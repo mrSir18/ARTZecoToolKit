@@ -1,0 +1,16 @@
+PODS:
+  - ARTZecoToolKit (0.1.0)
+
+DEPENDENCIES:
+  - ARTZecoToolKit (from `../`)
+
+EXTERNAL SOURCES:
+  ARTZecoToolKit:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ARTZecoToolKit: 3a13356f61017cbf480bb7e52a342f684cc89da0
+
+PODFILE CHECKSUM: 1b30a8f593455f82540e5685a045547da8254dbb
+
+COCOAPODS: 1.12.0
