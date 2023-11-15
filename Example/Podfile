@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '10.0'
+
+target 'ARTZecoToolKit_Example' do
+  pod 'ARTZecoToolKit', :path => '../'
+
+  target 'ARTZecoToolKit_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
