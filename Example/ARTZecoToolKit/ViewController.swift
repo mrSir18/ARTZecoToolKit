@@ -28,6 +28,7 @@ class ViewController: UIViewController {
     }
 }
 
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -72,12 +73,34 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         return reusableView
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: self.view.frame.size.width, height: 40)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: self.view.frame.size.width, height: 30)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("第\(indexPath.section)组，第\(indexPath.row)个")
     }
 }
 
+// MARK: - ARTCollectionViewDelegateFlowLayout
 extension ViewController: ARTCollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, configModelForSectionAt section: Int) -> ARTCollectionViewConfigModel? {
         let entity: ARTCollectionViewConfigModel = ARTCollectionViewConfigModel()
         entity.cornerRadius     = 15
@@ -102,26 +125,6 @@ extension ViewController: ARTCollectionViewDelegateFlowLayout {
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 5
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 5
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: self.view.frame.size.width, height: 40)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: self.view.frame.size.width, height: 30)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, heightForItemAt indexPath: IndexPath) -> CGFloat {
         
         switch indexPath.section {
@@ -135,6 +138,7 @@ extension ViewController: ARTCollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - ARTZecoTestCell
 class ARTZecoTestCell: UICollectionViewCell {
     lazy var artTestLabel: UILabel = {
         let label = UILabel()
@@ -161,6 +165,7 @@ class ARTZecoTestCell: UICollectionViewCell {
     }
 }
 
+// MARK: - ARTZecoTestReusableView
 class ARTZecoTestReusableView: UICollectionReusableView {
     static let elementKindSectionHeader = "ARTZecoElementKindSectionHeader"
     static let elementKindSectionfooter = "ARTZecoElementKindSectionfooter"
@@ -195,10 +200,6 @@ class ARTZecoTestReusableView: UICollectionReusableView {
             self.artTestLabel.layer.cornerRadius = 15
             self.artTestLabel.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
             self.artTestLabel.clipsToBounds = true
-            print("页眉")
-        } else {
-            print("页脚")
-            
         }
     }
 }
