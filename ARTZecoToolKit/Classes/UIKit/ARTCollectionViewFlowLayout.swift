@@ -127,16 +127,6 @@ public class ARTCollectionViewFlowLayout: UICollectionViewLayout {
     private var art_columnsLastHeights : [CGFloat] = [] //存放每个Section最后一个高度
     private var art_collectionHeight: CGFloat = 0.0 //collection内容高度
     private var art_lastItemHeight: CGFloat = 0.0 //最后一个Item内容高度
-    
-    init(_ delegate: ARTCollectionViewDelegateFlowLayout?) {
-        super.init()
-        self.art_delegate = delegate
-        self.register(ARTCollectionReusableView.self, forDecorationViewOfKind: ARTCollectionReusableViewDecoration)
-    }
-    
-    required public init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }
 
 extension ARTCollectionViewFlowLayout {
@@ -145,6 +135,9 @@ extension ARTCollectionViewFlowLayout {
         super.prepare()
         
         if let collectionView = self.collectionView {
+            self.art_delegate = (collectionView.delegate as! any ARTCollectionViewDelegateFlowLayout)
+            self.register(ARTCollectionReusableView.self, forDecorationViewOfKind: ARTCollectionReusableViewDecoration)
+            
             self.art_decorationAttributes.removeAll()
             self.art_columnsLastHeights.removeAll()
             self.art_collectionHeight = 0.0
