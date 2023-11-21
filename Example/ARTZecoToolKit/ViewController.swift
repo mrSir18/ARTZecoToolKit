@@ -68,6 +68,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         
         let reusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as! ARTZecoTestReusableView
         reusableView.artTestLabel.text = labelText
+        reusableView.configureCornerRadius(reuseIdentifier)
         return reusableView
     }
     
@@ -81,7 +82,7 @@ extension ViewController: ARTCollectionViewDelegateFlowLayout {
         let entity: ARTCollectionViewConfigModel = ARTCollectionViewConfigModel()
         entity.cornerRadius     = 15
         entity.maskedCorners    = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        entity.imageURLString   = "1"
+        entity.imageURLString   = String(describing: section)
         entity.backgroundColor  = .orange
         return entity
     }
@@ -168,7 +169,7 @@ class ARTZecoTestReusableView: UICollectionReusableView {
         let label = UILabel()
         label.backgroundColor = UIColor(red: 75.0/255.0, green: 75.0/255.0, blue: 75.0/255.0, alpha: 0.5)
         label.textColor = .white
-        label.font = .systemFont(ofSize: 14)
+        label.font = .boldSystemFont(ofSize: 14)
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
@@ -187,6 +188,18 @@ class ARTZecoTestReusableView: UICollectionReusableView {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.artTestLabel.frame = CGRectMake(10, 0, self.bounds.width-20, self.bounds.height)
+    }
+    
+    func configureCornerRadius(_ kind: String) {
+        if ARTZecoTestReusableView.elementKindSectionHeader == kind {
+            self.artTestLabel.layer.cornerRadius = 15
+            self.artTestLabel.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            self.artTestLabel.clipsToBounds = true
+            print("页眉")
+        } else {
+            print("页脚")
+            
+        }
     }
 }
 
