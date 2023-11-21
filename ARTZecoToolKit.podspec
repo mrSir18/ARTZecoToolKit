@@ -30,7 +30,7 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '11.0'
 
-  s.source_files = 'ARTZecoToolKit/**/*.swift'
+  s.source_files = 'ARTZecoToolKit/Classes/**/*'
   
   # s.resource_bundles = {
   #   'ARTZecoToolKit' => ['ARTZecoToolKit/Assets/*.png']
