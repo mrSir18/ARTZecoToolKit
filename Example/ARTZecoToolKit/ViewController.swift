@@ -105,8 +105,12 @@ extension ViewController: ARTCollectionViewDelegateFlowLayout {
         let entity: ARTCollectionViewConfigModel = ARTCollectionViewConfigModel()
         entity.cornerRadius     = 15
         entity.maskedCorners    = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        entity.imageURLString   = String(describing: section)
-        entity.backgroundColor  = .orange
+        if section == 0 {
+            entity.imageURLString = "https://img.tukuppt.com/preview/00/06/79/32/6793262612eb23740eshow.jpg"
+        } else {
+            entity.imageURLString   = String(describing: section)
+        }
+        entity.backgroundColor  = .white
         return entity
     }
     
@@ -151,7 +155,7 @@ class ARTZecoTestCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .darkGray
+        self.backgroundColor = UIColor(red: 17.0/255.0, green: 17.0/255.0, blue: 17.0/255.0, alpha: 0.8)
         self.addSubview(self.artTestLabel)
     }
     

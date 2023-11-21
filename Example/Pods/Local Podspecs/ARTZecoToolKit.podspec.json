@@ -18,5 +18,10 @@
   "platforms": {
     "ios": "11.0"
   },
-  "source_files": "ARTZecoToolKit/Classes/**/*"
+  "source_files": "ARTZecoToolKit/Classes/**/*",
+  "dependencies": {
+    "AlamofireImage": [
+
+    ]
+  }
 }

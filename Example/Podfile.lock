@@ -1,15 +1,26 @@
 PODS:
-  - ARTZecoToolKit (0.1.0)
+  - Alamofire (5.8.1)
+  - AlamofireImage (4.3.0):
+    - Alamofire (~> 5.8)
+  - ARTZecoToolKit (0.1.0):
+    - AlamofireImage
 
 DEPENDENCIES:
   - ARTZecoToolKit (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - AlamofireImage
 
 EXTERNAL SOURCES:
   ARTZecoToolKit:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ARTZecoToolKit: 13cd81201199441f23c61cf2aa183c0ff6e43d86
+  Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
+  AlamofireImage: 843953fa97bee5f561cf05d83abd759e590b068d
+  ARTZecoToolKit: bbe2243f47b16a3a0b767367c20136da6d8a8794
 
 PODFILE CHECKSUM: e42b632d9da101dc1ff28202d40e5a5c26042761
 
