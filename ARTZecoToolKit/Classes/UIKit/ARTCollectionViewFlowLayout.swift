@@ -220,9 +220,9 @@ extension ARTCollectionViewFlowLayout {
             let itemX = self.art_sectionInset.left + CGFloat(minColumn) * (itemWidth + self.art_minimumInteritemSpacing)
             let itemY = minColumnHeight + (minColumnHeight != self.art_lastItemHeight ? self.art_minimumLineSpacing : 0.0)
             
+            self.art_collectionHeight = max(self.art_collectionHeight, itemY + itemHeight)
             layoutAttributes.frame = CGRect(x: itemX, y: itemY, width: itemWidth, height: itemHeight)
             self.art_columnsLastHeights[minColumn] = layoutAttributes.frame.maxY
-            self.art_collectionHeight = layoutAttributes.frame.maxY
         }
         return layoutAttributes
     }

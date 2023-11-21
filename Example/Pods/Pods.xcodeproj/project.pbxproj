@@ -7,29 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		15C4C056FC7410818A76C0AA5F7284A3 /* ARTZecoToolKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D684D6967A31EB834E19CC0D1288844D /* ARTZecoToolKit-dummy.m */; };
+		0EE621859E9CDAA4C1F2C1A896B72E98 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		16AF4894BCE1F79BBF986587A54DEA09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		2A4E397643A11E7CD56B7FD4CBF1A4EC /* ARTZecoToolKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C6F369BC053C7E4F0D30BB7EB21020 /* ARTZecoToolKit-dummy.m */; };
 		4534C00BD7D53AC3F3F362A8F4FDC74A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		6E9D6436841001A2CC034AA40D316E9D /* ARTDeviceExtension .swift in Sources */ = {isa = PBXBuildFile; fileRef = 4564CA6741ED8C6143C027DBB9E0CBB4 /* ARTDeviceExtension .swift */; };
 		6F583CB40D99C1E69184300F9D9F097F /* Pods-ARTZecoToolKit_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E3DD6E051FBCE17CC08D8A86AB5456A1 /* Pods-ARTZecoToolKit_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		804DE0A81F6D63EC932A2578FBA47CB4 /* ARTZecoToolKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9FF9748863F29A30E198312EDC3A09D4 /* ARTZecoToolKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		878867A04EA4DAE8CA3BB12083AB9C93 /* Pods-ARTZecoToolKit_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4817B92BEC385613D940860B96F90CDD /* Pods-ARTZecoToolKit_Example-dummy.m */; };
 		B17800C1749FC072FC2F2F7E1D2429AF /* Pods-ARTZecoToolKit_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5452FB06D6BF2E71E8541C92721D30FB /* Pods-ARTZecoToolKit_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B69AE4F3DD7A2C76EDFC9EF0FD80EB63 /* ARTDeviceExtension .swift in Sources */ = {isa = PBXBuildFile; fileRef = C453540918DD8E247A026193B00E9309 /* ARTDeviceExtension .swift */; };
-		C9BE6058E8FDB691DC133B78736BE94A /* ARTCollectionViewConfigModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028486920C2FA3857AA333CCDC2CEACF /* ARTCollectionViewConfigModel.swift */; };
-		CC03E2C4C3B34C36D356FC662E193C74 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		E10FA7D00B285F73ED8E8D33EEB72CDA /* ARTCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B007520620348D12377D1C4ADB17A3 /* ARTCollectionViewFlowLayout.swift */; };
+		BB7BDC7A853417C002C5AE9125D31389 /* ARTCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F9E77EAEA717D5EC7C7E87E3197E34 /* ARTCollectionViewFlowLayout.swift */; };
+		C42990BFCB9B0C29FF680373BB09B71D /* ARTCollectionViewConfigModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658A516EE963BE49DBE2FC244E4EC286 /* ARTCollectionViewConfigModel.swift */; };
+		C97F128A5F1D5AD846B83FC2172C948D /* ARTZecoToolKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F83694D0494C7DCD0616E5CE99AF8FE8 /* ARTZecoToolKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D75D8ED2B9BE4D81FB694ED1C654E7E3 /* ARTCollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E7B52A3F69608B1F6EFDC0C7C69B6C /* ARTCollectionView+Extension.swift */; };
 		F60FF96A852595932E450DB86295B5FE /* Pods-ARTZecoToolKit_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9221FE134B1CD6A237A607DB39E423A1 /* Pods-ARTZecoToolKit_Tests-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		69B80F1E356AE193DC911D3A59CA9646 /* PBXContainerItemProxy */ = {
+		31CBADFEB11AC30278DE1CDC9F246059 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 4DBA1C8256B41F98DB5A0C5E648F557C;
 			remoteInfo = "Pods-ARTZecoToolKit_Example";
 		};
-		D7E4A7025270F0B0B8B0554273F91AA0 /* PBXContainerItemProxy */ = {
+		8046A9C39017DDEAA10995F1E49A5E62 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -39,41 +40,42 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		028486920C2FA3857AA333CCDC2CEACF /* ARTCollectionViewConfigModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTCollectionViewConfigModel.swift; sourceTree = "<group>"; };
+		00C6F369BC053C7E4F0D30BB7EB21020 /* ARTZecoToolKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ARTZecoToolKit-dummy.m"; sourceTree = "<group>"; };
+		03E7B52A3F69608B1F6EFDC0C7C69B6C /* ARTCollectionView+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ARTCollectionView+Extension.swift"; sourceTree = "<group>"; };
 		0E119A096385943734589D77AD5685F1 /* Pods-ARTZecoToolKit_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ARTZecoToolKit_Example.modulemap"; sourceTree = "<group>"; };
 		14DE57AD293B2561D63114BDAEEA0E5E /* Pods-ARTZecoToolKit_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ARTZecoToolKit_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		1A319BA77EE34C964438776DF68C64CD /* ARTZecoToolKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ARTZecoToolKit.release.xcconfig; sourceTree = "<group>"; };
-		1B425DB6849A18856E1324FAC82162F2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		25F9E77EAEA717D5EC7C7E87E3197E34 /* ARTCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		3D250DA9FFB5B2AF949F0162793F8CC7 /* ARTZecoToolKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ARTZecoToolKit-prefix.pch"; sourceTree = "<group>"; };
+		4564CA6741ED8C6143C027DBB9E0CBB4 /* ARTDeviceExtension .swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ARTDeviceExtension .swift"; sourceTree = "<group>"; };
 		47C5980B0BFC46A7F33AC501F0268856 /* Pods-ARTZecoToolKit_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ARTZecoToolKit_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		4817B92BEC385613D940860B96F90CDD /* Pods-ARTZecoToolKit_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ARTZecoToolKit_Example-dummy.m"; sourceTree = "<group>"; };
-		50B007520620348D12377D1C4ADB17A3 /* ARTCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		5452FB06D6BF2E71E8541C92721D30FB /* Pods-ARTZecoToolKit_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ARTZecoToolKit_Example-umbrella.h"; sourceTree = "<group>"; };
 		569CDAB67594E0A1296F06ABE4F6A9BD /* Pods-ARTZecoToolKit_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ARTZecoToolKit_Example-Info.plist"; sourceTree = "<group>"; };
+		5B2A6E066D4BF12093B90B343E150E24 /* ARTZecoToolKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ARTZecoToolKit.release.xcconfig; sourceTree = "<group>"; };
 		63C63DC38F58F2B75A5AEC20149460DF /* Pods-ARTZecoToolKit_Example */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-ARTZecoToolKit_Example"; path = Pods_ARTZecoToolKit_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		641ACD37B22AB1CC57D04FE50394B846 /* Pods-ARTZecoToolKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ARTZecoToolKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		658A516EE963BE49DBE2FC244E4EC286 /* ARTCollectionViewConfigModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTCollectionViewConfigModel.swift; sourceTree = "<group>"; };
 		6BC9A5F136A6BB2AE396F68C0722490F /* Pods-ARTZecoToolKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ARTZecoToolKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		7186D7FCADF13AE79308789CEAE44C0A /* ARTZecoToolKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = ARTZecoToolKit.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		74F9A8BD29E96832AF5D219D0283A255 /* ARTZecoToolKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ARTZecoToolKit.debug.xcconfig; sourceTree = "<group>"; };
 		751BA1374B3A2CFAE63E553AE660D236 /* Pods-ARTZecoToolKit_Tests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-ARTZecoToolKit_Tests"; path = Pods_ARTZecoToolKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		876FBD747DB9611AC88F995188B27430 /* Pods-ARTZecoToolKit_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ARTZecoToolKit_Tests.modulemap"; sourceTree = "<group>"; };
 		8975605F16F194F43B99F5C414F90211 /* Pods-ARTZecoToolKit_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ARTZecoToolKit_Tests-Info.plist"; sourceTree = "<group>"; };
 		8D7AD9678EAD417E8E31CDF16CE48B15 /* Pods-ARTZecoToolKit_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ARTZecoToolKit_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		9221FE134B1CD6A237A607DB39E423A1 /* Pods-ARTZecoToolKit_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ARTZecoToolKit_Tests-dummy.m"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9FF9748863F29A30E198312EDC3A09D4 /* ARTZecoToolKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ARTZecoToolKit-umbrella.h"; sourceTree = "<group>"; };
+		A7486B44819B989162072E52E524BE2C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		A78142144DEDFAB5AC7B6B7CC735373D /* Pods-ARTZecoToolKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ARTZecoToolKit_Example.release.xcconfig"; sourceTree = "<group>"; };
 		AB04B55AB290C7643DE169F9B762277E /* Pods-ARTZecoToolKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ARTZecoToolKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		AB04F3B719AB45742A2092CA3D357B23 /* ARTZecoToolKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ARTZecoToolKit.debug.xcconfig; sourceTree = "<group>"; };
-		ABE0884560C8D62BD4D995C4516CD0F2 /* ARTZecoToolKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ARTZecoToolKit-Info.plist"; sourceTree = "<group>"; };
-		AE694BAB3C6B67ADEE0CDBBE4994F87F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
-		AFAA76556D1C6EBA9E7C7FA6ED74DA2A /* ARTZecoToolKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ARTZecoToolKit-prefix.pch"; sourceTree = "<group>"; };
 		BA6D97D2E3C991BB67EC60B2BD79EF6D /* Pods-ARTZecoToolKit_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ARTZecoToolKit_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		C0CB6E44CF0A239FF853A1BAE53732C0 /* Pods-ARTZecoToolKit_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ARTZecoToolKit_Example-frameworks.sh"; sourceTree = "<group>"; };
-		C453540918DD8E247A026193B00E9309 /* ARTDeviceExtension .swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ARTDeviceExtension .swift"; sourceTree = "<group>"; };
+		C7285EDCD22BDCE285B68AD791A4A51E /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
 		C7715E250D97817734345220B2BF533A /* ARTZecoToolKit */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ARTZecoToolKit; path = ARTZecoToolKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D684D6967A31EB834E19CC0D1288844D /* ARTZecoToolKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ARTZecoToolKit-dummy.m"; sourceTree = "<group>"; };
+		C869F89DF60E0EECB6101A60D6C6C55B /* ARTZecoToolKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ARTZecoToolKit-Info.plist"; sourceTree = "<group>"; };
+		CFBBEB6CB5655012FAF58827363D3BFC /* ARTZecoToolKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ARTZecoToolKit.modulemap; sourceTree = "<group>"; };
+		DAA3B35A2B51C97CD93856A19B5F28ED /* ARTZecoToolKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = ARTZecoToolKit.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E3DD6E051FBCE17CC08D8A86AB5456A1 /* Pods-ARTZecoToolKit_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ARTZecoToolKit_Tests-umbrella.h"; sourceTree = "<group>"; };
-		ED59182E42F75135A64488547C5C2DD0 /* ARTZecoToolKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ARTZecoToolKit.modulemap; sourceTree = "<group>"; };
+		F83694D0494C7DCD0616E5CE99AF8FE8 /* ARTZecoToolKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ARTZecoToolKit-umbrella.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6BA0D7EE2C79718940855AA2D358DE66 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0EE621859E9CDAA4C1F2C1A896B72E98 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		714F52AFC8E107FA0921409FC50C98AE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -93,37 +103,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F34441B9DF3749C4414AA528E1A53654 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CC03E2C4C3B34C36D356FC662E193C74 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0759C608B37259151026A96455F6AD6D /* UIKit */ = {
+		07D705679D9D8CC631BF3F54C4B7B94E /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				028486920C2FA3857AA333CCDC2CEACF /* ARTCollectionViewConfigModel.swift */,
-				50B007520620348D12377D1C4ADB17A3 /* ARTCollectionViewFlowLayout.swift */,
+				CFBBEB6CB5655012FAF58827363D3BFC /* ARTZecoToolKit.modulemap */,
+				00C6F369BC053C7E4F0D30BB7EB21020 /* ARTZecoToolKit-dummy.m */,
+				C869F89DF60E0EECB6101A60D6C6C55B /* ARTZecoToolKit-Info.plist */,
+				3D250DA9FFB5B2AF949F0162793F8CC7 /* ARTZecoToolKit-prefix.pch */,
+				F83694D0494C7DCD0616E5CE99AF8FE8 /* ARTZecoToolKit-umbrella.h */,
+				74F9A8BD29E96832AF5D219D0283A255 /* ARTZecoToolKit.debug.xcconfig */,
+				5B2A6E066D4BF12093B90B343E150E24 /* ARTZecoToolKit.release.xcconfig */,
 			);
-			name = UIKit;
-			path = ARTZecoToolKit/Classes/UIKit;
-			sourceTree = "<group>";
-		};
-		12E4E57B381F9F5245E46D8256951749 /* ARTZecoToolKit */ = {
-			isa = PBXGroup;
-			children = (
-				C87D58CCE5862E90847BD1305305CDEC /* ExternUtils */,
-				3BB259074D20519AD55D9B781DA8386A /* Pod */,
-				918F451A4D9F868E22318C32FEEBFE50 /* Support Files */,
-				0759C608B37259151026A96455F6AD6D /* UIKit */,
-			);
-			name = ARTZecoToolKit;
-			path = ../..;
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/ARTZecoToolKit";
 			sourceTree = "<group>";
 		};
 		227161ECC15DBDA6CC5969F0603B6B7B /* Pods-ARTZecoToolKit_Tests */ = {
@@ -142,22 +137,24 @@
 			path = "Target Support Files/Pods-ARTZecoToolKit_Tests";
 			sourceTree = "<group>";
 		};
+		24073CB8C55A3D675FA5CCEC612A32F8 /* ARTZecoToolKit */ = {
+			isa = PBXGroup;
+			children = (
+				5CB8E563B1773465D5833DD6C60D5B78 /* ExternUtils */,
+				851F69459471AD595677E1083D0F2C23 /* Pod */,
+				07D705679D9D8CC631BF3F54C4B7B94E /* Support Files */,
+				639F6809D096859919DC0FDAA4CDE9BB /* UIKit */,
+			);
+			name = ARTZecoToolKit;
+			path = ../..;
+			sourceTree = "<group>";
+		};
 		2E72E30BEC4E136DBDD3C1027D024554 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				12E4E57B381F9F5245E46D8256951749 /* ARTZecoToolKit */,
+				24073CB8C55A3D675FA5CCEC612A32F8 /* ARTZecoToolKit */,
 			);
 			name = "Development Pods";
-			sourceTree = "<group>";
-		};
-		3BB259074D20519AD55D9B781DA8386A /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				7186D7FCADF13AE79308789CEAE44C0A /* ARTZecoToolKit.podspec */,
-				1B425DB6849A18856E1324FAC82162F2 /* LICENSE */,
-				AE694BAB3C6B67ADEE0CDBBE4994F87F /* README.md */,
-			);
-			name = Pod;
 			sourceTree = "<group>";
 		};
 		578452D2E740E91742655AC8F1636D1F /* iOS */ = {
@@ -178,19 +175,34 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		918F451A4D9F868E22318C32FEEBFE50 /* Support Files */ = {
+		5CB8E563B1773465D5833DD6C60D5B78 /* ExternUtils */ = {
 			isa = PBXGroup;
 			children = (
-				ED59182E42F75135A64488547C5C2DD0 /* ARTZecoToolKit.modulemap */,
-				D684D6967A31EB834E19CC0D1288844D /* ARTZecoToolKit-dummy.m */,
-				ABE0884560C8D62BD4D995C4516CD0F2 /* ARTZecoToolKit-Info.plist */,
-				AFAA76556D1C6EBA9E7C7FA6ED74DA2A /* ARTZecoToolKit-prefix.pch */,
-				9FF9748863F29A30E198312EDC3A09D4 /* ARTZecoToolKit-umbrella.h */,
-				AB04F3B719AB45742A2092CA3D357B23 /* ARTZecoToolKit.debug.xcconfig */,
-				1A319BA77EE34C964438776DF68C64CD /* ARTZecoToolKit.release.xcconfig */,
+				4564CA6741ED8C6143C027DBB9E0CBB4 /* ARTDeviceExtension .swift */,
 			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/ARTZecoToolKit";
+			name = ExternUtils;
+			path = ARTZecoToolKit/Classes/ExternUtils;
+			sourceTree = "<group>";
+		};
+		639F6809D096859919DC0FDAA4CDE9BB /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				03E7B52A3F69608B1F6EFDC0C7C69B6C /* ARTCollectionView+Extension.swift */,
+				658A516EE963BE49DBE2FC244E4EC286 /* ARTCollectionViewConfigModel.swift */,
+				25F9E77EAEA717D5EC7C7E87E3197E34 /* ARTCollectionViewFlowLayout.swift */,
+			);
+			name = UIKit;
+			path = ARTZecoToolKit/Classes/UIKit;
+			sourceTree = "<group>";
+		};
+		851F69459471AD595677E1083D0F2C23 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				DAA3B35A2B51C97CD93856A19B5F28ED /* ARTZecoToolKit.podspec */,
+				C7285EDCD22BDCE285B68AD791A4A51E /* LICENSE */,
+				A7486B44819B989162072E52E524BE2C /* README.md */,
+			);
+			name = Pod;
 			sourceTree = "<group>";
 		};
 		ABE3237845A071194AF5C3AB7883FB85 /* Pods-ARTZecoToolKit_Example */ = {
@@ -217,15 +229,6 @@
 				227161ECC15DBDA6CC5969F0603B6B7B /* Pods-ARTZecoToolKit_Tests */,
 			);
 			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		C87D58CCE5862E90847BD1305305CDEC /* ExternUtils */ = {
-			isa = PBXGroup;
-			children = (
-				C453540918DD8E247A026193B00E9309 /* ARTDeviceExtension .swift */,
-			);
-			name = ExternUtils;
-			path = ARTZecoToolKit/Classes/ExternUtils;
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
@@ -266,11 +269,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C53344F9BE1C851E387F9B3A283374C7 /* Headers */ = {
+		B5C86A828CFED91004BBB7B7CFAE4892 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				804DE0A81F6D63EC932A2578FBA47CB4 /* ARTZecoToolKit-umbrella.h in Headers */,
+				C97F128A5F1D5AD846B83FC2172C948D /* ARTZecoToolKit-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,7 +292,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				CC376266D2CB238635ABB04806049EDB /* PBXTargetDependency */,
+				591D4AB97A46626C3A672B5AB089B49F /* PBXTargetDependency */,
 			);
 			name = "Pods-ARTZecoToolKit_Tests";
 			productName = Pods_ARTZecoToolKit_Tests;
@@ -298,12 +301,12 @@
 		};
 		2D155CECEE9B71EF7099E786C728D53D /* ARTZecoToolKit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C0277CE9B2CAC01BE9FCF886A3BC4649 /* Build configuration list for PBXNativeTarget "ARTZecoToolKit" */;
+			buildConfigurationList = EB87B6705FF5B14E3D067400ECAB2741 /* Build configuration list for PBXNativeTarget "ARTZecoToolKit" */;
 			buildPhases = (
-				C53344F9BE1C851E387F9B3A283374C7 /* Headers */,
-				56CD8DE54F4902F61E35D57B6AACC4E3 /* Sources */,
-				F34441B9DF3749C4414AA528E1A53654 /* Frameworks */,
-				0678EE8963BB5BD5BCDC4A9AB0567B9C /* Resources */,
+				B5C86A828CFED91004BBB7B7CFAE4892 /* Headers */,
+				FDE515C7DA4A27D044F829CD27B0BF7D /* Sources */,
+				6BA0D7EE2C79718940855AA2D358DE66 /* Frameworks */,
+				AB1667A724E2660CFF158F5040D01C93 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -326,7 +329,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				F5B74FA4F4608BCFB3458F8C394F099C /* PBXTargetDependency */,
+				C9DDCC320143B0B76541EE84413CC6A1 /* PBXTargetDependency */,
 			);
 			name = "Pods-ARTZecoToolKit_Example";
 			productName = Pods_ARTZecoToolKit_Example;
@@ -363,14 +366,14 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		0678EE8963BB5BD5BCDC4A9AB0567B9C /* Resources */ = {
+		8ED6BAB198338A76DF8DBAEC0252E01B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8ED6BAB198338A76DF8DBAEC0252E01B /* Resources */ = {
+		AB1667A724E2660CFF158F5040D01C93 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -403,31 +406,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		56CD8DE54F4902F61E35D57B6AACC4E3 /* Sources */ = {
+		FDE515C7DA4A27D044F829CD27B0BF7D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9BE6058E8FDB691DC133B78736BE94A /* ARTCollectionViewConfigModel.swift in Sources */,
-				E10FA7D00B285F73ED8E8D33EEB72CDA /* ARTCollectionViewFlowLayout.swift in Sources */,
-				B69AE4F3DD7A2C76EDFC9EF0FD80EB63 /* ARTDeviceExtension .swift in Sources */,
-				15C4C056FC7410818A76C0AA5F7284A3 /* ARTZecoToolKit-dummy.m in Sources */,
+				D75D8ED2B9BE4D81FB694ED1C654E7E3 /* ARTCollectionView+Extension.swift in Sources */,
+				C42990BFCB9B0C29FF680373BB09B71D /* ARTCollectionViewConfigModel.swift in Sources */,
+				BB7BDC7A853417C002C5AE9125D31389 /* ARTCollectionViewFlowLayout.swift in Sources */,
+				6E9D6436841001A2CC034AA40D316E9D /* ARTDeviceExtension .swift in Sources */,
+				2A4E397643A11E7CD56B7FD4CBF1A4EC /* ARTZecoToolKit-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		CC376266D2CB238635ABB04806049EDB /* PBXTargetDependency */ = {
+		591D4AB97A46626C3A672B5AB089B49F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Pods-ARTZecoToolKit_Example";
 			target = 4DBA1C8256B41F98DB5A0C5E648F557C /* Pods-ARTZecoToolKit_Example */;
-			targetProxy = 69B80F1E356AE193DC911D3A59CA9646 /* PBXContainerItemProxy */;
+			targetProxy = 31CBADFEB11AC30278DE1CDC9F246059 /* PBXContainerItemProxy */;
 		};
-		F5B74FA4F4608BCFB3458F8C394F099C /* PBXTargetDependency */ = {
+		C9DDCC320143B0B76541EE84413CC6A1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ARTZecoToolKit;
 			target = 2D155CECEE9B71EF7099E786C728D53D /* ARTZecoToolKit */;
-			targetProxy = D7E4A7025270F0B0B8B0554273F91AA0 /* PBXContainerItemProxy */;
+			targetProxy = 8046A9C39017DDEAA10995F1E49A5E62 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -460,38 +464,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		09865DC21CD85688032ABF41C43FE3F0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = AB04F3B719AB45742A2092CA3D357B23 /* ARTZecoToolKit.debug.xcconfig */;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/ARTZecoToolKit/ARTZecoToolKit-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/ARTZecoToolKit/ARTZecoToolKit-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/ARTZecoToolKit/ARTZecoToolKit.modulemap";
-				PRODUCT_MODULE_NAME = ARTZecoToolKit;
-				PRODUCT_NAME = ARTZecoToolKit;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -532,9 +504,9 @@
 			};
 			name = Debug;
 		};
-		7550D162B2A8564E01FCEE410E9C1F32 /* Release */ = {
+		320B013843FBEAD67719CE29C27C356D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1A319BA77EE34C964438776DF68C64CD /* ARTZecoToolKit.release.xcconfig */;
+			baseConfigurationReference = 74F9A8BD29E96832AF5D219D0283A255 /* ARTZecoToolKit.debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -559,11 +531,10 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
 		8DE5143C03248BB6CD542DE3963D6F3A /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -763,6 +734,39 @@
 			};
 			name = Release;
 		};
+		EAD63A4BE1ACBCE7BEB74B8A127CFD9B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B2A6E066D4BF12093B90B343E150E24 /* ARTZecoToolKit.release.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/ARTZecoToolKit/ARTZecoToolKit-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/ARTZecoToolKit/ARTZecoToolKit-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/ARTZecoToolKit/ARTZecoToolKit.modulemap";
+				PRODUCT_MODULE_NAME = ARTZecoToolKit;
+				PRODUCT_NAME = ARTZecoToolKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -784,20 +788,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C0277CE9B2CAC01BE9FCF886A3BC4649 /* Build configuration list for PBXNativeTarget "ARTZecoToolKit" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				09865DC21CD85688032ABF41C43FE3F0 /* Debug */,
-				7550D162B2A8564E01FCEE410E9C1F32 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		DDC28F8541E2A27BC188A92B911D5F0F /* Build configuration list for PBXNativeTarget "Pods-ARTZecoToolKit_Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				276941569AA4DCE3EDE5AFE24F8FB490 /* Debug */,
 				D9B7CC1DFB88463C0BEFF456B88D42B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EB87B6705FF5B14E3D067400ECAB2741 /* Build configuration list for PBXNativeTarget "ARTZecoToolKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				320B013843FBEAD67719CE29C27C356D /* Debug */,
+				EAD63A4BE1ACBCE7BEB74B8A127CFD9B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
