@@ -155,7 +155,6 @@ extension ARTCollectionViewFlowLayout {
                 
                 /*!自定义装饰header*/
                 let indexPath = IndexPath(item: 0, section: section)
-                
                 let headerAttributes = self.layoutAttributesForSupplementaryView(ofKind: UICollectionElementKindSectionHeader, at: indexPath)
                 if let headerAttributes = headerAttributes {
                     self.art_decorationAttributes.append(headerAttributes)
