@@ -1,5 +1,5 @@
 //
-//  ARTCollectionView+Extension.swift
+//  UICollectionView+ARTExtension.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2023/11/22.
@@ -8,6 +8,7 @@
 import UIKit
 
 extension UICollectionView {
+    
     public func registerCell(_ cls: AnyClass) {
         register(cls, forCellWithReuseIdentifier: String(describing: cls))
     }
@@ -24,4 +25,3 @@ extension UICollectionView {
         register(cls, forSupplementaryViewOfKind: kind, withReuseIdentifier: identifier)
     }
 }
-
