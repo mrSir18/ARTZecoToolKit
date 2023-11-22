@@ -13,11 +13,11 @@ extension UICollectionView {
     }
     
     public func registerElementKindSectionHeader(_ cls: AnyClass) {
-        registerElementKindReusableView(cls, kind: UICollectionElementKindSectionHeader, identifier: String(describing: cls))
+        registerElementKindReusableView(cls, kind: UICollectionView.elementKindSectionHeader, identifier: String(describing: cls))
     }
     
     public func registerElementKindSectionFooter(_ cls: AnyClass) {
-        registerElementKindReusableView(cls, kind: UICollectionElementKindSectionFooter, identifier: String(describing: cls))
+        registerElementKindReusableView(cls, kind: UICollectionView.elementKindSectionFooter, identifier: String(describing: cls))
     }
     
     public func registerElementKindReusableView(_ cls: AnyClass, kind: String, identifier: String) {

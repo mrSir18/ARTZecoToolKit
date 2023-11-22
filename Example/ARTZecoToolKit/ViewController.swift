@@ -17,13 +17,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.title = "智库"
         
-        let layout = ARTCollectionViewFlowLayout()
+        let layout = ARTCollectionViewFlowLayout(self)
         let collection = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
         collection.delegate = self
         collection.dataSource = self
         collection.registerCell(ARTZecoTestCell.self)
-        collection.register(ARTZecoTestReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: ARTZecoTestReusableView.elementKindSectionHeader)
-        collection.register(ARTZecoTestReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: ARTZecoTestReusableView.elementKindSectionfooter)
+        collection.register(ARTZecoTestReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ARTZecoTestReusableView.elementKindSectionHeader)
+        collection.register(ARTZecoTestReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: ARTZecoTestReusableView.elementKindSectionfooter)
         view.addSubview(collection)
     }
 }
@@ -57,10 +57,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         let labelText: String
         
         switch kind {
-        case UICollectionElementKindSectionHeader:
+        case UICollectionView.elementKindSectionHeader:
             reuseIdentifier = ARTZecoTestReusableView.elementKindSectionHeader
             labelText = "\(self.sectionNames[indexPath.section]) header view"
-        case UICollectionElementKindSectionFooter:
+        case UICollectionView.elementKindSectionFooter:
             reuseIdentifier = ARTZecoTestReusableView.elementKindSectionfooter
             labelText = "\(self.sectionNames[indexPath.section]) footer view"
         default:

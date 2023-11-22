@@ -126,6 +126,16 @@ public class ARTCollectionViewFlowLayout: UICollectionViewLayout {
     private var art_columnsLastHeights : [CGFloat] = [] //存放每个Section最后一个高度
     private var art_collectionHeight: CGFloat = 0.0 //collection内容高度
     private var art_lastItemHeight: CGFloat = 0.0 //最后一个Item内容高度
+    
+    public init(_ delegate: ARTCollectionViewDelegateFlowLayout?) {
+        super.init()
+        self.art_delegate = delegate
+        self.register(ARTCollectionReusableView.self, forDecorationViewOfKind: ARTCollectionReusableViewDecoration)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension ARTCollectionViewFlowLayout {
@@ -134,9 +144,6 @@ extension ARTCollectionViewFlowLayout {
         super.prepare()
         
         if let collectionView = self.collectionView {
-            self.art_delegate = (collectionView.delegate as! any ARTCollectionViewDelegateFlowLayout)
-            self.register(ARTCollectionReusableView.self, forDecorationViewOfKind: ARTCollectionReusableViewDecoration)
-            
             self.art_decorationAttributes.removeAll()
             self.art_columnsLastHeights.removeAll()
             self.art_collectionHeight = 0.0
@@ -155,7 +162,7 @@ extension ARTCollectionViewFlowLayout {
                 
                 /*!自定义装饰header*/
                 let indexPath = IndexPath(item: 0, section: section)
-                let headerAttributes = self.layoutAttributesForSupplementaryView(ofKind: UICollectionElementKindSectionHeader, at: indexPath)
+                let headerAttributes = self.layoutAttributesForSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, at: indexPath)
                 if let headerAttributes = headerAttributes {
                     self.art_decorationAttributes.append(headerAttributes)
                     self.art_columnsLastHeights.removeAll()
@@ -170,7 +177,7 @@ extension ARTCollectionViewFlowLayout {
                 self.art_decorationAttributes.append(contentsOf: itemAttributes)
                 
                 /*!自定义装饰footer*/
-                let footerAttributes = self.layoutAttributesForSupplementaryView(ofKind: UICollectionElementKindSectionFooter, at: indexPath)
+                let footerAttributes = self.layoutAttributesForSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, at: indexPath)
                 if let footerAttributes = footerAttributes {
                     self.art_decorationAttributes.append(footerAttributes)
                 }
@@ -190,12 +197,12 @@ extension ARTCollectionViewFlowLayout {
     
     public override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         let layoutAttributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: elementKind, with: indexPath)
-        if elementKind == UICollectionElementKindSectionHeader {
+        if elementKind == UICollectionView.elementKindSectionHeader {
             self.art_collectionHeight += self.art_headerWithfooterLineSpacing
             layoutAttributes.frame = CGRect(x: 0, y: self.art_collectionHeight, width: self.art_headerReferenceSize.width, height: self.art_headerReferenceSize.height)
             self.art_collectionHeight = self.art_collectionHeight + self.art_headerReferenceSize.height + self.art_sectionInset.top
             
-        } else if (elementKind == UICollectionElementKindSectionFooter) {
+        } else if (elementKind == UICollectionView.elementKindSectionFooter) {
             self.art_collectionHeight += self.art_sectionInset.bottom
             layoutAttributes.frame = CGRect(x: 0, y: self.art_collectionHeight, width: self.art_footerReferenceSize.width, height: self.art_footerReferenceSize.height)
             self.art_collectionHeight += self.art_footerReferenceSize.height
