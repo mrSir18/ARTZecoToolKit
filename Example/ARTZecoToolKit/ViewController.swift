@@ -155,10 +155,8 @@ class ARTZecoTestCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .art_randomColor()
+        self.backgroundColor = UIColor.art_randomColor()
         self.addSubview(self.artTestLabel)
-        var num: NSArray = []
-        print(num.art_number(0)) 
     }
     
     required init?(coder: NSCoder) {
