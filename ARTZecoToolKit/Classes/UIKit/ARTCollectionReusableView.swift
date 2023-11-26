@@ -10,7 +10,7 @@ import UIKit
 // MARK: - ARTCollectionReusableView
 public class ARTCollectionReusableView: UICollectionReusableView {
 
-    class func dequeueReusableCell(from collectionView: UICollectionView, ofKind elementKind: String, withReuseIdentifier identifier: AnyClass, for indexPath: IndexPath) -> ARTCollectionReusableView {
+    public class func dequeueReusableCell(from collectionView: UICollectionView, ofKind elementKind: String, withReuseIdentifier identifier: AnyClass, for indexPath: IndexPath) -> ARTCollectionReusableView {
         let reusableView = collectionView.dequeueReusableSupplementaryView(ofKind: elementKind, withReuseIdentifier: String(describing: identifier), for: indexPath) as! ARTCollectionReusableView
         return reusableView
     }
@@ -28,7 +28,7 @@ public class ARTCollectionReusableView: UICollectionReusableView {
 // MARK: - ARTElementKindSectionHeader
 public class ARTElementKindSectionHeader: ARTCollectionReusableView {
 
-    class func dequeueHeader(from collectionView: UICollectionView, for indexPath: IndexPath) -> ARTCollectionReusableView {
+    public class func dequeueHeader(from collectionView: UICollectionView, for indexPath: IndexPath) -> ARTCollectionReusableView {
         return dequeueReusableCell(from: collectionView, ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: self, for: indexPath) as! ARTElementKindSectionHeader
     }
 }
@@ -36,7 +36,7 @@ public class ARTElementKindSectionHeader: ARTCollectionReusableView {
 // MARK: - ARTElementKindSectionFooter
 public class ARTElementKindSectionFooter: ARTCollectionReusableView {
     
-    class func dequeueFooter(from collectionView: UICollectionView, for indexPath: IndexPath) -> ARTCollectionReusableView {
+    public class func dequeueFooter(from collectionView: UICollectionView, for indexPath: IndexPath) -> ARTCollectionReusableView {
         return dequeueReusableCell(from: collectionView, ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: self, for: indexPath) as! ARTElementKindSectionFooter
     }
 }
