@@ -9,10 +9,10 @@
 import UIKit
 import AlamofireImage
 
-private let ARTCollectionReusableViewDecoration = "com.ARTCollectionReusableViewDecoration"
+private let ART_CollectionReusableViewDecoration = "com.ART_CollectionReusableViewDecoration"
 
-// MARK: - ARTCollectionReusableView
-private class ARTCollectionReusableView: UICollectionReusableView {
+// MARK: - ART_CollectionReusableView
+private class ART_CollectionReusableView: UICollectionReusableView {
     
     //初始化布局模型
     private lazy var attributes: ARTCollectionViewLayoutAttributes = {
@@ -130,7 +130,7 @@ public class ARTCollectionViewFlowLayout: UICollectionViewLayout {
     public init(_ delegate: ARTCollectionViewDelegateFlowLayout?) {
         super.init()
         self.art_delegate = delegate
-        self.register(ARTCollectionReusableView.self, forDecorationViewOfKind: ARTCollectionReusableViewDecoration)
+        self.register(ART_CollectionReusableView.self, forDecorationViewOfKind: ART_CollectionReusableViewDecoration)
     }
     
     required init?(coder: NSCoder) {
@@ -186,7 +186,7 @@ extension ARTCollectionViewFlowLayout {
                 let groupWidth  = collectionView.frame.size.width - self.art_sectionInset.left - self.art_sectionInset.right
                 let groupHeight = footerAttributes!.frame.maxY - headerAttributes!.frame.minY
                 let groupFrame  = CGRectMake(self.art_sectionInset.left, headerAttributes!.frame.minY, groupWidth, groupHeight)
-                let groupAttributes = ARTCollectionViewLayoutAttributes(forDecorationViewOfKind: ARTCollectionReusableViewDecoration, with: indexPath)
+                let groupAttributes = ARTCollectionViewLayoutAttributes(forDecorationViewOfKind: ART_CollectionReusableViewDecoration, with: indexPath)
                 groupAttributes.frame  = groupFrame
                 groupAttributes.zIndex = -1
                 groupAttributes.configModel = self.art_configModel
