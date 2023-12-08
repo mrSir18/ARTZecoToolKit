@@ -2,8 +2,7 @@
 //  ARTCollectionViewFlowLayout.swift
 //  WaterfallFlowDemo
 //
-//  Created by mrSir18 on 2023/11/18.
-//  Copyright © 2023 lijiang. All rights reserved.
+//  Created by mrSir18 on 2023/11/22.
 //
 
 import UIKit
