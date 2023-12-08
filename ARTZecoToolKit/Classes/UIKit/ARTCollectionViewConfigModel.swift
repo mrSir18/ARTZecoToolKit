@@ -1,6 +1,6 @@
 //
 //  ARTCollectionViewConfigModel.swift
-//  WaterfallFlowDemo
+//  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2023/11/22.
 //
