@@ -182,11 +182,15 @@ extension ARTCollectionViewFlowLayout {
                 }
                 
                 /*!自定义装饰model*/
-                let groupWidth  = collectionView.frame.size.width - self.art_sectionInset.left - self.art_sectionInset.right
+                let groupWidth = collectionView.frame.size.width - self.art_sectionInset.left - self.art_sectionInset.right
                 let groupHeight = footerAttributes!.frame.maxY - headerAttributes!.frame.minY
-                let groupFrame  = CGRectMake(self.art_sectionInset.left, headerAttributes!.frame.minY, groupWidth, groupHeight)
+                var groupFrame = CGRect(x: self.art_sectionInset.left, y: headerAttributes!.frame.minY, width: groupWidth, height: groupHeight)
+                //如果是全屏模式，调整组框架
+                if self.art_configModel?.isFullScreen == true {
+                    groupFrame = CGRect(x: 0, y: headerAttributes!.frame.minY, width: collectionView.frame.size.width, height: groupHeight)
+                }
                 let groupAttributes = ARTCollectionViewLayoutAttributes(forDecorationViewOfKind: ART_CollectionReusableViewDecoration, with: indexPath)
-                groupAttributes.frame  = groupFrame
+                groupAttributes.frame = groupFrame
                 groupAttributes.zIndex = -1
                 groupAttributes.configModel = self.art_configModel
                 self.art_decorationAttributes.append(groupAttributes)

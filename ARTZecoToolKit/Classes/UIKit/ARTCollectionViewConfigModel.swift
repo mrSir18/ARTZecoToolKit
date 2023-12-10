@@ -38,4 +38,6 @@ public class ARTCollectionViewConfigModel: NSObject {
     public var contentMode: UIView.ContentMode = .scaleAspectFill
     /// view是否裁剪 - <默认裁剪>
     public var clipsToBounds: Bool = true
+    /// view是否设置为CollectionView宽度 - <默认Section去掉边距宽度>
+    public var isFullScreen: Bool = false
 }
