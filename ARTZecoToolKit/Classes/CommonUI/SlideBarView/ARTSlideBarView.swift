@@ -110,13 +110,15 @@ public class ARTSliderBarView: UIView {
         }
     }
     
-    // MARK: - Private Click UIButton Method
+    // MARK: - Private UIButton Methods
+    
     @objc private func clickSliderBarButtonTapped(sender: UIButton) {
         moveLine(sender.tag)
         delegate?.slideBarView?(self, didSelectItemAt: sender.tag)
     }
     
     // MARK: - Private Method
+    
     private func moveLine(_ index: Int) {
         let configuration = ARTSliderBarStyleConfiguration.default()
         if let previousLabel = viewWithTag(previousIndex) as? UILabel {

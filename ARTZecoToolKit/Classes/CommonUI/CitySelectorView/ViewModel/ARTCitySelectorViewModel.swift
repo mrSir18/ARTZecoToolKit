@@ -305,6 +305,7 @@ struct ARTCitySelectorViewModel {
 }
 
 // MARK: - Private Method.
+
 extension ARTCitySelectorViewModel {
     
     /// 配置布局.

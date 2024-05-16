@@ -39,6 +39,14 @@ class ARTCitySelectorHotCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupViews() {
         
         // 创建容器视图
         containerView = UIView()
@@ -59,7 +67,7 @@ class ARTCitySelectorHotCell: UICollectionViewCell {
         locationLabel.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
         }
-
+        
 //        // 创建容器视图
 //        let containerView = UIView()
 //        containerView.backgroundColor    = .art_color(withHEXValue: 0xf8f8f8)
@@ -102,9 +110,5 @@ class ARTCitySelectorHotCell: UICollectionViewCell {
 //            make.right.equalTo(locationLabel.snp.right)
 //            make.centerX.centerY.equalTo(containerView)
 //        }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

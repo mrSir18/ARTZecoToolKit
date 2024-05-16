@@ -105,13 +105,15 @@ public class ARTCitySelectorView: UIView {
         }
     }
     
-    // MARK: - UIPanGestureRecognizer Private Method
+    // MARK: - Private Methods (UIPanGestureRecognizer)
+
     @objc private func handleTapGesture(_ gesture: UITapGestureRecognizer) {
         removeCitySelector()
     }
 }
 
 // MARK: - Public Method
+
 extension ARTCitySelectorView {
     
     /// 创建并显示城市选择器.
@@ -148,6 +150,7 @@ extension ARTCitySelectorView {
 }
 
 // MARK: - ARTCitySelectorHeaderProtocol
+
 extension ARTCitySelectorView: ARTCitySelectorHeaderProtocol {
     
     func didTapCloseCitySelector(_ headerView: ARTCitySelectorHeader) {

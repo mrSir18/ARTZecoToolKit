@@ -83,7 +83,8 @@ open class ARTSlidePopupHeaderView: UIView {
         }
     }
     
-    // MARK: - Button Event Method
+    // MARK: - Private Button Actions
+    
     @objc private func clickPackUpButtonTapped(sender: UIButton) {
         delegate?.didTapPackUpButton(self)
     }

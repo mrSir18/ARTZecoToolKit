@@ -12,6 +12,14 @@ class ARTCitySelectorHotHeader: ARTSectionHeaderView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupViews() {
         self.backgroundColor = .clear
 
         // 创建常用城市标签视图
@@ -25,9 +33,5 @@ class ARTCitySelectorHotHeader: ARTSectionHeaderView {
             make.left.equalTo(18.0)
             make.centerY.equalToSuperview()
         }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
