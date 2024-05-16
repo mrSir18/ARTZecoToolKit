@@ -1,0 +1,75 @@
+[
+    {
+        "id": "1101",
+        "pid": 11,
+        "deep": 1,
+        "name": "北京",
+        "pinyin": "bei jing",
+        "pinyin_prefix": "b",
+        "ext_id": "110100000000",
+        "ext_name": "北京市"
+    }, {
+        "id": "3101",
+        "pid": 31,
+        "deep": 1,
+        "name": "上海",
+        "pinyin": "shang hai",
+        "pinyin_prefix": "s",
+        "ext_id": "310100000000",
+        "ext_name": "上海市"
+    }, {
+        "id": "4403",
+        "pid": 44,
+        "deep": 1,
+        "name": "深圳",
+        "pinyin": "shen zhen",
+        "pinyin_prefix": "s",
+        "ext_id": "440300000000",
+        "ext_name": "深圳市"
+    }, {
+        "id": "4401",
+        "pid": 44,
+        "deep": 1,
+        "name": "广州",
+        "pinyin": "guang zhou",
+        "pinyin_prefix": "g",
+        "ext_id": "440100000000",
+        "ext_name": "广州市"
+    },{
+        "id": "3301",
+        "pid": 33,
+        "deep": 1,
+        "name": "杭州",
+        "pinyin": "hang zhou",
+        "pinyin_prefix": "h",
+        "ext_id": "330100000000",
+        "ext_name": "杭州市"
+    }, {
+        "id": "5101",
+        "pid": 51,
+        "deep": 1,
+        "name": "成都",
+        "pinyin": "cheng du",
+        "pinyin_prefix": "c",
+        "ext_id": "510100000000",
+        "ext_name": "成都市"
+    },{
+        "id": "3201",
+        "pid": 32,
+        "deep": 1,
+        "name": "南京",
+        "pinyin": "nan jing",
+        "pinyin_prefix": "n",
+        "ext_id": "320100000000",
+        "ext_name": "南京市"
+    }, {
+        "id": "4301",
+        "pid": 43,
+        "deep": 1,
+        "name": "长沙",
+        "pinyin": "chang sha",
+        "pinyin_prefix": "c",
+        "ext_id": "430100000000",
+        "ext_name": "长沙市"
+    }
+]

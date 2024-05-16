@@ -1,0 +1,38 @@
+{
+  "name": "ARTZecoToolKit",
+  "version": "0.1.0",
+  "summary": "A short description of ARTZecoToolKit.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/mrSir18/ARTZecoToolKit",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "mrSir18": "mrSir18@163.com"
+  },
+  "source": {
+    "git": "https://github.com/mrSir18/ARTZecoToolKit.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "13.0"
+  },
+  "source_files": "ARTZecoToolKit/Classes/**/*",
+  "dependencies": {
+    "AlamofireImage": [
+
+    ],
+    "SnapKit": [
+
+    ],
+    "HandyJSON": [
+
+    ]
+  },
+  "resource_bundles": {
+    "ARTZecoToolKit": [
+      "ARTZecoToolKit/Assets/*.png"
+    ]
+  }
+}

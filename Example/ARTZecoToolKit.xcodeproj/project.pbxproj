@@ -7,10 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02F8AE2B2BF66B3E00A111F6 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F8AE262BF66B3D00A111F6 /* 0.png */; };
+		02F8AE2C2BF66B3E00A111F6 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F8AE272BF66B3D00A111F6 /* 2.png */; };
+		02F8AE2D2BF66B3E00A111F6 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F8AE282BF66B3D00A111F6 /* 1.png */; };
+		02F8AE2E2BF66B3E00A111F6 /* area_format_user.json in Resources */ = {isa = PBXBuildFile; fileRef = 02F8AE292BF66B3E00A111F6 /* area_format_user.json */; };
+		02F8AE2F2BF66B3E00A111F6 /* hot_area_format_user.json in Resources */ = {isa = PBXBuildFile; fileRef = 02F8AE2A2BF66B3E00A111F6 /* hot_area_format_user.json */; };
+		02F8AE312BF66BCE00A111F6 /* ARTBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8AE302BF66BCE00A111F6 /* ARTBaseViewController.swift */; };
+		02F8AE4C2BF67E7E00A111F6 /* ARTViewController_CitySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8AE422BF67E7E00A111F6 /* ARTViewController_CitySelector.swift */; };
+		02F8AE4D2BF67E7E00A111F6 /* ARTBaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8AE432BF67E7E00A111F6 /* ARTBaseTabBarController.swift */; };
+		02F8AE4E2BF67E7E00A111F6 /* ARTViewController+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8AE442BF67E7E00A111F6 /* ARTViewController+CollectionView.swift */; };
+		02F8AE4F2BF67E7E00A111F6 /* ARTViewController_SlidePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8AE452BF67E7E00A111F6 /* ARTViewController_SlidePopup.swift */; };
+		02F8AE502BF67E7E00A111F6 /* ARTViewController+ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8AE462BF67E7E00A111F6 /* ARTViewController+ScrollView.swift */; };
+		02F8AE512BF67E7E00A111F6 /* ARTViewController_Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8AE472BF67E7E00A111F6 /* ARTViewController_Alert.swift */; };
+		02F8AE522BF67E7E00A111F6 /* ARTBaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8AE482BF67E7E00A111F6 /* ARTBaseNavigationController.swift */; };
+		02F8AE532BF67E7E00A111F6 /* ARTViewController_Quantity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8AE492BF67E7E00A111F6 /* ARTViewController_Quantity.swift */; };
+		02F8AE542BF67E7E00A111F6 /* ARTViewController+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8AE4A2BF67E7E00A111F6 /* ARTViewController+Debug.swift */; };
+		02F8AE552BF67E7E00A111F6 /* ARTViewController_SlideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8AE4B2BF67E7E00A111F6 /* ARTViewController_SlideBar.swift */; };
 		1CF33B9CC8DA8DF1CBE993DE /* Pods_ARTZecoToolKit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EA625A08A616D91D29660F4 /* Pods_ARTZecoToolKit_Tests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
-		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
-		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
@@ -28,13 +42,27 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02F8AE262BF66B3D00A111F6 /* 0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0.png; sourceTree = "<group>"; };
+		02F8AE272BF66B3D00A111F6 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		02F8AE282BF66B3D00A111F6 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		02F8AE292BF66B3E00A111F6 /* area_format_user.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = area_format_user.json; sourceTree = "<group>"; };
+		02F8AE2A2BF66B3E00A111F6 /* hot_area_format_user.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hot_area_format_user.json; sourceTree = "<group>"; };
+		02F8AE302BF66BCE00A111F6 /* ARTBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTBaseViewController.swift; sourceTree = "<group>"; };
+		02F8AE422BF67E7E00A111F6 /* ARTViewController_CitySelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARTViewController_CitySelector.swift; sourceTree = "<group>"; };
+		02F8AE432BF67E7E00A111F6 /* ARTBaseTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARTBaseTabBarController.swift; sourceTree = "<group>"; };
+		02F8AE442BF67E7E00A111F6 /* ARTViewController+CollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ARTViewController+CollectionView.swift"; sourceTree = "<group>"; };
+		02F8AE452BF67E7E00A111F6 /* ARTViewController_SlidePopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARTViewController_SlidePopup.swift; sourceTree = "<group>"; };
+		02F8AE462BF67E7E00A111F6 /* ARTViewController+ScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ARTViewController+ScrollView.swift"; sourceTree = "<group>"; };
+		02F8AE472BF67E7E00A111F6 /* ARTViewController_Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARTViewController_Alert.swift; sourceTree = "<group>"; };
+		02F8AE482BF67E7E00A111F6 /* ARTBaseNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARTBaseNavigationController.swift; sourceTree = "<group>"; };
+		02F8AE492BF67E7E00A111F6 /* ARTViewController_Quantity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARTViewController_Quantity.swift; sourceTree = "<group>"; };
+		02F8AE4A2BF67E7E00A111F6 /* ARTViewController+Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ARTViewController+Debug.swift"; sourceTree = "<group>"; };
+		02F8AE4B2BF67E7E00A111F6 /* ARTViewController_SlideBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARTViewController_SlideBar.swift; sourceTree = "<group>"; };
 		1EA625A08A616D91D29660F4 /* Pods_ARTZecoToolKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARTZecoToolKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		508CCC9841039DC382960AFC /* Pods_ARTZecoToolKit_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARTZecoToolKit_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* ARTZecoToolKit_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARTZecoToolKit_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* ARTZecoToolKit_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARTZecoToolKit_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,11 +70,11 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		66BAEF9DDFD7CD00A18E3C35 /* Pods-ARTZecoToolKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARTZecoToolKit_Example.debug.xcconfig"; path = "Target Support Files/Pods-ARTZecoToolKit_Example/Pods-ARTZecoToolKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		8AF1FBC305A60DEB7A8B433F /* Pods-ARTZecoToolKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARTZecoToolKit_Tests.release.xcconfig"; path = "Target Support Files/Pods-ARTZecoToolKit_Tests/Pods-ARTZecoToolKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		A13A46B6F22885964AF67601 /* ARTZecoToolKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = ARTZecoToolKit.podspec; path = ../ARTZecoToolKit.podspec; sourceTree = "<group>"; };
-		CB45B7B3F467FA99B0E4C6AD /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		A13A46B6F22885964AF67601 /* ARTZecoToolKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ARTZecoToolKit.podspec; path = ../ARTZecoToolKit.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		CB45B7B3F467FA99B0E4C6AD /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		CC0B092E2DE1D2B0904D09F1 /* Pods-ARTZecoToolKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARTZecoToolKit_Example.release.xcconfig"; path = "Target Support Files/Pods-ARTZecoToolKit_Example/Pods-ARTZecoToolKit_Example.release.xcconfig"; sourceTree = "<group>"; };
 		CF75856A2D9F7E855B00302C /* Pods-ARTZecoToolKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARTZecoToolKit_Tests.debug.xcconfig"; path = "Target Support Files/Pods-ARTZecoToolKit_Tests/Pods-ARTZecoToolKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		D8F7423B5C4DB1F56DAB0F07 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		D8F7423B5C4DB1F56DAB0F07 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +97,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02F8AE562BF67E8500A111F6 /* BaseBusiness */ = {
+			isa = PBXGroup;
+			children = (
+				02F8AE302BF66BCE00A111F6 /* ARTBaseViewController.swift */,
+				02F8AE482BF67E7E00A111F6 /* ARTBaseNavigationController.swift */,
+				02F8AE432BF67E7E00A111F6 /* ARTBaseTabBarController.swift */,
+			);
+			name = BaseBusiness;
+			sourceTree = "<group>";
+		};
 		0F3224FA1EC1F8C22E451E65 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -103,10 +141,15 @@
 			isa = PBXGroup;
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				607FACD71AFB9204008FA782 /* ViewController.swift */,
-				607FACD91AFB9204008FA782 /* Main.storyboard */,
-				607FACDC1AFB9204008FA782 /* Images.xcassets */,
-				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
+				02F8AE4A2BF67E7E00A111F6 /* ARTViewController+Debug.swift */,
+				02F8AE442BF67E7E00A111F6 /* ARTViewController+CollectionView.swift */,
+				02F8AE462BF67E7E00A111F6 /* ARTViewController+ScrollView.swift */,
+				02F8AE422BF67E7E00A111F6 /* ARTViewController_CitySelector.swift */,
+				02F8AE472BF67E7E00A111F6 /* ARTViewController_Alert.swift */,
+				02F8AE4B2BF67E7E00A111F6 /* ARTViewController_SlideBar.swift */,
+				02F8AE492BF67E7E00A111F6 /* ARTViewController_Quantity.swift */,
+				02F8AE452BF67E7E00A111F6 /* ARTViewController_SlidePopup.swift */,
+				02F8AE562BF67E8500A111F6 /* BaseBusiness */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
 			name = "Example for ARTZecoToolKit";
@@ -116,6 +159,13 @@
 		607FACD31AFB9204008FA782 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				02F8AE262BF66B3D00A111F6 /* 0.png */,
+				02F8AE282BF66B3D00A111F6 /* 1.png */,
+				02F8AE272BF66B3D00A111F6 /* 2.png */,
+				02F8AE292BF66B3E00A111F6 /* area_format_user.json */,
+				02F8AE2A2BF66B3E00A111F6 /* hot_area_format_user.json */,
+				607FACDC1AFB9204008FA782 /* Images.xcassets */,
+				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD41AFB9204008FA782 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -156,7 +206,6 @@
 				CF75856A2D9F7E855B00302C /* Pods-ARTZecoToolKit_Tests.debug.xcconfig */,
 				8AF1FBC305A60DEB7A8B433F /* Pods-ARTZecoToolKit_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -171,7 +220,7 @@
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				2446CA9F44C256DD6E94ADC6 /* [CP] Embed Pods Frameworks */,
+				14D4FD0AE3E45720831CD5B6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -227,6 +276,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -246,8 +296,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
+				02F8AE2B2BF66B3E00A111F6 /* 0.png in Resources */,
+				02F8AE2F2BF66B3E00A111F6 /* hot_area_format_user.json in Resources */,
+				02F8AE2C2BF66B3E00A111F6 /* 2.png in Resources */,
+				02F8AE2D2BF66B3E00A111F6 /* 1.png in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				02F8AE2E2BF66B3E00A111F6 /* area_format_user.json in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,7 +316,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2446CA9F44C256DD6E94ADC6 /* [CP] Embed Pods Frameworks */ = {
+		14D4FD0AE3E45720831CD5B6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -270,10 +324,18 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ARTZecoToolKit_Example/Pods-ARTZecoToolKit_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ARTZecoToolKit/ARTZecoToolKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/HandyJSON/HandyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ARTZecoToolKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HandyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -331,8 +393,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				02F8AE552BF67E7E00A111F6 /* ARTViewController_SlideBar.swift in Sources */,
+				02F8AE502BF67E7E00A111F6 /* ARTViewController+ScrollView.swift in Sources */,
+				02F8AE4C2BF67E7E00A111F6 /* ARTViewController_CitySelector.swift in Sources */,
+				02F8AE4F2BF67E7E00A111F6 /* ARTViewController_SlidePopup.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				02F8AE4D2BF67E7E00A111F6 /* ARTBaseTabBarController.swift in Sources */,
+				02F8AE512BF67E7E00A111F6 /* ARTViewController_Alert.swift in Sources */,
+				02F8AE542BF67E7E00A111F6 /* ARTViewController+Debug.swift in Sources */,
+				02F8AE4E2BF67E7E00A111F6 /* ARTViewController+CollectionView.swift in Sources */,
+				02F8AE312BF66BCE00A111F6 /* ARTBaseViewController.swift in Sources */,
+				02F8AE532BF67E7E00A111F6 /* ARTViewController_Quantity.swift in Sources */,
+				02F8AE522BF67E7E00A111F6 /* ARTBaseNavigationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,14 +427,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				607FACDA1AFB9204008FA782 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		607FACDE1AFB9204008FA782 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -419,7 +483,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -465,7 +529,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -479,12 +543,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ARTZecoToolKit/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -494,12 +559,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ARTZecoToolKit/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -520,7 +586,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ARTZecoToolKit_Example.app/ARTZecoToolKit_Example";
 			};
 			name = Debug;
@@ -538,7 +604,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ARTZecoToolKit_Example.app/ARTZecoToolKit_Example";
 			};
 			name = Release;

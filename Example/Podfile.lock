@@ -1,0 +1,35 @@
+PODS:
+  - Alamofire (5.9.1)
+  - AlamofireImage (4.3.0):
+    - Alamofire (~> 5.8)
+  - ARTZecoToolKit (0.1.0):
+    - AlamofireImage
+    - HandyJSON
+    - SnapKit
+  - HandyJSON (5.0.2)
+  - SnapKit (5.7.1)
+
+DEPENDENCIES:
+  - ARTZecoToolKit (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - AlamofireImage
+    - HandyJSON
+    - SnapKit
+
+EXTERNAL SOURCES:
+  ARTZecoToolKit:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
+  AlamofireImage: 843953fa97bee5f561cf05d83abd759e590b068d
+  ARTZecoToolKit: 4cb909289cdbe693e2591767015dc556e36533db
+  HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
+  SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
+
+PODFILE CHECKSUM: e42b632d9da101dc1ff28202d40e5a5c26042761
+
+COCOAPODS: 1.14.3

@@ -1,0 +1,6 @@
+framework module ARTZecoToolKit {
+  umbrella header "ARTZecoToolKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

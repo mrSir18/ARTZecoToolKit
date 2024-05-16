@@ -24,17 +24,22 @@ TODO: Add long description of the pod here.
   s.homepage         = 'https://github.com/mrSir18/ARTZecoToolKit'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'mrSir18' => 'mrsir18@163.com' }
+  s.author           = { 'mrSir18' => 'mrSir18@163.com' }
   s.source           = { :git => 'https://github.com/mrSir18/ARTZecoToolKit.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '10.0'
+  s.ios.deployment_target = '13.0'
 
   s.source_files = 'ARTZecoToolKit/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'ARTZecoToolKit' => ['ARTZecoToolKit/Assets/*.png']
-  # }
+### 依赖库
+  s.dependency 'AlamofireImage'
+  s.dependency 'SnapKit'
+  s.dependency 'HandyJSON'
+  
+   s.resource_bundles = {
+     'ARTZecoToolKit' => ['ARTZecoToolKit/Assets/*.png']
+   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
