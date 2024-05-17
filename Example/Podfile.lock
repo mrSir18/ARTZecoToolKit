@@ -4,9 +4,9 @@ PODS:
     - Alamofire (~> 5.8)
   - ARTZecoToolKit (0.1.0):
     - AlamofireImage
-    - HandyJSON
+    - SmartCodable
     - SnapKit
-  - HandyJSON (5.0.2)
+  - SmartCodable (3.4.3)
   - SnapKit (5.7.1)
 
 DEPENDENCIES:
@@ -16,7 +16,7 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - AlamofireImage
-    - HandyJSON
+    - SmartCodable
     - SnapKit
 
 EXTERNAL SOURCES:
@@ -26,8 +26,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   AlamofireImage: 843953fa97bee5f561cf05d83abd759e590b068d
-  ARTZecoToolKit: 4cb909289cdbe693e2591767015dc556e36533db
-  HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
+  ARTZecoToolKit: 53ba11d962092db92101c9e61b5f23962fbf7a54
+  SmartCodable: a8dce63d9471246ad18cb900cef7a4ede0f7f1fb
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
 
 PODFILE CHECKSUM: e42b632d9da101dc1ff28202d40e5a5c26042761

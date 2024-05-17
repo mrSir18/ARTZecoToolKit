@@ -35,7 +35,7 @@ TODO: Add long description of the pod here.
 ### 依赖库
   s.dependency 'AlamofireImage'
   s.dependency 'SnapKit'
-  s.dependency 'HandyJSON'
+  s.dependency 'SmartCodable'
   
    s.resource_bundles = {
      'ARTZecoToolKit' => ['ARTZecoToolKit/Assets/*.png']
