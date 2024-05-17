@@ -9,6 +9,7 @@
 import UIKit
 
 // MARK: - ARTCollectionReusableView
+
 /// 自定义集合视图可重用视图基类.
 open class ARTCollectionReusableView: UICollectionReusableView {
     
@@ -39,6 +40,7 @@ open class ARTCollectionReusableView: UICollectionReusableView {
 }
 
 // MARK: - ARTSectionHeaderView
+
 /// 自定义集合视图段头视图.
 open class ARTSectionHeaderView: ARTCollectionReusableView {
     
@@ -54,6 +56,7 @@ open class ARTSectionHeaderView: ARTCollectionReusableView {
 }
 
 // MARK: - ARTSectionFooterView
+
 /// 自定义集合视图段尾视图.
 open class ARTSectionFooterView: ARTCollectionReusableView {
     

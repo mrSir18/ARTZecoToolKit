@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 // MARK: - ARTScrollViewProtocol
+
 @objc public protocol ARTScrollViewProtocol: AnyObject {
     
     /// 滚动视图:点击事件
@@ -28,6 +29,7 @@ import SnapKit
 }
 
 // MARK: - ARTScrollView
+
 public class ARTScrollView: UIView {
 
     /// 遵循 ARTScrollViewProtocol 协议的弱引用委托对象.
@@ -75,7 +77,6 @@ public class ARTScrollView: UIView {
         }
     }
     
-    // MARK: - 创建滚动视图效果
     private func createScrollPageEffect() {
         removeScrollPageFromSuperview()
         layoutIfNeeded()
@@ -145,12 +146,14 @@ public class ARTScrollView: UIView {
         scrollView.contentSize = CGSize(width: CGFloat(pageCount + 2) * scrollViewWidth, height: scrollView.frame.size.height)
     }
     
-    // MARK: - Button Method
+    // MARK: - Private Button Actions
+    
     @objc private func clickImageTapHandler(_ sender: UIButton) {
         delegate?.scrollView?(self, didTapSelectItemAt: sender.tag)
     }
     
-    // MARK: - Private Method
+    // MARK: - Private Methods
+    
     private func startAutoScroll() {
         guard timer == nil else { return }
         
@@ -182,7 +185,8 @@ public class ARTScrollView: UIView {
     }
 }
 
-// MARK: - Publick Method
+// MARK: - Publick Methods
+
 extension ARTScrollView {
 
     /// 滚动到指定索引位置
@@ -200,6 +204,7 @@ extension ARTScrollView {
 }
 
 // MARK: - UIScrollViewDelegate
+
 extension ARTScrollView: UIScrollViewDelegate {
     
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

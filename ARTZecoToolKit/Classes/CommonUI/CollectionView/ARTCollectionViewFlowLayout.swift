@@ -12,6 +12,7 @@ import AlamofireImage
 private let ART_CollectionReusableViewDecoration = "com.ART_CollectionReusableViewDecoration"
 
 // MARK: - ART_CollectionReusableView
+
 private class ART_CollectionReusableView: UICollectionReusableView {
     
     /// 初始化布局模型
@@ -82,6 +83,7 @@ private class ART_CollectionReusableView: UICollectionReusableView {
 }
 
 // MARK: - ARTCollectionViewLayoutAttributes
+
 private class ARTCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
     
     /// 集合视图的配置模型.
@@ -89,6 +91,7 @@ private class ARTCollectionViewLayoutAttributes: UICollectionViewLayoutAttribute
 }
 
 // MARK: - ARTCollectionViewDelegateFlowLayout
+
 @objc public protocol ARTCollectionViewDelegateFlowLayout: UICollectionViewDelegateFlowLayout {
     
     /// 集合视图的委托方法，用于获取指定段的配置模型.
@@ -129,6 +132,7 @@ private class ARTCollectionViewLayoutAttributes: UICollectionViewLayoutAttribute
 }
 
 // MARK: - ARTCollectionViewFlowLayout
+
 public class ARTCollectionViewFlowLayout: UICollectionViewLayout {
     
     /// 遵循 ARTCollectionViewDelegateFlowLayout 协议的弱引用委托对象.
@@ -305,6 +309,7 @@ extension ARTCollectionViewFlowLayout {
 }
 
 // MARK: - Private自定义方法: ARTCollectionViewDelegateFlowLayout
+
 extension ARTCollectionViewFlowLayout {
     
     /// 获取委托方法返回的指定段的配置模型.
@@ -341,6 +346,7 @@ extension ARTCollectionViewFlowLayout {
 }
 
 // MARK: - Private系统方法: UICollectionViewDelegateFlowLayout
+
 extension ARTCollectionViewFlowLayout {
     
     /// 获取委托方法返回的指定段的内边距.

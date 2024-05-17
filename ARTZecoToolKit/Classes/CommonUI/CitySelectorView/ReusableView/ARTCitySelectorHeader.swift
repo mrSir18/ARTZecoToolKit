@@ -193,7 +193,8 @@ class ARTCitySelectorHeader: UIView {
         }
     }
     
-    // MARK: - UIButton Private Method
+    // MARK: - Private Button Actions
+    
     @objc private func clickCloseButtonTapped(sender: UIButton) {
         delegate?.didTapCloseCitySelector?(self)
     }
@@ -231,6 +232,7 @@ class ARTCitySelectorHeader: UIView {
 }
 
 // MARK: - Public Method
+
 extension ARTCitySelectorHeader {
     
     /// 更新城市选择器的标题

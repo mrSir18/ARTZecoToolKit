@@ -189,7 +189,7 @@ struct ARTCitySelectorViewModel {
             hotLastSelectedIndex = clickIndexPath
             hotCityEntity = hotCities[indexPath.row]
             for (index, city) in allCities.enumerated() {
-                if hotCityEntity.pid == city.id {
+                if String(hotCityEntity.pid) == city.id {
                     // 添加城市名
                     clickIndexPath = IndexPath(item: index, section: indexPath.section)
                     originaAllCities.append([index: allCities])
@@ -305,6 +305,7 @@ struct ARTCitySelectorViewModel {
 }
 
 // MARK: - Private Method.
+
 extension ARTCitySelectorViewModel {
     
     /// 配置布局.

@@ -31,8 +31,7 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
-    // MARK: - setupViews
+
     private func setupViews() {
         
         // 创建遮罩视图
@@ -65,7 +64,8 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
         }
     }
     
-    // MARK: - UIPanGestureRecognizer Private Method
+    // MARK: - Private Methods (UIPanGestureRecognizer)
+    
     @objc private func handleTapGesture(_ gesture: UITapGestureRecognizer) {
         hideSlidePopupView()
     }
@@ -100,6 +100,7 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
     }
     
     // MARK: - ARTSlidePopupHeaderViewProtocol
+    
     open func didTapPackUpButton(_ headerView: ARTSlidePopupHeaderView) {
         hideSlidePopupView()
     }
@@ -108,7 +109,7 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
         return ""
     }
     
-    // MARK: - override Method
+    // MARK: - Override Super Method
     
     /// 展示动画
     open func showSlidePopupView() {
@@ -135,6 +136,7 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
 }
 
 // MARK: - Public Method
+
 extension ARTSlidePopupView {
     
     /// 添加视图到容器视图

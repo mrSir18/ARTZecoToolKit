@@ -9,6 +9,7 @@
 import UIKit
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+
 extension ARTCitySelectorView: UICollectionViewDelegate, UICollectionViewDataSource {
     
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -96,6 +97,7 @@ extension ARTCitySelectorView: UICollectionViewDelegate, UICollectionViewDataSou
 }
 
 // MARK: - ARTCollectionViewDelegateFlowLayout
+
 extension ARTCitySelectorView: ARTCollectionViewDelegateFlowLayout {
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, columnForSectionAt section: Int) -> Int {

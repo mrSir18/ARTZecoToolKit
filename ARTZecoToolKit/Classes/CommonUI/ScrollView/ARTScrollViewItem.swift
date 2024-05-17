@@ -8,7 +8,6 @@
 
 import UIKit
 
-// MARK: - 滚动视图管理类
 public struct ARTScrollViewItem {
     public let id: String
     public let imageUrl: String

@@ -38,7 +38,15 @@ class ARTCitySelectorCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        setupViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupViews() {
+        
         // 创建索引标签视图
         indexLabel = UILabel()
         indexLabel.textColor       = .art_color(withHEXValue: 0x808080)
@@ -76,9 +84,5 @@ class ARTCitySelectorCell: UICollectionViewCell {
             tickImageView.image = UIImage(contentsOfFile: file)
             ARTCityStyleConfiguration.default().tickImage(tickImageView.image)
         }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

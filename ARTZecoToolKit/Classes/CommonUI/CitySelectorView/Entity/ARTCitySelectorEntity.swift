@@ -7,13 +7,13 @@
 //
 
 import UIKit
-import HandyJSON
+import SmartCodable
 
-public class ARTCitySelectorEntity: HandyJSON {
+public class ARTCitySelectorEntity: SmartCodable {
     
     var id: String = ""
-    var pid: String = ""
-    var deep: String = ""
+    var pid: Int = 0
+    var deep: Int = 0
     var name: String = ""
     var pinyin: String = ""
     var pinyin_prefix: String = ""
@@ -25,13 +25,7 @@ public class ARTCitySelectorEntity: HandyJSON {
         
     }
 
-    public func mapping(mapper: HelpingMapper) {
-        /// 重新映射大写拼音前缀
-        mapper <<<
-            self.pinyin_prefix <-- TransformOf<String, String>(fromJSON: { (value: String?) -> String? in
-                return value?.uppercased()
-            }, toJSON: { (value: String?) -> String? in
-                return value
-            })
+    public func didFinishMapping() {
+        pinyin_prefix = pinyin_prefix.uppercased()
     }
 }
