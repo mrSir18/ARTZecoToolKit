@@ -21,6 +21,11 @@ extension NSMutableAttributedString {
                                                  _ symbolFont: UIFont?,
                                                  _ integerFont: UIFont?,
                                                  _ decimalFont: UIFont?) -> NSAttributedString {
+        guard !text.isEmpty else {
+            print("Text is empty.")
+            return NSAttributedString(string: "")
+        }
+        
         let pattern = "¥([0-9]+)(\\.[0-9]{2})?"
         do {
             let regex = try NSRegularExpression(pattern: pattern, options: [])
@@ -39,6 +44,7 @@ extension NSMutableAttributedString {
             if let integerFont = integerFont {
                 attrib.addAttribute(.font, value: integerFont, range: integerRange)
             }
+            // 设置小数部分字体，如果存在
             if let decimalFont = decimalFont, decimalRange.location != NSNotFound {
                 attrib.addAttribute(.font, value: decimalFont, range: decimalRange)
             }
@@ -49,4 +55,5 @@ extension NSMutableAttributedString {
         }
     }
 }
+
 
