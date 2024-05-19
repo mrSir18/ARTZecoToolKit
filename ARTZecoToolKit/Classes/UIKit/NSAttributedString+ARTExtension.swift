@@ -18,9 +18,9 @@ extension NSAttributedString {
     ///  - decimalFont: 价格小数部分字体.
     ///  - Returns: 带有价格符号的富文本字符串.
     public func art_createAttributedPriceString(_ text: String,
-                                                _ symbolFont: UIFont,
-                                                _ middleFont: UIFont,
-                                                _ decimalFont: UIFont) -> NSAttributedString {
+                                                _ symbolFont: UIFont!,
+                                                _ middleFont: UIFont!,
+                                                _ decimalFont: UIFont!) -> NSAttributedString {
         let pattern = "¥([0-9]+)(\\.[0-9]{2})?"
         do {
             let regex = try NSRegularExpression(pattern: pattern, options: [])
@@ -34,12 +34,12 @@ extension NSAttributedString {
             
             let attrib = NSMutableAttributedString(string: text)
             
-            attrib.addAttribute(.font, value: symbolRange, range: symbolRange)
-            attrib.addAttribute(.font, value: middleFont, range: middleRange)
+            attrib.addAttribute(.font, value: symbolFont!, range: symbolRange)
+            attrib.addAttribute(.font, value: middleFont!, range: middleRange)
             
             // 如果存在小数部分，应用对应的字体样式
             if decimalRange.location != NSNotFound {
-                attrib.addAttribute(.font, value: decimalFont, range: decimalRange)
+                attrib.addAttribute(.font, value: decimalFont!, range: decimalRange)
             }
             return attrib
         } catch {
