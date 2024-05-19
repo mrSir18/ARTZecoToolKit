@@ -21,10 +21,10 @@ extension NSMutableAttributedString {
                                                  _ symbolFont: UIFont?,
                                                  _ integerFont: UIFont?,
                                                  _ decimalFont: UIFont?) -> NSAttributedString {
-        guard !text.isEmpty else {
-            print("Text is empty.")
-            return NSAttributedString(string: "")
-        }
+        guard text.count > 0 else {
+             print("Text is empty.")
+             return NSAttributedString(string: "")
+         }
         
         let pattern = "¥([0-9]+)(\\.[0-9]{2})?"
         do {
