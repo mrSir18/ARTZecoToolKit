@@ -16,10 +16,11 @@ extension NSAttributedString {
     ///  - symbolFont:  价格符号字体.
     ///  - middleFont:  价格整数部分字体.
     ///  - decimalFont: 价格小数部分字体.
-    func createAttributedPriceString(_ text: String,
-                                     _ symbolFont: UIFont,
-                                     _ middleFont: UIFont,
-                                     _ decimalFont: UIFont) -> NSAttributedString {
+    ///  - Returns: 带有价格符号的富文本字符串.
+    func art_createAttributedPriceString(_ text: String,
+                                         _ symbolFont: UIFont,
+                                         _ middleFont: UIFont,
+                                         _ decimalFont: UIFont) -> NSAttributedString {
         let pattern = "¥([0-9]+)(\\.[0-9]{2})?"
         do {
             let regex = try NSRegularExpression(pattern: pattern, options: [])
@@ -30,7 +31,7 @@ extension NSAttributedString {
             let symbolRange  = match.range(at: 0)
             let middleRange  = match.range(at: 1)
             let decimalRange = match.range(at: 2)
-
+            
             let attrib = NSMutableAttributedString(string: text)
             
             attrib.addAttribute(.font, value: symbolRange, range: symbolRange)
