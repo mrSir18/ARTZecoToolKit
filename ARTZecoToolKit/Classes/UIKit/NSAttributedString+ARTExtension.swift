@@ -17,10 +17,10 @@ extension NSAttributedString {
     ///  - middleFont:  价格整数部分字体.
     ///  - decimalFont: 价格小数部分字体.
     ///  - Returns: 带有价格符号的富文本字符串.
-    func art_createAttributedPriceString(_ text: String,
-                                         _ symbolFont: UIFont,
-                                         _ middleFont: UIFont,
-                                         _ decimalFont: UIFont) -> NSAttributedString {
+    public func art_createAttributedPriceString(_ text: String,
+                                                _ symbolFont: UIFont,
+                                                _ middleFont: UIFont,
+                                                _ decimalFont: UIFont) -> NSAttributedString {
         let pattern = "¥([0-9]+)(\\.[0-9]{2})?"
         do {
             let regex = try NSRegularExpression(pattern: pattern, options: [])
