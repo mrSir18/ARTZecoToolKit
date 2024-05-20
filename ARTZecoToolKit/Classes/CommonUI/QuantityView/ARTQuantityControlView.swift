@@ -30,7 +30,6 @@ public class ARTQuantityControlView: UIView {
             quantityTextField.text = "\(quantity)"
             decreaseButton.isEnabled = quantity > configuration.minimumQuantity
             increaseButton.isEnabled = quantity < configuration.maximumQuantity
-            quantityChanged?(quantity)
         }
     }
     
@@ -145,6 +144,7 @@ public class ARTQuantityControlView: UIView {
     @objc private func decreaseQuantity() {
         if quantity > configuration.minimumQuantity {
             quantity -= 1
+            quantityChanged?(quantity)
         }
     }
 
@@ -152,6 +152,7 @@ public class ARTQuantityControlView: UIView {
         if quantity < configuration.maximumQuantity {
             quantity += 1
             quantityTextField.text = "\(quantity)"
+            quantityChanged?(quantity)
         }
     }
 }
@@ -225,6 +226,7 @@ extension ARTQuantityControlView: UITextFieldDelegate {
             // 更新数量值
             quantity = newValue
         }
+        quantityChanged?(quantity)
     }
 }
 
