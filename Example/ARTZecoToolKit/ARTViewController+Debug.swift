@@ -12,12 +12,12 @@ import ARTZecoToolKit
 class ARTViewController_Debug: ARTBaseViewController {
 
     /// 控件名
-    let dataSources: [String] = ["自定义表单", "自定义轮播图", "自定义城市选择器", "自定义提示框(Alert)(ActionSheet))", "自定义(SlideBar)", "自定义数量选择器", "自定义弹窗(SlidePopup)"]
+    let dataSources: [String] = ["自定义表单", "自定义轮播图", "自定义城市选择器", "自定义提示框(Alert)(ActionSheet))", "自定义(SlideBar)", "自定义数量选择器", "自定义弹窗(SlidePopup)", "自定义视频播放器(VideoPlayer)"]
     
     /// 类名数组
     let classNames: [String] = ["ARTViewController_CollectionView", "ARTViewController_ScrollView", "ARTViewController_CitySelector",
                                 "ARTViewController_Alert",          "ARTViewController_SlideBar",   "ARTViewController_Quantity",
-                                "ARTViewController_SlidePopup"]
+                                "ARTViewController_SlidePopup", "ARTViewController_VideoPlayer"]
     
     override func viewDidLoad() {
         super.viewDidLoad()

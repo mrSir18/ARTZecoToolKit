@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0258B7AB2BFA845800AEB349 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0258B7A82BFA845800AEB349 /* 3.png */; };
+		0258B7AC2BFA845800AEB349 /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 0258B7A92BFA845800AEB349 /* 4.png */; };
+		0258B7AD2BFA845800AEB349 /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 0258B7AA2BFA845800AEB349 /* 5.png */; };
+		0258B7AF2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0258B7AE2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift */; };
+		0258B7B12BFA862B00AEB349 /* video.MOV in Resources */ = {isa = PBXBuildFile; fileRef = 0258B7B02BFA862B00AEB349 /* video.MOV */; };
 		02F8AE2B2BF66B3E00A111F6 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F8AE262BF66B3D00A111F6 /* 0.png */; };
 		02F8AE2C2BF66B3E00A111F6 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F8AE272BF66B3D00A111F6 /* 2.png */; };
 		02F8AE2D2BF66B3E00A111F6 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F8AE282BF66B3D00A111F6 /* 1.png */; };
@@ -42,6 +47,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0258B7A82BFA845800AEB349 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
+		0258B7A92BFA845800AEB349 /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
+		0258B7AA2BFA845800AEB349 /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
+		0258B7AE2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_VideoPlayer.swift; sourceTree = "<group>"; };
+		0258B7B02BFA862B00AEB349 /* video.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = video.MOV; sourceTree = "<group>"; };
 		02F8AE262BF66B3D00A111F6 /* 0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0.png; sourceTree = "<group>"; };
 		02F8AE272BF66B3D00A111F6 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		02F8AE282BF66B3D00A111F6 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
@@ -149,6 +159,7 @@
 				02F8AE4B2BF67E7E00A111F6 /* ARTViewController_SlideBar.swift */,
 				02F8AE492BF67E7E00A111F6 /* ARTViewController_Quantity.swift */,
 				02F8AE452BF67E7E00A111F6 /* ARTViewController_SlidePopup.swift */,
+				0258B7AE2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift */,
 				02F8AE562BF67E8500A111F6 /* BaseBusiness */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
@@ -162,6 +173,10 @@
 				02F8AE262BF66B3D00A111F6 /* 0.png */,
 				02F8AE282BF66B3D00A111F6 /* 1.png */,
 				02F8AE272BF66B3D00A111F6 /* 2.png */,
+				0258B7A82BFA845800AEB349 /* 3.png */,
+				0258B7A92BFA845800AEB349 /* 4.png */,
+				0258B7AA2BFA845800AEB349 /* 5.png */,
+				0258B7B02BFA862B00AEB349 /* video.MOV */,
 				02F8AE292BF66B3E00A111F6 /* area_format_user.json */,
 				02F8AE2A2BF66B3E00A111F6 /* hot_area_format_user.json */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
@@ -262,11 +277,14 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 875Z28YH6M;
 						LastSwiftMigration = 0900;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 875Z28YH6M;
 						LastSwiftMigration = 0900;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 				};
@@ -296,9 +314,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0258B7AC2BFA845800AEB349 /* 4.png in Resources */,
+				0258B7AD2BFA845800AEB349 /* 5.png in Resources */,
 				02F8AE2B2BF66B3E00A111F6 /* 0.png in Resources */,
 				02F8AE2F2BF66B3E00A111F6 /* hot_area_format_user.json in Resources */,
 				02F8AE2C2BF66B3E00A111F6 /* 2.png in Resources */,
+				0258B7AB2BFA845800AEB349 /* 3.png in Resources */,
+				0258B7B12BFA862B00AEB349 /* video.MOV in Resources */,
 				02F8AE2D2BF66B3E00A111F6 /* 1.png in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				02F8AE2E2BF66B3E00A111F6 /* area_format_user.json in Resources */,
@@ -396,6 +418,7 @@
 				02F8AE552BF67E7E00A111F6 /* ARTViewController_SlideBar.swift in Sources */,
 				02F8AE502BF67E7E00A111F6 /* ARTViewController+ScrollView.swift in Sources */,
 				02F8AE4C2BF67E7E00A111F6 /* ARTViewController_CitySelector.swift in Sources */,
+				0258B7AF2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift in Sources */,
 				02F8AE4F2BF67E7E00A111F6 /* ARTViewController_SlidePopup.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				02F8AE4D2BF67E7E00A111F6 /* ARTBaseTabBarController.swift in Sources */,
@@ -542,11 +565,12 @@
 			baseConfigurationReference = 66BAEF9DDFD7CD00A18E3C35 /* Pods-ARTZecoToolKit_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 875Z28YH6M;
 				INFOPLIST_FILE = ARTZecoToolKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wxfz.zeco;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -558,11 +582,12 @@
 			baseConfigurationReference = CC0B092E2DE1D2B0904D09F1 /* Pods-ARTZecoToolKit_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 875Z28YH6M;
 				INFOPLIST_FILE = ARTZecoToolKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wxfz.zeco;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -573,6 +598,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CF75856A2D9F7E855B00302C /* Pods-ARTZecoToolKit_Tests.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 875Z28YH6M;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -583,8 +611,9 @@
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wxfz.zeco;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ARTZecoToolKit_Example.app/ARTZecoToolKit_Example";
@@ -595,14 +624,18 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8AF1FBC305A60DEB7A8B433F /* Pods-ARTZecoToolKit_Tests.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 875Z28YH6M;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wxfz.zeco;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ARTZecoToolKit_Example.app/ARTZecoToolKit_Example";
