@@ -6,7 +6,7 @@ PODS:
     - AlamofireImage
     - SmartCodable
     - SnapKit
-  - SmartCodable (3.4.3)
+  - SmartCodable (3.4.4)
   - SnapKit (5.7.1)
 
 DEPENDENCIES:
@@ -27,7 +27,7 @@ SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   AlamofireImage: 843953fa97bee5f561cf05d83abd759e590b068d
   ARTZecoToolKit: 53ba11d962092db92101c9e61b5f23962fbf7a54
-  SmartCodable: a8dce63d9471246ad18cb900cef7a4ede0f7f1fb
+  SmartCodable: 285a9220f1e719fa8e22ff2edbc8e3291f0406e7
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
 
 PODFILE CHECKSUM: e42b632d9da101dc1ff28202d40e5a5c26042761
