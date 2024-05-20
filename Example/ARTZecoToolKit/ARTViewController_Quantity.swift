@@ -20,6 +20,7 @@ class ARTViewController_Quantity: ARTBaseViewController {
         
         // 创建数量控制视图
         let quantityControlView = ARTQuantityControlView()
+        quantityControlView.quantity = 3
         quantityControlView.quantityChanged = { newQuantity in
             print("Quantity changed to \(newQuantity)")
             // 更新其他视图或模型
