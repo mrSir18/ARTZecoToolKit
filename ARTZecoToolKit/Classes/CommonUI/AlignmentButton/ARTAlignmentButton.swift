@@ -98,6 +98,11 @@ public class ARTAlignmentButton: UIButton {
         var titleSize = titleLabel.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
         titleSize.height = titleSize.width > 0 ? titleLabel.font.pointSize : 0.0
         
+        // 限制titleSize的宽度不超过按钮的宽度
+        if titleSize.width > bounds.width - contentInset * 2 {
+            titleSize.width = bounds.width - contentInset * 2
+        }
+        
         if layoutType == .freeform {
             // 自有布局 - 图片与标题，坐标默认xy=0为起点, 以左上角为原点
             layoutFreeform(titleSize: titleSize, imageRect: &imageRect, titleRect: &titleRect)
