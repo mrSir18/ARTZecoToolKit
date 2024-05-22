@@ -67,8 +67,8 @@ public class ARTAlignmentButton: UIButton {
     // 标题对齐方式，默认为右对齐
     public var titleAlignment: TitleAlignment = .right
     
-    // 图片尺寸，默认为18.0*18.0
-    public var imageSize: CGSize = CGSize(width: 18.0, height: 18.0)
+    // 图片尺寸，默认为zero
+    public var imageSize: CGSize = .zero
     
     // 图片与标题之间的间距，默认为0.0
     public var imageTitleSpacing: CGFloat = 0.0

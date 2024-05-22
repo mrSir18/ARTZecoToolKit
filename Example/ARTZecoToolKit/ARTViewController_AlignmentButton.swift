@@ -26,10 +26,10 @@ class ARTViewController_AlignmentButton: ARTBaseViewController {
         let firstButton = ARTAlignmentButton()
         firstButton.backgroundColor     = .art_randomColor()
         firstButton.titleLabel?.font    = .systemFont(ofSize: 16.0)
-        firstButton.imageTitleSpacing   = 10.0    //图片与文本间距
-        firstButton.imageSize           = CGSize(width: 100.0, height: 100.0) // 图片大小
+//        firstButton.imageTitleSpacing   = 10.0    //图片与文本间距
+//        firstButton.imageSize           = CGSize(width: 100.0, height: 100.0) // 图片大小
         firstButton.setTitle("默认", for: .normal)
-        firstButton.setImage(UIImage(named: "2"), for: .normal)
+//        firstButton.setImage(UIImage(named: "2"), for: .normal)
         firstButton.setTitleColor(.art_randomColor(), for: .normal)
         firstButton.addTarget(self, action: #selector(clickButtonAction), for: .touchUpInside)
         view.addSubview(firstButton)
