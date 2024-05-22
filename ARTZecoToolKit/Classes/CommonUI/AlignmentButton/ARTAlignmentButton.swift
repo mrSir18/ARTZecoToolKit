@@ -90,6 +90,9 @@ public class ARTAlignmentButton: UIButton {
             return
         }
         
+        // 禁用高亮时调整图像
+        adjustsImageWhenHighlighted = false
+        
         // 图片与标题的矩形框
         var imageRect: CGRect = .zero
         var titleRect: CGRect = .zero
