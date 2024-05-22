@@ -121,7 +121,7 @@ public class ARTScrollView: UIView {
                 }
             }
 
-            let button = UIButton(type: .custom)
+            let button = ARTAlignmentButton(type: .custom)
             button.tag = index
             button.addTarget(self, action: #selector(clickImageTapHandler), for: .touchUpInside)
             pageView.addSubview(button)

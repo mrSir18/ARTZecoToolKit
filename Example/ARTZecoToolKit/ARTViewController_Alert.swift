@@ -12,8 +12,8 @@ import ARTZecoToolKit
 class ARTViewController_Alert: ARTBaseViewController {
     
     /// Alert按钮
-    private lazy var alertButton: UIButton = {
-        let button = UIButton(type: .custom)
+    private lazy var alertButton: ARTAlignmentButton = {
+        let button = ARTAlignmentButton(type: .custom)
         button.titleLabel?.font = .art_regular(16.0)
         button.backgroundColor  = .art_randomColor()
         button.setTitle("这是Alert", for: .normal)
@@ -23,8 +23,8 @@ class ARTViewController_Alert: ARTBaseViewController {
     }()
     
     /// ActionSheet按钮
-    private lazy var actionSheetButton: UIButton = {
-        let button = UIButton(type: .custom)
+    private lazy var actionSheetButton: ARTAlignmentButton = {
+        let button = ARTAlignmentButton(type: .custom)
         button.titleLabel?.font = .art_regular(16.0)
         button.backgroundColor  = .art_randomColor()
         button.setTitle("这是ActionSheet", for: .normal)

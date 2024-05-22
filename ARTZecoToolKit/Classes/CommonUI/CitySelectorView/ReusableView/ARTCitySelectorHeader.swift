@@ -71,17 +71,12 @@ class ARTCitySelectorHeader: UIView {
         }
 
         let file = art_resourcePath(file: "city_selector_close.png", object: self)
-        let closeImageView = UIImageView()
-        closeImageView.image        = UIImage(contentsOfFile: file)
-        closeImageView.contentMode  = .scaleAspectFit
-        headerContainerView.addSubview(closeImageView)
-        closeImageView.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 28.0, height: 28.0))
-            make.centerY.equalToSuperview()
-            make.right.equalTo(-18.0)
-        }
- 
-        let closeButton = UIButton()
+        let closeButton = ARTAlignmentButton()
+        closeButton.imageAlignment       = .right
+        closeButton.titleAlignment       = .right
+        closeButton.contentInset         = 18.0
+        closeButton.imageSize            = CGSize(width: 28.0, height: 28.0)
+        closeButton.setImage(UIImage(contentsOfFile: file), for: .normal)
         closeButton.addTarget(self, action: #selector(clickCloseButtonTapped(sender:)), for: .touchUpInside)
         headerContainerView.addSubview(closeButton)
         closeButton.snp.makeConstraints { make in
@@ -113,7 +108,7 @@ class ARTCitySelectorHeader: UIView {
 //            make.centerY.equalTo(locationContainerView)
 //        }
 //
-//        let locationButton = UIButton()
+//        let locationButton = ARTAlignmentButton()
 //        locationButton.titleLabel?.font     = .art_regular(14.0)
 //        locationButton.backgroundColor      = ARTCityStyleConfiguration.default().themeColor
 //        locationButton.layer.cornerRadius   = 4.0
@@ -242,11 +237,11 @@ extension ARTCitySelectorHeader {
         let viewsToRemove = titleScrollView.subviews.filter { $0 is UIButton || $0 is UILabel }
         viewsToRemove.forEach { $0.removeFromSuperview() }
         
-        var lastButton: UIButton?
+        var lastButton: ARTAlignmentButton?
         let selectedColor = ARTCityStyleConfiguration.default().themeColor
         let normalColor = UIColor.art_color(withHEXValue: 0x18171f)
         cityNames.enumerated().forEach { (index, title) in
-            let titleButton = UIButton()
+            let titleButton = ARTAlignmentButton()
             titleButton.tag                         = index + 1000
             titleButton.titleLabel?.font            = .art_regular(14.0)
             titleButton.contentHorizontalAlignment  = .left

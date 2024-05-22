@@ -13,8 +13,8 @@ import AVFoundation
 class ARTViewController_VideoPlayer: ARTBaseViewController {
     
     /// 按钮
-    private lazy var playerButton: UIButton = {
-        let button = UIButton(type: .custom)
+    private lazy var playerButton: ARTAlignmentButton = {
+        let button = ARTAlignmentButton(type: .custom)
         button.titleLabel?.font = .art_regular(16.0)
         button.backgroundColor  = .art_randomColor()
         button.setTitle("播放视频", for: .normal)

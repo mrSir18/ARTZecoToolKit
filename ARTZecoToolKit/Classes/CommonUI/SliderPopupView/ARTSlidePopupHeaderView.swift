@@ -53,19 +53,14 @@ open class ARTSlidePopupHeaderView: UIView {
             make.right.equalTo(-13.0)
         }
         
-        // 创建箭头图标
-        let fileName = art_resourcePath(file: "slider_header_arrow_down.png", object: self)
-        let arrowImageView = UIImageView()
-        arrowImageView.image = UIImage(contentsOfFile: fileName)
-        addSubview(arrowImageView)
-        arrowImageView.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 30.0, height: 30.0))
-            make.right.equalTo(-13.0)
-            make.centerY.equalToSuperview()
-        }
-        
         // 创建收起按钮
-        let packUpButton = UIButton(type: .custom)
+        let fileName = art_resourcePath(file: "slider_header_arrow_down.png", object: self)
+        let packUpButton = ARTAlignmentButton(type: .custom)
+        packUpButton.imageAlignment       = .right
+        packUpButton.titleAlignment       = .right
+        packUpButton.contentInset         = 12.0
+        packUpButton.imageSize            = CGSize(width: 30.0, height: 30.0)
+        packUpButton.setImage(UIImage(contentsOfFile: fileName), for: .normal)
         packUpButton.addTarget(self, action: #selector(clickPackUpButtonTapped(sender:)), for: .touchUpInside)
         addSubview(packUpButton)
         packUpButton.snp.makeConstraints { make in

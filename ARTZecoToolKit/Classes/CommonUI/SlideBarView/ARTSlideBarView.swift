@@ -44,7 +44,7 @@ public class ARTSliderBarView: UIView {
     
     private func setupViews() {
         let configuration = ARTSliderBarStyleConfiguration.default()
-        var lastButton: UIButton?
+        var lastButton: ARTAlignmentButton?
         for (index, title) in configuration.titles.enumerated() {
             let textSize = (title as NSString).size(withAttributes: [.font: configuration.titleFont])
             let isSelected = index + 1000 == previousIndex
@@ -70,7 +70,7 @@ public class ARTSliderBarView: UIView {
                 make.height.equalTo(textSize.height)
             }
             
-            let button = UIButton(type: .system)
+            let button = ARTAlignmentButton(type: .system)
             button.tag = index
             button.addTarget(self, action: #selector(clickSliderBarButtonTapped(sender:)), for: .touchUpInside)
             addSubview(button)

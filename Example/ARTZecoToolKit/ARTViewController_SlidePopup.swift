@@ -12,8 +12,8 @@ import ARTZecoToolKit
 class ARTViewController_SlidePopup: ARTBaseViewController {
     
     /// 按钮
-    private lazy var slidePopupButton: UIButton = {
-        let button = UIButton(type: .custom)
+    private lazy var slidePopupButton: ARTAlignmentButton = {
+        let button = ARTAlignmentButton(type: .custom)
         button.titleLabel?.font = .art_regular(16.0)
         button.backgroundColor  = .art_randomColor()
         button.setTitle("这是滑动弹窗", for: .normal)
@@ -96,7 +96,7 @@ class ARTChildSlidePopupView: ARTSlidePopupView {
     
     private func setupViews() {
 
-        let button = UIButton(type: .system)
+        let button = ARTAlignmentButton(type: .system)
         button.backgroundColor = .art_randomColor()
         button.setTitle("Perform Action", for: .normal)
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)

@@ -14,13 +14,12 @@ class ARTBaseViewController: UIViewController {
     ///导航容器视图
     var baseContainerView: UIView!
     
-    ///
-    private var backContainerView: UIView!
+    private var backButton: ARTAlignmentButton!
     
     /// 返回按钮是否隐藏
     var backButtonHidden: Bool = false {
         didSet {
-            backContainerView.isHidden = backButtonHidden
+            backButton.isHidden = backButtonHidden
         }
     }
     
@@ -36,52 +35,49 @@ class ARTBaseViewController: UIViewController {
             make.height.equalTo(art_navigationFullHeight())
         }
         
-        let navigationBarView = UIView()
-        baseContainerView.addSubview(navigationBarView)
-        navigationBarView.snp.makeConstraints { make in
+        // 容器视图
+        let containerView = UIView()
+        view.addSubview(containerView)
+        containerView.snp.makeConstraints { make in
             make.top.equalTo(art_statusBarHeight())
-            make.left.bottom.right.equalToSuperview()
+            make.left.right.equalToSuperview()
+            make.height.equalTo(art_navigationBarHeight())
         }
         
-        backContainerView = UIView()
-        navigationBarView.addSubview(backContainerView)
-        backContainerView.snp.makeConstraints { make in
+        // 创建返回按钮
+        backButton = ARTAlignmentButton(type: .custom)
+        backButton.imageAlignment       = .left
+        backButton.titleAlignment       = .left
+        backButton.contentInset         = 12.0
+        backButton.imageSize            = CGSize(width: 20.0, height: 20.0)
+        backButton.setImage(UIImage(named: "navigation_back_black"), for: .normal)
+        backButton.addTarget(self, action: #selector(clickBackButtonTapped), for: .touchUpInside)
+        containerView.addSubview(backButton)
+        backButton.snp.makeConstraints { make in
             make.left.top.bottom.equalToSuperview()
-            make.width.equalTo(60.0)
+            make.width.equalTo(70.0)
         }
         
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "navigation_back_black")
-        backContainerView.addSubview(imageView)
-        imageView.snp.makeConstraints { make in
-            make.left.equalTo(12.0)
-            make.centerY.equalTo(navigationBarView)
-            make.size.equalTo(CGSize(width: 20.0, height: 20.0))
-        }
-        
-        let button = UIButton(type: .custom)
-        button.addTarget(self, action: #selector(clickBackButtonTapped), for: .touchUpInside)
-        backContainerView.addSubview(button)
-        button.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
+        // 创建标题标签
         let titleLabel = UILabel()
-        titleLabel.text             = self.title ?? "成长智库"
+        titleLabel.text             = "成长智库"
         titleLabel.textAlignment    = .center
         titleLabel.font             = .art_semibold(17.0)
         titleLabel.textColor        = .black
-        navigationBarView.addSubview(titleLabel)
+        containerView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.left.equalTo(backButton.snp.right).offset(12.0)
+            make.top.bottom.equalTo(0.0)
+            make.right.equalTo(-art_navigationBarHeight())
         }
         
+        // 创建分割线
         let separateLine = UIView()
         separateLine.backgroundColor = .gray
-        navigationBarView.addSubview(separateLine)
+        containerView.addSubview(separateLine)
         separateLine.snp.makeConstraints { make in
-            make.left.right.equalTo(0.0)
-            make.bottom.equalTo(navigationBarView.snp.bottom)
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(containerView.snp.bottom)
             make.height.equalTo(0.5)
         }
     }

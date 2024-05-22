@@ -21,8 +21,8 @@ class ARTViewController_CitySelector: ARTBaseViewController {
     var cityName: String = ""
     
     /// 城市选择器按钮
-    private lazy var citySelectorButton: UIButton = {
-        let button = UIButton(type: .custom)
+    private lazy var citySelectorButton: ARTAlignmentButton = {
+        let button = ARTAlignmentButton(type: .custom)
         button.titleLabel?.font = .art_regular(16.0)
         button.backgroundColor  = .art_randomColor()
         button.setTitle("选择城市", for: .normal)
