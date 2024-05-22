@@ -211,8 +211,8 @@ public class ARTAlignmentButton: UIButton {
             titleRect = CGRect(x: bounds.width - imageSize.width - titleSize.width - imageTitleSpacing, y: (bounds.height - titleSize.height) / 2, width: titleSize.width, height: titleSize.height)
             imageRect = CGRect(x: bounds.width - imageSize.width, y: (bounds.height - imageSize.height) / 2, width: imageSize.width, height: imageSize.height)
         case .right:
-            imageRect = CGRect(x: bounds.width - imageSize.width, y: (bounds.height - imageSize.height) / 2, width: imageSize.width, height: imageSize.height)
-            titleRect = CGRect(x: left - imageTitleSpacing - titleSize.width, y: (bounds.height - titleSize.height) / 2, width: titleSize.width, height: titleSize.height)
+            titleRect = CGRect(x: bounds.width - titleSize.width, y: (bounds.height - titleSize.height) / 2, width: titleSize.width, height: titleSize.height)
+            imageRect = CGRect(x: bounds.width - titleSize.width - imageTitleSpacing - imageSize.width, y: (bounds.height - imageSize.height) / 2, width: imageSize.width, height: imageSize.height)
         }
     }
     
