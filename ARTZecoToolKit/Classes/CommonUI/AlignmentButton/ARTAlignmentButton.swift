@@ -121,6 +121,8 @@ public class ARTAlignmentButton: UIButton {
                 break
             }
         }
+        // 如果内容超出按钮边界，进行裁剪
+        clipsToBounds = true
         
         // 设置图像和标题的框架
         imageView.frame = imageRect.integral
