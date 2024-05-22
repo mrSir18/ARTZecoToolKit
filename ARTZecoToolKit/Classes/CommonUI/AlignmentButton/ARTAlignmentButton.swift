@@ -70,8 +70,11 @@ public class ARTAlignmentButton: UIButton {
     // 图片尺寸，默认为18.0*18.0
     public var imageSize: CGSize = CGSize(width: 18.0, height: 18.0)
     
-    // 图片和标题之间的间距，默认为0.0
+    // 图片与标题之间的间距，默认为0.0
     public var imageTitleSpacing: CGFloat = 0.0
+    
+    // 内容（图片与标题）距离上、下、左、右、内边距（图片与标题），默认为0.0
+    public var contentInset: CGFloat = 0.0
     
     // 图片边距，默认为UIEdgeInsets.zero
     public var imageEdgeInset: UIEdgeInsets = .zero
@@ -87,13 +90,13 @@ public class ARTAlignmentButton: UIButton {
             return
         }
         
-        // 图片和标题的矩形框
+        // 图片与标题的矩形框
         var imageRect: CGRect = .zero
         var titleRect: CGRect = .zero
         
         // 计算标题的大小
         var titleSize = titleLabel.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
-        titleSize.height = titleLabel.font.pointSize
+        titleSize.height = titleSize.width > 0 ? titleLabel.font.pointSize : 0.0
         
         if layoutType == .freeform {
             // 自有布局 - 图片与标题，坐标默认xy=0为起点, 以左上角为原点
@@ -126,93 +129,212 @@ public class ARTAlignmentButton: UIButton {
     
     // 固定布局 - 居中
     private func layoutCenterX(titleSize: CGSize, imageRect: inout CGRect, titleRect: inout CGRect) {
-        let left = (bounds.width - imageSize.width - titleSize.width - imageTitleSpacing) / 2
-        imageRect = CGRect(x: left, y: (bounds.height - imageSize.height) / 2, width: imageSize.width, height: imageSize.height)
-        titleRect = CGRect(x: imageRect.maxX + imageTitleSpacing, y: (bounds.height - titleSize.height) / 2, width: titleSize.width, height: titleSize.height)
+        imageRect = CGRect(x: (bounds.width - imageSize.width - imageTitleSpacing - titleSize.width) / 2, 
+                           y: (bounds.height - imageSize.height) / 2,
+                           width: imageSize.width, 
+                           height: imageSize.height)
+        
+        titleRect = CGRect(x: imageRect.maxX + imageTitleSpacing,
+                           y: (bounds.height - titleSize.height) / 2,
+                           width: titleSize.width,
+                           height: titleSize.height)
     }
     
     // 固定布局 - 垂直
     private func layoutCenterY(titleSize: CGSize, imageRect: inout CGRect, titleRect: inout CGRect) {
-        let top = (bounds.height - imageSize.height - titleSize.height - imageTitleSpacing) / 2
-        imageRect = CGRect(x: (bounds.width - imageSize.width) / 2, y: top, width: imageSize.width, height: imageSize.height)
-        titleRect = CGRect(x: (bounds.width - titleSize.width) / 2, y: imageRect.maxY + imageTitleSpacing, width: titleSize.width, height: titleSize.height)
+        imageRect = CGRect(x: (bounds.width - imageSize.width) / 2, 
+                           y: (bounds.height - imageSize.height - imageTitleSpacing - titleSize.height) / 2,
+                           width: imageSize.width,
+                           height: imageSize.height)
+        
+        titleRect = CGRect(x: (bounds.width - titleSize.width) / 2, 
+                           y: imageRect.maxY + imageTitleSpacing, 
+                           width: titleSize.width,
+                           height: titleSize.height)
     }
     
     // 固定布局 - 图片在上方
     private func layoutTop(titleSize: CGSize, imageRect: inout CGRect, titleRect: inout CGRect) {
-        let commonX = (bounds.width - imageSize.width - titleSize.width - imageTitleSpacing) / 2
         switch titleAlignment {
         case .top:
-            titleRect = CGRect(x: (bounds.width - titleSize.width) / 2, y: 0.0, width: titleSize.width, height: titleSize.height)
-            imageRect = CGRect(x: (bounds.width - imageSize.width) / 2, y: titleRect.maxY + imageTitleSpacing, width: imageSize.width, height: imageSize.height)
+            titleRect = CGRect(x: (bounds.width - titleSize.width) / 2, 
+                               y: contentInset,
+                               width: titleSize.width,
+                               height: titleSize.height)
+            
+            imageRect = CGRect(x: (bounds.width - imageSize.width) / 2, 
+                               y: titleRect.maxY + imageTitleSpacing,
+                               width: imageSize.width,
+                               height: imageSize.height)
         case .bottom:
-            imageRect = CGRect(x: (bounds.width - imageSize.width) / 2, y: 0.0, width: imageSize.width, height: imageSize.height)
-            titleRect = CGRect(x: (bounds.width - titleSize.width) / 2, y: imageRect.maxY + imageTitleSpacing, width: titleSize.width, height: titleSize.height)
+            imageRect = CGRect(x: (bounds.width - imageSize.width) / 2, 
+                               y: 0.0,
+                               width: imageSize.width,
+                               height: imageSize.height)
+            
+            titleRect = CGRect(x: (bounds.width - titleSize.width) / 2, 
+                               y: imageRect.maxY + imageTitleSpacing,
+                               width: titleSize.width,
+                               height: titleSize.height)
         case .left:
-            titleRect = CGRect(x: commonX, y: (imageSize.height - titleSize.height) / 2, width: titleSize.width, height: titleSize.height)
-            imageRect = CGRect(x: titleRect.maxX + imageTitleSpacing, y: 0.0, width: imageSize.width, height: imageSize.height)
+            titleRect = CGRect(x: (bounds.width - titleSize.width - imageTitleSpacing - imageSize.width) / 2,
+                               y: (imageSize.height - titleSize.height) / 2,
+                               width: titleSize.width,
+                               height: titleSize.height)
+            
+            imageRect = CGRect(x: titleRect.maxX + imageTitleSpacing, 
+                               y: 0.0,
+                               width: imageSize.width, 
+                               height: imageSize.height)
         case .right:
-            imageRect = CGRect(x: commonX, y: 0.0, width: imageSize.width, height: imageSize.height)
-            titleRect = CGRect(x: imageRect.maxX + imageTitleSpacing, y: (imageSize.height - titleSize.height) / 2, width: titleSize.width, height: titleSize.height)
+            imageRect = CGRect(x: (bounds.width - imageSize.width - imageTitleSpacing - titleSize.width) / 2,
+                               y: 0.0,
+                               width: imageSize.width,
+                               height: imageSize.height)
+            
+            titleRect = CGRect(x: imageRect.maxX + imageTitleSpacing,
+                               y: (imageSize.height - titleSize.height) / 2, 
+                               width: titleSize.width,
+                               height: titleSize.height)
         }
     }
     
     // 固定布局 - 图片在底部
     private func layoutBottom(titleSize: CGSize, imageRect: inout CGRect, titleRect: inout CGRect) {
-        let commonX = (bounds.width - imageSize.width - titleSize.width - imageTitleSpacing) / 2
-        let top = bounds.height - imageSize.height
         switch titleAlignment {
         case .top:
-            titleRect = CGRect(x: (bounds.width - titleSize.width) / 2, y: top - titleSize.height - imageTitleSpacing, width: titleSize.width, height: titleSize.height)
-            imageRect = CGRect(x: (bounds.width - imageSize.width) / 2, y: titleRect.maxY + imageTitleSpacing, width: imageSize.width, height: imageSize.height)
+            imageRect = CGRect(x: (bounds.width - imageSize.width) / 2, 
+                               y: bounds.height - imageSize.height,
+                               width: imageSize.width,
+                               height: imageSize.height)
+            
+            titleRect = CGRect(x: (bounds.width - titleSize.width) / 2, 
+                               y: imageRect.minY - imageTitleSpacing - titleSize.height,
+                               width: titleSize.width,
+                               height: titleSize.height)
         case .bottom:
-            imageRect = CGRect(x: (bounds.width - imageSize.width) / 2, y: top - (titleSize.height + imageTitleSpacing), width: imageSize.width, height: imageSize.height)
-            titleRect = CGRect(x: (bounds.width - titleSize.width) / 2, y: imageRect.maxY + imageTitleSpacing, width: titleSize.width, height: titleSize.height)
+            titleRect = CGRect(x: (bounds.width - titleSize.width) / 2, 
+                               y: bounds.height - contentInset - titleSize.height,
+                               width: titleSize.width,
+                               height: titleSize.height)
+            
+            imageRect = CGRect(x: (bounds.width - imageSize.width) / 2, 
+                               y: titleRect.minY - imageTitleSpacing - imageSize.height,
+                               width: imageSize.width,
+                               height: imageSize.height)
+            
         case .left:
-            titleRect = CGRect(x: commonX, y: top + (imageSize.height - titleSize.height) / 2, width: titleSize.width, height: titleSize.height)
-            imageRect = CGRect(x: titleRect.maxX + imageTitleSpacing, y: top, width: imageSize.width, height: imageSize.height)
+            titleRect = CGRect(x: (bounds.width - titleSize.width - imageTitleSpacing - imageSize.width) / 2,
+                               y: bounds.height - imageSize.height + (imageSize.height - titleSize.height) / 2,
+                               width: titleSize.width,
+                               height: titleSize.height)
+            
+            imageRect = CGRect(x: titleRect.maxX + imageTitleSpacing, 
+                               y: bounds.height - imageSize.height,
+                               width: imageSize.width,
+                               height: imageSize.height)
         case .right:
-            imageRect = CGRect(x: commonX, y: top, width: imageSize.width, height: imageSize.height)
-            titleRect = CGRect(x: imageRect.maxX + imageTitleSpacing, y: top + (imageSize.height - titleSize.height) / 2, width: titleSize.width, height: titleSize.height)
+            imageRect = CGRect(x: (bounds.width - imageSize.width - imageTitleSpacing - titleSize.width) / 2, 
+                               y: bounds.height - imageSize.height,
+                               width: imageSize.width,
+                               height: imageSize.height)
+            
+            titleRect = CGRect(x: imageRect.maxX + imageTitleSpacing, 
+                               y: bounds.height - imageSize.height + (imageSize.height - titleSize.height) / 2,
+                               width: titleSize.width,
+                               height: titleSize.height)
         }
     }
     
     // 固定布局 - 图片在左侧
     private func layoutLeft(titleSize: CGSize, imageRect: inout CGRect, titleRect: inout CGRect) {
-        let commonY = (bounds.height - titleSize.height - imageSize.height - imageTitleSpacing) / 2
         switch titleAlignment {
         case .top:
-            titleRect = CGRect(x: (imageSize.width - titleSize.width) / 2, y: commonY, width: titleSize.width, height: titleSize.height)
-            imageRect = CGRect(x: 0.0, y: titleRect.maxY + imageTitleSpacing, width: imageSize.width, height: imageSize.height)
+            titleRect = CGRect(x: (imageSize.width - titleSize.width) / 2, 
+                               y: (bounds.height - titleSize.height - imageTitleSpacing - imageSize.height) / 2,
+                               width: titleSize.width,
+                               height: titleSize.height)
+            
+            imageRect = CGRect(x: 0.0, 
+                               y: titleRect.maxY + imageTitleSpacing,
+                               width: imageSize.width,
+                               height: imageSize.height)
         case .bottom:
-            imageRect = CGRect(x: 0.0, y: commonY, width: imageSize.width, height: imageSize.height)
-            titleRect = CGRect(x: (imageSize.width - titleSize.width) / 2, y: imageRect.maxY + imageTitleSpacing, width: titleSize.width, height: titleSize.height)
+            imageRect = CGRect(x: 0.0, 
+                               y: (bounds.height - titleSize.height - imageTitleSpacing - imageSize.height) / 2,
+                               width: imageSize.width,
+                               height: imageSize.height)
+            
+            titleRect = CGRect(x: (imageSize.width - titleSize.width) / 2, 
+                               y: imageRect.maxY + imageTitleSpacing,
+                               width: titleSize.width,
+                               height: titleSize.height)
         case .left:
-            titleRect = CGRect(x: 0.0, y: (bounds.height - titleSize.height) / 2, width: titleSize.width, height: titleSize.height)
-            imageRect = CGRect(x: titleRect.maxX + imageTitleSpacing, y: (bounds.height - imageSize.height) / 2, width: imageSize.width, height: imageSize.height)
+            titleRect = CGRect(x: contentInset,
+                               y: (bounds.height - titleSize.height) / 2,
+                               width: titleSize.width,
+                               height: titleSize.height)
+            
+            imageRect = CGRect(x: titleRect.maxX + imageTitleSpacing, 
+                               y: (bounds.height - imageSize.height) / 2,
+                               width: imageSize.width,
+                               height: imageSize.height)
         case .right:
-            imageRect = CGRect(x: 0.0, y: (bounds.height - imageSize.height) / 2, width: imageSize.width, height: imageSize.height)
-            titleRect = CGRect(x: imageRect.maxX + imageTitleSpacing, y: (bounds.height - titleSize.height) / 2, width: titleSize.width, height: titleSize.height)
+            imageRect = CGRect(x: 0.0, 
+                               y: (bounds.height - imageSize.height) / 2,
+                               width: imageSize.width,
+                               height: imageSize.height)
+            
+            titleRect = CGRect(x: imageRect.maxX + imageTitleSpacing, 
+                               y: (bounds.height - titleSize.height) / 2,
+                               width: titleSize.width,
+                               height: titleSize.height)
         }
     }
     
     // 固定布局 - 图片在右侧
     private func layoutRight(titleSize: CGSize, imageRect: inout CGRect, titleRect: inout CGRect) {
-        let commonY = (bounds.height - titleSize.height - imageSize.height - imageTitleSpacing) / 2
-        let left = bounds.width - imageSize.width
         switch titleAlignment {
         case .top:
-            titleRect = CGRect(x: left + (imageSize.width - titleSize.width) / 2, y: commonY, width: titleSize.width, height: titleSize.height)
-            imageRect = CGRect(x: left, y: titleRect.maxY + imageTitleSpacing, width: imageSize.width, height: imageSize.height)
+            titleRect = CGRect(x: bounds.width - imageSize.width + (imageSize.width - titleSize.width) / 2,
+                               y: (bounds.height - titleSize.height - imageTitleSpacing - imageSize.height) / 2,
+                               width: titleSize.width,
+                               height: titleSize.height)
+            
+            imageRect = CGRect(x: bounds.width - imageSize.width,
+                               y: titleRect.maxY + imageTitleSpacing,
+                               width: imageSize.width,
+                               height: imageSize.height)
         case .bottom:
-            imageRect = CGRect(x: left, y: commonY, width: imageSize.width, height: imageSize.height)
-            titleRect = CGRect(x: left + (imageSize.width - titleSize.width) / 2, y: imageRect.maxY + imageTitleSpacing, width: titleSize.width, height: titleSize.height)
+            imageRect = CGRect(x: bounds.width - imageSize.width,
+                               y: (bounds.height - imageSize.height - imageTitleSpacing - titleSize.height) / 2,
+                               width: imageSize.width,
+                               height: imageSize.height)
+            
+            titleRect = CGRect(x: bounds.width - imageSize.width + (imageSize.width - titleSize.width) / 2,
+                               y: imageRect.maxY + imageTitleSpacing,
+                               width: titleSize.width,
+                               height: titleSize.height)
         case .left:
-            titleRect = CGRect(x: bounds.width - imageSize.width - titleSize.width - imageTitleSpacing, y: (bounds.height - titleSize.height) / 2, width: titleSize.width, height: titleSize.height)
-            imageRect = CGRect(x: bounds.width - imageSize.width, y: (bounds.height - imageSize.height) / 2, width: imageSize.width, height: imageSize.height)
+            imageRect = CGRect(x: bounds.width - imageSize.width, 
+                               y: (bounds.height - imageSize.height) / 2,
+                               width: imageSize.width,
+                               height: imageSize.height)
+            
+            titleRect = CGRect(x: imageRect.minX - imageTitleSpacing - titleSize.width,
+                               y: (bounds.height - titleSize.height) / 2,
+                               width: titleSize.width,
+                               height: titleSize.height)
         case .right:
-            titleRect = CGRect(x: bounds.width - titleSize.width, y: (bounds.height - titleSize.height) / 2, width: titleSize.width, height: titleSize.height)
-            imageRect = CGRect(x: bounds.width - titleSize.width - imageTitleSpacing - imageSize.width, y: (bounds.height - imageSize.height) / 2, width: imageSize.width, height: imageSize.height)
+            titleRect = CGRect(x: bounds.width - contentInset - titleSize.width,
+                               y: (bounds.height - titleSize.height) / 2,
+                               width: titleSize.width,
+                               height: titleSize.height)
+            
+            imageRect = CGRect(x: titleRect.minX - imageTitleSpacing - imageSize.width, 
+                               y: (bounds.height - imageSize.height) / 2,
+                               width: imageSize.width,
+                               height: imageSize.height)
         }
     }
     
@@ -220,17 +342,45 @@ public class ARTAlignmentButton: UIButton {
     private func layoutFreeform(titleSize: CGSize, imageRect: inout CGRect, titleRect: inout CGRect) {
         switch imageAlignment {
         case .topLeft:
-            titleRect = CGRect(x: titleEdgeInset.left, y: titleEdgeInset.top, width: titleSize.width, height: titleSize.height)
-            imageRect = CGRect(x: imageEdgeInset.left, y: imageEdgeInset.top, width: imageSize.width, height: imageSize.height)
+            titleRect = CGRect(x: titleEdgeInset.left, 
+                               y: titleEdgeInset.top,
+                               width: titleSize.width,
+                               height: titleSize.height)
+            
+            imageRect = CGRect(x: imageEdgeInset.left, 
+                               y: imageEdgeInset.top,
+                               width: imageSize.width,
+                               height: imageSize.height)
         case .bottomLeft:
-            imageRect = CGRect(x: imageEdgeInset.left, y: bounds.height - imageSize.height - imageEdgeInset.bottom, width: imageSize.width, height: imageSize.height)
-            titleRect = CGRect(x: titleEdgeInset.left, y: bounds.height - titleSize.height - titleEdgeInset.bottom, width: titleSize.width, height: titleSize.height)
+            imageRect = CGRect(x: imageEdgeInset.left, 
+                               y: bounds.height - imageEdgeInset.bottom - imageSize.height,
+                               width: imageSize.width,
+                               height: imageSize.height)
+            
+            titleRect = CGRect(x: titleEdgeInset.left,
+                               y: bounds.height - titleEdgeInset.bottom - titleSize.height,
+                               width: titleSize.width,
+                               height: titleSize.height)
         case .topRight:
-            titleRect = CGRect(x: bounds.width - titleSize.width - titleEdgeInset.right, y: titleEdgeInset.top, width: titleSize.width, height: titleSize.height)
-            imageRect = CGRect(x: bounds.width - imageSize.width - imageEdgeInset.right, y: imageEdgeInset.top, width: imageSize.width, height: imageSize.height)
+            titleRect = CGRect(x: bounds.width - titleEdgeInset.right - titleSize.width,
+                               y: titleEdgeInset.top,
+                               width: titleSize.width,
+                               height: titleSize.height)
+            
+            imageRect = CGRect(x: bounds.width - imageEdgeInset.right - imageSize.width,
+                               y: imageEdgeInset.top,
+                               width: imageSize.width,
+                               height: imageSize.height)
         case .bottomRight:
-            imageRect = CGRect(x: bounds.width - imageSize.width - imageEdgeInset.right, y: bounds.height - imageSize.height - imageEdgeInset.bottom, width: imageSize.width, height: imageSize.height)
-            titleRect = CGRect(x: bounds.width - titleSize.width - titleEdgeInset.right, y: bounds.height - titleSize.height - titleEdgeInset.bottom, width: titleSize.width, height: titleSize.height)
+            imageRect = CGRect(x: bounds.width - imageEdgeInset.right - imageSize.width,
+                               y: bounds.height - imageEdgeInset.bottom - imageSize.height,
+                               width: imageSize.width,
+                               height: imageSize.height)
+            
+            titleRect = CGRect(x: bounds.width - titleEdgeInset.right - titleSize.width,
+                               y: bounds.height - titleEdgeInset.bottom - titleSize.height,
+                               width: titleSize.width,
+                               height: titleSize.height)
         default:
             break
         }
