@@ -68,6 +68,7 @@ extension ARTViewController_SlidePopup: ARTChildSlidePopupViewProtocol {
 
 
 // MARK: - Child 自定义样式
+
 protocol ARTChildSlidePopupViewProtocol: AnyObject {
     func didPerformSomeAction(_ view: ARTChildSlidePopupView)
 }
@@ -118,6 +119,7 @@ class ARTChildSlidePopupView: ARTSlidePopupView {
     }
     
     // MARK: - 重写父类代理方法
+    
     override func didTapPackUpButton(_ headerView: ARTSlidePopupHeaderView) {
         super.didTapPackUpButton(headerView)
         print("子类重写：点击了收起按钮")

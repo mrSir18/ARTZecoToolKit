@@ -84,6 +84,7 @@ class ARTViewController_CitySelector: ARTBaseViewController {
 }
 
 // MARK: - ARTCitySelectorViewProtocol
+
 extension ARTViewController_CitySelector: ARTCitySelectorViewProtocol {
 
     public func citySelectorView(_ citySelectorView: ARTCitySelectorView, didSelectItemAt cityName: String) {

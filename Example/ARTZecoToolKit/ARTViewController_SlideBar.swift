@@ -42,6 +42,7 @@ class ARTViewController_SlideBar: ARTBaseViewController {
 }
 
 // MARK: - ARTSliderBarViewProtocol
+
 extension ARTViewController_SlideBar: ARTSliderBarViewProtocol {
     
     func slideBarView(_ slideBarView: ARTSliderBarView, didSelectItemAt index: Int) {

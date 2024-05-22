@@ -41,6 +41,7 @@ class ARTViewController_Debug: ARTBaseViewController {
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+
 extension ARTViewController_Debug: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return classNames.count
@@ -77,6 +78,7 @@ extension ARTViewController_Debug: UICollectionViewDelegate, UICollectionViewDat
 }
 
 // MARK: - ARTViewControllerViewCell
+
 class ARTViewControllerViewCell: UICollectionViewCell {
     
     var titleLabel: UILabel!

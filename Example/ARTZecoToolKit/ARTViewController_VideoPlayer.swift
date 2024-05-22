@@ -34,8 +34,8 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
     }
     
     @objc private func videoPlayerButtonAction () {
-
-        /// 创建播放器
+        
+        // 创建播放器
         guard let videoURL = Bundle.main.url(forResource: "video", withExtension: "MOV") else {
             fatalError("视频文件不存在")
         }

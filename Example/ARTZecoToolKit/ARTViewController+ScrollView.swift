@@ -53,6 +53,7 @@ class ARTViewController_ScrollView: ARTBaseViewController {
 }
 
 // MARK: - ARTScrollViewProtocol
+
 extension ARTViewController_ScrollView: ARTScrollViewProtocol {
    
     func scrollView(_ scrollView: ARTScrollView, didTapSelectItemAt index: Int) {

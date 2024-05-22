@@ -34,6 +34,7 @@ class ARTViewController_CollectionView: ARTBaseViewController {
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+
 extension ARTViewController_CollectionView: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -104,6 +105,7 @@ extension ARTViewController_CollectionView: UICollectionViewDelegate, UICollecti
 }
 
 // MARK: - ARTCollectionViewDelegateFlowLayout
+
 extension ARTViewController_CollectionView: ARTCollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, configModelForSectionAt section: Int) -> ARTCollectionViewConfigModel? {
@@ -148,6 +150,7 @@ extension ARTViewController_CollectionView: ARTCollectionViewDelegateFlowLayout 
 }
 
 // MARK: - ARTZecoTestCell
+
 class ARTZecoTestCell: UICollectionViewCell {
     lazy var artTestLabel: UILabel = {
         let label = UILabel()
@@ -175,6 +178,7 @@ class ARTZecoTestCell: UICollectionViewCell {
 }
 
 // MARK: - ARTZecoTestReusableView
+
 class ARTZecoTestReusableView: UICollectionReusableView {
     static let elementKindSectionHeader = "ARTZecoElementKindSectionHeader"
     static let elementKindSectionfooter = "ARTZecoElementKindSectionfooter"
