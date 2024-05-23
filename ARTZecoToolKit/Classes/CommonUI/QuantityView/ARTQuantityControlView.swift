@@ -159,6 +159,15 @@ public class ARTQuantityControlView: UIView {
             quantityChanged?(quantity)
         }
     }
+    
+    private func buttonAlpha(for first: Int, second: Int, comparison: ComparisonType) -> CGFloat {
+        switch comparison {
+        case .greaterThan:
+            return first > second ? 1.0 : 0.25
+        case .lessThan:
+            return first < second ? 1.0 : 0.25
+        }
+    }
 }
 
 extension ARTQuantityControlView: UITextFieldDelegate {
@@ -231,22 +240,6 @@ extension ARTQuantityControlView: UITextFieldDelegate {
             quantity = newValue
         }
         quantityChanged?(quantity)
-    }
-    
-    /// 根据比较类型返回按钮的alpha值。
-    ///
-    /// - Parameters:
-    ///  - first: 第一个值
-    ///  - second: 第二个值
-    ///  - comparison: 比较类型
-    ///  - Returns: 按钮的alpha值
-    private func buttonAlpha(for first: Int, second: Int, comparison: ComparisonType) -> CGFloat {
-        switch comparison {
-        case .greaterThan:
-            return first > second ? 1.0 : 0.25
-        case .lessThan:
-            return first < second ? 1.0 : 0.25
-        }
     }
 }
 
