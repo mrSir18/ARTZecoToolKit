@@ -8,6 +8,12 @@
 
 import UIKit
 
+/// 比较类型
+enum ComparisonType {
+    case greaterThan
+    case lessThan
+}
+
 public class ARTQuantityControlView: UIView {
     
     /// 默认配置
@@ -28,8 +34,8 @@ public class ARTQuantityControlView: UIView {
             // 确保数量在 minimumQuantity 到 maximumQuantity 之间
             quantity = min(max(quantity, configuration.minimumQuantity), configuration.maximumQuantity)
             quantityTextField.text = "\(quantity)"
-            decreaseButton.isEnabled = quantity > configuration.minimumQuantity
-            increaseButton.isEnabled = quantity < configuration.maximumQuantity
+            decreaseButton.alpha = buttonAlpha(for: quantity, second: configuration.minimumQuantity, comparison: .greaterThan)
+            increaseButton.alpha = buttonAlpha(for: quantity, second: configuration.maximumQuantity, comparison: .lessThan)
         }
     }
     
@@ -69,7 +75,7 @@ public class ARTQuantityControlView: UIView {
             decreaseImage    = UIImage(contentsOfFile: decreaseFile)
         }
         decreaseButton = ARTAlignmentButton(type: .custom)
-        decreaseButton.isEnabled            = quantity > configuration.minimumQuantity
+        decreaseButton.alpha                = buttonAlpha(for: quantity, second: configuration.minimumQuantity, comparison: .greaterThan)
         decreaseButton.backgroundColor      = configuration.buttonBackgroundColor
         decreaseButton.imageSize            = configuration.imageSize
         decreaseButton.setImage(decreaseImage, for: .normal)
@@ -89,7 +95,7 @@ public class ARTQuantityControlView: UIView {
             increaseImage    = UIImage(contentsOfFile: increaseFile)
         }
         increaseButton = ARTAlignmentButton(type: .custom)
-        increaseButton.isEnabled            = quantity < configuration.maximumQuantity
+        increaseButton.alpha                = buttonAlpha(for: quantity, second: configuration.maximumQuantity, comparison: .lessThan)
         increaseButton.backgroundColor      = configuration.buttonBackgroundColor
         increaseButton.imageSize            = configuration.imageSize
         increaseButton.setImage(increaseImage, for: .normal)
@@ -189,8 +195,8 @@ extension ARTQuantityControlView: UITextFieldDelegate {
         }
         
         // 更新按钮的状态。
-        decreaseButton.isEnabled = newValue ?? configuration.minimumQuantity > configuration.minimumQuantity
-        increaseButton.isEnabled = newValue ?? configuration.minimumQuantity < configuration.maximumQuantity
+        decreaseButton.alpha = buttonAlpha(for: newValue ?? configuration.minimumQuantity, second: configuration.minimumQuantity, comparison: .greaterThan)
+        increaseButton.alpha = buttonAlpha(for: newValue ?? configuration.minimumQuantity, second: configuration.maximumQuantity, comparison: .lessThan)
     }
     
     public func textFieldDidEndEditing(_ textField: UITextField) {
@@ -218,13 +224,29 @@ extension ARTQuantityControlView: UITextFieldDelegate {
             textField.text = "\(newValue)"
             
             // 更新按钮的状态。
-            decreaseButton.isEnabled = newValue > configuration.minimumQuantity
-            increaseButton.isEnabled = newValue < configuration.maximumQuantity
+            decreaseButton.alpha = buttonAlpha(for: newValue, second: configuration.minimumQuantity, comparison: .greaterThan)
+            increaseButton.alpha = buttonAlpha(for: newValue, second: configuration.maximumQuantity, comparison: .lessThan)
             
             // 更新数量值
             quantity = newValue
         }
         quantityChanged?(quantity)
+    }
+    
+    /// 根据比较类型返回按钮的alpha值。
+    ///
+    /// - Parameters:
+    ///  - first: 第一个值
+    ///  - second: 第二个值
+    ///  - comparison: 比较类型
+    ///  - Returns: 按钮的alpha值
+    private func buttonAlpha(for first: Int, second: Int, comparison: ComparisonType) -> CGFloat {
+        switch comparison {
+        case .greaterThan:
+            return first > second ? 1.0 : 0.25
+        case .lessThan:
+            return first < second ? 1.0 : 0.25
+        }
     }
 }
 
