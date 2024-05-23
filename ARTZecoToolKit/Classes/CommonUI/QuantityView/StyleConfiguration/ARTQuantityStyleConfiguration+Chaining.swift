@@ -77,8 +77,8 @@ public extension ARTQuantityStyleConfiguration {
     }
     
     @discardableResult
-    func imageEdgeInsets(_ insets: UIEdgeInsets) -> ARTQuantityStyleConfiguration {
-        imageEdgeInsets = insets
+    func imageSize(_ size: CGSize) -> ARTQuantityStyleConfiguration {
+        imageSize = size
         return self
     }
     

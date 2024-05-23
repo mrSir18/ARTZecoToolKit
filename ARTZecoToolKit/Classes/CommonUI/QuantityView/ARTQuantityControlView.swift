@@ -14,13 +14,13 @@ public class ARTQuantityControlView: UIView {
     let configuration = ARTQuantityStyleConfiguration.default()
     
     /// 减少按钮
-    private var decreaseButton: UIButton!
+    private var decreaseButton: ARTAlignmentButton!
     
     /// 数量输入框
     private var quantityTextField: UITextField!
 
     /// 增加按钮
-    private var increaseButton: UIButton!
+    private var increaseButton: ARTAlignmentButton!
     
     // 当前数量，默认为1
     public var quantity: Int = 1 {
@@ -68,11 +68,10 @@ public class ARTQuantityControlView: UIView {
             let decreaseFile = art_resourcePath(file: "quantity_decrease_icon.png", object: self)
             decreaseImage    = UIImage(contentsOfFile: decreaseFile)
         }
-        decreaseButton = UIButton(type: .custom)
-        decreaseButton.isEnabled                = quantity > configuration.minimumQuantity
-        decreaseButton.imageView?.contentMode   = .scaleAspectFit
-        decreaseButton.backgroundColor          = configuration.buttonBackgroundColor
-        decreaseButton.imageEdgeInsets          = configuration.imageEdgeInsets
+        decreaseButton = ARTAlignmentButton(type: .custom)
+        decreaseButton.isEnabled            = quantity > configuration.minimumQuantity
+        decreaseButton.backgroundColor      = configuration.buttonBackgroundColor
+        decreaseButton.imageSize            = configuration.imageSize
         decreaseButton.setImage(decreaseImage, for: .normal)
         decreaseButton.addTarget(self, action: #selector(decreaseQuantity), for: .touchUpInside)
         containerView.addSubview(decreaseButton)
@@ -89,11 +88,10 @@ public class ARTQuantityControlView: UIView {
             let increaseFile = art_resourcePath(file: "quantity_increase_icon.png", object: self)
             increaseImage    = UIImage(contentsOfFile: increaseFile)
         }
-        increaseButton = UIButton(type: .custom)
-        increaseButton.isEnabled                = quantity < configuration.maximumQuantity
-        increaseButton.imageView?.contentMode   = .scaleAspectFit
-        increaseButton.backgroundColor          = configuration.buttonBackgroundColor
-        increaseButton.imageEdgeInsets          = configuration.imageEdgeInsets
+        increaseButton = ARTAlignmentButton(type: .custom)
+        increaseButton.isEnabled            = quantity < configuration.maximumQuantity
+        increaseButton.backgroundColor      = configuration.buttonBackgroundColor
+        increaseButton.imageSize            = configuration.imageSize
         increaseButton.setImage(increaseImage, for: .normal)
         increaseButton.addTarget(self, action: #selector(increaseQuantity), for: .touchUpInside)
         containerView.addSubview(increaseButton)

@@ -173,16 +173,16 @@ public class ARTQuantityStyleConfiguration: NSObject {
         }
     }
     
-    /// 按钮imageEdgeInsets.
+    /// 按钮imageSize.
     ///
-    /// - Note: 默认UIEdgeInsets(top: 0.0, left:0.0, bottom: 0.0, right: 0.0).
-    private var pri_imageEdgeInsets: UIEdgeInsets = .zero
-    public var imageEdgeInsets: UIEdgeInsets {
+    /// - Note: 默认CGSize = CGSize(width: 18.0, height: 18.0).
+    private var pri_imageSize: CGSize = CGSize(width: 18.0, height: 18.0)
+    public var imageSize: CGSize {
         get {
-            pri_imageEdgeInsets
+            pri_imageSize
         }
         set {
-            pri_imageEdgeInsets = newValue
+            pri_imageSize = newValue
         }
     }
     

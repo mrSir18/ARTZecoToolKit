@@ -14,9 +14,9 @@ class ARTViewController_Quantity: ARTBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        // 默认配置
+        // 默认配置 图片大小18.0x18.0
         ARTQuantityStyleConfiguration.default()
-            .imageEdgeInsets(UIEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0))
+            .imageSize(CGSize(width: 20.0, height: 20.0))
         
         // 创建数量控制视图
         let quantityControlView = ARTQuantityControlView()
