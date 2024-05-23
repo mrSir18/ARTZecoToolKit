@@ -178,7 +178,7 @@ public class ARTAlignmentButton: UIButton {
                                height: imageSize.height)
         case .bottom:
             imageRect = CGRect(x: (bounds.width - imageSize.width) / 2, 
-                               y: 0.0,
+                               y: contentInset,
                                width: imageSize.width,
                                height: imageSize.height)
             
@@ -188,22 +188,22 @@ public class ARTAlignmentButton: UIButton {
                                height: titleSize.height)
         case .left:
             titleRect = CGRect(x: (bounds.width - titleSize.width - imageTitleSpacing - imageSize.width) / 2,
-                               y: (imageSize.height - titleSize.height) / 2,
+                               y: (imageSize.height - titleSize.height) / 2 + contentInset,
                                width: titleSize.width,
                                height: titleSize.height)
             
             imageRect = CGRect(x: titleRect.maxX + imageTitleSpacing, 
-                               y: 0.0,
-                               width: imageSize.width, 
+                               y: contentInset,
+                               width: imageSize.width,
                                height: imageSize.height)
         case .right:
             imageRect = CGRect(x: (bounds.width - imageSize.width - imageTitleSpacing - titleSize.width) / 2,
-                               y: 0.0,
+                               y: contentInset,
                                width: imageSize.width,
                                height: imageSize.height)
             
             titleRect = CGRect(x: imageRect.maxX + imageTitleSpacing,
-                               y: (imageSize.height - titleSize.height) / 2, 
+                               y: (imageSize.height - titleSize.height) / 2 + contentInset, 
                                width: titleSize.width,
                                height: titleSize.height)
         }
@@ -214,7 +214,7 @@ public class ARTAlignmentButton: UIButton {
         switch titleAlignment {
         case .top:
             imageRect = CGRect(x: (bounds.width - imageSize.width) / 2, 
-                               y: bounds.height - imageSize.height,
+                               y: bounds.height - imageSize.height - contentInset,
                                width: imageSize.width,
                                height: imageSize.height)
             
@@ -235,22 +235,22 @@ public class ARTAlignmentButton: UIButton {
             
         case .left:
             titleRect = CGRect(x: (bounds.width - titleSize.width - imageTitleSpacing - imageSize.width) / 2,
-                               y: bounds.height - imageSize.height + (imageSize.height - titleSize.height) / 2,
+                               y: bounds.height - contentInset - imageSize.height + (imageSize.height - titleSize.height) / 2,
                                width: titleSize.width,
                                height: titleSize.height)
             
             imageRect = CGRect(x: titleRect.maxX + imageTitleSpacing, 
-                               y: bounds.height - imageSize.height,
+                               y: bounds.height - imageSize.height - contentInset,
                                width: imageSize.width,
                                height: imageSize.height)
         case .right:
             imageRect = CGRect(x: (bounds.width - imageSize.width - imageTitleSpacing - titleSize.width) / 2, 
-                               y: bounds.height - imageSize.height,
+                               y: bounds.height - imageSize.height - contentInset,
                                width: imageSize.width,
                                height: imageSize.height)
             
             titleRect = CGRect(x: imageRect.maxX + imageTitleSpacing, 
-                               y: bounds.height - imageSize.height + (imageSize.height - titleSize.height) / 2,
+                               y: bounds.height - contentInset - imageSize.height + (imageSize.height - titleSize.height) / 2,
                                width: titleSize.width,
                                height: titleSize.height)
         }
@@ -260,22 +260,22 @@ public class ARTAlignmentButton: UIButton {
     private func layoutLeft(titleSize: CGSize, imageRect: inout CGRect, titleRect: inout CGRect) {
         switch titleAlignment {
         case .top:
-            titleRect = CGRect(x: (imageSize.width - titleSize.width) / 2, 
+            titleRect = CGRect(x: (imageSize.width - titleSize.width) / 2 + contentInset,
                                y: (bounds.height - titleSize.height - imageTitleSpacing - imageSize.height) / 2,
                                width: titleSize.width,
                                height: titleSize.height)
             
-            imageRect = CGRect(x: 0.0, 
+            imageRect = CGRect(x: contentInset,
                                y: titleRect.maxY + imageTitleSpacing,
                                width: imageSize.width,
                                height: imageSize.height)
         case .bottom:
-            imageRect = CGRect(x: 0.0, 
+            imageRect = CGRect(x: contentInset,
                                y: (bounds.height - titleSize.height - imageTitleSpacing - imageSize.height) / 2,
                                width: imageSize.width,
                                height: imageSize.height)
             
-            titleRect = CGRect(x: (imageSize.width - titleSize.width) / 2, 
+            titleRect = CGRect(x: (imageSize.width - titleSize.width) / 2 + contentInset, 
                                y: imageRect.maxY + imageTitleSpacing,
                                width: titleSize.width,
                                height: titleSize.height)
@@ -290,7 +290,7 @@ public class ARTAlignmentButton: UIButton {
                                width: imageSize.width,
                                height: imageSize.height)
         case .right:
-            imageRect = CGRect(x: 0.0, 
+            imageRect = CGRect(x: contentInset, 
                                y: (bounds.height - imageSize.height) / 2,
                                width: imageSize.width,
                                height: imageSize.height)
@@ -306,27 +306,27 @@ public class ARTAlignmentButton: UIButton {
     private func layoutRight(titleSize: CGSize, imageRect: inout CGRect, titleRect: inout CGRect) {
         switch titleAlignment {
         case .top:
-            titleRect = CGRect(x: bounds.width - imageSize.width + (imageSize.width - titleSize.width) / 2,
+            titleRect = CGRect(x: bounds.width - contentInset - imageSize.width + (imageSize.width - titleSize.width) / 2,
                                y: (bounds.height - titleSize.height - imageTitleSpacing - imageSize.height) / 2,
                                width: titleSize.width,
                                height: titleSize.height)
             
-            imageRect = CGRect(x: bounds.width - imageSize.width,
+            imageRect = CGRect(x: bounds.width - contentInset - imageSize.width,
                                y: titleRect.maxY + imageTitleSpacing,
                                width: imageSize.width,
                                height: imageSize.height)
         case .bottom:
-            imageRect = CGRect(x: bounds.width - imageSize.width,
+            imageRect = CGRect(x: bounds.width - contentInset - imageSize.width,
                                y: (bounds.height - imageSize.height - imageTitleSpacing - titleSize.height) / 2,
                                width: imageSize.width,
                                height: imageSize.height)
             
-            titleRect = CGRect(x: bounds.width - imageSize.width + (imageSize.width - titleSize.width) / 2,
+            titleRect = CGRect(x: bounds.width - contentInset - imageSize.width + (imageSize.width - titleSize.width) / 2,
                                y: imageRect.maxY + imageTitleSpacing,
                                width: titleSize.width,
                                height: titleSize.height)
         case .left:
-            imageRect = CGRect(x: bounds.width - imageSize.width, 
+            imageRect = CGRect(x: bounds.width - contentInset - imageSize.width, 
                                y: (bounds.height - imageSize.height) / 2,
                                width: imageSize.width,
                                height: imageSize.height)

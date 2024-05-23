@@ -44,7 +44,7 @@ class ARTViewController_AlignmentButton: ARTBaseViewController {
         let secondButton = ARTAlignmentButton()
         secondButton.backgroundColor    = .art_randomColor()
         secondButton.titleLabel?.font   = .systemFont(ofSize: 16.0)
-        secondButton.imageAlignment     = .left //设置按钮图片左对齐
+        secondButton.imageAlignment     = .top //设置按钮图片左对齐
         secondButton.titleAlignment     = .left //设置内容在图片左侧
         secondButton.imageTitleSpacing  = 20.0  //图片与内容20px
         secondButton.contentInset       = 10.0  //内容内边距
