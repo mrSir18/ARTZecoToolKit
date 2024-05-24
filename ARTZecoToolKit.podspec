@@ -33,15 +33,14 @@ TODO: Add long description of the pod here.
   s.source_files = 'ARTZecoToolKit/Classes/**/*'
   
 ### 依赖库
-  s.dependency 'AlamofireImage'
   s.dependency 'SnapKit'
   s.dependency 'SmartCodable'
-  
+  s.dependency 'YYWebImage'
    s.resource_bundles = {
      'ARTZecoToolKit' => ['ARTZecoToolKit/Assets/*.png']
    }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
+   s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
 end

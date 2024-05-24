@@ -1,34 +1,40 @@
 PODS:
-  - Alamofire (5.9.1)
-  - AlamofireImage (4.3.0):
-    - Alamofire (~> 5.8)
   - ARTZecoToolKit (0.1.0):
-    - AlamofireImage
     - SmartCodable
     - SnapKit
+    - YYWebImage
   - SmartCodable (3.4.4)
   - SnapKit (5.7.1)
+  - YYCache (1.0.4)
+  - YYImage (1.0.4):
+    - YYImage/Core (= 1.0.4)
+  - YYImage/Core (1.0.4)
+  - YYWebImage (1.0.5):
+    - YYCache
+    - YYImage
 
 DEPENDENCIES:
   - ARTZecoToolKit (from `../`)
 
 SPEC REPOS:
   trunk:
-    - Alamofire
-    - AlamofireImage
     - SmartCodable
     - SnapKit
+    - YYCache
+    - YYImage
+    - YYWebImage
 
 EXTERNAL SOURCES:
   ARTZecoToolKit:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
-  AlamofireImage: 843953fa97bee5f561cf05d83abd759e590b068d
-  ARTZecoToolKit: 53ba11d962092db92101c9e61b5f23962fbf7a54
+  ARTZecoToolKit: 581f4a5e2f28de1bf2b794e6003a2eaf0faae07b
   SmartCodable: 285a9220f1e719fa8e22ff2edbc8e3291f0406e7
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
+  YYCache: 8105b6638f5e849296c71f331ff83891a4942952
+  YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
+  YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
 PODFILE CHECKSUM: e42b632d9da101dc1ff28202d40e5a5c26042761
 

@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "ARTZecoToolKit-Bridging-Header.h"
 
 FOUNDATION_EXPORT double ARTZecoToolKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char ARTZecoToolKitVersionString[];

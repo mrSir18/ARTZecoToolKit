@@ -20,13 +20,13 @@
   },
   "source_files": "ARTZecoToolKit/Classes/**/*",
   "dependencies": {
-    "AlamofireImage": [
-
-    ],
     "SnapKit": [
 
     ],
     "SmartCodable": [
+
+    ],
+    "YYWebImage": [
 
     ]
   },
@@ -34,5 +34,6 @@
     "ARTZecoToolKit": [
       "ARTZecoToolKit/Assets/*.png"
     ]
-  }
+  },
+  "public_header_files": "Pod/Classes/**/*.h"
 }

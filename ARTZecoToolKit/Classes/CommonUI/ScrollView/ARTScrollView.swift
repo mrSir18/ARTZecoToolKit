@@ -115,7 +115,8 @@ public class ARTScrollView: UIView {
             let imageUrl = dataSources[index].imageUrl
             if !imageUrl.isEmpty {
                 if isValidHttpUrl(imageUrl) {
-                    imageView.af.setImage(withURL: URL(string: imageUrl)!)
+                    imageView.yy_imageURL = URL(string: imageUrl)
+//                    imageView.af.setImage(withURL: URL(string: imageUrl)!)
                 } else {
                     imageView.image = UIImage(named: imageUrl)
                 }

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 private let ART_CollectionReusableViewDecoration = "com.ART_CollectionReusableViewDecoration"
 
@@ -65,9 +64,9 @@ private class ART_CollectionReusableView: UICollectionReusableView {
             if let imageURLString = model.imageURLString, !imageURLString.isEmpty {
                 self.backgroundImageView.contentMode = model.contentMode
                 if isValidHttpUrl(imageURLString) {
-                    self.backgroundImageView.af.setImage(withURL: URL(string: imageURLString)!)
+                    self.backgroundImageView.yy_imageURL = URL(string: imageURLString)
                 } else {
-                    self.backgroundImageView.image  = UIImage(named: imageURLString)
+                    self.backgroundImageView.image = UIImage(named: imageURLString)
                 }
             }
         }
