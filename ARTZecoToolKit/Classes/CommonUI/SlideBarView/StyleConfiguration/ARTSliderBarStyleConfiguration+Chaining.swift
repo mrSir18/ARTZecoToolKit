@@ -47,14 +47,32 @@ public extension ARTSliderBarStyleConfiguration {
     }
     
     @discardableResult
-    func titleSpacing(_ spacing: CGFloat) -> ARTSliderBarStyleConfiguration {
-        titleSpacing = spacing
+    func titleAverageType(_ type: AverageType) -> ARTSliderBarStyleConfiguration {
+        titleAverageType = type
         return self
     }
     
     @discardableResult
-    func titleTopSpacing(_ spacing: CGFloat) -> ARTSliderBarStyleConfiguration {
-        titleTopSpacing = spacing
+    func titleAverageTypeCount(_ count: Int) -> ARTSliderBarStyleConfiguration {
+        titleAverageTypeCount = count
+        return self
+    }
+    
+    @discardableResult
+    func titleFixedWidth(_ width: CGFloat) -> ARTSliderBarStyleConfiguration {
+        titleFixedWidth = width
+        return self
+    }
+    
+    @discardableResult
+    func titleEdgeInsets(_ edgeInsets: UIEdgeInsets) -> ARTSliderBarStyleConfiguration {
+        titleEdgeInsets = edgeInsets
+        return self
+    }
+    
+    @discardableResult
+    func titleSpacing(_ spacing: CGFloat) -> ARTSliderBarStyleConfiguration {
+        titleSpacing = spacing
         return self
     }
     

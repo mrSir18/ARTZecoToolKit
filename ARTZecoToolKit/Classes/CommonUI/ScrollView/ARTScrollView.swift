@@ -68,7 +68,7 @@ public class ARTScrollView: UIView {
         scrollView.isPagingEnabled                  = true
         scrollView.bounces                          = false
         scrollView.scrollsToTop                     = false
-        scrollView.contentSize                      = CGSizeMake(0.0, 0.0)
+        scrollView.contentSize                      = .zero
         scrollView.backgroundColor                  = .clear
         scrollView.contentInsetAdjustmentBehavior   = .never
         self.addSubview(scrollView)
@@ -116,7 +116,6 @@ public class ARTScrollView: UIView {
             if !imageUrl.isEmpty {
                 if isValidHttpUrl(imageUrl) {
                     imageView.yy_imageURL = URL(string: imageUrl)
-//                    imageView.af.setImage(withURL: URL(string: imageUrl)!)
                 } else {
                     imageView.image = UIImage(named: imageUrl)
                 }

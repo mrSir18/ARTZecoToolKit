@@ -54,7 +54,6 @@ public class ARTPageViewController: UIPageViewController {
         // 设置第一个视图控制器
         if let firstViewController = pages.first {
             setViewControllers([firstViewController], direction: .forward, animated: true, completion: nil)
-            pageDelegate?.pageViewController(self, didUpdatePageIndex: 0)
         }
     }
     

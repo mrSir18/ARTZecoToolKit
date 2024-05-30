@@ -66,8 +66,8 @@ class ARTBaseViewController: UIViewController {
         titleLabel.textColor        = .black
         containerView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.left.equalTo(backButton.snp.right).offset(12.0)
             make.top.bottom.equalTo(0.0)
+            make.centerX.equalToSuperview()
             make.right.equalTo(-art_navigationBarHeight())
         }
         

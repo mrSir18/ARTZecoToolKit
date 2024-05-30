@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 
 /// 自定义UI样式配置
 @objcMembers

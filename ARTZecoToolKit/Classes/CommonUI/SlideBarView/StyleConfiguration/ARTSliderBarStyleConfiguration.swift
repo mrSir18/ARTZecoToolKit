@@ -7,7 +7,22 @@
 //
 
 import Foundation
-import UIKit
+
+// 标题布局类型
+public enum AverageType {
+    /// 等分宽度布局（默认： (UIScreen.main.bounds.size.width - titleEdgeInsets.left - titleEdgeInsets.right - titleSpacing) /  itleAverageTypeCount）
+    ///
+    /// - Note: 仅在titleAverageTypeCount > 1时生效, 配合使用
+    case average
+    /// 固定宽度布局
+    ///
+    /// 指定标题内容宽度
+    case fixed
+    /// 内容宽度布局
+    ///
+    /// 根据内容宽度自适应
+    case content
+}
 
 /// 自定义UI样式配置
 @objcMembers
@@ -101,29 +116,70 @@ public class ARTSliderBarStyleConfiguration: NSObject {
         }
     }
     
+    /// 菜单栏 - 标题布局类型.
+    ///
+    /// - Note: 默认average.
+    /// - Note: 与titleAverageTypeCount 配合使用
+    /// - Note: 设置.average时titleFixedWidth失效
+    private var pri_titleAverageType: AverageType = .average
+    public var titleAverageType: AverageType {
+        get {
+            pri_titleAverageType
+        }
+        set {
+            pri_titleAverageType = newValue
+        }
+    }
+    
+    /// 菜单栏 - 标题布局等分数.
+    ///
+    /// - Note: 默认UIScreen.main.bounds.size.width / 5.
+    private var pri_titleAverageTypeCount: Int = 5
+    public var titleAverageTypeCount: Int {
+        get {
+            pri_titleAverageTypeCount
+        }
+        set {
+            pri_titleAverageTypeCount = max(1, newValue)
+        }
+    }
+    
+    /// 菜单栏 - 标题固定宽度.
+    ///
+    /// - Note: 默认100.0.
+    private var pri_titleFixedWidth: CGFloat = 100.0
+    public var titleFixedWidth: CGFloat {
+        get {
+            pri_titleFixedWidth
+        }
+        set {
+            pri_titleFixedWidth = max(0.0, newValue)
+        }
+    }
+    
+    /// 菜单栏 - 标题左右内边距.
+    ///
+    /// - Note: 默认.zero.
+    private var pri_titleEdgeInsets: UIEdgeInsets = .zero
+    public var titleEdgeInsets: UIEdgeInsets {
+        get {
+            pri_titleEdgeInsets
+        }
+        set {
+            pri_titleEdgeInsets = newValue
+        }
+    }
+    
     /// 菜单栏 - 标题间距.
     ///
-    /// - Note: 默认20.0.
-    private var pri_titleSpacing: CGFloat = 20.0
+    /// - Note: 默认0.0.
+    private var pri_titleSpacing: CGFloat = 0.0
     public var titleSpacing: CGFloat {
         get {
             pri_titleSpacing
         }
         set {
             pri_titleSpacing = max(0.0, newValue)
-        }
-    }
-    
-    /// 菜单栏 - 标题距离顶部间距.
-    ///
-    /// - Note: 默认0.0.
-    private var pri_titleTopSpacing: CGFloat = 0.0
-    public var titleTopSpacing: CGFloat {
-        get {
-            pri_titleTopSpacing
-        }
-        set {
-            pri_titleTopSpacing = max(0.0, newValue)
         }
     }
     
