@@ -16,12 +16,22 @@ public struct IgnoredKey<T>: Codable {
     }
 
     public init(from decoder: Decoder) throws {
-        guard let decoder = decoder as? _SmartJSONDecoder else {
+        
+        guard let impl = decoder as? JSONDecoderImpl else {
+            wrappedValue = try Patcher<T>.defaultForType()
+            return
+        }
+        
+        /// Only those using the SmartJSONDecoder parser have the ability to be compatible with thrown exceptions.
+        if let key = CodingUserInfoKey.parsingMark, let mark = impl.userInfo[key] {
+            // 将异常抛出，在解析容器中进行兼容。
             throw DecodingError.typeMismatch(IgnoredKey<T>.self, DecodingError.Context(
-                codingPath: decoder.codingPath, debugDescription: "Expected \(Self.self) value，but an exception occurred！Please report this issue（请上报该问题）")
+                codingPath: decoder.codingPath, debugDescription: "\(Self.self) does not participate in the parsing, please ignore it.")
             )
         }
-        wrappedValue = try decoder.smartDecode(type: T.self)
+        
+        /// The resolution triggered by the other three parties may be resolved here.
+        wrappedValue = try impl.smartDecode(type: T.self)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -34,7 +44,7 @@ public struct IgnoredKey<T>: Codable {
         }
     }
 }
-extension _SmartJSONDecoder {
+extension JSONDecoderImpl {
     fileprivate func smartDecode<T>(type: T.Type) throws -> T {
 
         if let key = codingPath.last, let value: T = cache.getValue(forKey: key) {

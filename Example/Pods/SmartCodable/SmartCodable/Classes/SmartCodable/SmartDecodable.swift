@@ -32,6 +32,8 @@ extension SmartDecodable {
 /// Options for SmartCodable parsing
 public enum SmartDecodingOption: Hashable {
     
+    
+    /// date的默认策略是ReferenceDate（参考日期是指2001年1月1日 00:00:00 UTC），以秒为单位。
     case date(JSONDecoder.DateDecodingStrategy)
     
     case data(JSONDecoder.DataDecodingStrategy)
@@ -265,9 +267,8 @@ extension Data {
 extension Dictionary where Key == String {
     
     fileprivate func toData() -> Data? {
-        let peeled = self.peelIfPresent
-        guard JSONSerialization.isValidJSONObject(peeled) else { return nil }
-        return try? JSONSerialization.data(withJSONObject: peeled)
+        guard JSONSerialization.isValidJSONObject(self) else { return nil }
+        return try? JSONSerialization.data(withJSONObject: self)
     }
     
     fileprivate func toJSONString() -> String? {
@@ -282,9 +283,8 @@ extension Dictionary where Key == String {
 extension Array {
     
     fileprivate func toData() -> Data? {
-        let peeled = self.peelIfPresent
-        guard JSONSerialization.isValidJSONObject(peeled) else { return nil }
-        return try? JSONSerialization.data(withJSONObject: peeled)
+        guard JSONSerialization.isValidJSONObject(self) else { return nil }
+        return try? JSONSerialization.data(withJSONObject: self)
     }
     
     fileprivate func toJSONString() -> String? {

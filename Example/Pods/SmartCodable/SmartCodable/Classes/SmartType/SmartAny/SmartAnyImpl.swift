@@ -13,10 +13,7 @@ import Foundation
 /// By wrapping it with SmartAny, it achieves the purpose of enabling parsing for Any types.
 ///
 /// To retrieve the original value, call '.peel' to unwrap it.
-public enum SmartAny {
-    
-    
-    
+enum SmartAnyImpl {
     
     /// In Swift, NSNumber is a composite type that can accommodate various numeric types:
     ///  - All integer types: Int, Int8, Int16, Int32, Int64, UInt, UInt8, UInt16, UInt32, UInt64
@@ -34,8 +31,8 @@ public enum SmartAny {
     /// However, during parsing, a situation arises: the data type is forcibly specified, losing the flexibility of NSNumber. For instance, `as? Double` will fail when the data is 5.
     case number(NSNumber)
     case string(String)
-    case dict([String: SmartAny])
-    case array([SmartAny])
+    case dict([String: SmartAnyImpl])
+    case array([SmartAnyImpl])
     case null(NSNull)
     
     
@@ -46,13 +43,13 @@ public enum SmartAny {
 
 extension Dictionary where Key == String {
     /// Converts from [String: Any] type to [String: SmartAny]
-    public var cover: [String: SmartAny] {
-        mapValues { SmartAny(from: $0) }
+    internal var cover: [String: SmartAnyImpl] {
+        mapValues { SmartAnyImpl(from: $0) }
     }
     
     /// Unwraps if it exists, otherwise returns itself.
-    public var peelIfPresent: [String: Any] {
-        if let dict = self as? [String: SmartAny] {
+    internal var peelIfPresent: [String: Any] {
+        if let dict = self as? [String: SmartAnyImpl] {
             return dict.peel
         } else {
             return self
@@ -61,15 +58,15 @@ extension Dictionary where Key == String {
 }
 
 extension Array {
-    public var cover: [ SmartAny] {
-        map { SmartAny(from: $0) }
+    internal var cover: [ SmartAnyImpl] {
+        map { SmartAnyImpl(from: $0) }
     }
     
     /// Unwraps if it exists, otherwise returns itself.
-    public var peelIfPresent: [Any] {
-        if let arr = self as? [[String: SmartAny]] {
+    internal var peelIfPresent: [Any] {
+        if let arr = self as? [[String: SmartAnyImpl]] {
             return arr.peel
-        } else if let arr = self as? [SmartAny] {
+        } else if let arr = self as? [SmartAnyImpl] {
             return arr.peel
         } else {
             return self
@@ -78,28 +75,28 @@ extension Array {
 }
 
 
-extension Dictionary where Key == String, Value == SmartAny {
+extension Dictionary where Key == String, Value == SmartAnyImpl {
     /// The parsed value will be wrapped by SmartAny. Use this property to unwrap it.
-    public var peel: [String: Any] {
+    internal var peel: [String: Any] {
         mapValues { $0.peel }
     }
 }
-extension Array where Element == SmartAny {
+extension Array where Element == SmartAnyImpl {
+    /// The parsed value will be wrapped by SmartAny. Use this property to unwrap it.
+    internal var peel: [Any] {
+        map { $0.peel }
+    }
+}
+
+extension Array where Element == [String: SmartAnyImpl] {
     /// The parsed value will be wrapped by SmartAny. Use this property to unwrap it.
     public var peel: [Any] {
         map { $0.peel }
     }
 }
 
-extension Array where Element == [String: SmartAny] {
-    /// The parsed value will be wrapped by SmartAny. Use this property to unwrap it.
-    public var peel: [Any] {
-        map { $0.peel }
-    }
-}
 
-
-extension SmartAny {
+extension SmartAnyImpl {
     /// The parsed value will be wrapped by SmartAny. Use this property to unwrap it.
     public var peel: Any {
         switch self {
@@ -114,30 +111,31 @@ extension SmartAny {
 
 
 
-extension SmartAny: Codable {
+extension SmartAnyImpl: Codable {
     public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
         
-        guard let decoder = decoder as? _SmartJSONDecoder else {
-            throw DecodingError.typeMismatch(SmartAny.self, DecodingError.Context(
+        guard let decoder = decoder as? JSONDecoderImpl,
+              let container = try? decoder.singleValueContainer() as? JSONDecoderImpl.SingleValueContainer else {
+            throw DecodingError.typeMismatch(SmartAnyImpl.self, DecodingError.Context(
                 codingPath: decoder.codingPath, debugDescription: "Expected \(Self.self) value，but an exception occurred！Please report this issue（请上报该问题）")
             )
         }
-        
+       
         if container.decodeNil() {
             self = .null(NSNull())
-        } else if let value = try? decoder.unbox(decoder.storage.topContainer, as: SmartAny.self) {
+        } else if let value = container.decodeIfPresent(SmartAnyImpl.self) {
             self = value
-        } else if let value = try? decoder.unbox(decoder.storage.topContainer, as: [String: SmartAny].self) {
+        } else if let value = try? container.decode([String: SmartAnyImpl].self) {
             self = .dict(value)
-        } else if let value = try? decoder.unbox(decoder.storage.topContainer, as: [SmartAny].self) {
+        } else if let value = try? container.decode([SmartAnyImpl].self) {
             self = .array(value)
         } else {
-            throw DecodingError.typeMismatch(SmartAny.self, DecodingError.Context(
+            throw DecodingError.typeMismatch(SmartAnyImpl.self, DecodingError.Context(
                 codingPath: decoder.codingPath, debugDescription: "Expected \(Self.self) value，but an exception occurred！Please report this issue（请上报该问题）")
             )
         }
     }
+        
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
@@ -158,9 +156,11 @@ extension SmartAny: Codable {
              布尔类型：Bool
              */
             
-            if let bool = value as? Bool {
-                try container.encode(bool)
-            }  else if let double = value as? Double {
+            if value === kCFBooleanTrue as NSNumber || value === kCFBooleanFalse as NSNumber {
+                if let bool = value as? Bool {
+                    try container.encode(bool)
+                }  
+            } else if let double = value as? Double {
                 try container.encode(double)
             } else if let float = value as? Float {
                 try container.encode(float)
@@ -194,9 +194,8 @@ extension SmartAny: Codable {
 }
 
 
-
-extension SmartAny {
-    private static func convertToSmartAny(_ value: Any) -> SmartAny {
+extension SmartAnyImpl {
+    private static func convertToSmartAny(_ value: Any) -> SmartAnyImpl {
         switch value {
         case let v as NSNumber:      return .number(v)
         case let v as String:        return .string(v)
