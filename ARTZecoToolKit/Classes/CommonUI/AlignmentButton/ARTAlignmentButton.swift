@@ -82,6 +82,9 @@ public class ARTAlignmentButton: UIButton {
     // 标题边距，默认为UIEdgeInsets.zero
     public var titleEdgeInset: UIEdgeInsets = .zero
     
+    // 图片圆角，默认为0.0
+    public var imageCornerRadius: CGFloat = 0.0
+    
     public override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -135,6 +138,11 @@ public class ARTAlignmentButton: UIButton {
         // 设置图像和标题的框架
         imageView.frame = imageRect.integral
         titleLabel.frame = titleRect.integral
+        
+        if imageCornerRadius > 0 {
+            imageView.layer.cornerRadius = imageCornerRadius
+            imageView.clipsToBounds = true
+        }
     }
     
     // 固定布局 - 居中
