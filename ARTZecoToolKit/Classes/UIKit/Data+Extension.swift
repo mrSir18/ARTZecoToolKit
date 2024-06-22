@@ -11,7 +11,7 @@ extension Data {
     ///
     /// - Returns:
     ///    如果转换成功，则返回字符串对象，否则返回 nil
-    func art_toString() -> String? {
+    public func art_toString() -> String? {
         return String(data: self, encoding: .utf8)
     }
     
@@ -19,7 +19,7 @@ extension Data {
     ///
     /// - Returns:
     ///    如果转换成功，则返回字典对象，否则返回 nil.
-    func art_toDictionary() -> Dictionary<String, Any>? {
+    public func art_toDictionary() -> Dictionary<String, Any>? {
         do {
             if let dictionary = try JSONSerialization.jsonObject(with: self, options: []) as? [String: Any] {
                 return dictionary
@@ -34,7 +34,7 @@ extension Data {
     ///
     /// - Returns:
     ///    如果转换成功，则返回数组对象，否则返回 nil.
-    func art_toArray() -> Array<Any>? {
+    public func art_toArray() -> Array<Any>? {
         do {
             if let array = try JSONSerialization.jsonObject(with: self, options: []) as? [Any] {
                 return array

@@ -29,7 +29,7 @@ extension Dictionary {
     ///
     /// - Returns:
     ///  如果转换成功，则返回 JSON 字符串，否则返回 nil.
-    private func art_toJSONString() -> String? {
+    public func art_toJSONString() -> String? {
         if (!JSONSerialization.isValidJSONObject(self)) {
             print("无法解析出JSONString")
             return nil
