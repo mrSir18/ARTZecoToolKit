@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0256296D2C27711F003B21B8 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0256296C2C27711F003B21B8 /* Data+Extension.swift */; };
+		0256296F2C2771B5003B21B8 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0256296E2C2771B5003B21B8 /* String+Extension.swift */; };
+		025629712C277294003B21B8 /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025629702C277294003B21B8 /* Dictionary+Extension.swift */; };
+		025629732C2772D2003B21B8 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025629722C2772D2003B21B8 /* Array+Extension.swift */; };
 		034790BCA4ABE6DBE0196CDA7E53553C /* ARTQuantityControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D684A490DFDDAC8E5416402982967C /* ARTQuantityControlView.swift */; };
 		04C726426785BB8B16097785A3D39419 /* SmartAnyImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA66791295A6B94500BE1828E347CD37 /* SmartAnyImpl.swift */; };
 		05469E64602412D1F9607A7045C744D8 /* YYFrameImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 84813DBF63A50C61FA2C3BA2E3A1EA11 /* YYFrameImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -322,6 +326,10 @@
 /* Begin PBXFileReference section */
 		008459F16261765E9280CB1538179474 /* SmartCodable.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SmartCodable.release.xcconfig; sourceTree = "<group>"; };
 		0161A74B01E1A777748421B319369526 /* DateTransformer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DateTransformer.swift; path = SmartCodable/Classes/Transformer/DateTransformer.swift; sourceTree = "<group>"; };
+		0256296C2C27711F003B21B8 /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
+		0256296E2C2771B5003B21B8 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		025629702C277294003B21B8 /* Dictionary+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extension.swift"; sourceTree = "<group>"; };
+		025629722C2772D2003B21B8 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		051F55DF28966A79E3573D96BF71CED4 /* YYCache-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "YYCache-umbrella.h"; sourceTree = "<group>"; };
 		0581CEC26EB9E130A4606FF9A552347A /* ConstraintConstantTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintConstantTarget.swift; path = Sources/ConstraintConstantTarget.swift; sourceTree = "<group>"; };
 		06DF0A41CC6265643C50228315F5D54B /* _YYWebImageSetter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = _YYWebImageSetter.m; path = YYWebImage/Categories/_YYWebImageSetter.m; sourceTree = "<group>"; };
@@ -355,7 +363,7 @@
 		2E5F3F9ACEFF183C1974351F47423DCE /* ARTScrollViewItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTScrollViewItem.swift; sourceTree = "<group>"; };
 		3024EC49F2CC74E9CA1F4BEDE3EFF059 /* ARTZecoToolKit-ARTZecoToolKit */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "ARTZecoToolKit-ARTZecoToolKit"; path = ARTZecoToolKit.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		31FB1AB222B186815A1D2E7EF35092E9 /* ARTZecoToolKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ARTZecoToolKit-umbrella.h"; sourceTree = "<group>"; };
-		322147781674FBB97677D28487868B68 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		322147781674FBB97677D28487868B68 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		3527E4A55DF0858E10DB91D48776BA3C /* YYCache-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "YYCache-Info.plist"; sourceTree = "<group>"; };
 		35D3A4ADCE9064969B71529AABF55000 /* SmartEncodable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SmartEncodable.swift; path = SmartCodable/Classes/SmartCodable/SmartEncodable.swift; sourceTree = "<group>"; };
 		36CFE947D301DB230BCD605516A6C995 /* YYKVStorage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = YYKVStorage.h; path = YYCache/YYKVStorage.h; sourceTree = "<group>"; };
@@ -378,7 +386,7 @@
 		47C5980B0BFC46A7F33AC501F0268856 /* Pods-ARTZecoToolKit_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ARTZecoToolKit_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		4817B92BEC385613D940860B96F90CDD /* Pods-ARTZecoToolKit_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ARTZecoToolKit_Example-dummy.m"; sourceTree = "<group>"; };
 		48ACF38225AF5129416A1F090F6D3286 /* YYCache */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = YYCache; path = YYCache.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4A3BE170A2A91F1CACC737D7564266A4 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Sources/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		4A3BE170A2A91F1CACC737D7564266A4 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Sources/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		4ACB9EFC186282A840E0C3F944E38A48 /* ConstraintLayoutGuide.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutGuide.swift; path = Sources/ConstraintLayoutGuide.swift; sourceTree = "<group>"; };
 		4B9DB378A4E0F0993FE3F0DC150B2023 /* JSONParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = JSONParser.swift; path = SmartCodable/Classes/JSONValue/JSONParser.swift; sourceTree = "<group>"; };
 		4E7705FC3D35EB68BAA8C8874F0BED22 /* city_selector_close.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = city_selector_close.png; path = ARTZecoToolKit/Assets/city_selector_close.png; sourceTree = "<group>"; };
@@ -417,7 +425,7 @@
 		6BC9A5F136A6BB2AE396F68C0722490F /* Pods-ARTZecoToolKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ARTZecoToolKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		6CBF2F2E98F00A33C79D47E4B66C0D5E /* city_selector_tick.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = city_selector_tick.png; path = ARTZecoToolKit/Assets/city_selector_tick.png; sourceTree = "<group>"; };
 		6D2B279A77AE2462F39C6573C80561A6 /* YYImage-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "YYImage-prefix.pch"; sourceTree = "<group>"; };
-		6E42895FBD74E5E5DFFBFA9D4614AB89 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		6E42895FBD74E5E5DFFBFA9D4614AB89 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		6E77C50DEA50CE669B8968C205E0D33D /* YYImageCoder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = YYImageCoder.h; path = YYImage/YYImageCoder.h; sourceTree = "<group>"; };
 		6F365C8AF8AFA0077CF844EC78F05E55 /* ARTCitySelectorViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTCitySelectorViewModel.swift; sourceTree = "<group>"; };
 		6F6B4F269BED0A5E62C172500D820FB6 /* SnapKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SnapKit.debug.xcconfig; sourceTree = "<group>"; };
@@ -470,7 +478,7 @@
 		9B138EECD7F6C88D36F7613D393C7F4D /* NSMutableAttributedString+ARTExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+ARTExtension.swift"; sourceTree = "<group>"; };
 		9B15ACCD54DCB8CCEC1377E77F39459E /* ARTSliderBarStyleConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTSliderBarStyleConfiguration.swift; sourceTree = "<group>"; };
 		9C975B4B2D3FE519320942D0145B187D /* UIImage+ARTExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIImage+ARTExtension.swift"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E0D507E1E88EC6E8CF0ADDC44C69EC0 /* JSONDecoderImpl+UnkeyedContainer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "JSONDecoderImpl+UnkeyedContainer.swift"; path = "SmartCodable/Classes/JSONDecoder/Decoder/Impl/JSONDecoderImpl+UnkeyedContainer.swift"; sourceTree = "<group>"; };
 		A06E45B0920F06C22AFB4C25B2C89014 /* ConstraintLayoutSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupport.swift; path = Sources/ConstraintLayoutSupport.swift; sourceTree = "<group>"; };
 		A0CD9EB0BEFC208E82DFE592CB79683B /* ARTQuantityStyleConfiguration+Chaining.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ARTQuantityStyleConfiguration+Chaining.swift"; sourceTree = "<group>"; };
@@ -522,7 +530,7 @@
 		CE41F9636B6D8804E4492AF93FEF7056 /* ConstraintPriorityTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintPriorityTarget.swift; path = Sources/ConstraintPriorityTarget.swift; sourceTree = "<group>"; };
 		CEA5419D83418064E1439D943CC8A635 /* YYImage-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "YYImage-umbrella.h"; sourceTree = "<group>"; };
 		CF7ECA01BDF42BE112FC1FB8C9436208 /* JSONKeyedEncodingContainer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = JSONKeyedEncodingContainer.swift; path = SmartCodable/Classes/JSONEncoder/Container/JSONKeyedEncodingContainer.swift; sourceTree = "<group>"; };
-		CFA2E4306DB5B707576BCEA13B89E31F /* ARTZecoToolKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = ARTZecoToolKit.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		CFA2E4306DB5B707576BCEA13B89E31F /* ARTZecoToolKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = ARTZecoToolKit.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D03FBDD05180C1A7E89ABA2EDB0EDCCB /* YYAnimatedImageView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = YYAnimatedImageView.h; path = YYImage/YYAnimatedImageView.h; sourceTree = "<group>"; };
 		D2AA5BED18A18508533AFDAA9F847FBE /* Patcher+Transformer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Patcher+Transformer.swift"; path = "SmartCodable/Classes/JSONDecoder/Patcher/Patcher+Transformer.swift"; sourceTree = "<group>"; };
 		D2C16FC2E327CBAACFAF954A9EEFDC39 /* slider_header_arrow_down.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = slider_header_arrow_down.png; path = ARTZecoToolKit/Assets/slider_header_arrow_down.png; sourceTree = "<group>"; };
@@ -684,7 +692,6 @@
 				152EE691258C32C45D24A0F2BFAA86B3 /* ARTCityStyleConfiguration.swift */,
 				FEEB4D5D098F2F209E41F836EC8C4484 /* ARTCityStyleConfiguration+Chaining.swift */,
 			);
-			name = StyleConfiguration;
 			path = StyleConfiguration;
 			sourceTree = "<group>";
 		};
@@ -731,7 +738,6 @@
 				44E27B7C67CDD2FE47F0ABDD17314485 /* Resources */,
 				5FF8F89439D48DF025CBBEB4F2DB807D /* Support Files */,
 			);
-			name = SnapKit;
 			path = SnapKit;
 			sourceTree = "<group>";
 		};
@@ -775,7 +781,6 @@
 				8946B53A4144AA99A0CF2A3D15E54A8B /* ARTSlidePopupView.swift */,
 				41E128E8988CE2A0F60C7D7BEB6B8645 /* StyleConfiguration */,
 			);
-			name = SliderPopupView;
 			path = SliderPopupView;
 			sourceTree = "<group>";
 		};
@@ -819,7 +824,6 @@
 				5A666175595E473EAC63A12A395C51AC /* YYWebImageOperation.m */,
 				4C026655D889A97FFCAFCE27155B8D21 /* Support Files */,
 			);
-			name = YYWebImage;
 			path = YYWebImage;
 			sourceTree = "<group>";
 		};
@@ -829,7 +833,6 @@
 				9B15ACCD54DCB8CCEC1377E77F39459E /* ARTSliderBarStyleConfiguration.swift */,
 				6453FFDCA4A157174D51BF73CE6A8412 /* ARTSliderBarStyleConfiguration+Chaining.swift */,
 			);
-			name = StyleConfiguration;
 			path = StyleConfiguration;
 			sourceTree = "<group>";
 		};
@@ -839,7 +842,6 @@
 				90D684A490DFDDAC8E5416402982967C /* ARTQuantityControlView.swift */,
 				6640BDEC7D4930F47070DFF7E99A5524 /* StyleConfiguration */,
 			);
-			name = QuantityView;
 			path = QuantityView;
 			sourceTree = "<group>";
 		};
@@ -864,7 +866,6 @@
 				D6C9C1FBA5F56390DD70691135580300 /* ARTCitySelectorHeader.swift */,
 				2BB30D9900C34F772B57E63D9A2A2F97 /* ARTCitySelectorHotHeader.swift */,
 			);
-			name = ReusableView;
 			path = ReusableView;
 			sourceTree = "<group>";
 		};
@@ -886,7 +887,6 @@
 				1DEC21B9B548983461BAD0C502470BAA /* ARTSlidePopupStyleConfiguration.swift */,
 				D46E821DEDC665003C902682A33CBB27 /* ARTSlidePopupStyleConfiguration+Chaining.swift */,
 			);
-			name = StyleConfiguration;
 			path = StyleConfiguration;
 			sourceTree = "<group>";
 		};
@@ -904,7 +904,6 @@
 				CB3E39DC2DCF031DCFAD6CA63857291C /* ARTSlideBarView.swift */,
 				283C2ACF74A660FE1B9421CD3B90C797 /* StyleConfiguration */,
 			);
-			name = SlideBarView;
 			path = SlideBarView;
 			sourceTree = "<group>";
 		};
@@ -936,7 +935,6 @@
 				653C4C6B68F1A2CDF9F9912712304ACF /* YYMemoryCache.m */,
 				3166E349694F442AA30A12A8CC65480E /* Support Files */,
 			);
-			name = YYCache;
 			path = YYCache;
 			sourceTree = "<group>";
 		};
@@ -961,7 +959,6 @@
 				E47182F7754DC71B7EBE3D738ABAEB41 /* ARTCitySelectorCell.swift */,
 				6767AAB97AB595B79442289514F334F4 /* ARTCitySelectorHotCell.swift */,
 			);
-			name = CityCell;
 			path = CityCell;
 			sourceTree = "<group>";
 		};
@@ -987,7 +984,6 @@
 				CD92D96A879CF36CA038211D4AC21B70 /* ARTQuantityStyleConfiguration.swift */,
 				A0CD9EB0BEFC208E82DFE592CB79683B /* ARTQuantityStyleConfiguration+Chaining.swift */,
 			);
-			name = StyleConfiguration;
 			path = StyleConfiguration;
 			sourceTree = "<group>";
 		};
@@ -996,7 +992,6 @@
 			children = (
 				7D8D94CB011A406B49A931299176D0EA /* ARTPageViewController.swift */,
 			);
-			name = PageViewController;
 			path = PageViewController;
 			sourceTree = "<group>";
 		};
@@ -1028,7 +1023,6 @@
 				0850E85FB1C4AF05D98C1417DF72FC37 /* StyleConfiguration */,
 				D9B7B6662D6C54D99651D06C3D2A4E72 /* ViewModel */,
 			);
-			name = CitySelectorView;
 			path = CitySelectorView;
 			sourceTree = "<group>";
 		};
@@ -1048,7 +1042,6 @@
 				A9C561E250AD04D190F54A66C753C096 /* ARTScrollView.swift */,
 				2E5F3F9ACEFF183C1974351F47423DCE /* ARTScrollViewItem.swift */,
 			);
-			name = ScrollView;
 			path = ScrollView;
 			sourceTree = "<group>";
 		};
@@ -1057,7 +1050,6 @@
 			children = (
 				FFEF90A50651033B17901EA7F4334672 /* ARTAlertController.swift */,
 			);
-			name = Alert;
 			path = Alert;
 			sourceTree = "<group>";
 		};
@@ -1068,7 +1060,6 @@
 				3FBD3E7B16709123C7382D3E1BD76D60 /* ARTCollectionViewConfigModel.swift */,
 				264C8E31870C91790E04AE3ACD7CAA77 /* ARTCollectionViewFlowLayout.swift */,
 			);
-			name = CollectionView;
 			path = CollectionView;
 			sourceTree = "<group>";
 		};
@@ -1108,6 +1099,10 @@
 				A3440E36DAF864B0730D0F9711F0D95E /* UIFont+ARTExtension.swift */,
 				9C975B4B2D3FE519320942D0145B187D /* UIImage+ARTExtension.swift */,
 				B522A4474B1C0CED98C57CD3A9DDE22A /* UIScreen+ARTExtension.swift */,
+				0256296C2C27711F003B21B8 /* Data+Extension.swift */,
+				0256296E2C2771B5003B21B8 /* String+Extension.swift */,
+				025629702C277294003B21B8 /* Dictionary+Extension.swift */,
+				025629722C2772D2003B21B8 /* Array+Extension.swift */,
 			);
 			name = UIKit;
 			path = ARTZecoToolKit/Classes/UIKit;
@@ -1135,7 +1130,6 @@
 			children = (
 				615FAB0AC3CADF5C6F2674E36FCBBA82 /* ARTCitySelectorEntity.swift */,
 			);
-			name = Entity;
 			path = Entity;
 			sourceTree = "<group>";
 		};
@@ -1174,7 +1168,6 @@
 			children = (
 				BC6FFE9F62E4CA5998C5466667780A2D /* ARTAlignmentButton.swift */,
 			);
-			name = AlignmentButton;
 			path = AlignmentButton;
 			sourceTree = "<group>";
 		};
@@ -1228,7 +1221,6 @@
 				729D8F0387FBC304C7F3E87EFE25EF84 /* URLTransformer.swift */,
 				A035D73156A19233E2B1A3546BBD6010 /* Support Files */,
 			);
-			name = SmartCodable;
 			path = SmartCodable;
 			sourceTree = "<group>";
 		};
@@ -1249,7 +1241,6 @@
 			children = (
 				6F365C8AF8AFA0077CF844EC78F05E55 /* ARTCitySelectorViewModel.swift */,
 			);
-			name = ViewModel;
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
@@ -1276,7 +1267,6 @@
 				E39E46669DE189CB553E01078D7F3010 /* Core */,
 				4FB86D2D4362719B70EC9B7E9DC104FB /* Support Files */,
 			);
-			name = YYImage;
 			path = YYImage;
 			sourceTree = "<group>";
 		};
@@ -1896,6 +1886,7 @@
 				506A445C8B05C07EE0836CCE07022C40 /* ARTCollectionViewFlowLayout.swift in Sources */,
 				53EC3A375F49F43DE9D8E4160E9E5589 /* ARTDeviceExtension .swift in Sources */,
 				FAB26EAD84EFC2F370F4E6996C3E32AB /* ARTPageViewController.swift in Sources */,
+				0256296D2C27711F003B21B8 /* Data+Extension.swift in Sources */,
 				034790BCA4ABE6DBE0196CDA7E53553C /* ARTQuantityControlView.swift in Sources */,
 				D0AAE7CD5181943D3A7A22D53395435E /* ARTQuantityStyleConfiguration.swift in Sources */,
 				636849A580AC7F3DE36C1173B75EC4D3 /* ARTQuantityStyleConfiguration+Chaining.swift in Sources */,
@@ -1907,6 +1898,7 @@
 				1A185D05FAEF8F211E047198090D2E01 /* ARTSlidePopupStyleConfiguration.swift in Sources */,
 				7586F57791F9A49E0704ED2C58C528E0 /* ARTSlidePopupStyleConfiguration+Chaining.swift in Sources */,
 				BF749B0799FAC7F2EEC02D5C45975EBE /* ARTSlidePopupView.swift in Sources */,
+				025629712C277294003B21B8 /* Dictionary+Extension.swift in Sources */,
 				8C3C19E13FA6AAF5D71400B3B4190EAB /* ARTSliderBarStyleConfiguration.swift in Sources */,
 				B41DD67F0B60FBF319C604B53752007F /* ARTSliderBarStyleConfiguration+Chaining.swift in Sources */,
 				A79D6C8CBE5F12879378235D52849A00 /* ARTZecoToolKit-dummy.m in Sources */,
@@ -1914,10 +1906,12 @@
 				EEB0C1E737CE810382224366A166A2F2 /* NSMutableAttributedString+ARTExtension.swift in Sources */,
 				55502DF24AFE4007E15F71D1C497BE59 /* UIButton+ARTExtension.swift in Sources */,
 				0906424DFCB8DE15B4A327F76CD486FC /* UICollectionView+ARTExtension.swift in Sources */,
+				025629732C2772D2003B21B8 /* Array+Extension.swift in Sources */,
 				9942802ED4463ACF7D7B9071F995C7A9 /* UIColor+ARTExtension.swift in Sources */,
 				6CD7D41A0DC3F684C4B663C7C4B363E8 /* UIFont+ARTExtension.swift in Sources */,
 				90C7DACB744B4BCD2678A535B39F5845 /* UIImage+ARTExtension.swift in Sources */,
 				6DC13A0F61B9B2400083F463BEFFB990 /* UIScreen+ARTExtension.swift in Sources */,
+				0256296F2C2771B5003B21B8 /* String+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2539,8 +2533,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
