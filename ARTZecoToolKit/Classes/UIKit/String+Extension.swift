@@ -12,7 +12,7 @@ extension String {
     /// - Returns:
     ///   如果转换成功，则返回 JSON 对象，否则返回 nil.
     ///   如果 JSON 对象是字典，则返回 `[String: Any]` 类型.
-    public func decode<T: Decodable>(type: T.Type) -> T? {
+    public func art_decode<T: Decodable>(type: T.Type) -> T? {
         guard let jsonData = self.data(using: .utf8) else { return nil }
         
         do {
@@ -29,7 +29,7 @@ extension String {
     ///
     /// - Returns:
     ///   如果转换成功，则返回字典对象，否则返回 nil.
-    public func toDictionary() -> [String: Any]? {
+    public func art_toDictionary() -> [String: Any]? {
         if let jsonData = data(using: .utf8) {
             do {
                 // 尝试反序列化JSON数据到字典
@@ -47,7 +47,7 @@ extension String {
     ///
     /// - Returns:
     ///   如果转换成功，则返回数组对象，否则返回 nil.
-    public func toArray() -> [[String: Any]]? {
+    public func art_toArray() -> [[String: Any]]? {
         if let jsonData = data(using: .utf8) {
             do {
                 // 尝试反序列化JSON数据到数组

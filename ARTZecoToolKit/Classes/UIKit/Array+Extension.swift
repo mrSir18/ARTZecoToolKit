@@ -11,9 +11,9 @@ extension Array {
     ///
     /// - Returns:
     ///   如果转换成功，则返回 JSON 对象，否则返回 nil.
-    public func decode<T: Decodable>(type: [T].Type) -> [T]? {
+    public func art_decode<T: Decodable>(type: [T].Type) -> [T]? {
         do {
-            guard let jsonStr = self.toJSONString() else { return nil }
+            guard let jsonStr = art_toJSONString() else { return nil }
             guard let jsonData = jsonStr.data(using: .utf8) else { return nil }
             let decoder = JSONDecoder()
             let obj = try decoder.decode(type, from: jsonData)
@@ -28,7 +28,7 @@ extension Array {
     ///
     /// - Returns:
     ///  如果转换成功，则返回 JSON 字符串，否则返回 nil.
-    public func toJSONString() -> String? {
+    public func art_toJSONString() -> String? {
         if (!JSONSerialization.isValidJSONObject(self)) {
             return nil
         }
