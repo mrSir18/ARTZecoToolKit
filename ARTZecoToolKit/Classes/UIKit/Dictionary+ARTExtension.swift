@@ -1,5 +1,5 @@
 //
-//  Dictionary+Extension.swift
+//  Dictionary+ARTExtension.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/6/23.
