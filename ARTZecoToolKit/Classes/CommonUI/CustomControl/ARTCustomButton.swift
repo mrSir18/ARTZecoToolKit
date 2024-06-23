@@ -7,7 +7,7 @@
 
 import UIKit
 
-public class CustomButton: UIButton {
+public class ARTCustomButton: UIButton {
 
     /// 边框宽度
     ///
