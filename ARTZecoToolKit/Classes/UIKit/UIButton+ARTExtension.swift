@@ -15,7 +15,7 @@ extension UIButton {
     /// 自定义值，用于保存额外的数据.
     ///
     /// - Note: 使用 `objc_setAssociatedObject` 和 `objc_getAssociatedObject` 函数来实现.
-    var art_customValue: Any? {
+    public var art_customValue: Any? {
         get {
             return objc_getAssociatedObject(self, &art_customValueKey)
         }
