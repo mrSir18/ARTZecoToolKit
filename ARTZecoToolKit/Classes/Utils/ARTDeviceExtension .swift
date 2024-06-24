@@ -53,7 +53,7 @@ public func art_statusBarHeight() -> CGFloat {
 
 /// 获取导航栏的高度
 public func art_navigationBarHeight() -> CGFloat {
-    return 44.0
+    return ARTAdaptedValue(44.0)
 }
 
 /// 获取导航栏全高度（包括状态栏）
@@ -63,7 +63,7 @@ public func art_navigationFullHeight() -> CGFloat {
 
 /// 获取底部导航栏高度
 public func art_tabBarHeight() -> CGFloat {
-    return 49.0
+    return ARTAdaptedValue(49.0)
 }
 
 /// 获取底部导航栏高度（包括安全区）
