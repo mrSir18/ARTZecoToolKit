@@ -6,8 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
-
 extension UIImage {
     
     /// 创建一个指定颜色和大小的图片.

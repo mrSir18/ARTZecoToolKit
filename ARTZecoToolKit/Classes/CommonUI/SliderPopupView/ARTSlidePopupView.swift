@@ -6,7 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
 import SnapKit
 
 open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {

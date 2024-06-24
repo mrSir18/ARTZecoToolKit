@@ -6,8 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
-
 // MARK: - ARTCollectionReusableView
 
 /// 自定义集合视图可重用视图基类.

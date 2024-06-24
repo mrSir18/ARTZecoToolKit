@@ -6,8 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
-
 class ARTCitySelectorHotCell: UICollectionViewCell {
     
     /// 容器视图

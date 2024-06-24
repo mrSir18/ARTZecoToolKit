@@ -6,8 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
-
 /// 定义 ARTAlertController 的模式枚举.
 public enum ARTAlertControllerMode: Int {
     /// 第一种模式.

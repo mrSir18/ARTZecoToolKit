@@ -6,8 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
-
 private var art_customValueKey: UInt8 = 0
 
 extension UIButton {

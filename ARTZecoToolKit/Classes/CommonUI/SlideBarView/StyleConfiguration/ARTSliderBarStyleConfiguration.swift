@@ -6,8 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import Foundation
-
 // 标题布局类型
 public enum AverageType {
     /// 等分宽度布局（默认： (UIScreen.main.bounds.size.width - titleEdgeInsets.left - titleEdgeInsets.right - titleSpacing) /  itleAverageTypeCount）

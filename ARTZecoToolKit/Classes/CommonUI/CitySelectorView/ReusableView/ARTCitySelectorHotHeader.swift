@@ -6,8 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
-
 class ARTCitySelectorHotHeader: ARTSectionHeaderView {
     
     override init(frame: CGRect) {

@@ -6,8 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
-
 extension UIScreen {
     
     /// 返回当前屏幕的宽度.

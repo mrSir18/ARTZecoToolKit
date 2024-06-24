@@ -6,8 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
-
 extension UIFont {
     
     public static func art_regular(_ fontSize: CGFloat) -> UIFont? {

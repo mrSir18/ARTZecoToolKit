@@ -6,8 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
-
 /// 比较类型
 enum ComparisonType {
     case greaterThan

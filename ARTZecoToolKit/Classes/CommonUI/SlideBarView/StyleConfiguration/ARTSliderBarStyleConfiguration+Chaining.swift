@@ -6,8 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
-
 public extension ARTSliderBarStyleConfiguration {
     
     @discardableResult

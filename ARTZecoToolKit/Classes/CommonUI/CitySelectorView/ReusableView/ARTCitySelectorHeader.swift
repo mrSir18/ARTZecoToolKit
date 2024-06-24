@@ -6,9 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
-
-
 @objc protocol ARTCitySelectorHeaderProtocol: AnyObject {
     
     /// 视图的委托方法，点击关闭按钮时，收起城市选择器.

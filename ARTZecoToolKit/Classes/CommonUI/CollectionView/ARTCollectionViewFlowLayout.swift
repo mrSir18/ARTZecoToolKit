@@ -6,8 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
-
 private let ART_CollectionReusableViewDecoration = "com.ART_CollectionReusableViewDecoration"
 
 // MARK: - ART_CollectionReusableView

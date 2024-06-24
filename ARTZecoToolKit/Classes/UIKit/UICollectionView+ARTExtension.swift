@@ -6,8 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
-
 extension UICollectionView {
     
     /// 注册一个 UICollectionViewCell 子类.

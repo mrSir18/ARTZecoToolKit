@@ -5,8 +5,6 @@
 //  Created by mrSir18 on 2024/6/20.
 //
 
-import UIKit
-
 /// 获取适配比例
 public func ARTAdaptScaleFactor() -> CGFloat {
     let screenWidth = UIScreen.main.bounds.size.width

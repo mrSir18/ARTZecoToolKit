@@ -6,8 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import Foundation
-
 /// 自定义UI样式配置
 @objcMembers
 public class ARTSlidePopupStyleConfiguration: NSObject {

@@ -6,8 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
-
 public struct ARTScrollViewItem {
     public let id: String
     public let imageUrl: String

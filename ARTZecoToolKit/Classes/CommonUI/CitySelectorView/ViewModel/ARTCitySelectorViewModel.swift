@@ -6,8 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
-
 /// 城市选择器模式.
 enum ARTCitySelectorType: Int {
     /// 默认值.

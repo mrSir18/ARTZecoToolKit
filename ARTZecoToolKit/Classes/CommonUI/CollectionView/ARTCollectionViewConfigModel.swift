@@ -6,8 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
-
 /// 定义用于设置集合视图图层圆角的枚举.
 public enum ARTCollectionCornerMask: Int {
     /// <指定elementKindSectionHeader起点和elementKindSectionFooter结束点为圆角裁切点>.

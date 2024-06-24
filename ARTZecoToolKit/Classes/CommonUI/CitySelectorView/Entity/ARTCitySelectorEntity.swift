@@ -6,7 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
 import SmartCodable
 
 public class ARTCitySelectorEntity: SmartCodable {

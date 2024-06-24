@@ -6,9 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import Foundation
-import UIKit
-
 /// 获取安全区域顶部的高度
 public func art_safeAreaTop() -> CGFloat {
     if #available(iOS 13.0, *) {
