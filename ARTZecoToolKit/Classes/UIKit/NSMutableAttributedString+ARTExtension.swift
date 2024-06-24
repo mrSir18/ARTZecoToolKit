@@ -15,14 +15,14 @@ extension NSMutableAttributedString {
     ///   - integerFont: 整数部分字体。
     ///   - decimalFont: 小数部分字体。
     /// - Returns: 带有货币符号的富文本字符串。
-    public static func attributedStringWithCurrencySymbol(_ text: String,
-                                                          symbolFont: UIFont?,
-                                                          integerFont: UIFont?,
-                                                          decimalFont: UIFont?) -> NSAttributedString {
+    public static func art_attributedStringWithCurrencySymbol(_ text: String,
+                                                              symbolFont: UIFont?,
+                                                              integerFont: UIFont?,
+                                                              decimalFont: UIFont?) -> NSAttributedString {
         guard text.count > 0 else {
-             print("Price text is empty.")
-             return NSAttributedString(string: "")
-         }
+            print("Price text is empty.")
+            return NSAttributedString(string: "")
+        }
         
         let pattern = "¥([0-9]+)(\\.[0-9]*)?"
         do {
