@@ -16,9 +16,9 @@ extension NSMutableAttributedString {
     ///   - decimalFont: 小数部分字体。
     /// - Returns: 带有货币符号的富文本字符串。
     public static func art_attributedStringWithCurrencySymbol(_ text: String,
-                                                              symbolFont: UIFont?,
-                                                              integerFont: UIFont?,
-                                                              decimalFont: UIFont?) -> NSAttributedString {
+                                                              _ symbolFont: UIFont?,
+                                                              _ integerFont: UIFont?,
+                                                              _ decimalFont: UIFont?) -> NSAttributedString {
         guard text.count > 0 else {
             print("Price text is empty.")
             return NSAttributedString(string: "")
