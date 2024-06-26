@@ -35,6 +35,9 @@ class ARTCitySelectorHotCell: UICollectionViewCell {
         }
     }
     
+    
+    // MARK: - Life Cycle
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()

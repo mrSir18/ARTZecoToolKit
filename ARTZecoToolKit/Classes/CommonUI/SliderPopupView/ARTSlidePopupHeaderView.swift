@@ -30,6 +30,9 @@ open class ARTSlidePopupHeaderView: UIView {
     /// 代理对象
     weak var delegate: ARTSlidePopupHeaderViewProtocol?
     
+    
+    // MARK: - Life Cycle
+    
     convenience init(_ delegate: ARTSlidePopupHeaderViewProtocol) {
         self.init()
         self.backgroundColor = .clear
@@ -60,7 +63,7 @@ open class ARTSlidePopupHeaderView: UIView {
         packUpButton.contentInset         = 12.0
         packUpButton.imageSize            = CGSize(width: 30.0, height: 30.0)
         packUpButton.setImage(UIImage(contentsOfFile: fileName), for: .normal)
-        packUpButton.addTarget(self, action: #selector(clickPackUpButtonTapped(sender:)), for: .touchUpInside)
+        packUpButton.addTarget(self, action: #selector(packUpButtonTapped(sender:)), for: .touchUpInside)
         addSubview(packUpButton)
         packUpButton.snp.makeConstraints { make in
             make.top.right.bottom.equalToSuperview()
@@ -79,7 +82,7 @@ open class ARTSlidePopupHeaderView: UIView {
     
     // MARK: - Private Button Actions
     
-    @objc private func clickPackUpButtonTapped(sender: UIButton) {
+    @objc private func packUpButtonTapped(sender: UIButton) {
         delegate?.didTapPackUpButton(self)
     }
 }

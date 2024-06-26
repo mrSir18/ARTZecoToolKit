@@ -83,6 +83,9 @@ public class ARTAlignmentButton: UIButton {
     // 图片圆角，默认为0.0
     public var imageCornerRadius: CGFloat = 0.0
     
+    
+    // MARK: - Life Cycle
+    
     public override func layoutSubviews() {
         super.layoutSubviews()
         

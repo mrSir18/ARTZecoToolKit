@@ -55,6 +55,9 @@ public class ARTScrollView: UIView {
         }
     }
     
+    
+    // MARK: - Life Cycle
+    
     public convenience init(_ delegate: ARTScrollViewProtocol) {
         self.init()
         self.delegate = delegate
@@ -100,7 +103,7 @@ public class ARTScrollView: UIView {
             pageView.snp.makeConstraints { make in
                 make.size.equalTo(scrollView)
                 make.left.equalTo(offsetX)
-                make.top.equalTo(0)
+                make.top.equalToSuperview()
             }
             
             let imageView = UIImageView()
@@ -120,9 +123,9 @@ public class ARTScrollView: UIView {
                 }
             }
 
-            let button = ARTAlignmentButton(type: .custom)
+            let button = UIButton(type: .custom)
             button.tag = index
-            button.addTarget(self, action: #selector(clickImageTapHandler), for: .touchUpInside)
+            button.addTarget(self, action: #selector(imageTapped), for: .touchUpInside)
             pageView.addSubview(button)
             button.snp.makeConstraints { make in
                 make.edges.equalTo(pageView)
@@ -147,7 +150,7 @@ public class ARTScrollView: UIView {
     
     // MARK: - Private Button Actions
     
-    @objc private func clickImageTapHandler(_ sender: UIButton) {
+    @objc private func imageTapped(_ sender: UIButton) {
         delegate?.scrollView?(self, didTapSelectItemAt: sender.tag)
     }
     

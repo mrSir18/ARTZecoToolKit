@@ -46,6 +46,9 @@ public class ARTSliderBarView: UIView {
         scrollToVisibleButton(at: index + baseIndex) // 将当前下标加上基准值
     }
     
+    
+    // MARK: - Life Cycle
+    
     public convenience init(_ delegate: ARTSliderBarViewProtocol) {
         self.init()
         self.backgroundColor = ARTSliderBarStyleConfiguration.default().backgroundColor
@@ -78,7 +81,7 @@ public class ARTSliderBarView: UIView {
                 button.titleLabel?.font = isSelected ? configuration.titleSelectedFont : configuration.titleFont
                 button.setTitle(title, for: .normal)
                 button.setTitleColor(isSelected ? configuration.titleSelectedColor : configuration.titleColor, for: .normal)
-                button.addTarget(self, action: #selector(self.clickSliderBarButtonTapped(sender:)), for: .touchUpInside)
+                button.addTarget(self, action: #selector(self.sliderBarButtonTapped(sender:)), for: .touchUpInside)
                 self.scrollView.addSubview(button)
                 button.snp.makeConstraints { make in
                     make.top.equalToSuperview()
@@ -147,7 +150,7 @@ public class ARTSliderBarView: UIView {
     
     // MARK: - Private UIButton Methods
     
-    @objc private func clickSliderBarButtonTapped(sender: UIButton) {
+    @objc private func sliderBarButtonTapped(sender: UIButton) {
         moveLine(sender.tag)
         delegate?.slideBarView?(self, didSelectItemAt: sender.tag - baseIndex)
     }

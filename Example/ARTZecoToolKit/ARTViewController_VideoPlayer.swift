@@ -6,9 +6,8 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
-import ARTZecoToolKit
 import AVFoundation
+import ARTZecoToolKit
 
 class ARTViewController_VideoPlayer: ARTBaseViewController {
     

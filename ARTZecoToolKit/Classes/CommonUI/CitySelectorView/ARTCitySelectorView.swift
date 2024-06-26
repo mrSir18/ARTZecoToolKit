@@ -37,6 +37,9 @@ public class ARTCitySelectorView: UIView {
     /// 列表视图
     var collectionView: UICollectionView!
     
+    
+    // MARK: - Life Cycle
+    
     public convenience init(_ delegate: ARTCitySelectorViewProtocol) {
         self.init()
         self.backgroundColor = .clear

@@ -38,7 +38,10 @@ class ARTCitySelectorHeader: UIView {
     
     /// 城市名称列表.
     private var cityNames: [String] = []
-
+    
+    
+    // MARK: - Life Cycle
+    
     convenience init(_ delegate: ARTCitySelectorHeaderProtocol) {
         self.init()
         self.backgroundColor = .white
@@ -74,7 +77,7 @@ class ARTCitySelectorHeader: UIView {
         closeButton.contentInset         = 18.0
         closeButton.imageSize            = CGSize(width: 28.0, height: 28.0)
         closeButton.setImage(UIImage(contentsOfFile: file), for: .normal)
-        closeButton.addTarget(self, action: #selector(clickCloseButtonTapped(sender:)), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(closeButtonTapped(sender:)), for: .touchUpInside)
         headerContainerView.addSubview(closeButton)
         closeButton.snp.makeConstraints { make in
             make.top.right.bottom.equalToSuperview()
@@ -112,7 +115,7 @@ class ARTCitySelectorHeader: UIView {
 //        locationButton.layer.masksToBounds  = true
 //        locationButton.setTitle("使用", for: .normal)
 //        locationButton.setTitleColor(.white, for: .normal)
-//        locationButton.addTarget(self, action: #selector(clickLocationButtonTapped(sender:)), for: .touchUpInside)
+//        locationButton.addTarget(self, action: #selector(locationButtonTapped(sender:)), for: .touchUpInside)
 //        locationContainerView.addSubview(locationButton)
 //        locationButton.snp.makeConstraints { make in
 //            make.right.equalTo(-10.0)
@@ -187,15 +190,15 @@ class ARTCitySelectorHeader: UIView {
     
     // MARK: - Private Button Actions
     
-    @objc private func clickCloseButtonTapped(sender: UIButton) {
+    @objc private func closeButtonTapped(sender: UIButton) {
         delegate?.didTapCloseCitySelector?(self)
     }
     
-    @objc private func clickLocationButtonTapped(sender: UIButton) {
+    @objc private func locationButtonTapped(sender: UIButton) {
         print("点击了定位按钮")
     }
     
-    @objc private func clickTitleButtonTapped(sender: UIButton) {
+    @objc private func titleButtonTapped(sender: UIButton) {
         let selectedColor = ARTCityStyleConfiguration.default().themeColor
         let normalColor = UIColor.art_color(withHEXValue: 0x18171f)
         
@@ -244,7 +247,7 @@ extension ARTCitySelectorHeader {
             titleButton.contentHorizontalAlignment  = .left
             titleButton.setTitleColor(index == cityNames.count - 1 ? selectedColor : normalColor, for: .normal)
             titleButton.setTitle(title, for: .normal)
-            titleButton.addTarget(self, action: #selector(clickTitleButtonTapped(sender:)), for: .touchUpInside)
+            titleButton.addTarget(self, action: #selector(titleButtonTapped(sender:)), for: .touchUpInside)
             titleScrollView.addSubview(titleButton)
             titleButton.snp.makeConstraints { make in
                 if let lastButton = lastButton {

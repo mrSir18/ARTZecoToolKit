@@ -6,7 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
 import ARTZecoToolKit
 
 class ARTViewController_AlignmentButton: ARTBaseViewController {
@@ -32,7 +31,7 @@ class ARTViewController_AlignmentButton: ARTBaseViewController {
         firstButton.setTitle("默认", for: .normal)
         firstButton.setImage(UIImage(named: "2"), for: .normal)
         firstButton.setTitleColor(.art_randomColor(), for: .normal)
-        firstButton.addTarget(self, action: #selector(clickButtonAction), for: .touchUpInside)
+        firstButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         view.addSubview(firstButton)
         firstButton.snp.makeConstraints { make in
             make.left.equalTo(10.0)
@@ -53,7 +52,7 @@ class ARTViewController_AlignmentButton: ARTBaseViewController {
         secondButton.setTitle("左对齐", for: .normal)
         secondButton.setImage(UIImage(named: "1"), for: .normal)
         secondButton.setTitleColor(.art_randomColor(), for: .normal)
-        secondButton.addTarget(self, action: #selector(clickButtonAction), for: .touchUpInside)
+        secondButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         view.addSubview(secondButton)
         secondButton.snp.makeConstraints { make in
             make.left.equalTo(view.snp.centerX).offset(10.0)
@@ -73,7 +72,7 @@ class ARTViewController_AlignmentButton: ARTBaseViewController {
         thirdlyButton.setTitle("顶对齐", for: .normal)
         thirdlyButton.setImage(UIImage(named: "1"), for: .normal)
         thirdlyButton.setTitleColor(.art_randomColor(), for: .normal)
-        thirdlyButton.addTarget(self, action: #selector(clickButtonAction), for: .touchUpInside)
+        thirdlyButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         view.addSubview(thirdlyButton)
         thirdlyButton.snp.makeConstraints { make in
             make.left.right.equalTo(firstButton)
@@ -104,7 +103,7 @@ class ARTViewController_AlignmentButton: ARTBaseViewController {
         fourthButton.setTitle("左上角", for: .normal)
         fourthButton.setImage(UIImage(named: "2"), for: .normal)
         fourthButton.setTitleColor(.art_randomColor(), for: .normal)
-        fourthButton.addTarget(self, action: #selector(clickButtonAction), for: .touchUpInside)
+        fourthButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         view.addSubview(fourthButton)
         fourthButton.snp.makeConstraints { make in
             make.left.right.equalTo(secondButton)
@@ -124,7 +123,7 @@ class ARTViewController_AlignmentButton: ARTBaseViewController {
         fifthButton.setTitle("左下角对齐", for: .normal)
         fifthButton.setTitleColor(.black, for: .normal)
         fifthButton.setImage(UIImage(named: "4"), for: .normal)
-        fifthButton.addTarget(self, action: #selector(clickButtonAction), for: .touchUpInside)
+        fifthButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         view.addSubview(fifthButton)
         fifthButton.snp.makeConstraints { make in
             make.left.right.equalTo(thirdlyButton)
@@ -144,7 +143,7 @@ class ARTViewController_AlignmentButton: ARTBaseViewController {
         sixthButton.setTitle("右下角对齐", for: .normal)
         sixthButton.setTitleColor(.black, for: .normal)
         sixthButton.setImage(UIImage(named: "4"), for: .normal)
-        sixthButton.addTarget(self, action: #selector(clickButtonAction), for: .touchUpInside)
+        sixthButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         view.addSubview(sixthButton)
         sixthButton.snp.makeConstraints { make in
             make.left.right.equalTo(fourthButton)
@@ -153,7 +152,7 @@ class ARTViewController_AlignmentButton: ARTBaseViewController {
         }
     }
     
-    @objc func clickButtonAction(sender: UIButton) {
+    @objc func buttonTapped(sender: UIButton) {
         print("点击了:\(String(describing: sender.titleLabel?.text))")
     }
 }

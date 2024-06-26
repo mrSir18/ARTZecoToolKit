@@ -6,7 +6,6 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-import UIKit
 import ARTZecoToolKit
 
 class ARTViewController_Alert: ARTBaseViewController {

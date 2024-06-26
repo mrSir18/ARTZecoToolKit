@@ -51,7 +51,7 @@ class ARTBaseViewController: UIViewController {
         backButton.contentInset         = 12.0
         backButton.imageSize            = CGSize(width: 20.0, height: 20.0)
         backButton.setImage(UIImage(named: "navigation_back_black"), for: .normal)
-        backButton.addTarget(self, action: #selector(clickBackButtonTapped), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         containerView.addSubview(backButton)
         backButton.snp.makeConstraints { make in
             make.left.top.bottom.equalToSuperview()
@@ -83,7 +83,7 @@ class ARTBaseViewController: UIViewController {
     }
     
     // MARK: - Button Event Method
-    @objc private func clickBackButtonTapped(sender: UIButton) {
+    @objc private func backButtonTapped(sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
 }
