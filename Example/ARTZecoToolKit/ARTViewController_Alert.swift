@@ -32,6 +32,9 @@ class ARTViewController_Alert: ARTBaseViewController {
         return button
     }()
     
+    
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

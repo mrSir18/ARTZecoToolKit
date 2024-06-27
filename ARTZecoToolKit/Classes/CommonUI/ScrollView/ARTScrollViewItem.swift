@@ -14,14 +14,16 @@ public struct ARTScrollViewItem {
     public let imageUrl: String?    // 图片
     public let videoUrl: String?    // 视频
     public let linkUrl: String?     // H5链接
+    public let extParams: Any?      // 扩展参数
     
-    public init(id: String?, title: String?, desc: String?, imageUrl: String?, videoUrl: String?, linkUrl: String?) {
+    public init(id: String?, title: String?, desc: String?, imageUrl: String?, videoUrl: String?, linkUrl: String?, extParams: Any?) {
         self.id         = id
         self.title      = title
         self.desc       = desc
         self.imageUrl   = imageUrl
         self.videoUrl   = videoUrl
         self.linkUrl    = linkUrl
+        self.extParams  = extParams
     }
 }
 

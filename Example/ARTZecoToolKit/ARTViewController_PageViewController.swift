@@ -16,6 +16,9 @@ class ARTViewController_PageViewController: ARTBaseViewController {
     /// 分页控制器
     var pageViewController: ARTPageViewController!
     
+    
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

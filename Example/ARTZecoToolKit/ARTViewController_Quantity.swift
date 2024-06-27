@@ -10,6 +10,9 @@ import ARTZecoToolKit
 
 class ARTViewController_Quantity: ARTBaseViewController {
     
+    
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     

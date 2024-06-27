@@ -21,6 +21,9 @@ class ARTViewController_SlidePopup: ARTBaseViewController {
         return button
     }()
     
+    
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -21,6 +21,9 @@ class ARTViewController_Debug: ARTBaseViewController {
                                 "ARTViewController_SlidePopup",             "ARTViewController_VideoPlayer",    "ARTViewController_AlignmentButton",
                                 "ARTViewController_PageViewController"]
     
+    
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.backButtonHidden = true

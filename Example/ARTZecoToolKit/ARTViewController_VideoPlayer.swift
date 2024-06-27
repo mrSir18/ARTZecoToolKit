@@ -22,6 +22,9 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
         return button
     }()
     
+    
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true

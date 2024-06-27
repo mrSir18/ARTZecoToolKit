@@ -13,6 +13,9 @@ class ARTViewController_CollectionView: ARTBaseViewController {
     /// 数据源
     private let sectionNames: [String] = ["瀑布流布局", "列表布局", "九宫格布局"]
     
+    
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
