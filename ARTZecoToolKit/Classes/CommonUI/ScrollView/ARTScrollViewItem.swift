@@ -6,15 +6,22 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-public struct ARTScrollViewItem {
+import SmartCodable
+
+public struct ARTScrollViewItem: SmartCodable {
     
-    public let id: String?          // ID
-    public let title: String?       // 标题
-    public let desc: String?        // 描述
-    public let imageUrl: String?    // 图片
-    public let videoUrl: String?    // 视频
-    public let linkUrl: String?     // H5链接
-    public let extParams: Any?      // 扩展参数
+    public var id: String?          // ID
+    public var title: String?       // 标题
+    public var desc: String?        // 描述
+    public var imageUrl: String?    // 图片
+    public var videoUrl: String?    // 视频
+    public var linkUrl: String?     // H5链接
+    @SmartAny
+    public var extParams: Any?      // 扩展参数
+    
+    public init() {
+        
+    }
     
     public init(id: String?, title: String?, desc: String?, imageUrl: String?, videoUrl: String?, linkUrl: String?, extParams: Any?) {
         self.id         = id
