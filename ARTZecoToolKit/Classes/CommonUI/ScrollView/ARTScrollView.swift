@@ -114,8 +114,7 @@ public class ARTScrollView: UIView {
                 make.edges.equalTo(pageView)
             }
             /// 如果模型中包含非空且非空字符串的图像 URL，则根据情况设置背景图像视图的内容模式和图像.
-            let imageUrl = dataSources[index].imageUrl
-            if !imageUrl.isEmpty {
+            if let imageUrl = dataSources[index].imageUrl {
                 if isValidHttpUrl(imageUrl) {
                     imageView.yy_imageURL = URL(string: imageUrl)
                 } else {

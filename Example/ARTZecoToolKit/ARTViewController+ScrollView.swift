@@ -12,11 +12,11 @@ class ARTViewController_ScrollView: ARTBaseViewController {
 
     /// 轮播数据源
     private let dataSources: [ARTScrollViewItem] = [
-        ARTScrollViewItem(id: "1", imageUrl: "0", videoUrl: "", h5Link: ""),
-        ARTScrollViewItem(id: "2", imageUrl: "1", videoUrl: "", h5Link: ""),
-        ARTScrollViewItem(id: "3", imageUrl: "https://b0.bdstatic.com/9a718281687090415ea88d65e823488f.jpg@h_1280", videoUrl: "", h5Link: ""),
-        ARTScrollViewItem(id: "3", imageUrl: "https://img.soogif.com/5mSGKbh6tQKlCBJdxmbdUC0ceSPT9oCR.JPEG", videoUrl: "", h5Link: ""),
-        ARTScrollViewItem(id: "3", imageUrl: "2", videoUrl: "", h5Link: ""),
+        ARTScrollViewItem(id: "1", title: "", desc: "", imageUrl: "https://b0.bdstatic.com/9a718281687090415ea88d65e823488f.jpg@h_1280", videoUrl: "", linkUrl: ""),
+        ARTScrollViewItem(id: "2", title: "", desc: "", imageUrl: "2", videoUrl: "", linkUrl: ""),
+        ARTScrollViewItem(id: "3", title: "", desc: "", imageUrl: "https://b0.bdstatic.com/9a718281687090415ea88d65e823488f.jpg@h_1280", videoUrl: "", linkUrl: ""),
+        ARTScrollViewItem(id: "4", title: "", desc: "", imageUrl: "https://img.soogif.com/5mSGKbh6tQKlCBJdxmbdUC0ceSPT9oCR.JPEG", videoUrl: "", linkUrl: ""),
+        ARTScrollViewItem(id: "5", title: "", desc: "", imageUrl: "2", videoUrl: "", linkUrl: "")
     ]
     
     private var pageControl: UIPageControl!
