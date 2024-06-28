@@ -51,9 +51,11 @@ class ARTViewController_PageViewController: ARTBaseViewController {
         }
         
         // 指定跳转到第N个视图控制器
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//            pageViewController.goToPage(index: 1, animated: true)
-//        }
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.slideBarView.updateSelectedIndex(4, animated: false)
+            self.pageViewController.goToPage(index: 4, animated: true, shouldUpdatePageIndex: false)
+        }
     }
 }
 
@@ -63,7 +65,7 @@ class ARTViewController_PageViewController: ARTBaseViewController {
 extension ARTViewController_PageViewController: ARTSliderBarViewProtocol {
     
     func slideBarView(_ slideBarView: ARTSliderBarView, didSelectItemAt index: Int) {
-        pageViewController.goToPage(index: index, animated: true)
+        pageViewController.goToPage(index: index, animated: true, shouldUpdatePageIndex: true)
     }
 }
 
@@ -80,7 +82,7 @@ extension ARTViewController_PageViewController: ARTPageViewControllerProtocol {
     }
     
     func pageViewController(_ pageViewController: ARTPageViewController, didUpdatePageIndex index: Int) {
-        slideBarView.updateSelectedIndex(index)
+        slideBarView.updateSelectedIndex(index, animated: true)
         print("当前视图控制器的索引: \(index)")
     }
 }

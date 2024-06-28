@@ -8,14 +8,14 @@
 
 import SnapKit
 
-@objc public protocol ARTSliderBarViewProtocol: AnyObject {
+public protocol ARTSliderBarViewProtocol: AnyObject {
     
     /// 滑动块菜单栏
     ///
     /// - Parameters:
     ///   - slideBarView: 菜单栏视图。
     ///   - index: 内容的下标
-    @objc optional func slideBarView(_ slideBarView: ARTSliderBarView, didSelectItemAt index: Int)
+    func slideBarView(_ slideBarView: ARTSliderBarView, didSelectItemAt index: Int)
 }
 
 public class ARTSliderBarView: UIView {
@@ -41,9 +41,10 @@ public class ARTSliderBarView: UIView {
     }()
     
     // MARK: - 更新索引下标
-    public func updateSelectedIndex(_ index: Int) {
-        moveLine(index + baseIndex) // 将当前下标加上基准值
-        scrollToVisibleButton(at: index + baseIndex) // 将当前下标加上基准值
+    
+    public func updateSelectedIndex(_ index: Int, animated: Bool) {
+        moveLine(index + baseIndex, animated: animated) // 将当前下标加上基准值
+        scrollToVisibleButton(at: index + baseIndex, animated: animated) // 将当前下标加上基准值
     }
     
     
@@ -105,7 +106,7 @@ public class ARTSliderBarView: UIView {
             self.layoutIfNeeded()
             guard let lastButton = lastButton else { return }
             self.scrollView.contentSize = CGSize(width: lastButton.frame.maxX + configuration.titleEdgeInsets.right, height: self.scrollView.frame.height)
-
+            
             // 更新父视图的宽度
             if self.scrollView.contentSize.width < self.frame.size.width {
                 self.scrollView.snp.remakeConstraints { make in
@@ -151,13 +152,13 @@ public class ARTSliderBarView: UIView {
     // MARK: - Private UIButton Methods
     
     @objc private func sliderBarButtonTapped(sender: UIButton) {
-        moveLine(sender.tag)
-        delegate?.slideBarView?(self, didSelectItemAt: sender.tag - baseIndex)
+        moveLine(sender.tag, animated: true)
+        delegate?.slideBarView(self, didSelectItemAt: sender.tag - baseIndex)
     }
     
     // MARK: - Private Method
     
-    private func moveLine(_ index: Int) {
+    private func moveLine(_ index: Int, animated: Bool) {
         let configuration = ARTSliderBarStyleConfiguration.default()
         if let previousButton = viewWithTag(previousIndex) as? UIButton {
             previousButton.titleLabel?.font = configuration.titleFont
@@ -171,7 +172,7 @@ public class ARTSliderBarView: UIView {
         }
         
         if let lastButton = viewWithTag(previousIndex) as? UIButton {
-            UIView.animate(withDuration: 0.3) {
+            let updateConstraints = {
                 self.lineView.snp.remakeConstraints { make in
                     make.size.equalTo(configuration.lineSize)
                     make.bottom.equalTo(-configuration.lineBottomSpacing)
@@ -179,10 +180,18 @@ public class ARTSliderBarView: UIView {
                 }
                 self.layoutIfNeeded()
             }
+            
+            if animated {
+                UIView.animate(withDuration: 0.3) {
+                    updateConstraints()
+                }
+            } else {
+                updateConstraints()
+            }
         }
     }
     
-    private func scrollToVisibleButton(at index: Int) {
+    private func scrollToVisibleButton(at index: Int, animated: Bool) {
         guard let button = viewWithTag(index) as? UIButton else { return }
         let buttonFrame = button.frame
         let visibleRect = scrollView.bounds
@@ -197,7 +206,7 @@ public class ARTSliderBarView: UIView {
         offsetX += centerOffsetX
         // 限制偏移量在可滚动范围内
         offsetX = min(max(offsetX, 0.0), scrollView.contentSize.width - visibleRect.width)
-        scrollView.setContentOffset(CGPoint(x: offsetX, y: 0.0), animated: true)
+        scrollView.setContentOffset(CGPoint(x: offsetX, y: 0.0), animated: animated)
     }
 }
 

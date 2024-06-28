@@ -77,13 +77,16 @@ public class ARTPageViewController: UIPageViewController {
     /// - Parameters:
     ///  - index: 视图控制器的索引.
     ///  - animated: 是否动画.
-    public func goToPage(index: Int, animated: Bool) {
+    ///  - shouldUpdatePageIndex: 是否调用代理方法来更新页面索引.
+    public func goToPage(index: Int, animated: Bool, shouldUpdatePageIndex: Bool) {
         guard index >= 0, index < pages.count else { return }
         let currentIndex = pages.firstIndex(of: viewControllers?.first ?? UIViewController()) ?? 0
         let direction: UIPageViewController.NavigationDirection = index > currentIndex ? .forward : .reverse
         setViewControllers([pages[index]], direction: direction, animated: animated) { [weak self] _ in
             guard let self = self else { return }
-            self.pageDelegate?.pageViewController(self, didUpdatePageIndex: index)
+            if shouldUpdatePageIndex {
+                self.pageDelegate?.pageViewController(self, didUpdatePageIndex: index)
+            }
         }
     }
 }
