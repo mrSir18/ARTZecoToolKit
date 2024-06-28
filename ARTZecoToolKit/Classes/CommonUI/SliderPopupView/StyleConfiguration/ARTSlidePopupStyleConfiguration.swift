@@ -29,7 +29,7 @@ public class ARTSlidePopupStyleConfiguration: NSObject {
             pri_containerHeight
         }
         set {
-            pri_containerHeight = max(0.0, newValue)
+            pri_containerHeight = max(0.0, round(newValue))
         }
     }
     
