@@ -51,11 +51,11 @@ class ARTViewController_PageViewController: ARTBaseViewController {
         }
         
         // 指定跳转到第N个视图控制器
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.slideBarView.updateSelectedIndex(4, animated: false)
-            self.pageViewController.goToPage(index: 4, animated: true, shouldUpdatePageIndex: false)
-        }
+//        DispatchQueue.main.async { [weak self] in
+//            guard let self = self else { return }
+//            self.slideBarView.updateSelectedIndex(4, animated: false)
+//            self.pageViewController.goToPage(index: 4, animated: false, shouldUpdatePageIndex: false)
+//        }
     }
 }
 
