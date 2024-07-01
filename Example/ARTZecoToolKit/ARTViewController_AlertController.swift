@@ -1,5 +1,5 @@
 //
-//  ARTViewController_Alert.swift
+//  ARTViewController_AlertController.swift
 //  ARTZecoToolKit_Example
 //
 //  Created by mrSir18 on 2024/5/17.
@@ -8,7 +8,7 @@
 
 import ARTZecoToolKit
 
-class ARTViewController_Alert: ARTBaseViewController {
+class ARTViewController_AlertController: ARTBaseViewController {
     
     /// Alert按钮
     private lazy var alertButton: ARTAlignmentButton = {
@@ -62,7 +62,19 @@ class ARTViewController_Alert: ARTBaseViewController {
                                                preferredStyle: .alert,
                                                buttonTitles: ["确定", "取消"],
                                                buttonStyles: [.default, .cancel], in: self) { mode in
-            print("点击了\(mode)按钮")
+            switch mode {
+            case .first:
+                print("First mode selected")
+                // 处理第一种模式的逻辑
+            case .second:
+                print("Second mode selected")
+                // 处理第二种模式的逻辑
+            case .custom(let index):
+                print("Custom mode selected with index \(index)")
+                // 处理超出定义的情况，比如记录日志或其他操作
+            default:
+                break
+            }
         }
     }
     

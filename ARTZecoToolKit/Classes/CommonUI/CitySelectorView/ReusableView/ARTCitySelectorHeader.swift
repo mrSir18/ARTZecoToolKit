@@ -237,7 +237,7 @@ extension ARTCitySelectorHeader {
         let viewsToRemove = titleScrollView.subviews.filter { $0 is UIButton || $0 is UILabel }
         viewsToRemove.forEach { $0.removeFromSuperview() }
         
-        var lastButton: ARTAlignmentButton?
+        var previousButton: ARTAlignmentButton?
         let selectedColor = ARTCityStyleConfiguration.default().themeColor
         let normalColor = UIColor.art_color(withHEXValue: 0x18171f)
         cityNames.enumerated().forEach { (index, title) in
@@ -250,29 +250,29 @@ extension ARTCitySelectorHeader {
             titleButton.addTarget(self, action: #selector(titleButtonTapped(sender:)), for: .touchUpInside)
             titleScrollView.addSubview(titleButton)
             titleButton.snp.makeConstraints { make in
-                if let lastButton = lastButton {
-                    make.left.equalTo(lastButton.snp.right).offset(60.0)
+                if let previousButton = previousButton {
+                    make.left.equalTo(previousButton.snp.right).offset(60.0)
                 } else {
                     make.left.equalToSuperview()
                 }
                 make.centerY.equalToSuperview()
             }
             
-            lastButton = titleButton
+            previousButton = titleButton
         }
         
         self.sliderControlLine.snp.remakeConstraints { make in
             make.size.equalTo(CGSize(width: 32.0, height: 2.0))
-            make.centerX.equalTo(lastButton!)
+            make.centerX.equalTo(previousButton!)
             make.bottom.equalTo(self.separatorLinee)
         }
         
         titleScrollView.layoutIfNeeded()
-        titleScrollView.contentSize = CGSize(width: lastButton!.frame.maxX, height: titleScrollView.bounds.height)
+        titleScrollView.contentSize = CGSize(width: previousButton!.frame.maxX, height: titleScrollView.bounds.height)
         
         // 检查内容是否超出屏幕
-        if let lastButton = lastButton, lastButton.frame.maxX + titleScrollView.contentInset.right > titleScrollView.bounds.width {
-            let offsetX = max(0, lastButton.frame.maxX - titleScrollView.bounds.width)
+        if let previousButton = previousButton, previousButton.frame.maxX + titleScrollView.contentInset.right > titleScrollView.bounds.width {
+            let offsetX = max(0, previousButton.frame.maxX - titleScrollView.bounds.width)
             titleScrollView.setContentOffset(CGPoint(x: offsetX + titleScrollView.contentInset.right, y: 0), animated: true)
         }
     }

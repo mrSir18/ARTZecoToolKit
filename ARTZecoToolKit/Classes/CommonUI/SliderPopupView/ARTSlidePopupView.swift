@@ -33,7 +33,7 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
+    
     private func setupViews() {
         
         // 创建遮罩视图
@@ -84,15 +84,18 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
             // 根据手势速度确定是否收起containerView
             let velocity = gesture.velocity(in: containerView).y
             if velocity > 100.0 {
-                UIView.animate(withDuration: 0.2) {
+                UIView.animate(withDuration: 0.2) { [weak self] in
+                    guard let self = self else { return }
                     self.containerView.frame.origin.y = UIScreen.art_currentScreenHeight
-                } completion: { finish in
+                } completion: { [weak self] finish in
+                    guard let self = self else { return }
                     if finish {
                         self.hideSlidePopupView()
                     }
                 }
             } else {
-                UIView.animate(withDuration: 0.3) {
+                UIView.animate(withDuration: 0.3) { [weak self] in
+                    guard let self = self else { return }
                     self.containerView.frame.origin.y = self.initialY
                 }
             }
@@ -116,22 +119,25 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
     /// 展示动画
     open func showSlidePopupView() {
         keyWindow.addSubview(self)
-        self.snp.makeConstraints { make in
+        snp.makeConstraints { make in
             make.size.equalTo(CGSizeMake(UIScreen.art_currentScreenWidth,
                                          UIScreen.art_currentScreenHeight))
             make.left.top.equalToSuperview()
         }
         
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            guard let self = self else { return }
             self.containerView.transform = CGAffineTransformTranslate(self.containerView.transform, 0, -self.configuration.containerHeight - art_safeAreaBottom())
         }
     }
-
+    
     /// 隐藏动画
     open func hideSlidePopupView() {
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            guard let self = self else { return}
             self.containerView.transform = CGAffineTransformTranslate(self.containerView.transform, 0, self.configuration.containerHeight + art_safeAreaBottom())
-        } completion: { finish in
+        } completion: { [weak self] finish in
+            guard let self = self else { return}
             self.removeFromSuperview()
         }
     }

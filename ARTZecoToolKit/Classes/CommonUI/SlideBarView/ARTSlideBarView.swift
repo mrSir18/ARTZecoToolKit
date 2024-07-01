@@ -72,7 +72,7 @@ public class ARTSliderBarView: UIView {
             let spacing     = configuration.titleSpacing * CGFloat(titleCount - 1)
             let buttonWidth = (screenWidth - insets - spacing) / titleCount
             
-            var lastButton: ARTAlignmentButton?
+            var previousButton: ARTAlignmentButton?
             for (index, title) in configuration.titles.enumerated() {
                 let textSize = (title as NSString).size(withAttributes: [.font: configuration.titleSelectedFont])
                 let isSelected = index + self.baseIndex == self.previousIndex
@@ -87,8 +87,8 @@ public class ARTSliderBarView: UIView {
                 button.snp.makeConstraints { make in
                     make.top.equalToSuperview()
                     make.height.equalToSuperview()
-                    if let lastButton = lastButton {
-                        make.left.equalTo(lastButton.snp.right).offset(configuration.titleSpacing)
+                    if let previousButton = previousButton {
+                        make.left.equalTo(previousButton.snp.right).offset(configuration.titleSpacing)
                     } else {
                         make.left.equalTo(configuration.titleEdgeInsets.left)
                     }
@@ -101,11 +101,11 @@ public class ARTSliderBarView: UIView {
                         make.width.equalTo(textSize.width)
                     }
                 }
-                lastButton = button
+                previousButton = button
             }
             self.layoutIfNeeded()
-            guard let lastButton = lastButton else { return }
-            self.scrollView.contentSize = CGSize(width: lastButton.frame.maxX + configuration.titleEdgeInsets.right, height: self.scrollView.frame.height)
+            guard let previousButton = previousButton else { return }
+            self.scrollView.contentSize = CGSize(width: previousButton.frame.maxX + configuration.titleEdgeInsets.right, height: self.scrollView.frame.height)
             
             // 更新父视图的宽度
             if self.scrollView.contentSize.width < self.frame.size.width {
@@ -123,7 +123,7 @@ public class ARTSliderBarView: UIView {
                         make.left.equalTo(self.frame.origin.x)
                         make.top.equalTo(self.frame.origin.y)
                         make.height.equalTo(self.frame.size.height)
-                        make.right.equalTo(lastButton.frame.maxX + configuration.titleEdgeInsets.right)
+                        make.right.equalTo(previousButton.frame.maxX + configuration.titleEdgeInsets.right)
                     }
                 }
             }
@@ -171,12 +171,12 @@ public class ARTSliderBarView: UIView {
             nextButton.setTitleColor(configuration.titleSelectedColor, for: .normal)
         }
         
-        if let lastButton = viewWithTag(previousIndex) as? UIButton {
+        if let previousButton = viewWithTag(previousIndex) as? UIButton {
             let updateConstraints = {
                 self.lineView.snp.remakeConstraints { make in
                     make.size.equalTo(configuration.lineSize)
                     make.bottom.equalTo(-configuration.lineBottomSpacing)
-                    make.centerX.equalTo(lastButton.snp.centerX)
+                    make.centerX.equalTo(previousButton.snp.centerX)
                 }
                 self.layoutIfNeeded()
             }
