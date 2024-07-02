@@ -24,7 +24,9 @@ open class ARTAlertView: UIView {
     /// 确认按钮
     private var confirmButton: ARTCustomButton!
     
+    /// 按钮点击回调
     public var buttonTappedCallback: ((ARTAlertControllerMode) -> Void)?
+    
     
     // MARK: - Life Cycle
     

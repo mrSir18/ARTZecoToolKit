@@ -6,7 +6,6 @@
 //
 
 public extension ARTAlertViewStyleConfiguration {
-    
     @discardableResult
     func containerWidth(_ width: CGFloat) -> ARTAlertViewStyleConfiguration {
         containerWidth = width
