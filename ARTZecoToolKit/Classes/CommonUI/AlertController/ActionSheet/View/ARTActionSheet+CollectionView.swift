@@ -28,7 +28,8 @@ extension ARTActionSheet: UICollectionViewDelegate, UICollectionViewDataSource {
         let item = configuration.contentEntitys[indexPath.section][indexPath.item]
         guard let index = packedArray.firstIndex(where: { $0.text == item.text }) else { return }
         let mode = index < ARTAlertControllerMode.allCases.count ? ARTAlertControllerMode.allCases[index] : .custom(index + 1)
-        didSelectItemCallback?(mode)
+        self.didSelectItemCallback?(mode)
+        self.hide()
     }
 }
 
