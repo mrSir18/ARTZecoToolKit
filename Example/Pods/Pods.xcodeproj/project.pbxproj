@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		01783E54D9015C44569DEEAD8B1B2739 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CFFEF7A61F0E0AEB2C1DC5C71778033 /* UIKit.framework */; };
+		02781F2D2C35BAB5008F8B59 /* ARTStarRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02781F2C2C35BAB5008F8B59 /* ARTStarRatingView.swift */; };
+		02781F302C35BF7F008F8B59 /* ARTStarRatingStyleConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02781F2F2C35BF7F008F8B59 /* ARTStarRatingStyleConfiguration.swift */; };
+		02781F322C35BF8D008F8B59 /* ARTStarRatingStyleConfiguration+Chaining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02781F312C35BF8D008F8B59 /* ARTStarRatingStyleConfiguration+Chaining.swift */; };
 		0417B629EB02B72D9784FAD6D5865A59 /* JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA28CB45F064CCDC89802FDF9C5E39BC /* JSONValue.swift */; };
 		04FC51EF35CBE7ECBA879DF2E274DD75 /* JSONDecoderImpl+unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53ABD26A23A987C4184F10643EFCB4C /* JSONDecoderImpl+unwrap.swift */; };
 		054E41A9C8CF9A936F3AC2E7EC199481 /* ARTAlignmentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E80CFC483AC89B5652CFEC47E9A6F3 /* ARTAlignmentButton.swift */; };
@@ -339,6 +342,9 @@
 		008459F16261765E9280CB1538179474 /* SmartCodable.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SmartCodable.release.xcconfig; sourceTree = "<group>"; };
 		0112897A6CD6DD46079A3077A16A2B58 /* ARTZecoToolKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ARTZecoToolKit-dummy.m"; sourceTree = "<group>"; };
 		0161A74B01E1A777748421B319369526 /* DateTransformer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DateTransformer.swift; path = SmartCodable/Classes/Transformer/DateTransformer.swift; sourceTree = "<group>"; };
+		02781F2C2C35BAB5008F8B59 /* ARTStarRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTStarRatingView.swift; sourceTree = "<group>"; };
+		02781F2F2C35BF7F008F8B59 /* ARTStarRatingStyleConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTStarRatingStyleConfiguration.swift; sourceTree = "<group>"; };
+		02781F312C35BF8D008F8B59 /* ARTStarRatingStyleConfiguration+Chaining.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTStarRatingStyleConfiguration+Chaining.swift"; sourceTree = "<group>"; };
 		051F55DF28966A79E3573D96BF71CED4 /* YYCache-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "YYCache-umbrella.h"; sourceTree = "<group>"; };
 		0581CEC26EB9E130A4606FF9A552347A /* ConstraintConstantTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintConstantTarget.swift; path = Sources/ConstraintConstantTarget.swift; sourceTree = "<group>"; };
 		06DF0A41CC6265643C50228315F5D54B /* _YYWebImageSetter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = _YYWebImageSetter.m; path = YYWebImage/Categories/_YYWebImageSetter.m; sourceTree = "<group>"; };
@@ -383,7 +389,7 @@
 		37C3BA633915C8374BA47B28E9AB1ED4 /* ConstraintLayoutGuideDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutGuideDSL.swift; path = Sources/ConstraintLayoutGuideDSL.swift; sourceTree = "<group>"; };
 		38A8AC3B439B6264C9DD2A31BCF37833 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
 		39D1B25A95CBB1F1C088E60C7FBFF504 /* SnapKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SnapKit-prefix.pch"; sourceTree = "<group>"; };
-		3A294C64712EC3BFF411E775610862BF /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		3A294C64712EC3BFF411E775610862BF /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		3A3F63638B4C40166CF13FBB6B472D56 /* YYImage-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "YYImage-Info.plist"; sourceTree = "<group>"; };
 		3BC6F24FCDF13C63EE93D3B45804A1C1 /* ARTDeviceExtension .swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ARTDeviceExtension .swift"; sourceTree = "<group>"; };
 		3BE04313DA91A4B91F1945A25DE1FD98 /* Cachable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Cachable.swift; path = SmartCodable/Classes/Cache/Cachable.swift; sourceTree = "<group>"; };
@@ -402,7 +408,7 @@
 		4817B92BEC385613D940860B96F90CDD /* Pods-ARTZecoToolKit_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ARTZecoToolKit_Example-dummy.m"; sourceTree = "<group>"; };
 		48ACF38225AF5129416A1F090F6D3286 /* YYCache */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = YYCache; path = YYCache.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		497B4F32BC8B46287EB589F481A6C34E /* ARTQuantityStyleConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTQuantityStyleConfiguration.swift; sourceTree = "<group>"; };
-		4A3BE170A2A91F1CACC737D7564266A4 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Sources/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		4A3BE170A2A91F1CACC737D7564266A4 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Sources/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		4ACB9EFC186282A840E0C3F944E38A48 /* ConstraintLayoutGuide.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutGuide.swift; path = Sources/ConstraintLayoutGuide.swift; sourceTree = "<group>"; };
 		4B9DB378A4E0F0993FE3F0DC150B2023 /* JSONParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = JSONParser.swift; path = SmartCodable/Classes/JSONValue/JSONParser.swift; sourceTree = "<group>"; };
 		4C1FFFDD15B961468F163F4EF1210A00 /* ARTCityStyleConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTCityStyleConfiguration.swift; sourceTree = "<group>"; };
@@ -493,7 +499,7 @@
 		966F6BC3DD9C1D54BC3A5F26FFD940AD /* YYMemoryCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = YYMemoryCache.h; path = YYCache/YYMemoryCache.h; sourceTree = "<group>"; };
 		975642D6E78BF8EBEC790AA1052BDC20 /* JSONEncoderImpl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = JSONEncoderImpl.swift; path = SmartCodable/Classes/JSONEncoder/Impl/JSONEncoderImpl.swift; sourceTree = "<group>"; };
 		979486118B3E90C08386079D57962701 /* SnapKit */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SnapKit; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E0D507E1E88EC6E8CF0ADDC44C69EC0 /* JSONDecoderImpl+UnkeyedContainer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "JSONDecoderImpl+UnkeyedContainer.swift"; path = "SmartCodable/Classes/JSONDecoder/Decoder/Impl/JSONDecoderImpl+UnkeyedContainer.swift"; sourceTree = "<group>"; };
 		A06E45B0920F06C22AFB4C25B2C89014 /* ConstraintLayoutSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupport.swift; path = Sources/ConstraintLayoutSupport.swift; sourceTree = "<group>"; };
 		A12818C2E013374F7152467D59180DB6 /* YYWebImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = YYWebImage.h; path = YYWebImage/YYWebImage.h; sourceTree = "<group>"; };
@@ -512,7 +518,7 @@
 		B09222B2FA2D82286D89B4E7DD31D123 /* ARTZecoToolKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ARTZecoToolKit-prefix.pch"; sourceTree = "<group>"; };
 		B0E49FF6356988F7B87A4B5B4FB7428D /* UIImageView+YYWebImage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+YYWebImage.m"; path = "YYWebImage/Categories/UIImageView+YYWebImage.m"; sourceTree = "<group>"; };
 		B107227955B10F91920BB1F95E174495 /* ConstraintView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintView.swift; path = Sources/ConstraintView.swift; sourceTree = "<group>"; };
-		B31B6151A957C3223801E62B578F890A /* ARTZecoToolKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = ARTZecoToolKit.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		B31B6151A957C3223801E62B578F890A /* ARTZecoToolKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = ARTZecoToolKit.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		B3D2734ED717A8E05F720035686D1A3A /* JSONDecoderImpl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = JSONDecoderImpl.swift; path = SmartCodable/Classes/JSONDecoder/Decoder/Impl/JSONDecoderImpl.swift; sourceTree = "<group>"; };
 		B53ABD26A23A987C4184F10643EFCB4C /* JSONDecoderImpl+unwrap.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "JSONDecoderImpl+unwrap.swift"; path = "SmartCodable/Classes/JSONDecoder/Decoder/Impl/JSONDecoderImpl+unwrap.swift"; sourceTree = "<group>"; };
 		B6535402B3693E48EC8068AA4EADBC9C /* YYImage.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = YYImage.modulemap; sourceTree = "<group>"; };
@@ -569,7 +575,7 @@
 		DD4D6CF0124431ADE3C80927DE15B0F8 /* UIButton+YYWebImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIButton+YYWebImage.h"; path = "YYWebImage/Categories/UIButton+YYWebImage.h"; sourceTree = "<group>"; };
 		DEDAB6DCC188ADB343DDC7F9CD1B32A8 /* LogCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LogCache.swift; path = SmartCodable/Classes/Log/LogCache.swift; sourceTree = "<group>"; };
 		E01D514FB387200BA46EA7B79082E458 /* ConstraintMakerRelatable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerRelatable.swift; path = Sources/ConstraintMakerRelatable.swift; sourceTree = "<group>"; };
-		E07AF7E83C9B89D9A32EABF8DFEC512C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		E07AF7E83C9B89D9A32EABF8DFEC512C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E0AEAB470D836175930911AE2487E46D /* ConstraintLayoutSupportDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupportDSL.swift; path = Sources/ConstraintLayoutSupportDSL.swift; sourceTree = "<group>"; };
 		E3BD9A398B254D97C83A37679918F94D /* Encodable+ARTExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Encodable+ARTExtension.swift"; sourceTree = "<group>"; };
 		E3DD6E051FBCE17CC08D8A86AB5456A1 /* Pods-ARTZecoToolKit_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ARTZecoToolKit_Tests-umbrella.h"; sourceTree = "<group>"; };
@@ -710,7 +716,6 @@
 				6DEBA9F03F4EC34CCCE07D27499378C6 /* CustomAlert */,
 				DFF869CCBAB7A6F2F32A1221460CC089 /* SystemAlertController */,
 			);
-			name = AlertController;
 			path = AlertController;
 			sourceTree = "<group>";
 		};
@@ -720,7 +725,24 @@
 				4803A8BF605D84C28838B30C9C40AB28 /* ARTActionSheetStyleConfiguration.swift */,
 				F5C9F5108D4C99CE5BDB90696A34AEC3 /* ARTActionSheetStyleConfiguration+Chaining.swift */,
 			);
-			name = StyleConfiguration;
+			path = StyleConfiguration;
+			sourceTree = "<group>";
+		};
+		02781F2E2C35BAF6008F8B59 /* StarRatingView */ = {
+			isa = PBXGroup;
+			children = (
+				02781F2C2C35BAB5008F8B59 /* ARTStarRatingView.swift */,
+				02781F332C35BF92008F8B59 /* StyleConfiguration */,
+			);
+			path = StarRatingView;
+			sourceTree = "<group>";
+		};
+		02781F332C35BF92008F8B59 /* StyleConfiguration */ = {
+			isa = PBXGroup;
+			children = (
+				02781F2F2C35BF7F008F8B59 /* ARTStarRatingStyleConfiguration.swift */,
+				02781F312C35BF8D008F8B59 /* ARTStarRatingStyleConfiguration+Chaining.swift */,
+			);
 			path = StyleConfiguration;
 			sourceTree = "<group>";
 		};
@@ -738,7 +760,6 @@
 				FE101B608D5ADFBBA2D784995469D4E9 /* ARTSliderBarStyleConfiguration.swift */,
 				4FCA8F77266714F6B47B024F7FFE3E81 /* ARTSliderBarStyleConfiguration+Chaining.swift */,
 			);
-			name = StyleConfiguration;
 			path = StyleConfiguration;
 			sourceTree = "<group>";
 		};
@@ -785,7 +806,6 @@
 				44E27B7C67CDD2FE47F0ABDD17314485 /* Resources */,
 				5FF8F89439D48DF025CBBEB4F2DB807D /* Support Files */,
 			);
-			name = SnapKit;
 			path = SnapKit;
 			sourceTree = "<group>";
 		};
@@ -811,7 +831,6 @@
 			children = (
 				47E57FF9FC901903F4F01F1BDED585F5 /* ARTCitySelectorViewModel.swift */,
 			);
-			name = ViewModel;
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
@@ -842,7 +861,6 @@
 				497B4F32BC8B46287EB589F481A6C34E /* ARTQuantityStyleConfiguration.swift */,
 				FABEBDF6827E545849D993B0286D07D0 /* ARTQuantityStyleConfiguration+Chaining.swift */,
 			);
-			name = StyleConfiguration;
 			path = StyleConfiguration;
 			sourceTree = "<group>";
 		};
@@ -886,7 +904,6 @@
 				5A666175595E473EAC63A12A395C51AC /* YYWebImageOperation.m */,
 				4C026655D889A97FFCAFCE27155B8D21 /* Support Files */,
 			);
-			name = YYWebImage;
 			path = YYWebImage;
 			sourceTree = "<group>";
 		};
@@ -895,7 +912,6 @@
 			children = (
 				F9E814FB9CB1E3AC20E00270CFFEC9AA /* ARTCustomButton.swift */,
 			);
-			name = CustomControl;
 			path = CustomControl;
 			sourceTree = "<group>";
 		};
@@ -920,7 +936,6 @@
 				30FDA1F3CAEFB888B68D09882F8DEC6D /* ARTSlidePopupStyleConfiguration.swift */,
 				20D786DC041EEFECA15799F6D6E5E591 /* ARTSlidePopupStyleConfiguration+Chaining.swift */,
 			);
-			name = StyleConfiguration;
 			path = StyleConfiguration;
 			sourceTree = "<group>";
 		};
@@ -929,7 +944,6 @@
 			children = (
 				D76BDAFEDBFD540FE1A16337EBD4DD30 /* ARTPageViewController.swift */,
 			);
-			name = PageViewController;
 			path = PageViewController;
 			sourceTree = "<group>";
 		};
@@ -969,7 +983,6 @@
 				021F9C3EB0A5F58A9A303A693009BDB3 /* StyleConfiguration */,
 				D8233D3420D85634936CE543EDD0F3C1 /* View */,
 			);
-			name = ActionSheet;
 			path = ActionSheet;
 			sourceTree = "<group>";
 		};
@@ -978,7 +991,6 @@
 			children = (
 				5A01D0763D800B71CAE1F00615DDC9C1 /* ARTActionSheetEntity.swift */,
 			);
-			name = Entity;
 			path = Entity;
 			sourceTree = "<group>";
 		};
@@ -1028,7 +1040,6 @@
 				653C4C6B68F1A2CDF9F9912712304ACF /* YYMemoryCache.m */,
 				3166E349694F442AA30A12A8CC65480E /* Support Files */,
 			);
-			name = YYCache;
 			path = YYCache;
 			sourceTree = "<group>";
 		};
@@ -1043,7 +1054,6 @@
 				FE1653DE0FBB1F2779A6AA619977727F /* StyleConfiguration */,
 				0FB66ECADA01F8F1ECC217AFC69CD3FC /* ViewModel */,
 			);
-			name = CitySelectorView;
 			path = CitySelectorView;
 			sourceTree = "<group>";
 		};
@@ -1085,7 +1095,6 @@
 				C2F29964E7BEB2BD03CB094ADA684787 /* ARTCollectionViewConfigModel.swift */,
 				D3E0806885F21E49FAA516BC3DA298C3 /* ARTCollectionViewFlowLayout.swift */,
 			);
-			name = CollectionView;
 			path = CollectionView;
 			sourceTree = "<group>";
 		};
@@ -1095,7 +1104,6 @@
 				10C43DA3924A8A796004238EB41CD93E /* ARTAlertView.swift */,
 				DAF7CA1C7984344BD1342CEF87FC9C97 /* StyleConfiguration */,
 			);
-			name = CustomAlert;
 			path = CustomAlert;
 			sourceTree = "<group>";
 		};
@@ -1105,7 +1113,6 @@
 				19753FF33942E52CA143700224033B3F /* ARTCitySelectorCell.swift */,
 				12559603C62C4C285F8CED4EA2EDA162 /* ARTCitySelectorHotCell.swift */,
 			);
-			name = CityCell;
 			path = CityCell;
 			sourceTree = "<group>";
 		};
@@ -1116,7 +1123,6 @@
 				BBBF39C9CFAE631E601630D41C1D5466 /* ARTSlidePopupView.swift */,
 				338359CA47C3402F5588E1F9652048E4 /* StyleConfiguration */,
 			);
-			name = SliderPopupView;
 			path = SliderPopupView;
 			sourceTree = "<group>";
 		};
@@ -1126,7 +1132,6 @@
 				518B524C91EAA2217679A76C2365D3B2 /* ARTScrollView.swift */,
 				6F939BF006FC03788A2DA201533C41DE /* ARTScrollViewItem.swift */,
 			);
-			name = ScrollView;
 			path = ScrollView;
 			sourceTree = "<group>";
 		};
@@ -1135,7 +1140,6 @@
 			children = (
 				D0E80CFC483AC89B5652CFEC47E9A6F3 /* ARTAlignmentButton.swift */,
 			);
-			name = AlignmentButton;
 			path = AlignmentButton;
 			sourceTree = "<group>";
 		};
@@ -1144,7 +1148,6 @@
 			children = (
 				6B7BCD8449D45BAE9B6F90CB3A0B37B7 /* ARTCitySelectorEntity.swift */,
 			);
-			name = Entity;
 			path = Entity;
 			sourceTree = "<group>";
 		};
@@ -1169,7 +1172,6 @@
 				5327DE244F59C66DB23DC1275CFBBD26 /* ARTCitySelectorHeader.swift */,
 				EC1233F3F21179D890FC6E10585ECE7C /* ARTCitySelectorHotHeader.swift */,
 			);
-			name = ReusableView;
 			path = ReusableView;
 			sourceTree = "<group>";
 		};
@@ -1270,7 +1272,6 @@
 				729D8F0387FBC304C7F3E87EFE25EF84 /* URLTransformer.swift */,
 				A035D73156A19233E2B1A3546BBD6010 /* Support Files */,
 			);
-			name = SmartCodable;
 			path = SmartCodable;
 			sourceTree = "<group>";
 		};
@@ -1292,7 +1293,6 @@
 				BAEB6EC307F69ADA4E2F385C7EAF0358 /* ARTActionSheet+CollectionView.swift */,
 				C12377F918F533C9BA0EE2D766092876 /* ARTActionSheetCell.swift */,
 			);
-			name = View;
 			path = View;
 			sourceTree = "<group>";
 		};
@@ -1302,7 +1302,6 @@
 				7D0D5020CCCB57BE99DB3F5865B437D8 /* ARTAlertViewStyleConfiguration.swift */,
 				6FE0ADD44CC74D71D284542C39A2E45F /* ARTAlertViewStyleConfiguration+Chaining.swift */,
 			);
-			name = StyleConfiguration;
 			path = StyleConfiguration;
 			sourceTree = "<group>";
 		};
@@ -1311,7 +1310,6 @@
 			children = (
 				0F1C089ED21381382E922C02B340B368 /* ARTAlertController.swift */,
 			);
-			name = SystemAlertController;
 			path = SystemAlertController;
 			sourceTree = "<group>";
 		};
@@ -1338,7 +1336,6 @@
 				DCEED164E84D6C57E929E577FB26AD77 /* ARTSlideBarView.swift */,
 				08D79E68543D8F2F922EF6CB7CC00234 /* StyleConfiguration */,
 			);
-			name = SlideBarView;
 			path = SlideBarView;
 			sourceTree = "<group>";
 		};
@@ -1348,7 +1345,6 @@
 				E39E46669DE189CB553E01078D7F3010 /* Core */,
 				4FB86D2D4362719B70EC9B7E9DC104FB /* Support Files */,
 			);
-			name = YYImage;
 			path = YYImage;
 			sourceTree = "<group>";
 		};
@@ -1365,6 +1361,7 @@
 				8DD74C4E816B8BCFA1A6841B6F9EF7EA /* ScrollView */,
 				E4907CCA27009A3F9D8DE23E83148D46 /* SlideBarView */,
 				88BF408B199A559246C7679CDE05572F /* SliderPopupView */,
+				02781F2E2C35BAF6008F8B59 /* StarRatingView */,
 			);
 			name = CommonUI;
 			path = ARTZecoToolKit/Classes/CommonUI;
@@ -1409,7 +1406,6 @@
 				401E6DE91616FAF4546A3B45C44B94FD /* ARTQuantityControlView.swift */,
 				1BC84211D8E0250A60230E04E07BF333 /* StyleConfiguration */,
 			);
-			name = QuantityView;
 			path = QuantityView;
 			sourceTree = "<group>";
 		};
@@ -1419,7 +1415,6 @@
 				4C1FFFDD15B961468F163F4EF1210A00 /* ARTCityStyleConfiguration.swift */,
 				E51D676C2FED8138DE7A824630FF611E /* ARTCityStyleConfiguration+Chaining.swift */,
 			);
-			name = StyleConfiguration;
 			path = StyleConfiguration;
 			sourceTree = "<group>";
 		};
@@ -2017,6 +2012,7 @@
 				AA06FF9FE1A3E185D49415AFDEC739A1 /* ARTCitySelectorHeader.swift in Sources */,
 				2D8146C5484ED7EA9DCD69FAF6953257 /* ARTCitySelectorHotCell.swift in Sources */,
 				DB179FDB1F1A3A8EA1777F32168B4047 /* ARTCitySelectorHotHeader.swift in Sources */,
+				02781F322C35BF8D008F8B59 /* ARTStarRatingStyleConfiguration+Chaining.swift in Sources */,
 				186D4A5D1B776585153BF5772A77CEC3 /* ARTCitySelectorView.swift in Sources */,
 				21BBBE5FB03C57780B22B82D83167A33 /* ARTCitySelectorView+CollectionView.swift in Sources */,
 				2EAE1A5156B91C76E587EA2C659860F3 /* ARTCitySelectorViewModel.swift in Sources */,
@@ -2034,6 +2030,7 @@
 				4DB3C6B6DC228C2652FD137B3584D313 /* ARTScreenAdapter.swift in Sources */,
 				E87C74063B71E2370BEA4C94D2B0C40B /* ARTScrollView.swift in Sources */,
 				CDF77B186C8721193EF65BA65E2BA17A /* ARTScrollViewItem.swift in Sources */,
+				02781F302C35BF7F008F8B59 /* ARTStarRatingStyleConfiguration.swift in Sources */,
 				2EFAD90356C912D6630AB848844E7412 /* ARTSlideBarView.swift in Sources */,
 				5D00BD369DCC9A1D415E110A1E03F53C /* ARTSlidePopupHeaderView.swift in Sources */,
 				104CE4D8F346670940B13F73C71B4555 /* ARTSlidePopupStyleConfiguration.swift in Sources */,
@@ -2042,6 +2039,7 @@
 				381A1C26F561C4693217EB1F8C025A12 /* ARTSliderBarStyleConfiguration.swift in Sources */,
 				2128A9C73EDB6EFEA5BFCBE4CBCCE5EF /* ARTSliderBarStyleConfiguration+Chaining.swift in Sources */,
 				76411F4CD41B89125364CDA3956BF2C3 /* ARTZecoToolKit-dummy.m in Sources */,
+				02781F2D2C35BAB5008F8B59 /* ARTStarRatingView.swift in Sources */,
 				5183B0210E6C7045567C67AEBDE50E9B /* CALayer+ARTExtension.swift in Sources */,
 				B16219893B626B72C08FFB2AB483CD6C /* Data+ARTExtension.swift in Sources */,
 				8D86F7E532B50B9093594E0EE89DC805 /* Dictionary+ARTExtension.swift in Sources */,
@@ -2639,8 +2637,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};

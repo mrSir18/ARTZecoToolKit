@@ -13,13 +13,14 @@ class ARTViewController_Debug: ARTBaseViewController {
     /// 控件名
     let dataSources: [String] = ["自定义表单(CollectionView)",       "自定义轮播图(ScrollView)",        "自定义城市选择器(CitySelector)",          "自定义提示框(Alert)(ActionSheet)",       "自定义(SlideBar)",
                                  "自定义数量选择器(Quantity)",        "自定义弹窗(SlidePopup)",          "自定义视频播放器-待开发(VideoPlayer)",     "自定义按钮布局(AlignmentButton)",        "自定义滑动视图(PageViewController)",
-                                 "自定义弹框(AlertView)",            "自定义弹框(ActionSheet)"]
+                                 "自定义弹框(AlertView)",            "自定义弹框(ActionSheet)",         "自定义评分星星(StartRating)"]
     
     /// 类名数组
     let classNames: [String] = ["ARTViewController_CollectionView",             "ARTViewController_ScrollView",             "ARTViewController_CitySelector",
                                 "ARTViewController_AlertController",            "ARTViewController_SlideBar",               "ARTViewController_Quantity",
                                 "ARTViewController_SlidePopup",                 "ARTViewController_VideoPlayer",            "ARTViewController_AlignmentButton",
-                                "ARTViewController_PageViewController",         "ARTViewController_AlertView",              "ARTViewController_ActionSheet"]
+                                "ARTViewController_PageViewController",         "ARTViewController_AlertView",              "ARTViewController_ActionSheet",
+                                "ARTViewController_StartRating"]
     
     
     // MARK: - Life Cycle

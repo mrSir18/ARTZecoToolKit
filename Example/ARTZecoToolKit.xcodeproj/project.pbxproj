@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0222B4432C35A9F600FA82B7 /* ARTViewController_StartRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0222B4422C35A9F600FA82B7 /* ARTViewController_StartRating.swift */; };
 		023F976D2C32F5A1009CD62B /* ARTViewController_AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023F976C2C32F5A1009CD62B /* ARTViewController_AlertView.swift */; };
 		0258B7AB2BFA845800AEB349 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0258B7A82BFA845800AEB349 /* 3.png */; };
 		0258B7AC2BFA845800AEB349 /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 0258B7A92BFA845800AEB349 /* 4.png */; };
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0222B4422C35A9F600FA82B7 /* ARTViewController_StartRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_StartRating.swift; sourceTree = "<group>"; };
 		023F976C2C32F5A1009CD62B /* ARTViewController_AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_AlertView.swift; sourceTree = "<group>"; };
 		0258B7A82BFA845800AEB349 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
 		0258B7A92BFA845800AEB349 /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				0258CA9D2C03995300A486E7 /* ARTViewController_PageViewController.swift */,
 				023F976C2C32F5A1009CD62B /* ARTViewController_AlertView.swift */,
 				026A7B6B2C3431AE00D3134E /* ARTViewController_ActionSheet.swift */,
+				0222B4422C35A9F600FA82B7 /* ARTViewController_StartRating.swift */,
 				02F8AE562BF67E8500A111F6 /* BaseBusiness */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
@@ -429,6 +432,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0222B4432C35A9F600FA82B7 /* ARTViewController_StartRating.swift in Sources */,
 				02F8AE552BF67E7E00A111F6 /* ARTViewController_SlideBar.swift in Sources */,
 				02F8AE502BF67E7E00A111F6 /* ARTViewController_ScrollView.swift in Sources */,
 				02F8AE4C2BF67E7E00A111F6 /* ARTViewController_CitySelector.swift in Sources */,
