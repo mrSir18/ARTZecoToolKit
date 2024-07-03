@@ -3,7 +3,7 @@ PODS:
     - SmartCodable
     - SnapKit
     - YYWebImage
-  - SmartCodable (4.0.4)
+  - SmartCodable (4.1.0)
   - SnapKit (5.7.1)
   - YYCache (1.0.4)
   - YYImage (1.0.4):
@@ -30,7 +30,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   ARTZecoToolKit: 581f4a5e2f28de1bf2b794e6003a2eaf0faae07b
-  SmartCodable: 91f469249cf9cd8c1ef4777bffe902e167293846
+  SmartCodable: 04f61a30bd6567fc15b71e718e1aee4766956e55
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54

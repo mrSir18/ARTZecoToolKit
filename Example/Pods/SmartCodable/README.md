@@ -94,6 +94,12 @@ If you don't know how to use it, check it out.
 
 
 
+## SmarCodable Test
+
+ [👉 To learn more about how SmartCodable is tested, click here](https://github.com/intsig171/SmartCodable/blob/main/Document/README/HowToTest.md)
+
+
+
 ## Debug log
 
 **SmartLog Error** indicates that **SmartCodable** encountered a resolution problem and executed compatibility logic. This does not mean that the analysis failed.
