@@ -40,6 +40,10 @@ extension UIFont {
         return art_fontPingFangSCThin(fontSize)
     }
     
+    public static func art_shsHeavy(_ fontSize: CGFloat) -> UIFont? {
+        return art_fontSourceHanSansHeavy(fontSize)
+    }
+    
     /// 返回一个使用苹方-常规字体的字体对象.
     ///
     /// - Parameter fontSize: 字体的大小.
@@ -123,6 +127,17 @@ extension UIFont {
     /// - Returns: 苹方-纤细字体的字体对象，如果创建失败则返回系统默认字体.
     private static func art_fontPingFangSCThin(_ fontSize: CGFloat) -> UIFont? {
         guard let font = UIFont(name: "PingFangSC-Thin", size: fontSize) else {
+            return .systemFont(ofSize: fontSize)
+        }
+        return font
+    }
+    
+    /// 返回一个使用思源-黑体字体的字体对象.
+    ///
+    /// - Parameter fontSize: 字体的大小.
+    /// - Returns: 思源-黑体字体的字体对象，如果创建失败则返回系统默认字体.
+    private static func art_fontSourceHanSansHeavy(_ fontSize: CGFloat) -> UIFont? {
+        guard let font = UIFont(name: "SourceHanSansCN-Heavy", size: fontSize) else {
             return .systemFont(ofSize: fontSize)
         }
         return font
