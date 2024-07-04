@@ -116,7 +116,8 @@ public class ARTScrollView: UIView {
             /// 如果模型中包含非空且非空字符串的图像 URL，则根据情况设置背景图像视图的内容模式和图像.
             if let imageUrl = dataSources[index].imageUrl {
                 if isValidHttpUrl(imageUrl) {
-                    imageView.yy_imageURL = URL(string: imageUrl)
+                    imageView.yy_setImage(with: URL(string: imageUrl),
+                                          options: [.progressiveBlur, .setImageWithFadeAnimation])
                 } else {
                     imageView.image = UIImage(named: imageUrl)
                 }
