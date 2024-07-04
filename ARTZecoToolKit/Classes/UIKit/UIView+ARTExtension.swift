@@ -10,7 +10,7 @@ extension UIView {
     /// 将视图转换为图片对象.
     ///
     /// - Returns: 生成的图片对象.
-    func asImageAsync(completion: @escaping (UIImage?) -> Void) {
+    public func asImageAsync(completion: @escaping (UIImage?) -> Void) {
         DispatchQueue.global().async {
             UIGraphicsBeginImageContextWithOptions(self.bounds.size, false, 0.0)
             defer { UIGraphicsEndImageContext() }
