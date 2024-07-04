@@ -10,7 +10,7 @@ extension UIView {
     /// 获取视图的视图控制器对象.
     ///
     /// - Returns: 视图控制器对象.
-    func getViewController() -> UIViewController? {
+    public func getViewController() -> UIViewController? {
         var responder: UIResponder? = self
         while let nextResponder = responder?.next {
             if let viewController = nextResponder as? UIViewController {
