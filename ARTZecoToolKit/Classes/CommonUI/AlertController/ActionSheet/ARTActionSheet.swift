@@ -117,12 +117,10 @@ open class ARTActionSheet: UIView {
             let velocity = gesture.velocity(in: containerView).y
             if velocity > 100.0 {
                 UIView.animate(withDuration: 0.2) { [weak self] in
-                    guard let self = self else { return }
-                    self.containerView.frame.origin.y = UIScreen.art_currentScreenHeight
+                    self?.containerView.frame.origin.y = UIScreen.art_currentScreenHeight
                 } completion: { [weak self] finish in
-                    guard let self = self else { return }
                     if finish {
-                        self.hide()
+                        self?.hide()
                     }
                 }
             } else {
