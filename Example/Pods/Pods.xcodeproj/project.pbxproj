@@ -10,6 +10,7 @@
 		0024FC018637CE99608E0C51F1621243 /* YYDiskCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 85CC9EE696CEFA3D521F50E55A529F01 /* YYDiskCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		01ECBC00BAC2DA4D520AED43CEBC9CC1 /* JSONDecoderImpl+SingleValueContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919C8FF52BDC84B057639478239686E4 /* JSONDecoderImpl+SingleValueContainer.swift */; };
 		02D9C2352C375216007E82A6 /* UIView+ARTExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D9C2342C375216007E82A6 /* UIView+ARTExtension.swift */; };
+		02D9C2392C377CDC007E82A6 /* NSObject+ARTExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D9C2382C377CDC007E82A6 /* NSObject+ARTExtension.swift */; };
 		04669756B98DBC577B08B51B85DDDF43 /* YYWebImageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D958E39C610A9155F56C545B9743AA09 /* YYWebImageManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		04C899F7C49E3379426041D110AD1F94 /* ARTSlidePopupHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF50AD99C12ADAF35E17A24976EE695 /* ARTSlidePopupHeaderView.swift */; };
 		05018BD5F6C9B1BFF0686002FC3AB4A8 /* UICollectionView+ARTExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56CE9C18127F49654A887A3D0AFCB7E /* UICollectionView+ARTExtension.swift */; };
@@ -346,6 +347,7 @@
 		019D3D744B51595FBC444693A314DFFF /* NSMutableAttributedString+ARTExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+ARTExtension.swift"; sourceTree = "<group>"; };
 		027D375A44B3E2604A7B5F640B1008F4 /* ARTZecoToolKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ARTZecoToolKit-umbrella.h"; sourceTree = "<group>"; };
 		02D9C2342C375216007E82A6 /* UIView+ARTExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ARTExtension.swift"; sourceTree = "<group>"; };
+		02D9C2382C377CDC007E82A6 /* NSObject+ARTExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+ARTExtension.swift"; sourceTree = "<group>"; };
 		051F55DF28966A79E3573D96BF71CED4 /* YYCache-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "YYCache-umbrella.h"; sourceTree = "<group>"; };
 		0581CEC26EB9E130A4606FF9A552347A /* ConstraintConstantTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintConstantTarget.swift; path = Sources/ConstraintConstantTarget.swift; sourceTree = "<group>"; };
 		066075B32F752842BDF31234BBFA53C1 /* Array+ARTExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Array+ARTExtension.swift"; sourceTree = "<group>"; };
@@ -1195,6 +1197,7 @@
 				B339FD4259087D142FBD7A1CCA32EFDD /* UIImage+ARTExtension.swift */,
 				70CEA94ACB922C83AB3CEFC447A7B828 /* UIScreen+ARTExtension.swift */,
 				02D9C2342C375216007E82A6 /* UIView+ARTExtension.swift */,
+				02D9C2382C377CDC007E82A6 /* NSObject+ARTExtension.swift */,
 			);
 			name = UIKit;
 			path = ARTZecoToolKit/Classes/UIKit;
@@ -1884,6 +1887,7 @@
 				02D9C2352C375216007E82A6 /* UIView+ARTExtension.swift in Sources */,
 				57FEFEFD502DE41AB66292001878BE7D /* UIColor+ARTExtension.swift in Sources */,
 				FA000947CAC71A4EF2DE0687D9816989 /* UIFont+ARTExtension.swift in Sources */,
+				02D9C2392C377CDC007E82A6 /* NSObject+ARTExtension.swift in Sources */,
 				9F9DBA10FCD4E242FDB976BFF1D3FD67 /* UIImage+ARTExtension.swift in Sources */,
 				E38F05B003BE36F57E5873A8E8797D62 /* UIScreen+ARTExtension.swift in Sources */,
 			);
