@@ -11,7 +11,7 @@ extension UITextField {
     ///
     /// - Parameter color: 占位符的颜色.
     /// - Note: 该方法会覆盖掉原有的占位符颜色.
-    func setPlaceholderColor(_ color: UIColor) {
+    public func setPlaceholderColor(_ color: UIColor) {
         guard let placeholder = self.placeholder else { return }
         self.attributedPlaceholder = NSAttributedString(string: placeholder, 
                                                         attributes: [NSAttributedString.Key.foregroundColor: color])
