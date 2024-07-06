@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0024FC018637CE99608E0C51F1621243 /* YYDiskCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 85CC9EE696CEFA3D521F50E55A529F01 /* YYDiskCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		01ECBC00BAC2DA4D520AED43CEBC9CC1 /* JSONDecoderImpl+SingleValueContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919C8FF52BDC84B057639478239686E4 /* JSONDecoderImpl+SingleValueContainer.swift */; };
+		02B8ADB72C39668600102751 /* UITextField+ARTExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B8ADB62C39668600102751 /* UITextField+ARTExtension.swift */; };
 		02D9C2352C375216007E82A6 /* UIView+ARTExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D9C2342C375216007E82A6 /* UIView+ARTExtension.swift */; };
 		02D9C2392C377CDC007E82A6 /* NSObject+ARTExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D9C2382C377CDC007E82A6 /* NSObject+ARTExtension.swift */; };
 		02D9C23E2C378F07007E82A6 /* UIApplication+ARTExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D9C23D2C378F07007E82A6 /* UIApplication+ARTExtension.swift */; };
@@ -347,6 +348,7 @@
 		0161A74B01E1A777748421B319369526 /* DateTransformer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DateTransformer.swift; path = SmartCodable/Classes/Transformer/DateTransformer.swift; sourceTree = "<group>"; };
 		019D3D744B51595FBC444693A314DFFF /* NSMutableAttributedString+ARTExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+ARTExtension.swift"; sourceTree = "<group>"; };
 		027D375A44B3E2604A7B5F640B1008F4 /* ARTZecoToolKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ARTZecoToolKit-umbrella.h"; sourceTree = "<group>"; };
+		02B8ADB62C39668600102751 /* UITextField+ARTExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+ARTExtension.swift"; sourceTree = "<group>"; };
 		02D9C2342C375216007E82A6 /* UIView+ARTExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ARTExtension.swift"; sourceTree = "<group>"; };
 		02D9C2382C377CDC007E82A6 /* NSObject+ARTExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+ARTExtension.swift"; sourceTree = "<group>"; };
 		02D9C23D2C378F07007E82A6 /* UIApplication+ARTExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+ARTExtension.swift"; sourceTree = "<group>"; };
@@ -1201,6 +1203,7 @@
 				02D9C2342C375216007E82A6 /* UIView+ARTExtension.swift */,
 				02D9C2382C377CDC007E82A6 /* NSObject+ARTExtension.swift */,
 				02D9C23D2C378F07007E82A6 /* UIApplication+ARTExtension.swift */,
+				02B8ADB62C39668600102751 /* UITextField+ARTExtension.swift */,
 			);
 			name = UIKit;
 			path = ARTZecoToolKit/Classes/UIKit;
@@ -1880,6 +1883,7 @@
 				172E47538EC4E9B99100962957A7934B /* ARTStarRatingStyleConfiguration+Chaining.swift in Sources */,
 				B0CE0DCE8361A506633EBE01346FE8FD /* ARTStarRatingView.swift in Sources */,
 				69EC10026C4C8D0F66E66302AFB35F40 /* ARTZecoToolKit-dummy.m in Sources */,
+				02B8ADB72C39668600102751 /* UITextField+ARTExtension.swift in Sources */,
 				535CBE5867DAC3840DE0447D8FA8C2D0 /* CALayer+ARTExtension.swift in Sources */,
 				D9243F0B0CB81125FBAB762A6D8729E4 /* Data+ARTExtension.swift in Sources */,
 				5F0AFCEF142CA9DAD6D5484EB11D955E /* Dictionary+ARTExtension.swift in Sources */,
