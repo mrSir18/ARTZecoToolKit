@@ -13,7 +13,7 @@ extension UITextField {
     ///  - color: 占位符颜色.
     ///  - font: 占位符字体.
     ///  - Note: 该方法
-    public func art_PlaceholderColor(_ color: UIColor, font: UIFont) {
+    public func art_placeholderColor(_ color: UIColor, font: UIFont) {
         guard let placeholder = self.placeholder else { return }
         self.attributedPlaceholder = NSAttributedString(string: placeholder,
                                                         attributes: [.foregroundColor: color,
