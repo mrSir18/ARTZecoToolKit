@@ -7,13 +7,16 @@
 
 extension UITextField {
     
-    /// 设置占位符的颜色.
+    /// 设置占位符的颜色和字体.
     ///
-    /// - Parameter color: 占位符的颜色.
-    /// - Note: 该方法会覆盖掉原有的占位符颜色.
-    public func setPlaceholderColor(_ color: UIColor) {
+    /// - Parameters:
+    ///  - color: 占位符颜色.
+    ///  - font: 占位符字体.
+    ///  - Note: 该方法
+    public func art_PlaceholderColor(_ color: UIColor, font: UIFont) {
         guard let placeholder = self.placeholder else { return }
-        self.attributedPlaceholder = NSAttributedString(string: placeholder, 
-                                                        attributes: [NSAttributedString.Key.foregroundColor: color])
+        self.attributedPlaceholder = NSAttributedString(string: placeholder,
+                                                        attributes: [.foregroundColor: color,
+                                                                     .font: font])
     }
 }

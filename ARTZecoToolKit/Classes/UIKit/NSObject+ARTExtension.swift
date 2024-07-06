@@ -11,7 +11,7 @@ extension NSObject {
     ///
     /// - Returns: 视图控制器对象.
     /// - Note: 该方法可能会返回 nil 值.
-    public func getViewController() -> UIViewController? {
+    public func art_getViewController() -> UIViewController? {
         var responder: UIResponder? = self as? UIResponder
         while responder != nil {
             if let viewController = responder as? UIViewController {

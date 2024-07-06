@@ -12,17 +12,17 @@ extension UIApplication {
     /// - Parameter base: 要查找的视图控制器对象.
     /// - Returns: 顶级视图控制器对象.
     /// - Note: 该方法可能会返回 nil 值.
-    public class func topViewController(base: UIViewController? = UIApplication.shared.windows.first(where: \.isKeyWindow)?.rootViewController) -> UIViewController? {
+    public class func art_topViewController(base: UIViewController? = UIApplication.shared.windows.first(where: \.isKeyWindow)?.rootViewController) -> UIViewController? {
         if let nav = base as? UINavigationController {
-            return topViewController(base: nav.visibleViewController)
+            return art_topViewController(base: nav.visibleViewController)
         }
         if let tab = base as? UITabBarController {
             if let selected = tab.selectedViewController {
-                return topViewController(base: selected)
+                return art_topViewController(base: selected)
             }
         }
         if let presented = base?.presentedViewController {
-            return topViewController(base: presented)
+            return art_topViewController(base: presented)
         }
         return base
     }
