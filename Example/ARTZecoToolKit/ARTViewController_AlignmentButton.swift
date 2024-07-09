@@ -43,7 +43,7 @@ class ARTViewController_AlignmentButton: ARTBaseViewController {
             make.height.equalTo(200.0)
         }
         
-        // 左对齐，图片在内容右侧
+        // 顶部对齐，图片在顶部，内容在左侧
         let secondButton = ARTAlignmentButton()
         secondButton.backgroundColor    = .art_randomColor()
         secondButton.titleLabel?.font   = .systemFont(ofSize: 16.0)
