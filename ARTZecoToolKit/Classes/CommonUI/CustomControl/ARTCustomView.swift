@@ -77,6 +77,7 @@ public class ARTCustomView: UIView {
     }
     
     private func setupLayer() {
+        backgroundColor = .clear
         layer.allowsEdgeAntialiasing = true
         layer.edgeAntialiasingMask   = [.layerLeftEdge, .layerRightEdge, .layerBottomEdge, .layerTopEdge]
     }
