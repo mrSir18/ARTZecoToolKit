@@ -13,9 +13,6 @@ public func art_safeAreaTop() -> CGFloat {
         guard let windowScene = scene as? UIWindowScene else { return 0 }
         guard let window = windowScene.windows.first else { return 0 }
         return window.safeAreaInsets.top
-    } else if #available(iOS 11.0, *) {
-        guard let window = UIApplication.shared.windows.first else { return 0 }
-        return window.safeAreaInsets.top
     }
     return 0;
 }
@@ -26,9 +23,6 @@ public func art_safeAreaBottom() -> CGFloat {
         let scene = UIApplication.shared.connectedScenes.first
         guard let windowScene = scene as? UIWindowScene else { return 0 }
         guard let window = windowScene.windows.first else { return 0 }
-        return window.safeAreaInsets.bottom
-    } else if #available(iOS 11.0, *) {
-        guard let window = UIApplication.shared.windows.first else { return 0 }
         return window.safeAreaInsets.bottom
     }
     return 0;
