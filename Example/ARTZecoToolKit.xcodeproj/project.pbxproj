@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0222B4432C35A9F600FA82B7 /* ARTViewController_StartRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0222B4422C35A9F600FA82B7 /* ARTViewController_StartRating.swift */; };
+		022E01232C429EB50069BA7A /* CollectionSectionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E01222C429EB50069BA7A /* CollectionSectionProtocol.swift */; };
 		023F976D2C32F5A1009CD62B /* ARTViewController_AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023F976C2C32F5A1009CD62B /* ARTViewController_AlertView.swift */; };
 		0258B7AB2BFA845800AEB349 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0258B7A82BFA845800AEB349 /* 3.png */; };
 		0258B7AC2BFA845800AEB349 /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 0258B7A92BFA845800AEB349 /* 4.png */; };
@@ -59,6 +60,7 @@
 
 /* Begin PBXFileReference section */
 		0222B4422C35A9F600FA82B7 /* ARTViewController_StartRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_StartRating.swift; sourceTree = "<group>"; };
+		022E01222C429EB50069BA7A /* CollectionSectionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSectionProtocol.swift; sourceTree = "<group>"; };
 		023F976C2C32F5A1009CD62B /* ARTViewController_AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_AlertView.swift; sourceTree = "<group>"; };
 		0258B7A82BFA845800AEB349 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
 		0258B7A92BFA845800AEB349 /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
@@ -129,6 +131,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		022E01242C429EB90069BA7A /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				022E01222C429EB50069BA7A /* CollectionSectionProtocol.swift */,
+			);
+			name = Protocol;
+			sourceTree = "<group>";
+		};
 		02C95B3F2C426FEA00200438 /* Business */ = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +154,7 @@
 				02C95B462C42707700200438 /* View */,
 				02C95B452C42706400200438 /* ViewModel */,
 				02C95B512C42748F00200438 /* Entity */,
+				022E01242C429EB90069BA7A /* Protocol */,
 			);
 			name = CollectionViewBusiness;
 			sourceTree = "<group>";
@@ -529,6 +540,7 @@
 				02F8AE532BF67E7E00A111F6 /* ARTViewController_Quantity.swift in Sources */,
 				02F8AE522BF67E7E00A111F6 /* ARTBaseNavigationController.swift in Sources */,
 				02C95B4B2C42725E00200438 /* ARTCollectionHeader.swift in Sources */,
+				022E01232C429EB50069BA7A /* CollectionSectionProtocol.swift in Sources */,
 				0258CA9E2C03995300A486E7 /* ARTViewController_PageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

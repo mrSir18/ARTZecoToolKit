@@ -48,7 +48,7 @@ extension ARTViewController_CollectionView: UICollectionViewDelegate, UICollecti
         return UICollectionReusableView()
     }
     
-    private func configureHeader(for section: ARTCollectionViewModel.CollectionSectionProtocol, in collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionReusableView {
+    private func configureHeader(for section: CollectionSectionProtocol, in collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionReusableView {
         let reusableView = ARTCollectionHeader.dequeueHeader(from: collectionView, for: indexPath) // 根据结构类型动态自行配置头脚视图 switch section.sectionType { case .first: }
         if let header = reusableView as? ARTCollectionHeader {
             print("header \(header)")
@@ -56,7 +56,7 @@ extension ARTViewController_CollectionView: UICollectionViewDelegate, UICollecti
         return reusableView
     }
     
-    private func configureFooter(for section: ARTCollectionViewModel.CollectionSectionProtocol, in collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionReusableView {
+    private func configureFooter(for section: CollectionSectionProtocol, in collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionReusableView {
         let reusableView = ARTCollectionFooter.dequeueFooter(from: collectionView, for: indexPath) // 根据结构类型动态自行配置头脚视图 switch section.sectionType { case .first: }
         if let footer = reusableView as? ARTCollectionFooter {
             print("footer \(footer)")
