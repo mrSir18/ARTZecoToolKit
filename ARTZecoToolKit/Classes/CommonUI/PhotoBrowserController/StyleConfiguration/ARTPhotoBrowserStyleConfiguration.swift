@@ -22,6 +22,7 @@ public class ARTPhotoBrowserStyleConfiguration: NSObject {
     /// 模态展示样式
     ///
     /// 默认值为 `.custom`.
+    /// - Note: 模态展示样式为 `modalPresentationStyle`.
     private var pri_modalPresentationStyle: UIModalPresentationStyle = .custom
     public var modalPresentationStyle: UIModalPresentationStyle {
         get {
@@ -35,6 +36,7 @@ public class ARTPhotoBrowserStyleConfiguration: NSObject {
     /// 模态过渡样式
     ///
     /// 默认值为 `.crossDissolve`.
+    ///  - Note: 模态过渡样式为 `modalTransitionStyle`.
     private var pri_modalTransitionStyle: UIModalTransitionStyle = .crossDissolve
     public var modalTransitionStyle: UIModalTransitionStyle {
         get {
@@ -48,6 +50,7 @@ public class ARTPhotoBrowserStyleConfiguration: NSObject {
     /// 控制器淡出动画持续时间.
     ///
     /// 默认值为 0.15.
+    /// - Note: 控制器淡出动画持续时间为 `controllerFadeOutAnimatorDuration`.
     private var pri_controllerFadeOutAnimatorDuration: CGFloat = 0.15
     public var controllerFadeOutAnimatorDuration: CGFloat {
         get {
@@ -62,13 +65,13 @@ public class ARTPhotoBrowserStyleConfiguration: NSObject {
     ///
     /// 默认值为 true.
     /// - Note: 开启后可点击顶栏区域不可进行图片放大交互等操作.
-    private var pri_topBarUserInteractionEnabled: Bool = true
-    public var topBarUserInteractionEnabled: Bool {
+    private var pri_enableTopBarUserInteraction: Bool = true
+    public var enableTopBarUserInteraction: Bool {
         get {
-            pri_topBarUserInteractionEnabled
+            pri_enableTopBarUserInteraction
         }
         set {
-            pri_topBarUserInteractionEnabled = newValue
+            pri_enableTopBarUserInteraction = newValue
         }
     }
     
@@ -76,13 +79,28 @@ public class ARTPhotoBrowserStyleConfiguration: NSObject {
     ///
     /// 默认值为 false.
     /// - Note: 开启后可点击底栏区域不可进行图片放大交互等操作.
-    private var pri_bottomBarUserInteractionEnabled: Bool = false
-    public var bottomBarUserInteractionEnabled: Bool {
+    private var pri_enableBottomBarUserInteraction: Bool = false
+    public var enableBottomBarUserInteraction: Bool {
         get {
-            pri_bottomBarUserInteractionEnabled
+            pri_enableBottomBarUserInteraction
         }
         set {
-            pri_bottomBarUserInteractionEnabled = newValue
+            pri_enableBottomBarUserInteraction = newValue
+        }
+    }
+    
+    /// 顶底栏淡出动画是否开启.
+    ///
+    /// 默认值为 false.
+    /// - Note: 开启顶底栏动画时 `enableSingleTapDismissGesture` 单击图片区域退出图片浏览失效.
+    /// - Note: 顶底栏淡出动画持续时间为 `topBottomFadeOutAnimatorDuration`.
+    private var pri_enableTopBottomFadeOutAnimator: Bool = false
+    public var enableTopBottomFadeOutAnimator: Bool {
+        get {
+            pri_enableTopBottomFadeOutAnimator
+        }
+        set {
+            pri_enableTopBottomFadeOutAnimator = newValue
         }
     }
     
@@ -99,6 +117,19 @@ public class ARTPhotoBrowserStyleConfiguration: NSObject {
         }
     }
     
+    /// 顶底栏过度动画时间
+    ///
+    /// 默认值为 0.25.
+    private var pri_topBottomTransitionAnimatorDuration: CGFloat = 0.5
+    public var topBottomTransitionAnimatorDuration: CGFloat {
+        get {
+            pri_topBottomTransitionAnimatorDuration
+        }
+        set {
+            pri_topBottomTransitionAnimatorDuration = max(0.0, newValue)
+        }
+    }
+    
     /// 控制器背景颜色.
     ///
     /// - Note: 默认.black.
@@ -112,7 +143,7 @@ public class ARTPhotoBrowserStyleConfiguration: NSObject {
         }
     }
     
-    /// 是否开启背景图模糊效果.
+    /// 背景图模糊效果是否开启.
     ///
     /// - Note: 默认true.
     private var pri_enableBackgroundBlurEffect: Bool = true
@@ -124,10 +155,10 @@ public class ARTPhotoBrowserStyleConfiguration: NSObject {
             pri_enableBackgroundBlurEffect = newValue
         }
     }
-    
-    /// 是否开启单击退出图片浏览手势.
+    /// 单击退出图片浏览手势是否开启.
     ///
     /// - Note: 默认true.
+    /// - Note: 开启后单击图片区域退出图片浏览.
     private var pri_enableSingleTapDismissGesture: Bool = true
     public var enableSingleTapDismissGesture: Bool {
         get {
@@ -138,9 +169,10 @@ public class ARTPhotoBrowserStyleConfiguration: NSObject {
         }
     }
     
-    /// 是否开启双击图片放大手势.
+    /// 双击图片放大手势是否开启.
     ///
     /// - Note: 默认true.
+    /// - Note: 开启后双击图片区域放大图片.
     private var pri_enableDoubleTapZoomGesture: Bool = true
     public var enableDoubleTapZoomGesture: Bool {
         get {
@@ -154,6 +186,7 @@ public class ARTPhotoBrowserStyleConfiguration: NSObject {
     /// 双击最大缩放比例.
     ///
     /// - Note: 默认1.8.
+    /// - Note: 最大缩放比例为1.0时不可放大.
     private var pri_maximumZoomScale: CGFloat = 1.8
     public var maximumZoomScale: CGFloat {
         get {
@@ -166,7 +199,8 @@ public class ARTPhotoBrowserStyleConfiguration: NSObject {
     
     /// 双击最小缩放比例.
     ///
-    /// - Note: 默认1.0.
+    /// - Note: 默认1.0.'
+    /// - Note: 最小缩放比例为1.0时不可缩小.
     private var pri_minimumZoomScale: CGFloat = 1.0
     public var minimumZoomScale: CGFloat {
         get {

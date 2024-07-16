@@ -19,7 +19,7 @@ open class ARTPhotoBrowserNavigationBar: UIView {
     public override init(frame: CGRect) {
         super.init(frame: .zero)
         self.backgroundColor = .clear
-        self.isUserInteractionEnabled = configuration.topBarUserInteractionEnabled
+        self.isUserInteractionEnabled = configuration.enableTopBarUserInteraction
         setupViews()
     }
     

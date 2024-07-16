@@ -15,9 +15,14 @@ extension ARTPhotoBrowserViewController: UICollectionViewDelegate, UICollectionV
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueCell(for: indexPath) as ARTPhotoBrowserCell
-        cell.singleTapCallback = { [weak self] in
+        cell.singleTapCallback = { [weak self] tapType in
             guard let self = self else { return }
-            self.dismissPhotoBrowser()
+            switch tapType {
+            case .dismiss: // 单击关闭
+                self.dismissPhotoBrowser()
+            default: // 顶底栏动画
+                self.toggleTopBottomBar()
+            }
         }
         cell.loadImage(from: photos[indexPath.item])
         return cell

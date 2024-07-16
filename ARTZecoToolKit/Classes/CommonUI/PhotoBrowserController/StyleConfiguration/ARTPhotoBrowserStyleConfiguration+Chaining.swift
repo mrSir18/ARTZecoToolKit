@@ -25,20 +25,32 @@ public extension ARTPhotoBrowserStyleConfiguration {
     }
     
     @discardableResult
-    func topBarUserInteractionEnabled(_ enable: Bool) -> ARTPhotoBrowserStyleConfiguration {
-        topBarUserInteractionEnabled = enable
+    func enableTopBarUserInteraction(_ enable: Bool) -> ARTPhotoBrowserStyleConfiguration {
+        enableTopBarUserInteraction = enable
         return self
     }
     
     @discardableResult
-    func bottomBarUserInteractionEnabled(_ enable: Bool) -> ARTPhotoBrowserStyleConfiguration {
-        bottomBarUserInteractionEnabled = enable
+    func enableBottomBarUserInteraction(_ enable: Bool) -> ARTPhotoBrowserStyleConfiguration {
+        enableBottomBarUserInteraction = enable
+        return self
+    }
+    
+    @discardableResult
+    func enableTopBottomFadeOutAnimator(_ enable: Bool) -> ARTPhotoBrowserStyleConfiguration {
+        enableTopBottomFadeOutAnimator = enable
         return self
     }
     
     @discardableResult
     func topBottomFadeOutAnimatorDuration(_ duration: CGFloat) -> ARTPhotoBrowserStyleConfiguration {
         topBottomFadeOutAnimatorDuration = duration
+        return self
+    }
+    
+    @discardableResult
+    func topBottomTransitionAnimatorDuration(_ duration: CGFloat) -> ARTPhotoBrowserStyleConfiguration {
+        topBottomTransitionAnimatorDuration = duration
         return self
     }
     

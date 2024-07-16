@@ -43,6 +43,16 @@
     @objc optional func dismissPhotoBrowser(for viewController: ARTPhotoBrowserViewController, animated: Bool, completion: (() -> Void)?)
 }
 
+extension ARTPhotoBrowserViewController {
+    /// 顶部和底部栏状态
+    public enum TopBottomBarState {
+        /// 隐藏
+        case hidden
+        /// 显示
+        case visible
+    }
+}
+
 open class ARTPhotoBrowserViewController: UIViewController {
     
     // 代理对象
@@ -63,7 +73,7 @@ open class ARTPhotoBrowserViewController: UIViewController {
     /// 存储照片的数组
     internal var photos: [Any] = []
     
-    /// 当前显示的照片索引
+    /// 当前显示的照片索引,规则与数组索引一致
     internal var startIndex: Int = 0
     
     /// 记录上一次回调的索引
@@ -72,6 +82,12 @@ open class ARTPhotoBrowserViewController: UIViewController {
     /// 标记首次布局完成
     private var isFirstLayout = true
     
+    /// 顶部和底部栏状态,默认为隐藏
+    public var topBottomBarState: TopBottomBarState = .hidden
+    
+    /// 顶部和底部栏延迟任务
+    private var delayTopBottomBarTask: DispatchSourceTimer?
+    
     /// 当前显示的照片索引回调
     public var currentIndexCallback: ((Int) -> Void)?
     
@@ -79,8 +95,16 @@ open class ARTPhotoBrowserViewController: UIViewController {
     // MARK: - Class Methods
     
     /// 类方法展示图片浏览器
-    public class func showPhotoBrowser(withPhotos photos: [Any], startIndex index: Int, currentIndexCallback: ((Int) -> Void)? = nil) {
-        let photoBrowserViewController = ARTPhotoBrowserViewController(photos: photos, startIndex: index)
+    ///
+    /// - Parameters:
+    ///  - photos: 照片数组
+    ///  - index: 起始索引,规则与数组索引一致
+    ///  - delegate: 代理对象
+    ///  - currentIndexCallback: 当前显示的照片索引回调
+    ///  - Note: 该方法为类方法，直接调用即可展示图片浏览器
+    ///  - Note: 该方法默认使用 present 弹屏方式展示
+    public class func showPhotoBrowser(withPhotos photos: [Any], startIndex index: Int, delegate: ARTPhotoBrowserViewControllerDelegate? = nil, currentIndexCallback: ((Int) -> Void)? = nil) {
+        let photoBrowserViewController = ARTPhotoBrowserViewController(photos: photos, startIndex: index, delegate: delegate)
         photoBrowserViewController.currentIndexCallback = currentIndexCallback
         photoBrowserViewController.presentPhotoBrowser()
     }
@@ -94,9 +118,10 @@ open class ARTPhotoBrowserViewController: UIViewController {
     
     // MARK: - Initialization
     
-    public init(photos: [Any], startIndex: Int) {
+    public init(photos: [Any], startIndex: Int, delegate: ARTPhotoBrowserViewControllerDelegate? = nil) {
         self.photos = photos
-        self.startIndex = startIndex
+        self.startIndex = (startIndex >= 0 && startIndex < photos.count) ? startIndex : 0 // 索引越界处理,默认为 0
+        self.delegate = delegate 
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -123,18 +148,27 @@ open class ARTPhotoBrowserViewController: UIViewController {
     
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if isFirstLayout { /// 防止内存不必要的开销
-            collectionView.scrollToItem(at: IndexPath(item: startIndex, section: 0), at: .centeredHorizontally, animated: false)
-            isFirstLayout = false
-        }
+        guard isFirstLayout else { return }
+        // 首次布局完成时滚动到指定索引,避免闪动
+        isFirstLayout = false
+        collectionView.scrollToItem(at: IndexPath(item: startIndex, section: 0), at: .centeredHorizontally, animated: false)
+        // 如果启用顶部和底部淡出动画，则隐藏顶部和底部栏
+        if configuration.enableTopBottomFadeOutAnimator { showTopBottomBarAnimated() }
     }
     
-    // MARK: - Private Methods
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // 取消顶部和底部栏延迟任务
+        cancelDelayTopBottomBarTask()
+    }
+    
+    // MARK: - Override Methods
     
     /// 控制器基础配置
     ///
+    /// 重写父类方法，设置子视图
     /// - Note: 设置转场代理、隐藏导航栏、设置导航栏透明、设置背景颜色
-    private func setupBaseConfiguration() {
+    open func setupBaseConfiguration() {
         transitioningDelegate = self /// 设置转场代理
         navigationController?.navigationBar.isHidden = true /// 隐藏导航栏
         navigationController?.navigationBar.isTranslucent = true /// 设置导航栏透明
@@ -143,12 +177,12 @@ open class ARTPhotoBrowserViewController: UIViewController {
     
     /// 创建导航栏
     ///
+    /// 重写父类方法，设置子视图
     /// - Note: 使用代理返回的自定义导航栏视图，若返回 nil 则创建默认的导航栏视图
     /// - Note: 默认导航栏视图需继承 ARTPhotoBrowserNavigationBar
-    private func setupNavigationBar() {
+    open func setupNavigationBar() {
         if let customNavBar = delegate?.customNavigationBar?(for: self) { // 使用代理返回的自定义导航栏视图
             navigationBar = customNavBar
-            view.addSubview(navigationBar!)
             
         } else { // 创建默认的导航栏视图
             navigationBar = ARTPhotoBrowserNavigationBar()
@@ -166,9 +200,10 @@ open class ARTPhotoBrowserViewController: UIViewController {
     
     /// 创建底部工具栏
     ///
+    /// 重写父类方法，设置子视图
     /// - Note: 使用代理返回的自定义底部工具栏视图，若返回 nil 则创建默认的底部工具栏视图
     /// - Note: 默认底部工具栏视图需继承 ARTPhotoBrowserBottomBar
-    private func setupBottomBar() {
+    open func setupBottomBar() {
         if let customBottomBar = delegate?.customBottomBar?(for: self) { // 使用代理返回的自定义底部工具栏视图
             bottomBar = customBottomBar
             view.addSubview(bottomBar)
@@ -186,8 +221,9 @@ open class ARTPhotoBrowserViewController: UIViewController {
     
     /// 创建列表视图
     ///
+    /// 重写父类方法，设置子视图
     /// - Note: 设置列表视图的基础配置、代理、数据源、注册 cell、分页控制器
-    private func setupCollectionView() {
+    open func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -233,6 +269,77 @@ open class ARTPhotoBrowserViewController: UIViewController {
         }
     }
 }
+
+// MARK: - TopBottomBar Animation
+
+extension ARTPhotoBrowserViewController {
+    
+    /// 显示顶底栏动画
+    public func showTopBottomBarAnimated() {
+        UIView.animate(withDuration: configuration.topBottomTransitionAnimatorDuration, animations: {
+            self.topBottomBarState = .visible
+            self.navigationBar.alpha = 1
+            self.bottomBar.alpha = 1
+        }, completion: { _ in
+            self.resetDelayTopBottomBarTask()
+        })
+    }
+    
+    /// 隐藏顶底栏动画
+    public func hideTopBottomBarAnimated() {
+        UIView.animate(withDuration: configuration.topBottomTransitionAnimatorDuration, animations: {
+            self.topBottomBarState = .hidden
+            self.navigationBar.alpha = 0
+            self.bottomBar.alpha = 0
+        })
+    }
+    
+    /// 切换顶底栏的显示状态
+    ///
+    /// - Note: 如果顶底栏是隐藏的，则显示；如果是显示的，则隐藏
+    public func toggleTopBottomBar() {
+        if topBottomBarState == .hidden {
+            showTopBottomBarAnimated()
+        } else {
+            hideTopBottomBarAnimated()
+        }
+        resetDelayTopBottomBarTask()
+    }
+    
+    /// 重置顶底栏的延迟隐藏任务
+    ///
+    /// - Note: 重新开始计时
+    public func resetDelayTopBottomBarTask() {
+        cancelDelayTopBottomBarTask()
+        startDelayTopBottomBarTask()
+    }
+    
+    /// 开始顶底栏的延迟隐藏任务
+    ///
+    /// - Note: 开始计时
+    public func startDelayTopBottomBarTask() {
+        delayTopBottomBarTask = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main)
+        delayTopBottomBarTask?.schedule(deadline: .now() + configuration.topBottomFadeOutAnimatorDuration)
+        delayTopBottomBarTask?.setEventHandler { [weak self] in
+            guard let self = self else { return }
+            if self.topBottomBarState == .visible {
+                self.hideTopBottomBarAnimated()
+            }
+        }
+        delayTopBottomBarTask?.resume()
+    }
+    
+    /// 取消顶底栏的延迟隐藏任务
+    ///
+    /// - Note: 取消计时
+    public func cancelDelayTopBottomBarTask() {
+        if delayTopBottomBarTask != nil {
+            delayTopBottomBarTask?.cancel()
+            delayTopBottomBarTask = nil
+        }
+    }
+}
+
 
 // MARK: - UIScrollViewDelegate
 

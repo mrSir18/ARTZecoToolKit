@@ -22,7 +22,7 @@ open class ARTPhotoBrowserBottomBar: UIView {
     public override init(frame: CGRect) {
         super.init(frame: .zero)
         self.backgroundColor = .clear
-        self.isUserInteractionEnabled = configuration.bottomBarUserInteractionEnabled
+        self.isUserInteractionEnabled = configuration.enableBottomBarUserInteraction
         setupViews()
     }
     

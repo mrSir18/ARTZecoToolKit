@@ -35,8 +35,8 @@ class ARTViewController_PhotoBrowser: ARTBaseViewController {
     }
     
     @objc private func photoBrowserButtonAction () {
-        ARTPhotoBrowserStyleConfiguration.default().customBackButtonImageName("back_white_left")
-        
+        ARTPhotoBrowserStyleConfiguration.default().customBackButtonImageName("back_white_left").enableTopBottomFadeOutAnimator(true).enableSingleTapDismissGesture(true)
+//        ARTPhotoBrowserStyleConfiguration.resetConfiguration()
         let imageUrls: [Any] = [
             URL(string: "https://img2.baidu.com/it/u=1623302349,1771329113&fm=253&fmt=auto&app=120&f=JPEG?w=800&h=800")!,
             URL(string: "https://p3.itc.cn/q_70/images01/20231108/c665b01b1a9743d598e27e926ff83f15.png")!,
@@ -50,33 +50,38 @@ class ARTViewController_PhotoBrowser: ARTBaseViewController {
 //        }
         
         let photoBrowserViewController = ARTPhotoBrowserViewController(photos: imageUrls, startIndex: 2)
-        photoBrowserViewController.delegate = self
+//        photoBrowserViewController.delegate = self
         photoBrowserViewController.currentIndexCallback = { index in
             print("当前显示的照片索引为：\(index)")
         }
-//        photoBrowserViewController.showPhotoBrowser()
-        navigationController?.pushViewController(photoBrowserViewController, animated: true)
+        photoBrowserViewController.showPhotoBrowser()
+//        navigationController?.pushViewController(photoBrowserViewController, animated: true)
     }
 }
 
 // MARK: - ARTPhotoBrowserViewControllerDelegate
 
 extension ARTViewController_PhotoBrowser: ARTPhotoBrowserViewControllerDelegate {
-
+    
+    func photoBrowserViewController(_ viewController: ARTPhotoBrowserViewController, didChangedIndex index: Int) {
+        print("代理模式：当前显示的照片索引为：\(index)")
+    }
+    
     func customNavigationBar(for viewController: ARTPhotoBrowserViewController) -> ARTPhotoBrowserNavigationBar? {
         let navigationBar = ARTNavigationBar()
-        navigationBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 150)
         navigationBar.backgroundColor = .art_randomColor()
+        viewController.view.addSubview(navigationBar)
+        navigationBar.snp.makeConstraints { make in
+            make.left.top.right.equalToSuperview()
+            make.height.equalTo(art_navigationFullHeight())
+        }
         return navigationBar
     }
     
     func dismissPhotoBrowser(for viewController: ARTPhotoBrowserViewController, animated: Bool, completion: (() -> Void)?) {
         completion?()
-        navigationController?.popToViewController(self, animated: true)
-    }
-    
-    func photoBrowserViewController(_ viewController: ARTPhotoBrowserViewController, didChangedIndex index: Int) {
-        print("代理模式：当前显示的照片索引为：\(index)")
+//        navigationController?.popToViewController(self, animated: true)
+        navigationController?.dismiss(animated: true)
     }
 }
 

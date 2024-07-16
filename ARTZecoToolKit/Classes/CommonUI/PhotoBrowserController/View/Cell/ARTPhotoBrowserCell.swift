@@ -5,6 +5,12 @@
 //  Created by mrSir18 on 2024/7/15.
 //
 
+// 单击枚举类型
+internal enum CellSingleTapType: Int, CaseIterable {
+    case dismiss = 0 // 单击关闭
+    case none    = 1 // 顶底栏
+}
+
 class ARTPhotoBrowserCell: UICollectionViewCell {
     
     /// 默认配置
@@ -25,8 +31,8 @@ class ARTPhotoBrowserCell: UICollectionViewCell {
     /// 单击手势关闭
     private var singleTapGesture: UITapGestureRecognizer!
     
-    /// 单击回调闭包，用于处理单击事件
-    public var singleTapCallback: (() -> Void)?
+    /// 单击枚举回调闭包，用于处理单击事件
+    public var singleTapCallback: ((_ tapType: CellSingleTapType) -> Void)?
     
     
     // MARK: - Life Cycle
@@ -79,7 +85,7 @@ class ARTPhotoBrowserCell: UICollectionViewCell {
             scrollView.addGestureRecognizer(doubleTapZoomGesture)
         }
         
-        if configuration.enableSingleTapDismissGesture { // 创建单击手势
+        if configuration.enableSingleTapDismissGesture || configuration.enableTopBottomFadeOutAnimator { // 创建单击手势
             singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(_:)))
             singleTapGesture.delaysTouchesBegan = false
             singleTapGesture.numberOfTapsRequired = 1
@@ -117,7 +123,8 @@ class ARTPhotoBrowserCell: UICollectionViewCell {
     }
     
     @objc private func handleSingleTap(_ gesture: UITapGestureRecognizer) {
-        singleTapCallback?()
+        let action: CellSingleTapType = configuration.enableTopBottomFadeOutAnimator ? .none : .dismiss
+        singleTapCallback?(action)
     }
     
     // MARK: - Private Methods
