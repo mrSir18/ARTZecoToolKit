@@ -57,7 +57,7 @@ private class ART_CollectionReusableView: UICollectionReusableView {
             if let maskedCorners = model.maskedCorners {
                 containerView.layer.maskedCorners   = maskedCorners
             }
-
+            
             /// 如果模型中包含非空且非空字符串的图像 URL，则根据情况设置背景图像视图的内容模式和图像.
             if let imageURLString = model.imageURLString, !imageURLString.isEmpty {
                 self.backgroundImageView.contentMode = model.contentMode
@@ -65,10 +65,12 @@ private class ART_CollectionReusableView: UICollectionReusableView {
                     self.backgroundImageView.sd_setImage(with: URL(string: imageURLString),
                                                          placeholderImage: nil,
                                                          options: [.highPriority, .continueInBackground])
-
+                    
                 } else {
                     self.backgroundImageView.image = UIImage(named: imageURLString)
                 }
+            } else {
+                self.backgroundImageView.image = nil
             }
         }
     }
@@ -102,7 +104,7 @@ private class ARTCollectionViewLayoutAttributes: UICollectionViewLayoutAttribute
     ///   - section: 段的索引.
     /// - Returns: 配置模型，可选类型.
     @objc optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, configModelForSectionAt section: Int) -> ARTCollectionViewConfigModel?
-
+    
     /// 集合视图的委托方法，用于获取指定索引路径的单元格高度.
     ///
     /// - Parameters:
@@ -111,7 +113,7 @@ private class ARTCollectionViewLayoutAttributes: UICollectionViewLayoutAttribute
     ///   - indexPath: 单元格的索引路径.
     /// - Returns: 单元格高度.
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, heightForItemAt indexPath: IndexPath) -> CGFloat
-
+    
     /// 集合视图的委托方法，用于获取指定段的列数.
     ///
     /// - Parameters:
@@ -120,7 +122,7 @@ private class ARTCollectionViewLayoutAttributes: UICollectionViewLayoutAttribute
     ///   - section: 段的索引.
     /// - Returns: 列数，可选类型.
     @objc optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, columnForSectionAt section: Int) -> Int
-
+    
     /// 集合视图的委托方法，用于获取指定段的段尾视图与下一个段头视图之间的间距.
     ///
     /// - Parameters:
@@ -137,40 +139,40 @@ public class ARTCollectionViewFlowLayout: UICollectionViewLayout {
     
     /// 遵循 ARTCollectionViewDelegateFlowLayout 协议的弱引用委托对象.
     weak var art_delegate: ARTCollectionViewDelegateFlowLayout?
-
+    
     /// 配置模型.
     private var art_configModel: ARTCollectionViewConfigModel?
-
+    
     /// 段头和段尾之间的间距.
     private var art_headerWithfooterLineSpacing: CGFloat = 0.0
-
+    
     /// 列数.
     private var art_columnCount: Int = 1
-
+    
     /// 段的内边距.
     private var art_sectionInset: UIEdgeInsets = .zero
-
+    
     /// 行间距的最小值.
     private var art_minimumLineSpacing: CGFloat = 0.0
-
+    
     /// 列间距的最小值.
     private var art_minimumInteritemSpacing: CGFloat = 0.0
-
+    
     /// 段头视图的大小.
     private var art_headerReferenceSize: CGSize = .zero
-
+    
     /// 段尾视图的大小.
     private var art_footerReferenceSize: CGSize = .zero
-
+    
     /// 装饰视图的属性集合.
     private var art_decorationAttributes : [UICollectionViewLayoutAttributes] = []
-
+    
     /// 每列的最后一个元素的高度集合.
     private var art_columnsLastHeights : [CGFloat] = []
-
+    
     /// 集合视图的总高度.
     private var art_collectionHeight: CGFloat = 0.0
-
+    
     /// 上一个元素的高度.
     private var art_lastItemHeight: CGFloat = 0.0
     
@@ -228,7 +230,7 @@ extension ARTCollectionViewFlowLayout {
                 if let footerAttributes = footerAttributes {
                     self.art_decorationAttributes.append(footerAttributes)
                 }
-
+                
                 /// 自定义装饰模型.
                 let groupWidth  = collectionView.frame.size.width - self.art_sectionInset.left - self.art_sectionInset.right
                 var groupHeight = footerAttributes!.frame.maxY - headerAttributes!.frame.minY
@@ -252,7 +254,7 @@ extension ARTCollectionViewFlowLayout {
                         break
                     }
                 }
-            
+                
                 let groupAttributes = ARTCollectionViewLayoutAttributes(forDecorationViewOfKind: ART_CollectionReusableViewDecoration, with: indexPath)
                 groupAttributes.frame  = groupFrame
                 groupAttributes.zIndex = -1
@@ -319,7 +321,7 @@ extension ARTCollectionViewFlowLayout {
     private func delegate_configModelForSectionAt(_ section: Int) -> ARTCollectionViewConfigModel {
         return self.art_delegate?.collectionView?(collectionView!, layout: self, configModelForSectionAt: section) ?? ARTCollectionViewConfigModel()
     }
-
+    
     /// 获取委托方法返回的指定 indexPath 的单元格高度.
     ///
     /// - Parameter indexPath: 单元格的索引路径.
@@ -327,7 +329,7 @@ extension ARTCollectionViewFlowLayout {
     private func delegate_heightForItemAt(_ indexPath: IndexPath) -> CGFloat {
         return self.art_delegate?.collectionView(collectionView!, layout: self, heightForItemAt: indexPath) ?? 0.0
     }
-
+    
     /// 获取委托方法返回的指定段的列数.
     ///
     /// - Parameter section: 段的索引.
@@ -335,7 +337,7 @@ extension ARTCollectionViewFlowLayout {
     private func delegate_columnForSectionAt(_ section: Int) -> Int {
         return self.art_delegate?.collectionView?(collectionView!, layout: self, columnForSectionAt: section) ?? 1
     }
-
+    
     /// 获取委托方法返回的指定段的段尾视图与下一个段头视图之间的间距.
     ///
     /// - Parameter section: 段的索引.
@@ -356,7 +358,7 @@ extension ARTCollectionViewFlowLayout {
     private func delegate_insetForSectionAt(_ section: Int) -> UIEdgeInsets {
         return self.art_delegate?.collectionView?(collectionView!, layout: self, insetForSectionAt: section) ?? .zero
     }
-
+    
     /// 获取委托方法返回的指定段的最小行间距.
     ///
     /// - Parameter section: 段的索引.

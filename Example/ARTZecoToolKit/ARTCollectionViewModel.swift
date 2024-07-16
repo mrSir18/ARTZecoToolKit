@@ -82,6 +82,7 @@ extension ARTCollectionViewModel {
             let entity: ARTCollectionViewConfigModel = ARTCollectionViewConfigModel()
             entity.cornerRadius         = ARTAdaptedValue(12.0)     // 圆角
             entity.backgroundColor      = .art_randomColor()        // 背景色
+            entity.imageURLString       = ""                        // 背景图片
             self.configModel            = entity
         }
     }
@@ -111,6 +112,7 @@ extension ARTCollectionViewModel {
             entity.maskedCorners        = [.layerMinXMinYCorner, .layerMaxXMinYCorner] // 指定圆角
             entity.cornerRadius         = ARTAdaptedValue(12.0)     // 圆角
             entity.backgroundColor      = .art_randomColor()        // 背景色
+            entity.imageURLString       = ""                        // 背景图片
             self.configModel            = entity
         }
     }
