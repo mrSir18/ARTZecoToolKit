@@ -5,14 +5,14 @@
 //  Created by mrSir18 on 2024/7/15.
 //
 
-public protocol ARTPhotoBrowserViewControllerDelegate: AnyObject {
+@objc public protocol ARTPhotoBrowserViewControllerDelegate: AnyObject {
     
     /// 照片浏览器视图控制器索引变化回调
     ///
     /// - Parameters:
     ///  - viewController: 照片浏览器视图控制器
     ///  - index: 索引
-    func photoBrowserViewController(_ viewController: ARTPhotoBrowserViewController, didChangedIndex index: Int)
+    @objc optional func photoBrowserViewController(_ viewController: ARTPhotoBrowserViewController, didChangedIndex index: Int)
     
     /// 自定义导航栏视图
     ///
@@ -21,7 +21,7 @@ public protocol ARTPhotoBrowserViewControllerDelegate: AnyObject {
     /// - Returns: 自定义导航栏视图
     /// - Note: 返回自定义导航栏视图，若返回 nil 则使用默认导航栏视图
     /// - Note: 自定义导航栏视图需继承 ARTPhotoBrowserNavigationBar
-    func customNavigationBar(for viewController: ARTPhotoBrowserViewController) -> ARTPhotoBrowserNavigationBar?
+    @objc optional func customNavigationBar(for viewController: ARTPhotoBrowserViewController) -> ARTPhotoBrowserNavigationBar?
     
     /// 自定义底部工具栏视图
     ///
@@ -30,7 +30,17 @@ public protocol ARTPhotoBrowserViewControllerDelegate: AnyObject {
     /// - Returns: 自定义底部工具栏视图
     /// - Note: 返回自定义底部工具栏视图，若返回 nil 则使用默认底部工具栏视图
     /// - Note: 自定义底部工具栏视图需继承 ARTPhotoBrowserBottomBar
-    func customBottomBar(for viewController: ARTPhotoBrowserViewController) -> ARTPhotoBrowserBottomBar?
+    @objc optional func customBottomBar(for viewController: ARTPhotoBrowserViewController) -> ARTPhotoBrowserBottomBar?
+    
+    /// 退出照片浏览器
+    ///
+    /// - Parameters:
+    /// - viewController: 照片浏览器视图控制器
+    /// - animated: 是否动画
+    /// - completion: 退出完成回调
+    /// - Note: 非【present】弹屏方式展示时需实现该方法
+    /// - Note: 默认实现为 dismiss(animated:completion:)
+    @objc optional func dismissPhotoBrowser(for viewController: ARTPhotoBrowserViewController, animated: Bool, completion: (() -> Void)?)
 }
 
 open class ARTPhotoBrowserViewController: UIViewController {
@@ -136,7 +146,7 @@ open class ARTPhotoBrowserViewController: UIViewController {
     /// - Note: 使用代理返回的自定义导航栏视图，若返回 nil 则创建默认的导航栏视图
     /// - Note: 默认导航栏视图需继承 ARTPhotoBrowserNavigationBar
     private func setupNavigationBar() {
-        if let customNavBar = delegate?.customNavigationBar(for: self) { // 使用代理返回的自定义导航栏视图
+        if let customNavBar = delegate?.customNavigationBar?(for: self) { // 使用代理返回的自定义导航栏视图
             navigationBar = customNavBar
             view.addSubview(navigationBar!)
             
@@ -144,7 +154,7 @@ open class ARTPhotoBrowserViewController: UIViewController {
             navigationBar = ARTPhotoBrowserNavigationBar()
             navigationBar.closeControllerCallback = { [weak self] in
                 guard let self = self else { return }
-                self.dismiss(animated: true, completion: nil)
+                self.dismissPhotoBrowser()
             }
             view.addSubview(navigationBar)
             navigationBar.snp.makeConstraints { make in
@@ -159,7 +169,7 @@ open class ARTPhotoBrowserViewController: UIViewController {
     /// - Note: 使用代理返回的自定义底部工具栏视图，若返回 nil 则创建默认的底部工具栏视图
     /// - Note: 默认底部工具栏视图需继承 ARTPhotoBrowserBottomBar
     private func setupBottomBar() {
-        if let customBottomBar = delegate?.customBottomBar(for: self) { // 使用代理返回的自定义底部工具栏视图
+        if let customBottomBar = delegate?.customBottomBar?(for: self) { // 使用代理返回的自定义底部工具栏视图
             bottomBar = customBottomBar
             view.addSubview(bottomBar)
             
@@ -195,7 +205,7 @@ open class ARTPhotoBrowserViewController: UIViewController {
         }
     }
     
-    // MARK: - Instance Methods Methods
+    // MARK: - Private Instance Methods
     
     /// 展示图片浏览器
     ///
@@ -206,6 +216,20 @@ open class ARTPhotoBrowserViewController: UIViewController {
             navigationController.modalPresentationStyle = configuration.modalPresentationStyle // 设置导航控制器的模态展示样式为全屏
             navigationController.modalTransitionStyle = configuration.modalTransitionStyle // 设置导航控制器的模态过渡样式为交叉溶解
             topViewController.present(navigationController, animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: - Private Delegate Methods
+    
+    /// 退出图片浏览器
+    ///
+    /// - Note: 退出图片浏览器，通知代理对象
+    internal func dismissPhotoBrowser() {
+        guard (delegate?.dismissPhotoBrowser?(for: self, animated: true, completion: {
+            print("图片浏览器退出成功")
+        })) != nil else { /// 使用默认退出方式
+            dismiss(animated: true, completion: nil)
+            return
         }
     }
 }
@@ -222,10 +246,9 @@ extension ARTPhotoBrowserViewController: UIScrollViewDelegate {
         let pageIndex = Int(scrollView.contentOffset.x / scrollView.frame.width)
         if pageIndex != lastReportedIndex {
             currentIndexCallback?(pageIndex) /// 回调当前页码与代理对象，用于外部调用，实现任意一个回调即可
-            delegate?.photoBrowserViewController(self, didChangedIndex: pageIndex) /// 通知代理对象当前页码发生变化
+            delegate?.photoBrowserViewController?(self, didChangedIndex: pageIndex) /// 通知代理对象当前页码发生变化
             lastReportedIndex = pageIndex
-            guard (delegate?.customBottomBar(for: self)) != nil else { /// 使用默认底部工具栏视图
-//                print("自定义底部工具栏视图")
+            guard (delegate?.customBottomBar?(for: self)) != nil else { /// 使用默认底部工具栏视图
                 bottomBar.updatePageIndex(pageIndex, pageCount: photos.count)
                 return
             }

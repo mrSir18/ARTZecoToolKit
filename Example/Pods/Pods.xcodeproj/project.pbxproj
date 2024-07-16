@@ -2024,9 +2024,9 @@
 			isa = PBXGroup;
 			children = (
 				49DE90EAF91C1DEF0911DB6811FE266D /* Control */,
-				9A9DF8C8938A44AAFE5112EAC0011F85 /* FadeOutAnimator */,
-				EF00D348D388AE388289E95E55ED980E /* StyleConfiguration */,
 				B00ACEA9322F87EBF8D96F83A65CF705 /* View */,
+				EF00D348D388AE388289E95E55ED980E /* StyleConfiguration */,
+				9A9DF8C8938A44AAFE5112EAC0011F85 /* FadeOutAnimator */,
 			);
 			path = PhotoBrowserController;
 			sourceTree = "<group>";

@@ -5,10 +5,10 @@
 //  Created by mrSir18 on 2024/7/15.
 //
 
-public class ARTPhotoBrowserBottomBar: UIView {
+open class ARTPhotoBrowserBottomBar: UIView {
     
     /// 默认配置
-    public let configuration = ARTPhotoBrowserStyleConfiguration.default()
+    private let configuration = ARTPhotoBrowserStyleConfiguration.default()
     
     /// 页码容器视图
     private var pageIndexContainerView: UIView!
@@ -19,18 +19,21 @@ public class ARTPhotoBrowserBottomBar: UIView {
     
     // MARK: - Life Cycle
     
-    init() {
+    public override init(frame: CGRect) {
         super.init(frame: .zero)
         self.backgroundColor = .clear
         self.isUserInteractionEnabled = configuration.bottomBarUserInteractionEnabled
         setupViews()
     }
     
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupViews() {
+    /// 重写父类方法，设置子视图
+    ///
+    /// - Note: 由于子类需要自定义视图，所以需要重写该方法
+    open func setupViews() {
         
         // 创建容器视图
         let containerView = UIView()

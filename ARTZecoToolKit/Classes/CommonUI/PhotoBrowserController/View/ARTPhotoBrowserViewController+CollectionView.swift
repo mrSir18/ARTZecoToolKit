@@ -17,7 +17,7 @@ extension ARTPhotoBrowserViewController: UICollectionViewDelegate, UICollectionV
         let cell = collectionView.dequeueCell(for: indexPath) as ARTPhotoBrowserCell
         cell.singleTapCallback = { [weak self] in
             guard let self = self else { return }
-            self.dismiss(animated: true, completion: nil)
+            self.dismissPhotoBrowser()
         }
         cell.loadImage(from: photos[indexPath.item])
         return cell
