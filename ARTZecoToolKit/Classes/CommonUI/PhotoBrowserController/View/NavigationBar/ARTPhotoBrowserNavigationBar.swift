@@ -57,7 +57,7 @@ open class ARTPhotoBrowserNavigationBar: UIView {
         backButton.titleAlignment   = .right
         backButton.contentInset     = ARTAdaptedValue(12.0)
         if let customBackButtonImageName = configuration.customBackButtonImageName, !customBackButtonImageName.isEmpty {
-            backButton.imageSize    = ARTAdaptedSize(width: 18.0, height: 18.0)
+            backButton.imageSize    = ARTAdaptedSize(width: 28.0, height: 28.0)
             backButton.setImage(UIImage(named: customBackButtonImageName), for: .normal)
         } else {
             backButton.setTitle("关闭", for: .normal)
