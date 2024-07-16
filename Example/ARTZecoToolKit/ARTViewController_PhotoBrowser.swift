@@ -172,7 +172,11 @@ extension ARTViewController_PhotoBrowser: ARTControllerNavigationBarDelegate {
 /// - Note: 代理方法是可选的，若不实现，则使用默认配置
 extension ARTViewController_PhotoBrowser: ARTControllerBottomBarDelegate {
     
-    func bottomBarDidShare(_ bottomBar: ARTControllerBottomBar) {
-        print("点击了分享按钮")
+    func bottomBarDidTakePhoto(_ bottomBar: ARTControllerBottomBar) {
+        let actionSheet = ARTActionSheet()
+        actionSheet.didSelectItemCallback = { index in
+            print("点击了第\(index)个按钮")
+        }
+        actionSheet.show()
     }
 }

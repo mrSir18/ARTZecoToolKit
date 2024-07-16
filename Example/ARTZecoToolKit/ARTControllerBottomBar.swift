@@ -10,11 +10,13 @@ import ARTZecoToolKit
 
 protocol ARTControllerBottomBarDelegate: ARTPhotoBrowserBottomBarDelegate {
     
-    /// 分享图片
+    /// 拍照
+    ///
     /// - Parameters:
     ///  - bottomBar: 自定义底部栏视图
     /// - Note: 根据个人需求实现,决定是否继承自ARTPhotoBrowserBottomBarDelegate协议
-    func bottomBarDidShare(_ bottomBar: ARTControllerBottomBar)
+    func bottomBarDidTakePhoto(_ bottomBar: ARTControllerBottomBar)
+    
 }
 
 class ARTControllerBottomBar: ARTPhotoBrowserBottomBar {
@@ -39,14 +41,14 @@ class ARTControllerBottomBar: ARTPhotoBrowserBottomBar {
     }
     
     override func setupViews() { // 重写父类方法，设置子视图
-        let shareButton = UIButton(type: .custom)
-        shareButton.backgroundColor  = .art_randomColor()
-        shareButton.titleLabel?.font = .art_medium(ARTAdaptedValue(16.0))
-        shareButton.setTitle("分享", for: .normal)
-        shareButton.setTitleColor(.white, for: .normal)
-        shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
-        addSubview(shareButton)
-        shareButton.snp.makeConstraints { make in
+        let takePhotoButton = UIButton(type: .custom)
+        takePhotoButton.backgroundColor  = .art_randomColor()
+        takePhotoButton.titleLabel?.font = .art_medium(ARTAdaptedValue(16.0))
+        takePhotoButton.setTitle("拍照", for: .normal)
+        takePhotoButton.setTitleColor(.white, for: .normal)
+        takePhotoButton.addTarget(self, action: #selector(takePhotoButtonTapped), for: .touchUpInside)
+        addSubview(takePhotoButton)
+        takePhotoButton.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.bottom.equalTo(-art_safeAreaBottom())
             make.centerX.equalToSuperview()
@@ -56,7 +58,7 @@ class ARTControllerBottomBar: ARTPhotoBrowserBottomBar {
     
     // MARK: - Private Button Actions
     
-    @objc private func shareButtonTapped(sender: UIButton) {
-        bottomBarDelegate?.bottomBarDidShare(self)
+    @objc private func takePhotoButtonTapped(sender: UIButton) {
+        bottomBarDelegate?.bottomBarDidTakePhoto(self)
     }
 }
