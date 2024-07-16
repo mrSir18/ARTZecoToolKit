@@ -62,8 +62,10 @@ private class ART_CollectionReusableView: UICollectionReusableView {
             if let imageURLString = model.imageURLString, !imageURLString.isEmpty {
                 self.backgroundImageView.contentMode = model.contentMode
                 if isValidHttpUrl(imageURLString) {
-                    self.backgroundImageView.yy_setImage(with: URL(string: imageURLString),
-                                                         options: [.progressiveBlur, .setImageWithFadeAnimation])
+                    self.backgroundImageView.sd_setImage(with: URL(string: imageURLString),
+                                                         placeholderImage: nil,
+                                                         options: [.highPriority, .continueInBackground])
+
                 } else {
                     self.backgroundImageView.image = UIImage(named: imageURLString)
                 }

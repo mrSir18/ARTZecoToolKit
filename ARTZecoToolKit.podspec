@@ -36,7 +36,6 @@ TODO: Add long description of the pod here.
   s.dependency 'SnapKit'
   s.dependency 'SmartCodable'
   s.dependency 'SDWebImage'
-  s.dependency 'YYWebImage'
    s.resource_bundles = {
      'ARTZecoToolKit' => ['ARTZecoToolKit/Assets/*.png']
    }
