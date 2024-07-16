@@ -29,7 +29,7 @@ class ARTViewController_PhotoBrowser: ARTBaseViewController {
         
         view.addSubview(photoBrowserButton)
         photoBrowserButton.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 200.0, height: 200.0))
+            make.size.equalTo(ARTAdaptedSize(width: 200.0, height: 200.0))
             make.center.equalToSuperview()
         }
     }
@@ -61,14 +61,17 @@ class ARTViewController_PhotoBrowser: ARTBaseViewController {
 
 // MARK: - ARTPhotoBrowserViewControllerDelegate
 
-extension ARTViewController_PhotoBrowser: ARTPhotoBrowserViewControllerDelegate {
+extension ARTViewController_PhotoBrowser: ARTPhotoBrowserViewControllerDelegate, ARTNavigationBarDelegate{
+    func closeMethod() {
+        print("代理模式：关闭")
+    }
     
     func photoBrowserViewController(_ viewController: ARTPhotoBrowserViewController, didChangedIndex index: Int) {
         print("代理模式：当前显示的照片索引为：\(index)")
     }
     
     func customNavigationBar(for viewController: ARTPhotoBrowserViewController) -> ARTPhotoBrowserNavigationBar? {
-        let navigationBar = ARTNavigationBar()
+        let navigationBar = ARTNavigationBar(self)
         navigationBar.backgroundColor = .art_randomColor()
         viewController.view.addSubview(navigationBar)
         navigationBar.snp.makeConstraints { make in
@@ -85,22 +88,26 @@ extension ARTViewController_PhotoBrowser: ARTPhotoBrowserViewControllerDelegate 
     }
 }
 
-
+protocol ARTNavigationBarDelegate: ARTPhotoBrowserNavigationBarDelegate {
+   func closeMethod()
+}
 
 
 class ARTNavigationBar: ARTPhotoBrowserNavigationBar {
 
-    
+    private var navigationBarDelegate: ARTNavigationBarDelegate? {
+        return delegate as? ARTNavigationBarDelegate
+    }
     // MARK: - Life Cycle
-    
-    init() {
-        super.init(frame: .zero)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
+//    init(_ delegate: ARTNavigationBarDelegate? = nil) {
+//        super.init(delegate)
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+//    }
+
     override func setupViews() {
         let backButton = UIButton(type: .custom)
         backButton.backgroundColor = .art_randomColor()
@@ -120,5 +127,7 @@ class ARTNavigationBar: ARTPhotoBrowserNavigationBar {
     
     @objc private func closeButtonTapped(sender: UIButton) {
         print("关闭按钮被点击")
+        navigationBarDelegate?.closeMethod()
+//        delegate?.addStudentProfileWithNavigationBar()
     }
 }

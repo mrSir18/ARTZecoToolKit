@@ -30,7 +30,7 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
         navigationController?.isNavigationBarHidden = true
         view.addSubview(playerButton)
         playerButton.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 200.0, height: 200.0))
+            make.size.equalTo(ARTAdaptedSize(width: 200.0, height: 200.0))
             make.center.equalToSuperview()
         }
     }

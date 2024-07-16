@@ -54,7 +54,7 @@ extension ARTPhotoBrowserViewController {
 }
 
 open class ARTPhotoBrowserViewController: UIViewController {
-    
+
     // 代理对象
     public weak var delegate: ARTPhotoBrowserViewControllerDelegate?
     
@@ -185,8 +185,8 @@ open class ARTPhotoBrowserViewController: UIViewController {
             navigationBar = customNavBar
             
         } else { // 创建默认的导航栏视图
-            navigationBar = ARTPhotoBrowserNavigationBar()
-            navigationBar.closeControllerCallback = { [weak self] in
+            navigationBar = ARTPhotoBrowserNavigationBar(self)
+            navigationBar.dismissPhotoBrowserCallback = { [weak self] in
                 guard let self = self else { return }
                 self.dismissPhotoBrowser()
             }
@@ -209,7 +209,7 @@ open class ARTPhotoBrowserViewController: UIViewController {
             view.addSubview(bottomBar)
             
         } else { // 创建默认的底部工具栏视图
-            bottomBar = ARTPhotoBrowserBottomBar()
+            bottomBar = ARTPhotoBrowserBottomBar(self)
             bottomBar.updatePageIndex(startIndex, pageCount: photos.count)
             view.addSubview(bottomBar)
             bottomBar.snp.makeConstraints { make in
@@ -340,7 +340,6 @@ extension ARTPhotoBrowserViewController {
     }
 }
 
-
 // MARK: - UIScrollViewDelegate
 
 extension ARTPhotoBrowserViewController: UIScrollViewDelegate {
@@ -361,6 +360,18 @@ extension ARTPhotoBrowserViewController: UIScrollViewDelegate {
             }
         }
     }
+}
+
+// MARK: - ARTPhotoBrowserNavigationBarDelegate
+
+extension ARTPhotoBrowserViewController: ARTPhotoBrowserNavigationBarDelegate {
+    
+}
+
+// MARK: - ARTPhotoBrowserNavigationBar
+
+extension ARTPhotoBrowserViewController: ARTPhotoBrowserBottomBarDelegate {
+    
 }
 
 // MARK: - UIViewControllerTransitioningDelegate

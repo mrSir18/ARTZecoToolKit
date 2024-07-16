@@ -5,7 +5,16 @@
 //  Created by mrSir18 on 2024/7/15.
 //
 
+public protocol ARTPhotoBrowserBottomBarDelegate: AnyObject {
+    /// 协议方法
+    ///
+    /// - NOTE: 可继承该协议方法
+}
+
 open class ARTPhotoBrowserBottomBar: UIView {
+    
+    /// 代理对象
+    public weak var delegate: ARTPhotoBrowserBottomBarDelegate?
     
     /// 默认配置
     private let configuration = ARTPhotoBrowserStyleConfiguration.default()
@@ -19,14 +28,15 @@ open class ARTPhotoBrowserBottomBar: UIView {
     
     // MARK: - Life Cycle
     
-    public override init(frame: CGRect) {
+    public init(_ delegate: ARTPhotoBrowserBottomBarDelegate? = nil) {
         super.init(frame: .zero)
-        self.backgroundColor = .clear
+        self.delegate = delegate
+        self.backgroundColor = .art_randomColor()
         self.isUserInteractionEnabled = configuration.enableBottomBarUserInteraction
         setupViews()
     }
     
-    public required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

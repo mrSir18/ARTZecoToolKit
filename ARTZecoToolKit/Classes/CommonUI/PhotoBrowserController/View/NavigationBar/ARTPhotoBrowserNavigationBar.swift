@@ -5,25 +5,35 @@
 //  Created by mrSir18 on 2024/7/15.
 //
 
+public protocol ARTPhotoBrowserNavigationBarDelegate: AnyObject {
+    /// 协议方法
+    ///
+    /// - NOTE: 可继承该协议方法
+}
+
 open class ARTPhotoBrowserNavigationBar: UIView {
+
+    /// 代理对象
+    public weak var delegate: ARTPhotoBrowserNavigationBarDelegate?
     
     /// 默认配置
     private let configuration = ARTPhotoBrowserStyleConfiguration.default()
     
-    /// 关闭回调闭包，用于关闭控制器
-    public var closeControllerCallback: (() -> Void)?
+    /// 关闭控制器,图片浏览器回调
+    public var dismissPhotoBrowserCallback: (() -> Void)?
     
     
     // MARK: - Life Cycle
     
-    public override init(frame: CGRect) {
+    public init(_ delegate: ARTPhotoBrowserNavigationBarDelegate? = nil) {
         super.init(frame: .zero)
-        self.backgroundColor = .clear
+        self.delegate = delegate
+        self.backgroundColor = .art_randomColor()
         self.isUserInteractionEnabled = configuration.enableTopBarUserInteraction
         setupViews()
     }
     
-    public required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -64,6 +74,6 @@ open class ARTPhotoBrowserNavigationBar: UIView {
     // MARK: - Private Button Actions
     
     @objc private func backButtonTapped(sender: UIButton) {
-        closeControllerCallback?()
+        dismissPhotoBrowserCallback?()
     }
 }

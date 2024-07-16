@@ -5,10 +5,12 @@
 //  Created by mrSir18 on 2024/7/15.
 //
 
-// 单击枚举类型
-internal enum CellSingleTapType: Int, CaseIterable {
-    case dismiss = 0 // 单击关闭
-    case none    = 1 // 顶底栏
+extension ARTPhotoBrowserCell {
+    // 单击枚举类型
+    enum CellSingleTapType: Int, CaseIterable {
+        case dismiss = 0 // 单击关闭
+        case none    = 1 // 顶底栏
+    }
 }
 
 class ARTPhotoBrowserCell: UICollectionViewCell {

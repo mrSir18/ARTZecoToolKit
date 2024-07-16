@@ -29,7 +29,7 @@ class ARTViewController_AlertView: ARTBaseViewController {
 
         view.addSubview(alertViewButton)
         alertViewButton.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 200.0, height: 200.0))
+            make.size.equalTo(ARTAdaptedSize(width: 200.0, height: 200.0))
             make.center.equalToSuperview()
         }
     }

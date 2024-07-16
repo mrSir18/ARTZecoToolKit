@@ -29,7 +29,7 @@ class ARTViewController_SlidePopup: ARTBaseViewController {
 
         view.addSubview(slidePopupButton)
         slidePopupButton.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 200.0, height: 200.0))
+            make.size.equalTo(ARTAdaptedSize(width: 200.0, height: 200.0))
             make.center.equalToSuperview()
         }
     }
