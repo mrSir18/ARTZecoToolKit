@@ -39,7 +39,7 @@ class ARTViewController_PhotoBrowser: ARTBaseViewController {
         /// 自定义UI样式配置
         ///
         /// - Note: 更多配置请查看ARTPhotoBrowserStyleConfiguration.swift文件
-        ARTPhotoBrowserStyleConfiguration.default().customBackButtonImageName("back_white_left") // 自定义返回按钮
+        //        ARTPhotoBrowserStyleConfiguration.default().customBackButtonImageName("back_white_left") // 自定义返回按钮
         //        ARTPhotoBrowserStyleConfiguration.resetConfiguration() // 重置默认配置
         
         
