@@ -36,7 +36,7 @@ class ARTViewController_PhotoBrowser: ARTBaseViewController {
     
     @objc private func photoBrowserButtonAction () {
         ARTPhotoBrowserStyleConfiguration.default().customBackButtonImageName("back_white_left").enableTopBottomFadeOutAnimator(true).enableSingleTapDismissGesture(true)
-//        ARTPhotoBrowserStyleConfiguration.resetConfiguration()
+        ARTPhotoBrowserStyleConfiguration.resetConfiguration()
         let imageUrls: [Any] = [
             URL(string: "https://img2.baidu.com/it/u=1623302349,1771329113&fm=253&fmt=auto&app=120&f=JPEG?w=800&h=800")!,
             URL(string: "https://p3.itc.cn/q_70/images01/20231108/c665b01b1a9743d598e27e926ff83f15.png")!,
@@ -50,7 +50,7 @@ class ARTViewController_PhotoBrowser: ARTBaseViewController {
 //        }
         
         let photoBrowserViewController = ARTPhotoBrowserViewController(photos: imageUrls, startIndex: 2)
-//        photoBrowserViewController.delegate = self
+        photoBrowserViewController.delegate = self
         photoBrowserViewController.currentIndexCallback = { index in
             print("当前显示的照片索引为：\(index)")
         }
@@ -61,18 +61,14 @@ class ARTViewController_PhotoBrowser: ARTBaseViewController {
 
 // MARK: - ARTPhotoBrowserViewControllerDelegate
 
-extension ARTViewController_PhotoBrowser: ARTPhotoBrowserViewControllerDelegate, ARTNavigationBarDelegate{
-    func closeMethod() {
-        print("代理模式：关闭")
-    }
-    
-    func photoBrowserViewController(_ viewController: ARTPhotoBrowserViewController, didChangedIndex index: Int) {
+extension ARTViewController_PhotoBrowser: ARTPhotoBrowserViewControllerDelegate {
+
+    func photoBrowserViewController(_ viewController: ARTPhotoBrowserViewController, didChangedIndex index: Int) { // 照片索引改变
         print("代理模式：当前显示的照片索引为：\(index)")
     }
     
-    func customNavigationBar(for viewController: ARTPhotoBrowserViewController) -> ARTPhotoBrowserNavigationBar? {
-        let navigationBar = ARTNavigationBar(self)
-        navigationBar.backgroundColor = .art_randomColor()
+    func customNavigationBar(for viewController: ARTPhotoBrowserViewController) -> ARTPhotoBrowserNavigationBar? { // 自定义导航栏
+        let navigationBar = ARTControllerNavigationBar(self)
         viewController.view.addSubview(navigationBar)
         navigationBar.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
@@ -81,53 +77,37 @@ extension ARTViewController_PhotoBrowser: ARTPhotoBrowserViewControllerDelegate,
         return navigationBar
     }
     
-    func dismissPhotoBrowser(for viewController: ARTPhotoBrowserViewController, animated: Bool, completion: (() -> Void)?) {
+    func customBottomBar(for viewController: ARTPhotoBrowserViewController) -> ARTPhotoBrowserBottomBar? { // 自定义底部工具栏
+        let bottomBar = ARTControllerBottomBar(self)
+        viewController.view.addSubview(bottomBar)
+        bottomBar.snp.makeConstraints { make in
+            make.left.bottom.right.equalToSuperview()
+            make.height.equalTo(art_tabBarFullHeight())
+        }
+        return bottomBar
+    }
+    
+    func dismissPhotoBrowser(for viewController: ARTPhotoBrowserViewController, animated: Bool, completion: (() -> Void)?) { // 退出照片浏览器
         completion?()
 //        navigationController?.popToViewController(self, animated: true)
         navigationController?.dismiss(animated: true)
     }
 }
 
-protocol ARTNavigationBarDelegate: ARTPhotoBrowserNavigationBarDelegate {
-   func closeMethod()
+// MARK: - ARTControllerNavigationBarDelegate
+
+extension ARTViewController_PhotoBrowser: ARTControllerNavigationBarDelegate {
+    
+    func navigationBarDidClose(_ navigationBar: ARTControllerNavigationBar) {
+        navigationController?.dismiss(animated: true)
+    }
 }
 
+// MARK: - ARTControllerBottomBarDelegate
 
-class ARTNavigationBar: ARTPhotoBrowserNavigationBar {
-
-    private var navigationBarDelegate: ARTNavigationBarDelegate? {
-        return delegate as? ARTNavigationBarDelegate
-    }
-    // MARK: - Life Cycle
-
-//    init(_ delegate: ARTNavigationBarDelegate? = nil) {
-//        super.init(delegate)
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//    }
-
-    override func setupViews() {
-        let backButton = UIButton(type: .custom)
-        backButton.backgroundColor = .art_randomColor()
-        backButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0)
-        backButton.setTitle("关闭", for: .normal)
-        backButton.setTitleColor(.white, for: .normal)
-        backButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
-        addSubview(backButton)
-        backButton.snp.makeConstraints { make in
-            make.size.equalTo(ARTAdaptedSize(width: 100, height: 60))
-            make.centerX.centerY.equalToSuperview()
-        }
-    }
+extension ARTViewController_PhotoBrowser: ARTControllerBottomBarDelegate {
     
-    
-    // MARK: - Private Button Actions
-    
-    @objc private func closeButtonTapped(sender: UIButton) {
-        print("关闭按钮被点击")
-        navigationBarDelegate?.closeMethod()
-//        delegate?.addStudentProfileWithNavigationBar()
+    func bottomBarDidShare(_ bottomBar: ARTControllerBottomBar) {
+        print("点击了分享按钮")
     }
 }

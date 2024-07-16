@@ -12,7 +12,7 @@ public protocol ARTPhotoBrowserNavigationBarDelegate: AnyObject {
 }
 
 open class ARTPhotoBrowserNavigationBar: UIView {
-
+    
     /// 代理对象
     public weak var delegate: ARTPhotoBrowserNavigationBarDelegate?
     
@@ -28,7 +28,7 @@ open class ARTPhotoBrowserNavigationBar: UIView {
     public init(_ delegate: ARTPhotoBrowserNavigationBarDelegate? = nil) {
         super.init(frame: .zero)
         self.delegate = delegate
-        self.backgroundColor = .art_randomColor()
+        self.backgroundColor = .clear
         self.isUserInteractionEnabled = configuration.enableTopBarUserInteraction
         setupViews()
     }

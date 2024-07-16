@@ -31,7 +31,7 @@ open class ARTPhotoBrowserBottomBar: UIView {
     public init(_ delegate: ARTPhotoBrowserBottomBarDelegate? = nil) {
         super.init(frame: .zero)
         self.delegate = delegate
-        self.backgroundColor = .art_randomColor()
+        self.backgroundColor = .clear
         self.isUserInteractionEnabled = configuration.enableBottomBarUserInteraction
         setupViews()
     }

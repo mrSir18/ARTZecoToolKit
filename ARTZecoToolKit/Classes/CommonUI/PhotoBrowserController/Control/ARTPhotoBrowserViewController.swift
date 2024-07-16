@@ -54,7 +54,7 @@ extension ARTPhotoBrowserViewController {
 }
 
 open class ARTPhotoBrowserViewController: UIViewController {
-
+    
     // 代理对象
     public weak var delegate: ARTPhotoBrowserViewControllerDelegate?
     
@@ -121,7 +121,7 @@ open class ARTPhotoBrowserViewController: UIViewController {
     public init(photos: [Any], startIndex: Int, delegate: ARTPhotoBrowserViewControllerDelegate? = nil) {
         self.photos = photos
         self.startIndex = (startIndex >= 0 && startIndex < photos.count) ? startIndex : 0 // 索引越界处理,默认为 0
-        self.delegate = delegate 
+        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -206,7 +206,6 @@ open class ARTPhotoBrowserViewController: UIViewController {
     open func setupBottomBar() {
         if let customBottomBar = delegate?.customBottomBar?(for: self) { // 使用代理返回的自定义底部工具栏视图
             bottomBar = customBottomBar
-            view.addSubview(bottomBar)
             
         } else { // 创建默认的底部工具栏视图
             bottomBar = ARTPhotoBrowserBottomBar(self)
@@ -354,9 +353,8 @@ extension ARTPhotoBrowserViewController: UIScrollViewDelegate {
             currentIndexCallback?(pageIndex) /// 回调当前页码与代理对象，用于外部调用，实现任意一个回调即可
             delegate?.photoBrowserViewController?(self, didChangedIndex: pageIndex) /// 通知代理对象当前页码发生变化
             lastReportedIndex = pageIndex
-            guard (delegate?.customBottomBar?(for: self)) != nil else { /// 使用默认底部工具栏视图
+            if type(of: bottomBar!) == ARTPhotoBrowserBottomBar.self { /// 如果底部栏是默认
                 bottomBar.updatePageIndex(pageIndex, pageCount: photos.count)
-                return
             }
         }
     }

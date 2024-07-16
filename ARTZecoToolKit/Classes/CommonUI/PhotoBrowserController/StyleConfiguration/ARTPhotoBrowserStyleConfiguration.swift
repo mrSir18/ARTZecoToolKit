@@ -77,9 +77,9 @@ public class ARTPhotoBrowserStyleConfiguration: NSObject {
     
     /// 底栏用户交互方式是否开启
     ///
-    /// 默认值为 false.
+    /// 默认值为 true.
     /// - Note: 开启后可点击底栏区域不可进行图片放大交互等操作.
-    private var pri_enableBottomBarUserInteraction: Bool = false
+    private var pri_enableBottomBarUserInteraction: Bool = true
     public var enableBottomBarUserInteraction: Bool {
         get {
             pri_enableBottomBarUserInteraction
