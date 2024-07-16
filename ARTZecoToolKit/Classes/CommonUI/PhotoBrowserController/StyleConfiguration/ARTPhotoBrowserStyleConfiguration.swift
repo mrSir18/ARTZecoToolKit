@@ -91,10 +91,10 @@ public class ARTPhotoBrowserStyleConfiguration: NSObject {
     
     /// 顶底栏淡出动画是否开启.
     ///
-    /// 默认值为 false.
+    /// 默认值为 true.
     /// - Note: 开启顶底栏动画时 `enableSingleTapDismissGesture` 单击图片区域退出图片浏览失效.
     /// - Note: 顶底栏淡出动画持续时间为 `topBottomFadeOutAnimatorDuration`.
-    private var pri_enableTopBottomFadeOutAnimator: Bool = false
+    private var pri_enableTopBottomFadeOutAnimator: Bool = true
     public var enableTopBottomFadeOutAnimator: Bool {
         get {
             pri_enableTopBottomFadeOutAnimator

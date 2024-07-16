@@ -9,7 +9,7 @@ class ARTFadeOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     /// 返回动画持续时间
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.15  /// 动画持续时间设定为0.15秒
+        return ARTPhotoBrowserStyleConfiguration.default().controllerFadeOutAnimatorDuration  /// 动画持续时间设定为0.15秒
     }
     
     /// 执行过渡动画
