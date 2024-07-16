@@ -77,8 +77,8 @@ class ARTViewController_CitySelector: ARTBaseViewController {
             }
             
             DispatchQueue.main.async {
-                self.hotCities = hotCityArray as! [ARTCitySelectorEntity]
-                self.allCities = allCityArray as! [ARTCitySelectorEntity]
+                self.hotCities = hotCityArray
+                self.allCities = allCityArray
                 print("解析成功")
             }
         }

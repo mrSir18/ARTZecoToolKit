@@ -23,7 +23,6 @@ protocol CollectionSectionProtocol {
     var spacingBetweenFooterAndNextHeader: CGFloat {get}
 }
 
-
 /// 定义 样式 枚举.
 enum CollectionSectionType {
     /// 第一种模式.

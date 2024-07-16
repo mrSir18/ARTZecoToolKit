@@ -1,8 +1,12 @@
 PODS:
   - ARTZecoToolKit (0.1.0):
+    - SDWebImage
     - SmartCodable
     - SnapKit
     - YYWebImage
+  - SDWebImage (5.19.4):
+    - SDWebImage/Core (= 5.19.4)
+  - SDWebImage/Core (5.19.4)
   - SmartCodable (4.1.1)
   - SnapKit (5.7.1)
   - YYCache (1.0.4)
@@ -18,6 +22,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - SDWebImage
     - SmartCodable
     - SnapKit
     - YYCache
@@ -29,7 +34,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ARTZecoToolKit: 581f4a5e2f28de1bf2b794e6003a2eaf0faae07b
+  ARTZecoToolKit: b699237d464368d793d60782a0987c51a720c8f9
+  SDWebImage: 066c47b573f408f18caa467d71deace7c0f8280d
   SmartCodable: 092fd8c698dc958fc95e1d93baf3b497f9ab1715
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952

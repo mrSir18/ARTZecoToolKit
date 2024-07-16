@@ -10,6 +10,7 @@
 		0222B4432C35A9F600FA82B7 /* ARTViewController_StartRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0222B4422C35A9F600FA82B7 /* ARTViewController_StartRating.swift */; };
 		022E01232C429EB50069BA7A /* CollectionSectionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E01222C429EB50069BA7A /* CollectionSectionProtocol.swift */; };
 		023F976D2C32F5A1009CD62B /* ARTViewController_AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023F976C2C32F5A1009CD62B /* ARTViewController_AlertView.swift */; };
+		024F9A4F2C456D50008DF3AB /* ARTViewController_PhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024F9A4E2C456D50008DF3AB /* ARTViewController_PhotoBrowser.swift */; };
 		0258B7AB2BFA845800AEB349 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0258B7A82BFA845800AEB349 /* 3.png */; };
 		0258B7AC2BFA845800AEB349 /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 0258B7A92BFA845800AEB349 /* 4.png */; };
 		0258B7AD2BFA845800AEB349 /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 0258B7AA2BFA845800AEB349 /* 5.png */; };
@@ -62,6 +63,7 @@
 		0222B4422C35A9F600FA82B7 /* ARTViewController_StartRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_StartRating.swift; sourceTree = "<group>"; };
 		022E01222C429EB50069BA7A /* CollectionSectionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSectionProtocol.swift; sourceTree = "<group>"; };
 		023F976C2C32F5A1009CD62B /* ARTViewController_AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_AlertView.swift; sourceTree = "<group>"; };
+		024F9A4E2C456D50008DF3AB /* ARTViewController_PhotoBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_PhotoBrowser.swift; sourceTree = "<group>"; };
 		0258B7A82BFA845800AEB349 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
 		0258B7A92BFA845800AEB349 /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
 		0258B7AA2BFA845800AEB349 /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 				023F976C2C32F5A1009CD62B /* ARTViewController_AlertView.swift */,
 				026A7B6B2C3431AE00D3134E /* ARTViewController_ActionSheet.swift */,
 				0222B4422C35A9F600FA82B7 /* ARTViewController_StartRating.swift */,
+				024F9A4E2C456D50008DF3AB /* ARTViewController_PhotoBrowser.swift */,
 				02C95B3F2C426FEA00200438 /* Business */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
@@ -446,6 +449,7 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ARTZecoToolKit_Example/Pods-ARTZecoToolKit_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ARTZecoToolKit/ARTZecoToolKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SmartCodable/SmartCodable.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/YYCache/YYCache.framework",
@@ -455,6 +459,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ARTZecoToolKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SmartCodable.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYCache.framework",
@@ -535,6 +540,7 @@
 				02F8AE542BF67E7E00A111F6 /* ARTViewController_Debug.swift in Sources */,
 				02C95B412C42700600200438 /* ARTViewController+CollectionView.swift in Sources */,
 				02F8AE4E2BF67E7E00A111F6 /* ARTViewController_CollectionView.swift in Sources */,
+				024F9A4F2C456D50008DF3AB /* ARTViewController_PhotoBrowser.swift in Sources */,
 				0282385F2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift in Sources */,
 				02F8AE312BF66BCE00A111F6 /* ARTBaseViewController.swift in Sources */,
 				02F8AE532BF67E7E00A111F6 /* ARTViewController_Quantity.swift in Sources */,

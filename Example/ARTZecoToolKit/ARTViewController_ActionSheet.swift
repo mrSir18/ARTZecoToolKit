@@ -11,13 +11,13 @@ import ARTZecoToolKit
 class ARTViewController_ActionSheet: ARTBaseViewController {
     
     /// 按钮
-    private lazy var slidePopupButton: ARTAlignmentButton = {
+    private lazy var actionSheetButton: ARTAlignmentButton = {
         let button = ARTAlignmentButton(type: .custom)
         button.titleLabel?.font = .art_regular(16.0)
         button.backgroundColor  = .art_randomColor()
         button.setTitle("这是自定义ActionSheet", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(slidePopupButtonAction), for: .touchUpInside)
+        button.addTarget(self, action: #selector(actionSheetButtonAction), for: .touchUpInside)
         return button
     }()
     
@@ -27,14 +27,14 @@ class ARTViewController_ActionSheet: ARTBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(slidePopupButton)
-        slidePopupButton.snp.makeConstraints { make in
+        view.addSubview(actionSheetButton)
+        actionSheetButton.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 200.0, height: 200.0))
             make.center.equalToSuperview()
         }
     }
     
-    @objc private func slidePopupButtonAction () {
+    @objc private func actionSheetButtonAction () {
         
         ARTActionSheetStyleConfiguration.resetConfiguration()
         //设置actionSheet示例

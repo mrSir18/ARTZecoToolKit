@@ -10,5 +10,6 @@
 
 // 桥接头文件
 #import <YYWebImage/YYWebImage.h>
+#import <SDWebImage/SDWebImage.h>
 
 #endif /* ARTZecoToolKit_Bridging_Header_h */
