@@ -5,7 +5,7 @@
 //  Created by mrSir18 on 2024/7/15.
 //
 
-@objc public protocol ARTPhotoBrowserViewControllerDelegate: AnyObject {
+@objc public protocol ARTPhotoBrowserViewControllerProtocol: AnyObject {
     
     /// 照片浏览器视图控制器索引变化回调
     ///
@@ -55,8 +55,8 @@ extension ARTPhotoBrowserViewController {
 
 open class ARTPhotoBrowserViewController: UIViewController {
     
-    // 代理对象
-    public weak var delegate: ARTPhotoBrowserViewControllerDelegate?
+    /// 代理对象
+    public weak var delegate: ARTPhotoBrowserViewControllerProtocol?
     
     /// 默认配置
     public let configuration = ARTPhotoBrowserStyleConfiguration.default()
@@ -103,7 +103,7 @@ open class ARTPhotoBrowserViewController: UIViewController {
     ///  - currentIndexCallback: 当前显示的照片索引回调
     ///  - Note: 该方法为类方法，直接调用即可展示图片浏览器
     ///  - Note: 该方法默认使用 present 弹屏方式展示
-    public class func showPhotoBrowser(withPhotos photos: [Any], startIndex index: Int, delegate: ARTPhotoBrowserViewControllerDelegate? = nil, currentIndexCallback: ((Int) -> Void)? = nil) {
+    public class func showPhotoBrowser(withPhotos photos: [Any], startIndex index: Int, delegate: ARTPhotoBrowserViewControllerProtocol? = nil, currentIndexCallback: ((Int) -> Void)? = nil) {
         let photoBrowserViewController = ARTPhotoBrowserViewController(photos: photos, startIndex: index, delegate: delegate, currentIndexCallback: currentIndexCallback)
         photoBrowserViewController.presentPhotoBrowser()
     }
@@ -117,7 +117,7 @@ open class ARTPhotoBrowserViewController: UIViewController {
     
     // MARK: - Initialization
     
-    public init(photos: [Any], startIndex: Int, delegate: ARTPhotoBrowserViewControllerDelegate? = nil, currentIndexCallback: ((Int) -> Void)? = nil) {
+    public init(photos: [Any], startIndex: Int, delegate: ARTPhotoBrowserViewControllerProtocol? = nil, currentIndexCallback: ((Int) -> Void)? = nil) {
         self.photos = photos
         self.startIndex = (startIndex >= 0 && startIndex < photos.count) ? startIndex : 0 // 索引越界处理,默认为 0
         self.delegate = delegate

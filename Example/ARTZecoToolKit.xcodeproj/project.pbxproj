@@ -22,6 +22,8 @@
 		0282385F2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282385E2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift */; };
 		0298808B2C46E3EF00176ED3 /* ARTControllerNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0298808A2C46E3EF00176ED3 /* ARTControllerNavigationBar.swift */; };
 		029880902C46E97C00176ED3 /* ARTControllerBottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0298808F2C46E97C00176ED3 /* ARTControllerBottomBar.swift */; };
+		02BB292D2C49671100DE706C /* ARTFirstCarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB292C2C49671100DE706C /* ARTFirstCarouselCell.swift */; };
+		02BB292F2C49673200DE706C /* ARTSecondCarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB292E2C49673200DE706C /* ARTSecondCarouselCell.swift */; };
 		02C95B412C42700600200438 /* ARTViewController+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C95B402C42700600200438 /* ARTViewController+CollectionView.swift */; };
 		02C95B442C42705D00200438 /* ARTCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C95B432C42705D00200438 /* ARTCollectionViewModel.swift */; };
 		02C95B482C42723500200438 /* ARTCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C95B472C42723500200438 /* ARTCollectionCell.swift */; };
@@ -78,6 +80,8 @@
 		0282385E2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_AlignmentButton.swift; sourceTree = "<group>"; };
 		0298808A2C46E3EF00176ED3 /* ARTControllerNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTControllerNavigationBar.swift; sourceTree = "<group>"; };
 		0298808F2C46E97C00176ED3 /* ARTControllerBottomBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTControllerBottomBar.swift; sourceTree = "<group>"; };
+		02BB292C2C49671100DE706C /* ARTFirstCarouselCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTFirstCarouselCell.swift; sourceTree = "<group>"; };
+		02BB292E2C49673200DE706C /* ARTSecondCarouselCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTSecondCarouselCell.swift; sourceTree = "<group>"; };
 		02C95B402C42700600200438 /* ARTViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTViewController+CollectionView.swift"; sourceTree = "<group>"; };
 		02C95B432C42705D00200438 /* ARTCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTCollectionViewModel.swift; sourceTree = "<group>"; };
 		02C95B472C42723500200438 /* ARTCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTCollectionCell.swift; sourceTree = "<group>"; };
@@ -180,12 +184,38 @@
 			name = BottomBar;
 			sourceTree = "<group>";
 		};
+		02BB29302C49673F00DE706C /* CarouselBusiness */ = {
+			isa = PBXGroup;
+			children = (
+				02BB29312C49674800DE706C /* View */,
+			);
+			name = CarouselBusiness;
+			sourceTree = "<group>";
+		};
+		02BB29312C49674800DE706C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				02BB29322C49675700DE706C /* Cell */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		02BB29322C49675700DE706C /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				02BB292C2C49671100DE706C /* ARTFirstCarouselCell.swift */,
+				02BB292E2C49673200DE706C /* ARTSecondCarouselCell.swift */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
 		02C95B3F2C426FEA00200438 /* Business */ = {
 			isa = PBXGroup;
 			children = (
 				02F8AE562BF67E8500A111F6 /* BaseBusiness */,
 				02C95B422C42700B00200438 /* CollectionViewBusiness */,
 				0298808C2C46E43000176ED3 /* PhotoBrowserBusiness */,
+				02BB29302C49673F00DE706C /* CarouselBusiness */,
 			);
 			name = Business;
 			sourceTree = "<group>";
@@ -569,6 +599,7 @@
 				02C95B442C42705D00200438 /* ARTCollectionViewModel.swift in Sources */,
 				02C95B482C42723500200438 /* ARTCollectionCell.swift in Sources */,
 				023F976D2C32F5A1009CD62B /* ARTViewController_AlertView.swift in Sources */,
+				02BB292D2C49671100DE706C /* ARTFirstCarouselCell.swift in Sources */,
 				026A7B6C2C3431AE00D3134E /* ARTViewController_ActionSheet.swift in Sources */,
 				02C95B502C42748900200438 /* ARTCollectionEntity.swift in Sources */,
 				02F8AE4D2BF67E7E00A111F6 /* ARTBaseTabBarController.swift in Sources */,
@@ -581,6 +612,7 @@
 				0282385F2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift in Sources */,
 				02F8AE312BF66BCE00A111F6 /* ARTBaseViewController.swift in Sources */,
 				02F8AE532BF67E7E00A111F6 /* ARTViewController_Quantity.swift in Sources */,
+				02BB292F2C49673200DE706C /* ARTSecondCarouselCell.swift in Sources */,
 				02F8AE522BF67E7E00A111F6 /* ARTBaseNavigationController.swift in Sources */,
 				029880902C46E97C00176ED3 /* ARTControllerBottomBar.swift in Sources */,
 				02C95B4B2C42725E00200438 /* ARTCollectionHeader.swift in Sources */,

@@ -5,24 +5,38 @@
 //  Created by mrSir18 on 2024/7/18.
 //
 
+@objc public protocol ARTCarouselFlowLayoutProtocol: AnyObject {
+    
+    /// 获取元素的缩放比例.
+    ///
+    /// - Parameters:
+    ///  - collectionView: 当前的 UICollectionView.
+    ///  - collectionViewLayout: 当前的 ARTCarouselFlowLayout.
+    ///  - indexPath: 当前元素的 IndexPath.
+    ///  - Returns: 元素的缩放比例.
+    /// - Note: 如果不实现该方法，将会使用默认值 1.0.
+    @objc optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: ARTCarouselFlowLayout, scaleForItemAtIndexPath indexPath: IndexPath) -> CGFloat
+}
+
 open class ARTCarouselFlowLayout: UICollectionViewFlowLayout {
 
-    /// 缩放比例，默认为1.0.
-    ///
-    /// 当 scale >= 1.0 时，布局将失效并重新计算布局.
-    /// 例如，scale = 1.2，则元素将在中心点放大1.2倍，两侧元素缩小0.8倍.
-    /// 例如，scale = 0.8，则元素将在中心点缩小0.8倍，两侧元素放大1.2倍.
-    /// 例如，scale = 1.0，则元素大小不变.
-    /// 例如，scale = 0.0，则元素将不可见.
-    var scale: CGFloat = 1.0 {
-        didSet {
-            if scale >= 1.0 {
-                invalidateLayout()
-            }
-        }
+    /// 遵循 ARTCarouselFlowLayout 协议的弱引用委托对象.
+    weak var art_delegate: ARTCarouselFlowLayoutProtocol?
+    
+    
+    // MARK: - Life Cycle
+    
+    public init(_ delegate: ARTCarouselFlowLayoutProtocol?) {
+        super.init()
+        self.art_delegate = delegate
     }
     
-    // MARK: - UICollectionViewFlowLayout Overrides
+    required public init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension ARTCarouselFlowLayout {
     
     /// 准备布局.
     ///
@@ -76,6 +90,8 @@ open class ARTCarouselFlowLayout: UICollectionViewFlowLayout {
         let centerY = collectionView.bounds.height * 0.5 + collectionView.contentOffset.y
 
         for attribute in attributes { /// 遍历所有布局属性，计算缩放比例.
+//            let delegateScale = art_delegate?.collectionView?(collectionView, layout: self, scaleForItemAtIndexPath: attribute.indexPath) ?? 1.0
+            let delegateScale = 1.0
             var scale: CGFloat = 1.0
             var absOffset: CGFloat = 0.0
 
@@ -83,13 +99,13 @@ open class ARTCarouselFlowLayout: UICollectionViewFlowLayout {
                 absOffset = abs(attribute.center.x - centerX)
                 let distance = itemSize.width + minimumLineSpacing
                 if absOffset < distance { /// 如果元素距离中心点小于指定距离，则计算缩放比例.
-                    scale = (1 - absOffset / distance) * (self.scale - 1) + 1
+                    scale = (1 - absOffset / distance) * (delegateScale - 1) + 1
                 }
             } else {
                 absOffset = abs(attribute.center.y - centerY)
                 let distance = itemSize.height + minimumLineSpacing
                 if absOffset < distance { /// 如果元素距离中心点小于指定距离，则计算缩放比例.
-                    scale = (1 - absOffset / distance) * (self.scale - 1) + 1
+                    scale = (1 - absOffset / distance) * (delegateScale - 1) + 1
                 }
             }
             /// 设置布局属性.
@@ -110,7 +126,7 @@ open class ARTCarouselFlowLayout: UICollectionViewFlowLayout {
     open override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
         var minOffsetDifference = CGFloat.greatestFiniteMagnitude
         var targetOffset = proposedContentOffset
-        guard let collectionView = collectionView else { 
+        guard let collectionView = collectionView else {
             return targetOffset
         }
         
@@ -150,4 +166,3 @@ open class ARTCarouselFlowLayout: UICollectionViewFlowLayout {
         return targetOffset
     }
 }
-

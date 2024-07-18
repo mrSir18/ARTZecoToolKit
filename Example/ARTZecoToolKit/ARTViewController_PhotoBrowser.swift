@@ -110,12 +110,12 @@ class ARTViewController_PhotoBrowser: ARTBaseViewController {
     }
 }
 
-// MARK: - ARTPhotoBrowserViewControllerDelegate
+// MARK: - ARTPhotoBrowserViewControllerProtocol
 
 /// 可根据实际需要来实现特定的代理方法
 ///
 /// - Note: 代理方法是可选的，若不实现，则使用默认配置
-extension ARTViewController_PhotoBrowser: ARTPhotoBrowserViewControllerDelegate {
+extension ARTViewController_PhotoBrowser: ARTPhotoBrowserViewControllerProtocol {
     
     func photoBrowserViewController(_ viewController: ARTPhotoBrowserViewController, didChangedIndex index: Int) { // 照片索引改变
         print("代理模式：当前显示的照片索引为：\(index)")

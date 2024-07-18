@@ -40,6 +40,8 @@ open class ARTPhotoBrowserBottomBar: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Override Super Methods
+    
     /// 重写父类方法，设置子视图
     ///
     /// - Note: 由于子类需要自定义视图，所以需要重写该方法
