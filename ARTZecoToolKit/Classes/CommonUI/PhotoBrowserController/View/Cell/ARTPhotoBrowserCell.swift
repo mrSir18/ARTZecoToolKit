@@ -84,7 +84,7 @@ class ARTPhotoBrowserCell: UICollectionViewCell {
         if configuration.enableDoubleTapZoomGesture { // 创建双击手势
             doubleTapZoomGesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
             doubleTapZoomGesture.numberOfTapsRequired = 2
-            scrollView.addGestureRecognizer(doubleTapZoomGesture)
+            contentView.addGestureRecognizer(doubleTapZoomGesture)
         }
         
         if configuration.enableSingleTapDismissGesture || configuration.enableTopBottomFadeOutAnimator { // 创建单击手势
@@ -94,34 +94,36 @@ class ARTPhotoBrowserCell: UICollectionViewCell {
             if configuration.enableDoubleTapZoomGesture { // 解决单击事件和双击事件的冲突
                 singleTapGesture.require(toFail: doubleTapZoomGesture)
             }
-            scrollView.addGestureRecognizer(singleTapGesture)
+            contentView.addGestureRecognizer(singleTapGesture)
         }
     }
     
     // MARK: - Private UITapGestureRecognizer Methods
     
     @objc private func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
-        /// 获取点击位置
-        let pointInView = gesture.location(in: imageView)
-        
-        /// 获取当前缩放比例
-        let newZoomScale: CGFloat
-        if scrollView.zoomScale == scrollView.minimumZoomScale {
-            newZoomScale = scrollView.maximumZoomScale
-        } else {
-            newZoomScale = scrollView.minimumZoomScale
+        UIView.animate(withDuration: 0.35) {
+            /// 获取点击位置
+            let pointInView = gesture.location(in: self.imageView)
+            
+            /// 获取当前缩放比例
+            let newZoomScale: CGFloat
+            if self.scrollView.zoomScale == self.scrollView.minimumZoomScale {
+                newZoomScale = self.scrollView.maximumZoomScale
+            } else {
+                newZoomScale = self.scrollView.minimumZoomScale
+            }
+            
+            /// 计算缩放后的区域
+            let scrollViewSize = self.scrollView.bounds.size
+            let width = scrollViewSize.width / newZoomScale
+            let height = scrollViewSize.height / newZoomScale
+            let x = pointInView.x - (width / 2.0)
+            let y = pointInView.y - (height / 2.0)
+            let rectToZoomTo = CGRect(x: x, y: y, width: width, height: height)
+            
+            /// 缩放到指定区域
+            self.scrollView.zoom(to: rectToZoomTo, animated: false)
         }
-        
-        /// 计算缩放后的区域
-        let scrollViewSize = scrollView.bounds.size
-        let width = scrollViewSize.width / newZoomScale
-        let height = scrollViewSize.height / newZoomScale
-        let x = pointInView.x - (width / 2.0)
-        let y = pointInView.y - (height / 2.0)
-        let rectToZoomTo = CGRect(x: x, y: y, width: width, height: height)
-        
-        /// 缩放到指定区域
-        scrollView.zoom(to: rectToZoomTo, animated: true)
     }
     
     @objc private func handleSingleTap(_ gesture: UITapGestureRecognizer) {
@@ -180,7 +182,7 @@ class ARTPhotoBrowserCell: UICollectionViewCell {
     /// - Parameter image: 图片对象
     /// - Parameter source: 图片来源，可以是 URL、String 或 UIImage 对象
     public func loadImage(from source: Any) {
-        scrollView.zoomScale = 1.0
+        scrollView.setZoomScale(1.0, animated: false)
         scrollView.contentOffset = .zero
         
         if let urlString = source as? String { /// 检查 source 是否为字符串类型

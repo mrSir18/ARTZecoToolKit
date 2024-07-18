@@ -17,6 +17,7 @@
 		0258B7AF2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0258B7AE2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift */; };
 		0258B7B12BFA862B00AEB349 /* video.MOV in Resources */ = {isa = PBXBuildFile; fileRef = 0258B7B02BFA862B00AEB349 /* video.MOV */; };
 		0258CA9E2C03995300A486E7 /* ARTViewController_PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0258CA9D2C03995300A486E7 /* ARTViewController_PageViewController.swift */; };
+		025D29982C48459D00F611D6 /* ARTViewController_Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29972C48459D00F611D6 /* ARTViewController_Carousel.swift */; };
 		026A7B6C2C3431AE00D3134E /* ARTViewController_ActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A7B6B2C3431AE00D3134E /* ARTViewController_ActionSheet.swift */; };
 		0282385F2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282385E2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift */; };
 		0298808B2C46E3EF00176ED3 /* ARTControllerNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0298808A2C46E3EF00176ED3 /* ARTControllerNavigationBar.swift */; };
@@ -72,6 +73,7 @@
 		0258B7AE2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_VideoPlayer.swift; sourceTree = "<group>"; };
 		0258B7B02BFA862B00AEB349 /* video.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = video.MOV; sourceTree = "<group>"; };
 		0258CA9D2C03995300A486E7 /* ARTViewController_PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_PageViewController.swift; sourceTree = "<group>"; };
+		025D29972C48459D00F611D6 /* ARTViewController_Carousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_Carousel.swift; sourceTree = "<group>"; };
 		026A7B6B2C3431AE00D3134E /* ARTViewController_ActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_ActionSheet.swift; sourceTree = "<group>"; };
 		0282385E2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_AlignmentButton.swift; sourceTree = "<group>"; };
 		0298808A2C46E3EF00176ED3 /* ARTControllerNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTControllerNavigationBar.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				026A7B6B2C3431AE00D3134E /* ARTViewController_ActionSheet.swift */,
 				0222B4422C35A9F600FA82B7 /* ARTViewController_StartRating.swift */,
 				024F9A4E2C456D50008DF3AB /* ARTViewController_PhotoBrowser.swift */,
+				025D29972C48459D00F611D6 /* ARTViewController_Carousel.swift */,
 				02C95B3F2C426FEA00200438 /* Business */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
@@ -574,6 +577,7 @@
 				02C95B412C42700600200438 /* ARTViewController+CollectionView.swift in Sources */,
 				02F8AE4E2BF67E7E00A111F6 /* ARTViewController_CollectionView.swift in Sources */,
 				024F9A4F2C456D50008DF3AB /* ARTViewController_PhotoBrowser.swift in Sources */,
+				025D29982C48459D00F611D6 /* ARTViewController_Carousel.swift in Sources */,
 				0282385F2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift in Sources */,
 				02F8AE312BF66BCE00A111F6 /* ARTBaseViewController.swift in Sources */,
 				02F8AE532BF67E7E00A111F6 /* ARTViewController_Quantity.swift in Sources */,
