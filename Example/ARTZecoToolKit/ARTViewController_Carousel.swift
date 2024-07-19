@@ -26,19 +26,20 @@ class ARTViewController_Carousel: ARTBaseViewController {
         
         // 创建轮播图
         let carouselView = ARTCarouselView(self)
-        carouselView.scrollDirection = .vertical
-        carouselView.startIndex = 2
-        carouselView.isAutoScroll = true
-        carouselView.isCycleScroll = true
-        carouselView.autoScrollInterval = 3.0
-        carouselView.backgroundColor = .gray
+        carouselView.scrollDirection    = .horizontal   // 滚动方向
+        carouselView.isPagingEnabled    = true          // 是否分页
+        carouselView.startIndex         = 2             // 起始位置
+        carouselView.isAutoScroll       = true          // 是否自动滚动
+        carouselView.isCycleScroll      = true          // 是否循环滚动
+        carouselView.autoScrollInterval = 3.0           // 自动滚动时间间隔
+        carouselView.backgroundColor    = .art_randomColor()
         view.addSubview(carouselView)
         carouselView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
             make.centerY.equalToSuperview()
             make.height.equalTo(ARTAdaptedValue(250))
         }
-        carouselView.reloadData()
+        carouselView.reloadData() // 刷新数据
     }
 }
 
