@@ -18,7 +18,7 @@ class ARTFirstCarouselCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .art_randomColor()
+        self.backgroundColor = .clear
         setupViews()
     }
     
@@ -28,7 +28,7 @@ class ARTFirstCarouselCell: UICollectionViewCell {
     
     private func setupViews() {
 
-        // 创建标题标签
+        // 创建图片视图
         imageView = UIImageView()
         imageView.contentMode   = .scaleAspectFill
         imageView.clipsToBounds = true

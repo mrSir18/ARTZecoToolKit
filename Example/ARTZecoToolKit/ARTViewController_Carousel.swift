@@ -36,7 +36,7 @@ class ARTViewController_Carousel: ARTBaseViewController {
         carouselView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
             make.centerY.equalToSuperview()
-            make.height.equalTo(ARTAdaptedValue(300.0))
+            make.height.equalTo(ARTAdaptedValue(250))
         }
         carouselView.reloadData()
     }
@@ -46,21 +46,59 @@ class ARTViewController_Carousel: ARTBaseViewController {
 
 extension ARTViewController_Carousel: ARTCarouselViewProtocol {
     
-    func registerCells(for collectionView: UICollectionView) { // 注册cell
+    // MARK: - 必选方法
+    
+    func registerCells(for collectionView: UICollectionView) { // 注册 Cell.
         collectionView.registerCell(ARTFirstCarouselCell.self)
+        collectionView.registerCell(ARTSecondCarouselCell.self)
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { // Cell 数量
         return photos.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell { // Cell 数据
+        if indexPath.row % 2 == 0 {
+            let cell = collectionView.dequeueCell(for: indexPath) as ARTSecondCarouselCell
+            cell.updateTitle("第 \(indexPath.row) 个")
+            return cell
+        }
         let cell = collectionView.dequeueCell(for: indexPath) as ARTFirstCarouselCell
         cell.loadImage(photos[indexPath.row] as! URL)
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+    // MARK: - 可选方法
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize { // Cell 大小
+        return ARTAdaptedSize(width: 200.0, height: 150.0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat { // 行间距
+        return ARTAdaptedValue(12.0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat { // 列间距
+        return ARTAdaptedValue(12.0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, scaleForItemAtIndexPath indexPath: IndexPath) -> CGFloat { // 缩放系数
+        return 1.4
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) { // 点击事件
+        print("点击了第 \(indexPath.row) 个")
+    }
+    
+    func carouselView(_ carouselView: ARTCarouselView, didBeginDraggingItemAt index: Int) { // 开始拖拽
+        print("开始拖拽第 \(index) 个")
+    }
+    
+    func carouselView(_ carouselView: ARTCarouselView, didEndScrollingAnimationAt index: Int) { // 结束滚动
+        print("结束滚动第 \(index) 个")
+    }
+    
+    func carouselView(_ carouselView: ARTCarouselView, didScrollToItemAt index: Int) {
+//        print("滚动到第 \(index) 个")
     }
 }

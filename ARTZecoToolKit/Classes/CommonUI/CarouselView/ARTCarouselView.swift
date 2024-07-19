@@ -54,16 +54,6 @@
     /// - Warning: 该方法为可选方法，如果不重写则默认返回 CGSize.zero.
     @objc optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
     
-    /// 获取 Cell 间距.
-    ///
-    /// - Parameters:
-    ///  - collectionView: UICollectionView.
-    ///  - layout:UICollectionViewLayout.
-    ///  - section: Int.
-    ///  - Returns: UIEdgeInsets.
-    /// - Warning: 该方法为可选方法，如果不重写则默认返回 UIEdgeInsets.zero.
-    @objc optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets
-    
     /// 获取 Cell 行间距.
     ///
     /// - Parameters:
@@ -100,15 +90,23 @@
     ///  - carouselView: ARTCarouselView.
     ///  - indexPath: IndexPath.
     /// - Note: 由于不同的视图需要实现不同的滚动事件，所以需要重写该方法.
-    @objc optional func carouselView(_ carouselView: ARTCarouselView, didBeginDraggingItemAt indexPath: IndexPath)
+    @objc optional func carouselView(_ carouselView: ARTCarouselView, didBeginDraggingItemAt index: Int)
     
-    /// 结束拖拽到某个 Cell的位置.
+    /// 滚动结束到某个 Cell的位置.
     ///
     /// - Parameters:
     ///  - carouselView: ARTCarouselView.
     ///  - indexPath: IndexPath.
     /// - Note: 由于不同的视图需要实现不同的滚动结束事件，所以需要重写该方法.
-    @objc optional func carouselView(_ carouselView: ARTCarouselView, didEndScrollingAnimationAt indexPath: IndexPath)
+    @objc optional func carouselView(_ carouselView: ARTCarouselView, didEndScrollingAnimationAt index: Int)
+    
+    /// 滚动到某个 Cell的位置.
+    ///
+    /// - Parameters:
+    /// - carouselView: ARTCarouselView.
+    /// - indexPath: IndexPath.
+    /// - Note: 由于不同的视图需要实现不同的滚动事件，所以需要重写该方法.
+    @objc optional func carouselView(_ carouselView: ARTCarouselView, didScrollToItemAt index: Int)
 }
 
 open class ARTCarouselView: UIView {
@@ -118,6 +116,8 @@ open class ARTCarouselView: UIView {
     
     /// 视图列表
     internal var collectionView: UICollectionView!
+    
+    internal var layout: ARTCarouselFlowLayout!
     
     /// 滚动方向 默认水平滚动
     public var scrollDirection: UICollectionView.ScrollDirection = .horizontal {
@@ -163,11 +163,8 @@ open class ARTCarouselView: UIView {
     open func setupViews() {
         
         /// 创建列表视图
-        let layout = ARTCarouselFlowLayout(self)
+        layout = ARTCarouselFlowLayout(self)
         layout.scrollDirection = scrollDirection
-        layout.minimumInteritemSpacing = 10000
-        layout.minimumLineSpacing = 0
-        layout.itemSize = CGSize(width: UIScreen.art_currentScreenWidth, height: ARTAdaptedValue(300))
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.contentInsetAdjustmentBehavior   = .never
         collectionView.showsHorizontalScrollIndicator   = false
@@ -175,7 +172,7 @@ open class ARTCarouselView: UIView {
         collectionView.backgroundColor                  = .clear
         collectionView.delegate                         = self
         collectionView.dataSource                       = self
-        collectionView.isPagingEnabled                  = true
+//        collectionView.isPagingEnabled                  = true
         collectionView.contentInset                     = .zero
         delegate?.registerCells(for: collectionView)
         addSubview(collectionView)
@@ -338,10 +335,10 @@ extension ARTCarouselView {
         
         let edgeOffset: CGFloat
         if scrollDirection == .horizontal { /// 水平方向滚动，计算水平边缘偏移量
-            edgeOffset = (collectionView.bounds.width - UIScreen.art_currentScreenWidth) / 2
+            edgeOffset = (collectionView.bounds.width - layout.art_itemSize.width) / 2
             collectionView.setContentOffset(CGPoint(x: attributes.frame.minX - edgeOffset, y: 0), animated: false)
         } else { /// 垂直方向滚动，计算垂直边缘偏移量
-            edgeOffset = (collectionView.bounds.height - ARTAdaptedValue(300)) / 2
+            edgeOffset = (collectionView.bounds.height - layout.art_itemSize.height) / 2
             collectionView.setContentOffset(CGPoint(x: 0, y: attributes.frame.minY - edgeOffset), animated: false)
         }
     }
@@ -351,36 +348,36 @@ extension ARTCarouselView {
 
 extension ARTCarouselView {
     
-    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) { /// 开始拖拽时停止定时器
         if isAutoScroll { stopScrollTimer() }
         adjustLastPageDisplay()
         adjustFirstPageDisplay()
 
         if let currentIndex = currentVisibleIndexItem() {
             let index = currentIndex % realItemCount
-            print("index: \(index) \(expandedItemCount)")
+            delegate?.carouselView?(self, didBeginDraggingItemAt: index)
         }
     }
     
-    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { /// 结束拖拽时开启定时器
         if isAutoScroll { startScrollTimer() }
     }
     
-    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) { /// 结束减速时调整显示位置
         scrollViewDidEndScrollingAnimation(scrollView)
     }
     
-    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) { /// 结束滚动动画时调整显示位置
         if let currentIndex = currentVisibleIndexItem() {
             let index = currentIndex % realItemCount
-            print("index: \(index)")
+            delegate?.carouselView?(self, didEndScrollingAnimationAt: index)
         }
     }
     
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) { /// 滚动时调整显示位置
         if let currentIndex = currentVisibleIndexItem() {
             let index = currentIndex % realItemCount
-//            print("index: \(index)")
+            delegate?.carouselView?(self, didScrollToItemAt: index)
         }
     }
 }

@@ -5,7 +5,7 @@
 //  Created by mrSir18 on 2024/7/18.
 //
 
-@objc public protocol ARTCarouselFlowLayoutProtocol: AnyObject {
+@objc public protocol ARTCarouselFlowLayoutProtocol: UICollectionViewDelegateFlowLayout {
     
     /// 获取元素的缩放比例.
     ///
@@ -19,9 +19,21 @@
 }
 
 open class ARTCarouselFlowLayout: UICollectionViewFlowLayout {
-
+    
     /// 遵循 ARTCarouselFlowLayout 协议的弱引用委托对象.
     weak var art_delegate: ARTCarouselFlowLayoutProtocol?
+    
+    /// itemSIze.
+    internal var art_itemSize: CGSize = .zero
+    
+    /// 行间距的最小值.
+    internal var art_minimumLineSpacing: CGFloat = 0.0
+    
+    /// 列间距的最小值.
+    internal var art_minimumInteritemSpacing: CGFloat = 0.0
+    
+    /// 元素的缩放比例.
+    internal var art_itemScale: CGFloat = 1.0
     
     
     // MARK: - Life Cycle
@@ -48,18 +60,30 @@ extension ARTCarouselFlowLayout {
         super.prepare()
         guard let collectionView = collectionView else { return }
         
-        /// 设置滚动方向.
-        ///
-        /// 水平滚动：.horizontal.
-        /// 垂直滚动：.vertical.
-        /// - Note: 默认为水平滚动，根据滚动方向设置边距，使得元素居中显示.
-        let inset: CGFloat
-        if scrollDirection == .horizontal {
-            inset = (collectionView.bounds.width - itemSize.width) / 2
-            sectionInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
-        } else {
-            inset = (collectionView.bounds.height - itemSize.height) / 2
-            sectionInset = UIEdgeInsets(top: inset, left: 0, bottom: inset, right: 0)
+        /// 设置布局属性
+        let section = 0 /// 根据需要调整段的索引
+        self.art_minimumLineSpacing = delegate_minimumLineSpacingForSectionAt(section)
+        self.art_minimumInteritemSpacing = delegate_minimumInteritemSpacingForSectionAt(section)
+        
+        let numberOfItems = collectionView.numberOfItems(inSection: section)
+        for index in 0..<numberOfItems {
+            let indexPath = IndexPath(item: index, section: 0)
+            self.art_itemSize = delegate_sizeForItemAt(indexPath)
+            self.art_itemScale = delegate_scaleForItemAtIndexPath(indexPath)
+            
+            /// 设置滚动方向.
+            ///
+            /// 水平滚动：.horizontal.
+            /// 垂直滚动：.vertical.
+            /// - Note: 默认为水平滚动，根据滚动方向设置边距，使得元素居中显示.
+            let inset: CGFloat
+            if scrollDirection == .horizontal {
+                inset = (collectionView.bounds.width - self.art_itemSize.width) / 2
+                sectionInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
+            } else {
+                inset = (collectionView.bounds.height - self.art_itemSize.height) / 2
+                sectionInset = UIEdgeInsets(top: inset, left: 0, bottom: inset, right: 0)
+            }
         }
     }
     
@@ -88,24 +112,22 @@ extension ARTCarouselFlowLayout {
         /// 计算中心点.
         let centerX = collectionView.bounds.width * 0.5 + collectionView.contentOffset.x
         let centerY = collectionView.bounds.height * 0.5 + collectionView.contentOffset.y
-
+        
         for attribute in attributes { /// 遍历所有布局属性，计算缩放比例.
-//            let delegateScale = art_delegate?.collectionView?(collectionView, layout: self, scaleForItemAtIndexPath: attribute.indexPath) ?? 1.0
-            let delegateScale = 1.0
             var scale: CGFloat = 1.0
             var absOffset: CGFloat = 0.0
-
+            
             if scrollDirection == .horizontal {
                 absOffset = abs(attribute.center.x - centerX)
-                let distance = itemSize.width + minimumLineSpacing
+                let distance = self.art_itemSize.width + self.art_minimumLineSpacing
                 if absOffset < distance { /// 如果元素距离中心点小于指定距离，则计算缩放比例.
-                    scale = (1 - absOffset / distance) * (delegateScale - 1) + 1
+                    scale = (1 - absOffset / distance) * (self.art_itemScale - 1) + 1
                 }
             } else {
                 absOffset = abs(attribute.center.y - centerY)
-                let distance = itemSize.height + minimumLineSpacing
+                let distance = self.art_itemSize.height + self.art_minimumInteritemSpacing
                 if absOffset < distance { /// 如果元素距离中心点小于指定距离，则计算缩放比例.
-                    scale = (1 - absOffset / distance) * (delegateScale - 1) + 1
+                    scale = (1 - absOffset / distance) * (self.art_itemScale - 1) + 1
                 }
             }
             /// 设置布局属性.
@@ -115,7 +137,7 @@ extension ARTCarouselFlowLayout {
         
         return attributes
     }
-
+    
     /// 返回滚动停止时的目标内容偏移量.
     ///
     /// - Parameters:
@@ -166,3 +188,49 @@ extension ARTCarouselFlowLayout {
         return targetOffset
     }
 }
+
+// MARK: - Private系统方法: UICollectionViewDelegateFlowLayout
+
+extension ARTCarouselFlowLayout {
+    
+    /// 获取委托方法返回的指定itemSize.
+    ///
+    /// - Parameters:
+    /// - section: 段的索引.
+    /// - Returns: itemSize.
+    /// - Note: 如果不实现该方法，则使用默认UIEdgeInsets.zero.
+    private func delegate_sizeForItemAt(_ indexPath: IndexPath) -> CGSize {
+        return self.art_delegate?.collectionView?(collectionView!, layout: self, sizeForItemAt: indexPath) ?? itemSize
+    }
+    
+    /// 获取委托方法返回的指定段的最小行间距.
+    ///
+    /// - Parameters:
+    /// - section: 段的索引.
+    /// - Returns: 最小行间距.
+    /// - Note: 如果不实现该方法，则使用默认最小行间距0.0.
+    private func delegate_minimumLineSpacingForSectionAt(_ section: Int) -> CGFloat {
+        return self.art_delegate?.collectionView?(collectionView!, layout: self, minimumLineSpacingForSectionAt: section) ?? 0.0
+    }
+    
+    /// 获取委托方法返回的指定段的最小列间距.
+    ///
+    /// - Parameters:
+    /// - section: 段的索引.
+    /// - Returns: 最小列间距.
+    /// - Note: 如果不实现该方法，则使用默认最小列间距0.0.
+    private func delegate_minimumInteritemSpacingForSectionAt(_ section: Int) -> CGFloat {
+        return self.art_delegate?.collectionView?(collectionView!, layout: self, minimumInteritemSpacingForSectionAt: section) ?? 0.0
+    }
+    
+    /// 获取委托方法返回的指定item的缩放比例.
+    ///
+    /// - Parameters:
+    ///  - indexPath: 索引.
+    ///  - Returns: 缩放比例.
+    /// - Note: 如果不实现该方法，则使用默认缩放比例1.0.
+    private func delegate_scaleForItemAtIndexPath(_ indexPath: IndexPath) -> CGFloat {
+        return self.art_delegate?.collectionView?(collectionView!, layout: self, scaleForItemAtIndexPath: indexPath) ?? 1.0
+    }
+}
+
