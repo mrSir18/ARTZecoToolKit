@@ -508,4 +508,12 @@ extension ARTCarouselView {
         }
         collectionView.scrollToItem(at: IndexPath(item: targetIndex, section: 0), at: scrollPosition, animated: true)
     }
+    
+    /// 重置定时器.
+    ///
+    /// - Note: 点击 item 时调用该 API 重置定时器.
+    internal func resetScrollTimer() {
+        stopScrollTimer()
+        startScrollTimer()
+    }
 }
