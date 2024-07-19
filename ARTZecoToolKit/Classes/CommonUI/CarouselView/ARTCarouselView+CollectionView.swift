@@ -49,15 +49,11 @@ extension ARTCarouselView: UICollectionViewDelegate, UICollectionViewDataSource 
     // MARK: - UICollectionViewDelegateFlowLayout
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return delegate?.collectionView?(collectionView, layout: collectionViewLayout, sizeForItemAt: indexPath) ?? .zero
+        return art_itemSize[indexPath.item % realItemCount]
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return delegate?.collectionView?(collectionView, layout: collectionViewLayout, minimumLineSpacingForSectionAt: section) ?? 0
-    }
-    
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return delegate?.collectionView?(collectionView, layout: collectionViewLayout, minimumInteritemSpacingForSectionAt: section) ?? 0
+        return art_minimumLineSpacing
     }
 }
 
@@ -66,6 +62,6 @@ extension ARTCarouselView: UICollectionViewDelegate, UICollectionViewDataSource 
 extension ARTCarouselView: ARTCarouselFlowLayoutProtocol {
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: ARTCarouselFlowLayout, scaleForItemAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return delegate?.collectionView?(collectionView, layout: collectionViewLayout, scaleForItemAtIndexPath: indexPath) ?? 1.0
+        return art_itemScale[indexPath.item % realItemCount]
     }
 }

@@ -64,16 +64,6 @@
     /// - Warning: 该方法为可选方法，如果不重写则默认返回 0.
     @objc optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat
     
-    /// 获取 Cell 列间距.
-    ///
-    /// - Parameters:
-    ///  - collectionView: UICollectionView.
-    ///  - layout: UICollectionViewLayout.
-    ///  - section: Int.
-    ///  - Returns: CGFloat.
-    /// - Warning: 该方法为可选方法，如果不重写则默认返回 0.
-    @objc optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
-    
     /// 获取 Cell 缩放.
     ///
     /// - Parameters:
@@ -117,16 +107,12 @@ open class ARTCarouselView: UIView {
     /// 视图列表
     internal var collectionView: UICollectionView!
     
+    /// 布局对象
     internal var layout: ARTCarouselFlowLayout!
     
     /// 滚动方向 默认水平滚动
     public var scrollDirection: UICollectionView.ScrollDirection = .horizontal {
         didSet { updateCollectionViewLayout() }
-    }
-    
-    /// 是否分页 默认 true
-    public var isPagingEnabled: Bool = true {
-        didSet { updatePagingEnabled() }
     }
     
     /// 起始下标 默认 0
@@ -150,14 +136,33 @@ open class ARTCarouselView: UIView {
     /// 实际Item总数
     internal var realItemCount: Int = 0
     
+    /// item 尺寸
+    
+    internal var art_itemSize: [CGSize] = []
+    
+    /// item 缩放比例
+    
+    internal var art_itemScale: [CGFloat] = []
+    
+    /// 行间距的最小值.
+    internal var art_minimumLineSpacing: CGFloat = 0.0
+    
     
     // MARK: - Life Cycle
     
-    public convenience init(_ delegate: ARTCarouselViewProtocol) {
-        self.init()
+    public convenience init(_ delegate: ARTCarouselViewProtocol) {  /// 调用指定初始化方法
+        self.init(frame: .zero, delegate: delegate)
+    }
+    
+    init(frame: CGRect, delegate: ARTCarouselViewProtocol?) {
+        self.delegate = delegate
+        super.init(frame: frame)
         self.backgroundColor = .clear
-        self.delegate        = delegate
         setupViews()
+    }
+
+    required public init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
     
     // MARK: - Override Super Methods
@@ -172,28 +177,17 @@ open class ARTCarouselView: UIView {
         layout.scrollDirection = scrollDirection
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.contentInsetAdjustmentBehavior   = .never
+        collectionView.backgroundColor                  = .clear
         collectionView.showsHorizontalScrollIndicator   = false
         collectionView.showsVerticalScrollIndicator     = false
-        collectionView.backgroundColor                  = .clear
         collectionView.delegate                         = self
         collectionView.dataSource                       = self
-        collectionView.isPagingEnabled                  = false
+        collectionView.isPagingEnabled = false
         collectionView.contentInset                     = .zero
         delegate?.registerCells(for: collectionView)
         addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-        }
-    }
-    
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-        /// 如果有初始索引，将目标索引调整为初始索引，并且重置初始索引.
-        ///
-        /// - Note: 由于在 reloadData 之后会调整显示位置，所以需要在 layoutSubviews 之后调整显示位置.
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.adjustFirstPageDisplay()
         }
     }
     
@@ -209,8 +203,7 @@ open class ARTCarouselView: UIView {
     // MARK: - Public Methods
     
     public func reloadData() {
-        realItemCount = numberOfItems(inSection: 0) /// 获取实际的 item 数量 section 默认为 0.
-        expandedItemCount = calculateItemCount(for: realItemCount) /// item 扩大倍数.
+        configureCarousel() // 配置轮播图数据参数
         collectionView.reloadData()
         collectionView.setContentOffset(.zero, animated: true)
     }
@@ -257,22 +250,11 @@ extension ARTCarouselView {
     ///
     /// - Note: 由于不同的视图需要实现不同的布局，所以需要重写该方法.
     private func updateCollectionViewLayout() {
-        guard let layout = collectionView.collectionViewLayout as? ARTCarouselFlowLayout else { return }
-        layout.scrollDirection = scrollDirection
-        collectionView.collectionViewLayout.invalidateLayout() /// 重新布局.
-    }
-    
-    /// 更新分页状态.
-    ///
-    /// - Note: 由于缩放比例不同，分页状态也会不同，所以需要根据缩放比例来判断是否启用分页.
-    /// - Note: 该方法为可选方法，如果不重写则默认启用分页.
-    private func updatePagingEnabled() {
-//        guard let indexPaths = collectionView.indexPathsForVisibleItems.first else {
-//            collectionView.isPagingEnabled = isPagingEnabled
-//            return
-//        }
-//        let scale = delegate?.collectionView?(collectionView, layout: collectionView.collectionViewLayout, scaleForItemAtIndexPath: indexPaths) ?? 1.0
-//        collectionView.isPagingEnabled = isPagingEnabled && scale == 1.0 /// 当用户设定了分页状态并且缩放比例为 1.0 时启用分页，否则不启用分页.
+        if let collectionView = collectionView, 
+            let layout = collectionView.collectionViewLayout as? ARTCarouselFlowLayout {
+            layout.scrollDirection = scrollDirection
+            collectionView.collectionViewLayout.invalidateLayout() /// 重新布局.
+        }
     }
     
     /// 获取Item数量.
@@ -359,6 +341,74 @@ extension ARTCarouselView {
             edgeOffset = (collectionView.bounds.height - layout.art_itemSize.height) / 2
             collectionView.setContentOffset(CGPoint(x: 0, y: attributes.frame.minY - edgeOffset), animated: false)
         }
+    }
+    
+    /// 计算当前可见的 item 索引.
+    ///
+    /// - Returns: Int? 当前可见的 item 索引.
+    /// - Note: 如果没有可见的 item，则返回 nil.
+    /// - Note: 该方法会根据滚动方向计算可见的 item 索引.
+    private func configureCarousel() {
+        realItemCount = numberOfItems(inSection: 0) /// 获取实际的 item 数量，section 默认为 0.
+        expandedItemCount = calculateItemCount(for: realItemCount) /// 计算 item 扩大倍数.
+        art_minimumLineSpacing = max(delegate?.collectionView?(collectionView, layout: layout, minimumLineSpacingForSectionAt: 0) ?? 0, 0) /// 获取行间距.
+        
+        // 计算 itemSize 和 itemScale
+        art_itemSize = (0..<realItemCount).map { index in
+            let indexPath = IndexPath(item: index, section: 0)
+            return delegate?.collectionView?(collectionView, layout: layout, sizeForItemAt: indexPath) ?? .zero
+        }
+        
+        art_itemScale = (0..<realItemCount).map { index in
+            let indexPath = IndexPath(item: index, section: 0)
+            return delegate?.collectionView?(collectionView, layout: layout, scaleForItemAtIndexPath: indexPath) ?? 1.0
+        }
+
+        layoutIfNeeded()
+        collectionView.isPagingEnabled = shouldEnablePaging() /// 判断是否启用分页.
+        if art_minimumLineSpacing > 0 { /// 如果有设置行间距，则调整 itemSize.
+            art_itemSize = art_itemSize.map { adjustItemSize($0) }
+        }
+        /// 调整第一个页面的显示.
+        DispatchQueue.main.async { [weak self] in
+            self?.adjustFirstPageDisplay()
+        }
+    }
+
+    /// 判断是否启用分页.
+    ///
+    /// - Returns: Bool 是否启用分页.
+    /// - Note: 如果所有 itemScale 都为 1.0，且所有 itemSize 都为 collectionView 的宽度或高度，则启用分页.
+    private func shouldEnablePaging() -> Bool { /// 判断是否启用分页.
+        let isPagingEnabled = art_itemScale.allSatisfy { $0 == 1.0 }
+        let isFullWidthOrHeight: Bool
+
+        switch scrollDirection { /// 判断是否全屏宽度或高度.
+        case .horizontal:
+            isFullWidthOrHeight = art_itemSize.allSatisfy { $0.width == collectionView.bounds.width }
+        case .vertical:
+            isFullWidthOrHeight = art_itemSize.allSatisfy { $0.height == collectionView.bounds.height }
+        default:
+            return false
+        }
+        return isFullWidthOrHeight && isPagingEnabled
+    }
+
+    /// 调整 itemSize.
+    ///
+    /// - Parameters:
+    ///  - size: 原始的 itemSize.
+    ///  - Returns: 调整后的 itemSize.
+    ///  - Note: 水平方向时，减去行间距；垂直方向时，减去列间距.
+    ///  - Note: 该方法用于调整 itemSize，使 item 居中显示.
+    private func adjustItemSize(_ size: CGSize) -> CGSize {
+        var adjustedSize = size
+        if scrollDirection == .horizontal {
+            adjustedSize.width -= art_minimumLineSpacing
+        } else {
+            adjustedSize.height -= art_minimumLineSpacing
+        }
+        return adjustedSize
     }
 }
 

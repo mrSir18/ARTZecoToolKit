@@ -27,7 +27,6 @@ class ARTViewController_Carousel: ARTBaseViewController {
         // 创建轮播图
         let carouselView = ARTCarouselView(self)
         carouselView.scrollDirection    = .horizontal   // 滚动方向
-        carouselView.isPagingEnabled    = true          // 是否分页
         carouselView.startIndex         = 2             // 起始位置
         carouselView.isAutoScroll       = true          // 是否自动滚动
         carouselView.isCycleScroll      = true          // 是否循环滚动
@@ -37,7 +36,7 @@ class ARTViewController_Carousel: ARTBaseViewController {
         carouselView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
             make.centerY.equalToSuperview()
-            make.height.equalTo(ARTAdaptedValue(250))
+            make.height.equalTo(ARTAdaptedValue(300.0))
         }
         carouselView.reloadData() // 刷新数据
     }
@@ -72,19 +71,18 @@ extension ARTViewController_Carousel: ARTCarouselViewProtocol {
     // MARK: - 可选方法
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize { // Cell 大小
-        return ARTAdaptedSize(width: 200.0, height: 150.0)
+        return ARTAdaptedSize(width: 240.0, height: 180.0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat { // 行间距
-        return ARTAdaptedValue(12.0)
+        return 24
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat { // 列间距
-        return ARTAdaptedValue(12.0)
-    }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, scaleForItemAtIndexPath indexPath: IndexPath) -> CGFloat { // 缩放系数
-        return 1.4
+        if indexPath.row % 2 == 0 {
+            return 1.3
+        }
+        return 1.2
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) { // 点击事件

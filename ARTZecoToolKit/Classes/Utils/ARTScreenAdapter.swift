@@ -14,7 +14,7 @@ public func ARTAdaptScaleFactor() -> CGFloat {
 
 /// 适配值
 public func ARTAdaptedValue(_ value: CGFloat) -> CGFloat {
-    return value * ARTAdaptScaleFactor()
+    return round(value * ARTAdaptScaleFactor())
 }
 
 /// 适配尺寸
