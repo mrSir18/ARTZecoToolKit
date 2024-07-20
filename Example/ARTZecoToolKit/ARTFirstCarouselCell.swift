@@ -40,7 +40,8 @@ class ARTFirstCarouselCell: UICollectionViewCell {
     
     // MARK: - Public Methods
 
-    func loadImage(_ url: URL) {
-        imageView.sd_setImage(with: url)
+    func loadImage(_ imageURL: String?) {
+        guard let imageURL = imageURL else { return }
+        imageView.sd_setImage(with: URL(string: imageURL))
     }
 }

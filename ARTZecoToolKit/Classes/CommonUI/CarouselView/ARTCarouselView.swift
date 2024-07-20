@@ -205,7 +205,7 @@ open class ARTCarouselView: UIView {
     public func reloadData() {
         configureCarousel() // 配置轮播图数据参数
         collectionView.reloadData()
-        collectionView.setContentOffset(.zero, animated: true)
+        collectionView.setContentOffset(.zero, animated: false)
     }
     
     /// 获取当前所在位置的 IndexItem.
