@@ -54,7 +54,9 @@ class ARTViewController_Carousel: ARTBaseViewController {
             ".horizontal 翻页轮播",
             ".horizontal 缩放比例",
             ".vertical 翻页轮播",
-            ".vertical 缩放比例"
+            ".vertical 缩放比例",
+            ".randomItem 随机滚动",
+            ".滚动索引2的位置"
         ]
 
         let buttonWidth: CGFloat        = ARTAdaptedValue(150.0)
@@ -87,9 +89,22 @@ class ARTViewController_Carousel: ARTBaseViewController {
     }
     
     @objc func buttonTapped(sender: UIButton) {
-        carouselEntity = dataSource[sender.tag]
-        carouselView.scrollDirection = carouselEntity[0].scrollDirection
-        carouselView.reloadData()
+        if sender.tag <= 3 { // 更新数据
+            carouselEntity = dataSource[sender.tag]
+            carouselView.scrollDirection = carouselEntity[0].scrollDirection
+            carouselView.reloadData()
+        } else {
+            // 跳转到指定位置
+            switch sender.tag {
+            case 4: // 滚动到随机项
+                let randomIndex = Int.random(in: 0..<carouselEntity.count)
+                carouselView.scrollToItem(at: randomIndex, animated: true) // 随机滚动数组中的某个位置 (开启滚动动画)
+            case 5:// 滚动到指定索引
+                carouselView.scrollToItem(at: 2, animated: false) // 跳转索引为 2 的位置 (关闭滚动动画)
+            default:
+                break
+            }
+        }
     }
 }
 

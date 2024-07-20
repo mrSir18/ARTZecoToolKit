@@ -202,10 +202,26 @@ open class ARTCarouselView: UIView {
     
     // MARK: - Public Methods
     
+    ///  刷新数据
+    ///
+    ///  - Note: 由于不同的视图需要实现不同的数据源，所以需要重写该方法
     public func reloadData() {
         configureCarousel() // 配置轮播图数据参数
         collectionView.reloadData()
         collectionView.setContentOffset(.zero, animated: false)
+    }
+    
+    /// 滚动到指定位置
+    ///
+    /// - Parameters:
+    ///  - index: 索引值.
+    ///  - animated: 滚动动画.
+    ///  - Note: 滚动到指定位置
+    public func scrollToItem(at index: Int, animated: Bool) {
+        guard index < realItemCount, index >= 0 else { return }
+        resetScrollTimer() // 重置定时器
+        let targetIndex = isCycleScroll ? expandedItemCount / 2 + index : index
+        collectionView.scrollToItem(at: IndexPath(item: targetIndex, section: 0), at: .centeredHorizontally, animated: animated)
     }
     
     /// 获取当前所在位置的 IndexItem.
