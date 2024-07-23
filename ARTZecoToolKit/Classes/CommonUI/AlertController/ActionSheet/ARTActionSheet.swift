@@ -150,7 +150,7 @@ open class ARTActionSheet: UIView {
     
     /// 展示动画
     open func show() {
-        keyWindow.addSubview(self)
+        art_keyWindow.addSubview(self)
         snp.makeConstraints { make in
             make.size.equalTo(CGSizeMake(UIScreen.art_currentScreenWidth,
                                          UIScreen.art_currentScreenHeight))

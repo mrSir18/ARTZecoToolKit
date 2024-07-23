@@ -45,7 +45,7 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
         let playerLayer = AVPlayerLayer(player: player)
         playerLayer.frame = UIScreen.main.bounds
         playerLayer.videoGravity = .resizeAspectFill
-        keyWindow.layer.addSublayer(playerLayer)
+        art_keyWindow.layer.addSublayer(playerLayer)
         player.play()
     }
 }

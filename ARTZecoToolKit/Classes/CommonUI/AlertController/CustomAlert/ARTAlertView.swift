@@ -177,7 +177,7 @@ open class ARTAlertView: UIView {
     
     /// 展示AlertView
     open func show() {
-        keyWindow.addSubview(self)
+        art_keyWindow.addSubview(self)
         self.snp.makeConstraints { make in
             make.size.equalTo(CGSizeMake(UIScreen.art_currentScreenWidth,
                                          UIScreen.art_currentScreenHeight))

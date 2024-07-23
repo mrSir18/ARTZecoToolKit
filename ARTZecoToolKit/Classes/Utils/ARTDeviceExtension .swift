@@ -63,7 +63,7 @@ public func art_tabBarFullHeight() -> CGFloat {
 }
 
 /// 获取Window窗口
-public var keyWindow: UIWindow {
+public var art_keyWindow: UIWindow {
     return getKeyWindow() ?? UIWindow.init(frame: UIScreen.main.bounds)
 }
 
@@ -95,6 +95,34 @@ public func art_resourcePath(file: String, object: AnyObject) -> String {
     return path
 }
 
+/// 是否支持动态岛
+///
+/// - Returns: Bool
+public func art_isDynamicIslandSupported() -> Bool {
+    guard let modelName = getDeviceModelName() else {
+        return false
+    }
+    return isSupportedDevice(modelName: modelName)
+}
+
+/// 检查设备型号是否以支持的前缀开头
+private func isSupportedDevice(modelName: String) -> Bool {
+    let supportedModelPrefixes = ["iPhone14", "iPhone15", "iPhone16", "iPhone17", "iPhone18", "iPhone19", "iPhone20", "iPhone21", "iPhone22"]
+    return supportedModelPrefixes.contains(where: modelName.starts(with:))
+}
+
+/// 获取设备型号
+private func getDeviceModelName() -> String? {
+    var systemInfo = utsname()
+    uname(&systemInfo)
+    let modelIdentifier = withUnsafePointer(to: &systemInfo.machine.0) {
+        $0.withMemoryRebound(to: CChar.self, capacity: 1) {
+            String(cString: $0)
+        }
+    }
+    return modelIdentifier
+}
+
 /// 自定义的打印函数，仅在调试模式下生效..
 ///
 /// - Parameters:
@@ -110,5 +138,4 @@ public func print<T>(_ items: T..., separator: String = " ", terminator: String 
     Swift.print(log, terminator: terminator)
     #endif
 }
-
 
