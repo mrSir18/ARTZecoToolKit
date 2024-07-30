@@ -45,9 +45,7 @@ extension ARTActionSheet: ARTCollectionViewDelegateFlowLayout {
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, spacingBetweenFooterAndNextHeaderForSectionAt section: Int) -> CGFloat {
-        if section == 0 {
-            return 0.0
-        }
+        if section == 0 { return 0.0 }
         return configuration.collectionEntity.headerSpacing
     }
     
