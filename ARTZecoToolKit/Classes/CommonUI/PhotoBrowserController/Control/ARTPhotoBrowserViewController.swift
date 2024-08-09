@@ -103,7 +103,7 @@ open class ARTPhotoBrowserViewController: UIViewController {
     ///  - currentIndexCallback: 当前显示的照片索引回调
     ///  - Note: 该方法为类方法，直接调用即可展示图片浏览器
     ///  - Note: 该方法默认使用 present 弹屏方式展示
-    public class func showPhotoBrowser(withPhotos photos: [Any], startIndex index: Int, delegate: ARTPhotoBrowserViewControllerProtocol? = nil, currentIndexCallback: ((Int) -> Void)? = nil) {
+    public class func showPhotoBrowser(withPhotos photos: [Any], startIndex index: Int = 0, delegate: ARTPhotoBrowserViewControllerProtocol? = nil, currentIndexCallback: ((Int) -> Void)? = nil) {
         let photoBrowserViewController = ARTPhotoBrowserViewController(photos: photos, startIndex: index, delegate: delegate, currentIndexCallback: currentIndexCallback)
         photoBrowserViewController.presentPhotoBrowser()
     }
@@ -117,7 +117,7 @@ open class ARTPhotoBrowserViewController: UIViewController {
     
     // MARK: - Initialization
     
-    public init(photos: [Any], startIndex: Int, delegate: ARTPhotoBrowserViewControllerProtocol? = nil, currentIndexCallback: ((Int) -> Void)? = nil) {
+    public init(photos: [Any], startIndex: Int = 0, delegate: ARTPhotoBrowserViewControllerProtocol? = nil, currentIndexCallback: ((Int) -> Void)? = nil) {
         self.photos = photos
         self.startIndex = (startIndex >= 0 && startIndex < photos.count) ? startIndex : 0 // 索引越界处理,默认为 0
         self.delegate = delegate
