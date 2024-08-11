@@ -16,6 +16,15 @@ extension Date {
         return formatter.string(from: date)
     }
     
+    /// 将日期字符串转换为 Date 对象
+    /// - Parameter dateString: 需要转换的日期字符串
+    /// - Returns: 转换后的 Date 对象，如果转换失败则返回 nil
+    public static func dateFromString(_ dateString: String) -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"  // 内部定义的日期格式
+        return formatter.date(from: dateString)
+    }
+    
     /// 将时间戳转换为 Date 对象
     /// - Parameter timestamp: 时间戳（秒）
     /// - Returns: 对应的 Date 对象
