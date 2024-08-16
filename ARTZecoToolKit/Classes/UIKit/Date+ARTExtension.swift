@@ -38,4 +38,47 @@ extension Date {
     public static func timestampFromDate(_ date: Date) -> TimeInterval {
         return date.timeIntervalSince1970
     }
+    
+    /// 将两个日期之间的差值转换为描述年龄的字符串。
+    /// - Parameters:
+    ///   - startDate: 开始日期。
+    ///   - endDate: 结束日期。
+    /// - Returns: 描述年龄差异的字符串，包括年、月和天数。
+    
+    public static func convertToAgeDescription(from startDate: Date, to endDate: Date) -> String {
+        let calendar = Calendar.current
+        // 计算 startDate 和 endDate 之间的年、月、日差值。
+        let components = calendar.dateComponents([.year, .month, .day], from: startDate, to: endDate)
+        
+        let years = components.year ?? 0
+        let months = components.month ?? 0
+        let days = components.day ?? 0
+        // 计算 startDate 和 endDate 之间的总天数。
+        let totalDays = calendar.dateComponents([.day], from: startDate, to: endDate).day ?? 0
+        
+        // 根据总天数和年龄组件返回具体的描述字符串。
+        switch totalDays {
+        case 100:
+            // 特殊情况：正好100天
+            return "宝宝百天"
+        case _ where years > 0 && months == 0 && days == 0:
+            // 只包含整年
+            return "\(years)岁"
+        case _ where years > 0 && months > 0 && days == 0:
+            // 包含整年和整月
+            return "\(years)岁\(months)个月"
+        case _ where years > 0:
+            // 包含整年、整月和天数
+            return "\(years)岁\(months)个月\(days)天"
+        case _ where months > 0 && days == 0:
+            // 只包含整月
+            return "\(months)个月"
+        case _ where months > 0:
+            // 包含整月和天数
+            return "\(months)个月\(days)天"
+        default:
+            // 只包含天数
+            return "\(days)天"
+        }
+    }
 }
