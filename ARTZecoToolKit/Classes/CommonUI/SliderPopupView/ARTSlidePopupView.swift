@@ -69,7 +69,7 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
     // MARK: - Private Methods (UIPanGestureRecognizer)
     
     @objc private func handleTapGesture(_ gesture: UITapGestureRecognizer) {
-        hideSlidePopupView()
+        hidePopupView()
     }
     
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
@@ -90,7 +90,7 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
                 } completion: { [weak self] finish in
                     guard let self = self else { return }
                     if finish {
-                        self.hideSlidePopupView()
+                        self.hidePopupView()
                     }
                 }
             } else {
@@ -107,7 +107,7 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
     // MARK: - ARTSlidePopupHeaderViewProtocol
     
     open func didTapPackUpButton(_ headerView: ARTSlidePopupHeaderView) {
-        hideSlidePopupView()
+        hidePopupView()
     }
     
     open func titleName(with headerView: ARTSlidePopupHeaderView) -> String {
@@ -117,7 +117,7 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
     // MARK: - Override Super Method
     
     /// 展示动画
-    open func showSlidePopupView() {
+    open func showPopupView(completion: (() -> Void)? = nil) {
         art_keyWindow.addSubview(self)
         snp.makeConstraints { make in
             make.size.equalTo(CGSizeMake(UIScreen.art_currentScreenWidth,
@@ -128,17 +128,20 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
         UIView.animate(withDuration: 0.25) { [weak self] in
             guard let self = self else { return }
             self.containerView.transform = CGAffineTransformTranslate(self.containerView.transform, 0, -self.configuration.containerHeight - art_safeAreaBottom())
+        } completion: { _ in
+            completion?()
         }
     }
     
     /// 隐藏动画
-    open func hideSlidePopupView() {
+    open func hidePopupView(completion: (() -> Void)? = nil) {
         UIView.animate(withDuration: 0.25) { [weak self] in
             guard let self = self else { return}
             self.containerView.transform = CGAffineTransformTranslate(self.containerView.transform, 0, self.configuration.containerHeight + art_safeAreaBottom())
         } completion: { [weak self] finish in
             guard let self = self else { return}
             self.removeFromSuperview()
+            completion?()
         }
     }
 }

@@ -46,15 +46,16 @@ class ARTViewController_SlidePopup: ARTBaseViewController {
         
         /// 创建滑动弹窗
         let slidePopupView = ARTChildSlidePopupView(self)
-        slidePopupView.showSlidePopupView()
+        slidePopupView.showPopupView()
     }
 }
 
 extension ARTViewController_SlidePopup: ARTChildSlidePopupViewProtocol {
     
     func didPerformSomeAction(_ view: ARTChildSlidePopupView) {
-        view.hideSlidePopupView()
-        print("点击了按钮")
+        view.hidePopupView {
+            print("点击了按钮")
+        }
     }
 }
 
