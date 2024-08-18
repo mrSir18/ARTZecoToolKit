@@ -117,7 +117,7 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
     // MARK: - Override Super Method
     
     /// 展示动画
-    open func showPopupView(completion: (() -> Void)? = nil) {
+    open func showPopupView(_ completion: (() -> Void)? = nil) {
         art_keyWindow.addSubview(self)
         snp.makeConstraints { make in
             make.size.equalTo(CGSizeMake(UIScreen.art_currentScreenWidth,
@@ -134,7 +134,7 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
     }
     
     /// 隐藏动画
-    open func hidePopupView(completion: (() -> Void)? = nil) {
+    open func hidePopupView(_ completion: (() -> Void)? = nil) {
         UIView.animate(withDuration: 0.25) { [weak self] in
             guard let self = self else { return}
             self.containerView.transform = CGAffineTransformTranslate(self.containerView.transform, 0, self.configuration.containerHeight + art_safeAreaBottom())
