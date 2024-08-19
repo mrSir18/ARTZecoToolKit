@@ -7,7 +7,7 @@
 
 /// `ARTWebNavigationBarViewProtocol` 协议用于提供 `ARTWebNavigationBarView` 的配置。
 /// 通过实现这个协议，可以定制导航栏的背景色、返回按钮图片、标题内容等属性等。
-protocol ARTWebNavigationBarViewProtocol: AnyObject {
+@objc public protocol ARTWebNavigationBarViewProtocol: AnyObject {
     
     /// 点击返回按钮时调用。
     ///

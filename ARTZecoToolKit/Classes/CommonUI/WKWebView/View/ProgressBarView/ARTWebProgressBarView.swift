@@ -7,7 +7,7 @@
 
 /// `ARTProgressBarViewProtocol` 协议用于提供 `ARTProgressBarView` 的配置。
 /// 通过实现这个协议，可以定制进度条的颜色、隐藏状态等属性。
-protocol ARTProgressBarViewProtocol: AnyObject {
+@objc public protocol ARTProgressBarViewProtocol: AnyObject {
     
     /// 返回进度条的自定义颜色。
     ///

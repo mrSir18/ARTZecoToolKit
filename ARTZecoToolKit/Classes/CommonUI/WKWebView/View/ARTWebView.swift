@@ -67,9 +67,9 @@ extension ARTWebView {
     
     /// 加载网络 URL。
     /// - Parameter urlString: 网络 URL 的字符串表示。
-    public func loadURL(_ urlString: String) {
-        guard let url = URL(string: urlString) else {
-            print("Invalid URL string: \(urlString)")
+    public func loadURL(_ urlString: String?) {
+        guard let url = URL(string: urlString ?? "") else {
+            print("Invalid URL string: \(String(describing: urlString))")
             return
         }
         let request = URLRequest(url: url)

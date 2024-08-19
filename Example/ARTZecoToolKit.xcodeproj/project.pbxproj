@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0209353E2C73EE3A00696C0F /* ARTWebCustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0209353D2C73EE3A00696C0F /* ARTWebCustomViewController.swift */; };
 		0222B4432C35A9F600FA82B7 /* ARTViewController_StartRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0222B4422C35A9F600FA82B7 /* ARTViewController_StartRating.swift */; };
 		022E01232C429EB50069BA7A /* CollectionSectionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E01222C429EB50069BA7A /* CollectionSectionProtocol.swift */; };
 		023F976D2C32F5A1009CD62B /* ARTViewController_AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023F976C2C32F5A1009CD62B /* ARTViewController_AlertView.swift */; };
@@ -67,6 +68,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0209353D2C73EE3A00696C0F /* ARTWebCustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTWebCustomViewController.swift; sourceTree = "<group>"; };
 		0222B4422C35A9F600FA82B7 /* ARTViewController_StartRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_StartRating.swift; sourceTree = "<group>"; };
 		022E01222C429EB50069BA7A /* CollectionSectionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSectionProtocol.swift; sourceTree = "<group>"; };
 		023F976C2C32F5A1009CD62B /* ARTViewController_AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_AlertView.swift; sourceTree = "<group>"; };
@@ -147,6 +149,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0209353F2C73F08700696C0F /* WebViewBusiness */ = {
+			isa = PBXGroup;
+			children = (
+				0209353D2C73EE3A00696C0F /* ARTWebCustomViewController.swift */,
+			);
+			name = WebViewBusiness;
+			sourceTree = "<group>";
+		};
 		022E01242C429EB90069BA7A /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -221,6 +231,7 @@
 				02C95B422C42700B00200438 /* CollectionViewBusiness */,
 				0298808C2C46E43000176ED3 /* PhotoBrowserBusiness */,
 				02BB29302C49673F00DE706C /* CarouselBusiness */,
+				0209353F2C73F08700696C0F /* WebViewBusiness */,
 			);
 			name = Business;
 			sourceTree = "<group>";
@@ -604,6 +615,7 @@
 				02C95B4D2C42727100200438 /* ARTCollectionFooter.swift in Sources */,
 				02CD6CFD2C4B313C00193545 /* ARTCarouselEntity.swift in Sources */,
 				0222B4432C35A9F600FA82B7 /* ARTViewController_StartRating.swift in Sources */,
+				0209353E2C73EE3A00696C0F /* ARTWebCustomViewController.swift in Sources */,
 				02F8AE552BF67E7E00A111F6 /* ARTViewController_SlideBar.swift in Sources */,
 				02F8AE502BF67E7E00A111F6 /* ARTViewController_ScrollView.swift in Sources */,
 				02F8AE4C2BF67E7E00A111F6 /* ARTViewController_CitySelector.swift in Sources */,
