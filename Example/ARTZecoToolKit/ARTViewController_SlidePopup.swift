@@ -81,6 +81,7 @@ class ARTChildSlidePopupView: ARTSlidePopupView {
     /// 代理对象
     weak var delegate: ARTChildSlidePopupViewProtocol?
     
+    
     // 继承自ARTSlidePopupView，使用示例
     public convenience init(_ delegate: ARTChildSlidePopupViewProtocol?) {
         self.init(frame: .zero)

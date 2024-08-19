@@ -39,7 +39,7 @@ class ARTViewController_WebView: ARTBaseViewController {
     }()
     
     
-    var webView: WKWebView!
+    var webView: ARTWebView!
     
     
     // MARK: - Life Cycle
@@ -66,32 +66,12 @@ class ARTViewController_WebView: ARTBaseViewController {
     
     private func initWebView() {
         
-        WKWebView.loadSwizzling()
-        let configuration = WKWebViewConfiguration()
-        configuration.userContentController = WKUserContentController()
-        
-        let preferences = WKPreferences()
-        preferences.javaScriptCanOpenWindowsAutomatically = true
-        configuration.preferences = preferences
-        
-        webView = WKWebView()
-        webView.tag = 101
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
-        webView.cookieDelegate = self  // 设置 cookie 代理
-        
+        webView = ARTWebView(self)
         view.addSubview(webView)
-        webView.translatesAutoresizingMaskIntoConstraints = false
         webView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        // 开启自定义 cookie
-        webView.setupCustomCookies()
-        
-        if let url = URL(string: "https://www.baidu.com") {
-            webView.load(URLRequest(url: url))
-        }
+        webView.loadURL("https://www.baidu.com")
     }
     
     @objc func addCookieButtonAction () {
@@ -110,8 +90,7 @@ class ARTViewController_WebView: ARTBaseViewController {
     }
 }
 
-extension ARTViewController_WebView: WKUIDelegate, WKNavigationDelegate, ARTWKWebViewDelegate {
-
+extension ARTViewController_WebView: WKUIDelegate, WKNavigationDelegate, ARTWebViewDelegate {
     
      func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
          self.title = "加载中..."
@@ -136,7 +115,7 @@ extension ARTViewController_WebView: WKUIDelegate, WKNavigationDelegate, ARTWKWe
      
      func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
          self.title = ""
-         print(error)
+         print("======sssss")
      }
      
     func webviewCustomCookies() -> [String : String] {

@@ -7,9 +7,9 @@
 
 import WebKit
 
-// MARK: - ARTWKWebViewDelegate 协议
+// MARK: - ARTWebViewDelegate 协议
 
-public protocol ARTWKWebViewDelegate: AnyObject {
+public protocol ARTWebViewDelegate: WKUIDelegate, WKNavigationDelegate {
     
     /// 获取自定义的 Cookie 字典
     ///
@@ -48,9 +48,9 @@ extension WKWebView {
     /// 获取或设置 Cookie 代理
     ///
     /// - Note: 用于获取自定义的 Cookie 字典
-    public var cookieDelegate: ARTWKWebViewDelegate? {
+    public var cookieDelegate: ARTWebViewDelegate? {
         get {
-            return objc_getAssociatedObject(self, Self.key(for: AssociatedKeys.cookieDelegate)) as? ARTWKWebViewDelegate
+            return objc_getAssociatedObject(self, Self.key(for: AssociatedKeys.cookieDelegate)) as? ARTWebViewDelegate
         }
         set {
             objc_setAssociatedObject(self, Self.key(for: AssociatedKeys.cookieDelegate), newValue, .OBJC_ASSOCIATION_ASSIGN)
