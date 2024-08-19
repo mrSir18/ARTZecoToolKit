@@ -32,7 +32,7 @@
   },
   "resource_bundles": {
     "ARTZecoToolKit": [
-      "ARTZecoToolKit/Assets/*.png"
+      "ARTZecoToolKit/Assets/*"
     ]
   },
   "public_header_files": "Pod/Classes/**/*.h"

@@ -37,7 +37,7 @@ TODO: Add long description of the pod here.
   s.dependency 'SmartCodable'
   s.dependency 'SDWebImage'
    s.resource_bundles = {
-     'ARTZecoToolKit' => ['ARTZecoToolKit/Assets/*.png']
+     'ARTZecoToolKit' => ['ARTZecoToolKit/Assets/*']
    }
 
    s.public_header_files = 'Pod/Classes/**/*.h'
