@@ -12,6 +12,12 @@ class ARTWebCustomViewController: ARTWebViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         createButtons()
+        
+        // 自定义 Cookie
+        customCookies = [
+            "name": "mrSir18",
+            "bundleName": "zecoart"
+        ]
         loadURL("https://www.zecoart.com")
     }
     
@@ -44,19 +50,14 @@ class ARTWebCustomViewController: ARTWebViewController {
     }
     
     @objc func addCookieButtonAction () {
-        print("随机添加Cookie")
-        //        cookieDict["33333"] = "MiaoEr"
-        //        cookieDict["44444"] = "MiaoErCookie"
-        //        webView.refreshCookies()
-        //        webView.reload()
+        customCookies["sex"] = "gg"
+        customCookies["age"] = "24"
+        reloadWebView()
     }
     
     @objc func deleteCookieButtonAction () {
-        print("删除Cookie")
-        //        cookieDict.removeValue(forKey: "44444")
-        //        webView.refreshCookies()
-        //        webView.reload()
-        //    }
+        customCookies.removeValue(forKey: "age")
+        reloadWebView()
     }
 
     override func backButtonImageName(for navigationBar: ARTWebNavigationBarView) -> String? {

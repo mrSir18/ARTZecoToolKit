@@ -40,7 +40,7 @@ extension WKWebView {
     }
     
     /// 设置特定的 Cookie
-    private func setCookie(key: String, value: String) {
+    public func setCookie(key: String, value: String) {
         let javaScriptCode = "app_setCookie('\(key)', '\(value)')"
         evaluateJavaScript(javaScriptCode) { result, error in
             if let error = error { print("Error setting cookie: \(error.localizedDescription)") }
@@ -51,7 +51,7 @@ extension WKWebView {
     }
     
     /// 移除特定的 Cookie
-    private func removeCookie(key: String) {
+    public func removeCookie(key: String) {
         let javaScriptCode = "app_deleteCookie('\(key)')"
         evaluateJavaScript(javaScriptCode) { result, error in
             if let error = error { print("Error removing cookie: \(error.localizedDescription)") }
@@ -61,7 +61,7 @@ extension WKWebView {
     }
     
     /// 清除所有自定义 Cookie
-    private func clearAllCustomCookies() {
+    public func clearAllCustomCookies() {
         customCookies?.keys.forEach { key in
             let javaScriptCode = "app_deleteCookie('\(key)')"
             evaluateJavaScript(javaScriptCode) { result, error in
@@ -73,14 +73,14 @@ extension WKWebView {
     }
     
     /// 添加 JavaScript 代码片段
-    private func addUserScript(withJavaScriptCode javaScriptCode: String, tag: String) {
+    public func addUserScript(withJavaScriptCode javaScriptCode: String, tag: String) {
         let fullJavaScriptCode = "\(javaScriptCode) \n\(tag)"
         let userScript = WKUserScript(source: fullJavaScriptCode, injectionTime: .atDocumentStart, forMainFrameOnly: false)
         self.configuration.userContentController.addUserScript(userScript)
     }
     
     /// 移除 JavaScript 代码片段
-    private func removeUserScript(withTag tag: String?) {
+    public func removeUserScript(withTag tag: String?) {
         guard let tag = tag else { return }
         let userContentController = self.configuration.userContentController
         let remainingScripts = userContentController.userScripts.filter { !$0.source.contains(tag) }
@@ -89,7 +89,7 @@ extension WKWebView {
     }
     
     /// 生成用于标识 JavaScript 代码片段的标签
-    private func generateScriptTag(forKey key: String?) -> String {
+    public func generateScriptTag(forKey key: String?) -> String {
         return cookieScriptTagPrefix + (key ?? "")
     }
 }

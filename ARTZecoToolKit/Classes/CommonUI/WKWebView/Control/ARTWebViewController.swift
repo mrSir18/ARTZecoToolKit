@@ -34,6 +34,7 @@ open class ARTWebViewController: UIViewController {
         setupWebView()
         setupNetworkStatusView()
         setupProgressBarView()
+        setupLoadwebView()
     }
     
     // MARK: - Override Setup Methods
@@ -60,9 +61,6 @@ open class ARTWebViewController: UIViewController {
             make.left.right.bottom.equalToSuperview()
             make.top.equalTo(navigationBarView.snp.bottom)
         }
-        if let url = url {
-            loadURL(url)
-        }
     }
     
     open func setupProgressBarView() {
@@ -76,10 +74,16 @@ open class ARTWebViewController: UIViewController {
         }
     }
     
+    open func setupLoadwebView() {
+        // 子类重写: 此方法以自定义加载 WebView
+        if let url = url { webView.loadURL(url) }
+    }
+    
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
+    
 }
 
 // MARK: - Public Methods
@@ -89,6 +93,7 @@ extension ARTWebViewController {
     /// 加载 URL
     /// - Parameter url: URL 地址
     @objc open func loadURL(_ url: String) {
+        if url.isEmpty { return }
         webView.loadURL(url)
     }
     

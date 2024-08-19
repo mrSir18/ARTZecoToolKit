@@ -9,7 +9,7 @@
 import ARTZecoToolKit
 
 class ARTViewController_WebView: ARTBaseViewController {
-
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -45,14 +45,14 @@ class ARTViewController_WebView: ARTBaseViewController {
             make.right.equalToSuperview()
         }
     }
-
+    
     @objc func defaultButtonAction () {
         let webViewController = ARTWebViewController()
         webViewController.customCookies = [
-            "11111": "GarrettGao",
-            "66666": "WkCookie"
+            "name": "mrSir18",
+            "bundleName": "zecoart"
         ]
-        webViewController.url = "https://www.baidu.com"
+        webViewController.url = "https://www.zecoart.com"
         self.navigationController?.pushViewController(webViewController, animated: true)
     }
     
