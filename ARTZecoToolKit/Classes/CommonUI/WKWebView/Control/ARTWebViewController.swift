@@ -29,7 +29,7 @@ open class ARTWebViewController: UIViewController {
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .red
         setupNavigationBarView()
         setupWebView()
         setupNetworkStatusView()
@@ -57,6 +57,7 @@ open class ARTWebViewController: UIViewController {
         // 子类重写: 此方法以自定义 WebView
         webView = ARTWebView(self)
         view.addSubview(webView)
+        view.sendSubviewToBack(webView)
         webView.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
             make.top.equalTo(navigationBarView.snp.bottom)
@@ -69,7 +70,7 @@ open class ARTWebViewController: UIViewController {
         view.addSubview(progressBarView)
         progressBarView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
-            make.top.equalTo(navigationBarView.snp.bottom)
+            make.top.equalTo(webView)
             make.height.equalTo(2.0)
         }
     }
@@ -83,7 +84,6 @@ open class ARTWebViewController: UIViewController {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
-    
 }
 
 // MARK: - Public Methods
@@ -101,6 +101,13 @@ extension ARTWebViewController {
     @objc open func reloadWebView() {
         webView.refreshCookies()
         webView.reload()
+    }
+    
+    /// 全屏显示
+    @objc open func showFullScreen() {
+        webView.snp.remakeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 }
 
@@ -145,8 +152,12 @@ extension ARTWebViewController: ARTWebNavigationBarViewProtocol {
         navigationController?.popViewController(animated: true)
     }
     
+    open func shouldHideNavigationBar(for navigationBar: ARTWebNavigationBarView) -> Bool { // 是否隐藏导航栏
+        return false
+    }
+    
     open func navigationBarBackgroundColor(for navigationBar: ARTWebNavigationBarView) -> UIColor { /// 导航栏背景颜色
-        return .white
+        return .art_randomColor()
     }
     
     open func navigationBarAlpha(for navigationBar: ARTWebNavigationBarView) -> CGFloat { /// 导航栏透明度

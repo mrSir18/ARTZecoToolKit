@@ -38,6 +38,7 @@ open class ARTProgressBarView: UIView {
     
     convenience init(_ delegate: ARTProgressBarViewProtocol) {
         self.init()
+        self.backgroundColor = tintColor()
         self.delegate = delegate
         setupViews()
     }

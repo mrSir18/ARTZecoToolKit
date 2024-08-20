@@ -19,6 +19,13 @@
     // MARK: - navigationBar Style
     
     
+    /// 是否隐藏导航栏
+    ///
+    /// - Parameter navigationBar: 导航栏视图。
+    /// - Returns: `true` 表示隐藏导航栏，`false` 表示显示导航栏。
+    /// - Note: 默认为 `false`。
+    func shouldHideNavigationBar(for navigationBar: ARTWebNavigationBarView) -> Bool
+    
     /// 导航栏的背景色。
     ///
     /// - Parameter navigationBar: 导航栏视图。
@@ -85,6 +92,7 @@ open class ARTWebNavigationBarView: UIView {
     convenience init(_ delegate: ARTWebNavigationBarViewProtocol) {
         self.init()
         self.delegate = delegate
+        self.isHidden = delegate_shouldHideNavigationBar() // 是否隐藏导航栏
         setupViews()
     }
     
@@ -138,6 +146,7 @@ open class ARTWebNavigationBarView: UIView {
             customRightView.snp.makeConstraints { make in
                 make.right.equalToSuperview()
                 make.top.bottom.equalToSuperview()
+                make.width.equalTo(ARTAdaptedValue(60.0))
             }
             
             titleLabel.snp.makeConstraints { make in
@@ -161,6 +170,10 @@ open class ARTWebNavigationBarView: UIView {
     }
     
     // MARK: - Private Delegate Methods
+    
+    private func delegate_shouldHideNavigationBar() -> Bool { // 是否隐藏导航栏
+        return delegate?.shouldHideNavigationBar(for: self) ?? false
+    }
     
     private func delegate_navigationBarBackgroundColor() -> UIColor { // 导航栏背景色
         return delegate?.navigationBarBackgroundColor(for: self) ?? .white
