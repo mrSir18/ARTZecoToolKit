@@ -48,6 +48,7 @@ class ARTViewController_WebView: ARTBaseViewController {
     
     @objc func defaultButtonAction () {
         let webViewController = ARTWebViewController()
+        webViewController.jsMethodNames = ["testMethod", "customJumpToH5"]
         webViewController.shouldAutoFetchTitle = false
         webViewController.navigationBarTitle = "育儿教育我们是认真的"
         webViewController.customCookies = [
@@ -55,6 +56,9 @@ class ARTViewController_WebView: ARTBaseViewController {
             "bundleName": "zecoart"
         ]
         webViewController.url = "https://www.zecoart.com"
+        webViewController.didReceiveScriptMessage = { message in
+            print("接收到脚本消息：\(message.name) - \(message.body)")
+        }
         self.navigationController?.pushViewController(webViewController, animated: true)
     }
     

@@ -30,6 +30,17 @@ open class ARTWebViewController: UIViewController {
     /// 导航栏标题
     public var navigationBarTitle: String = "成长智库"
     
+    /// 自定义 JS 方法名数组
+    public var jsMethodNames: [String] = []
+    
+    /// 接收到脚本消息的回调
+    public var didReceiveScriptMessage: ((WKScriptMessage) -> Void)?
+    
+    /// 脚本消息处理代理
+    public lazy var scriptMessageDelegate: ARTScriptMessageHandlerDelegate = {
+        return ARTScriptMessageHandlerDelegate(self)
+    }()
+    
     
     // MARK: - Initialization
     
@@ -86,7 +97,7 @@ open class ARTWebViewController: UIViewController {
         if let url = url { webView.loadURL(url) }
     }
     
-    // MARK: - Public Methods
+    // MARK: - Register Methods
     
     /// 添加观察者
     open func addWebViewObservers() {
@@ -125,15 +136,34 @@ open class ARTWebViewController: UIViewController {
     
     /// 移除观察者
     deinit {
-         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
-         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.title))
-     }
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.title))
+        unregisterScriptMessageHandlers(jsMethodNames)
+    }
+    
+    /// 注册脚本消息处理器到 WebView 的用户内容控制器。
+    /// - Parameter scriptNames: 需要注册的脚本消息处理器名称列表。
+    open func registerScriptMessageHandlers(_ scriptNames: [String]) {
+        scriptNames.forEach { scriptName in
+            print("注册脚本消息处理器：\(scriptMessageDelegate) scriptName: \(scriptName)")
+            webView.configuration.userContentController.add(scriptMessageDelegate, name: scriptName)
+        }
+    }
+    
+    /// 移除已注册的脚本消息处理器。
+    /// - Parameter scriptNames: 需要移除的脚本消息处理器名称列表。
+    open func unregisterScriptMessageHandlers(_ scriptNames: [String]) {
+        scriptNames.forEach { scriptName in
+            webView.configuration.userContentController.removeScriptMessageHandler(forName: scriptName)
+        }
+    }
     
     // MARK: - Life Cycle
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        registerScriptMessageHandlers(jsMethodNames)
         addWebViewObservers()
     }
 }
@@ -164,8 +194,30 @@ extension ARTWebViewController {
     }
 }
 
-extension ARTWebViewController: ARTWebViewDelegate {
+extension ARTWebViewController: WKScriptMessageHandler {
+    
+    open func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) { /// 接收到脚本消息
+        didReceiveScriptMessage?(message)
+    }
+    
+    public func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+        ARTAlertController.showAlertController(title: "提示",
+                                               message: message,
+                                               preferredStyle: .alert,
+                                               buttonTitles: ["确定", "取消"],
+                                               buttonStyles: [.default, .cancel], in: self) { mode in
+            switch mode {
+            case .first:
+                completionHandler()
+            default:
+                break
+            }
+        }
+    }
+}
 
+extension ARTWebViewController: ARTWebViewDelegate {
+    
     open func webviewCustomCookies() -> [String : String] { /// 配置自定义 Cookie
         return customCookies
     }
@@ -189,6 +241,14 @@ extension ARTWebViewController: ARTWebViewDelegate {
     
     open func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) { /// 网页加载完成
         print("网页加载完成: \(webView.title ?? "")")
+    }
+    
+    open func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) { /// 网页加载失败
+        print("网页加载失败: \(error.localizedDescription)")
+    }
+    
+    open func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) { /// 网页加载失败
+        print("网页加载失败: \(error.localizedDescription)")
     }
 }
 
@@ -215,7 +275,7 @@ extension ARTWebViewController: ARTWebNavigationBarViewProtocol {
     }
     
     open func navigationBarBackgroundColor(for navigationBar: ARTWebNavigationBarView) -> UIColor { /// 导航栏背景颜色
-        return .art_randomColor()
+        return .white
     }
     
     open func navigationBarAlpha(for navigationBar: ARTWebNavigationBarView) -> CGFloat { /// 导航栏透明度

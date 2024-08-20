@@ -21,7 +21,13 @@ class ARTWebCustomViewController: ARTWebViewController {
             "name": "mrSir18",
             "bundleName": "zecoart"
         ]
+        jsMethodNames = ["testMethod", "customJumpToH5"] // 自定义 JS 方法名数组
         loadURL("https://www.zecoart.com") // 加载网页
+        
+        /// 设置脚本消息处理代理
+        didReceiveScriptMessage = { message in
+            print("接收到脚本消息：\(message.name) - \(message.body)")
+        }
     }
     
     private func createButtons() { // 创建测试按钮方法
