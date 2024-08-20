@@ -13,7 +13,7 @@ class ARTWebCustomViewController: ARTWebViewController {
         super.viewDidLoad()
         createButtons()
         
-        showFullScreen()
+//        showFullScreen()
         
         // 自定义 Cookie
         customCookies = [

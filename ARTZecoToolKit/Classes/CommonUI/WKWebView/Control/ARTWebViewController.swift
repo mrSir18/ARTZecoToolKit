@@ -29,7 +29,7 @@ open class ARTWebViewController: UIViewController {
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .red
+        self.view.backgroundColor = .white
         setupNavigationBarView()
         setupWebView()
         setupNetworkStatusView()
@@ -141,6 +141,18 @@ extension ARTWebViewController: ARTWebViewDelegate {
     open func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         self.title = ""
         print("======sssss")
+    }
+}
+
+
+// MARK: - UIScrollViewDelegate
+
+extension ARTWebViewController {
+    
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) { // 根据滚动位置调整顶部导航栏透明度
+        let offsetY = scrollView.contentOffset.y / 100.0
+        let alpha = min(max(offsetY, 0), 1.0)
+        navigationBarView.updateNavigationBarAlpha(alpha)
     }
 }
 

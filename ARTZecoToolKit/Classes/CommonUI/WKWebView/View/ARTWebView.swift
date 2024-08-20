@@ -31,10 +31,11 @@ public class ARTWebView: WKWebView {
         self.scrollView.showsVerticalScrollIndicator    = false
         self.allowsBackForwardNavigationGestures        = true
         self.scrollView.contentInsetAdjustmentBehavior  = .never
-        self.navigationDelegate = delegate
-        self.uiDelegate         = delegate
-        self.cookieDelegate     = delegate
-        self.backgroundColor    = .white
+        self.navigationDelegate     = delegate
+        self.uiDelegate             = delegate
+        self.cookieDelegate         = delegate
+        self.scrollView.delegate    = delegate
+        self.backgroundColor        = .white
         
         /// 开启自定义 Cookie
         self.setupCustomCookies()

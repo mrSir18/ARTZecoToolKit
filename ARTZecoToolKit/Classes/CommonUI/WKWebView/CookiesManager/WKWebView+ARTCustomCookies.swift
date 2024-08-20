@@ -9,7 +9,7 @@ import WebKit
 
 // MARK: - ARTWebViewDelegate 协议
 
-@objc public protocol ARTWebViewDelegate: WKUIDelegate, WKNavigationDelegate {
+@objc public protocol ARTWebViewDelegate: WKUIDelegate, WKNavigationDelegate, UIScrollViewDelegate {
     
     /// 获取自定义的 Cookie 字典
     ///

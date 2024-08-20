@@ -86,6 +86,12 @@ open class ARTWebNavigationBarView: UIView {
     /// 代理对象
     private weak var delegate: ARTWebNavigationBarViewProtocol?
     
+    /// 导航栏视图
+    private var containerBar: UIView!
+    
+    /// 是否滚动视图
+    private var isFollowScrollView: Bool = false
+    
     
     // MARK: - Life Cycle
     
@@ -93,15 +99,16 @@ open class ARTWebNavigationBarView: UIView {
         self.init()
         self.delegate = delegate
         self.isHidden = delegate_shouldHideNavigationBar() // 是否隐藏导航栏
+        self.isFollowScrollView = delegate_shouldFollowScrollView()
         setupViews()
     }
     
     private func setupViews() {
         // 创建透明容器视图
-        let containerBar = UIView()
+        containerBar = UIView()
         containerBar.backgroundColor = delegate_navigationBarBackgroundColor()
         containerBar.alpha = delegate_navigationBarAlpha()
-        if delegate_shouldFollowScrollView() { containerBar.alpha = 0.0 } // 如果跟随滚动视图，初始透明度为0
+        if isFollowScrollView { containerBar.alpha = 0.0 } // 如果跟随滚动视图，初始透明度为0
         addSubview(containerBar)
         containerBar.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -161,6 +168,16 @@ open class ARTWebNavigationBarView: UIView {
                 make.right.equalTo(-ARTAdaptedValue(60.0))
             }
         }
+    }
+    
+    // MARK: - Public Methods
+    
+    /// 更新导航栏透明度
+    ///
+    /// - Parameter alpha: 透明度
+    /// - Returns: 无
+    public func updateNavigationBarAlpha(_ alpha: CGFloat) {
+        if isFollowScrollView { containerBar.alpha = alpha } // 如果跟随滚动视图，不更新透明度
     }
     
     // MARK: - Private Button Actions
