@@ -35,6 +35,9 @@ open class ARTProgressBarView: UIView {
     
     /// 进度条的颜色
     private var progressColor: UIColor!
+    
+    /// 标记首次布局完成
+    private var isFirstLayout = true
  
     
     // MARK: - Initialization
@@ -52,11 +55,19 @@ open class ARTProgressBarView: UIView {
         // 创建进度条视图
         progressView = UIView()
         progressView.backgroundColor = progressColor
+        progressView.layer.masksToBounds = true
         addSubview(progressView)
         progressView.snp.makeConstraints { make in
             make.top.left.bottom.equalToSuperview()
             make.width.equalTo(0)
         }
+    }
+    
+    open override func layoutSubviews() { /// 布局子视图
+        super.layoutSubviews()
+        guard isFirstLayout else { return }
+        isFirstLayout = false
+        progressView.layer.cornerRadius = bounds.height/2
     }
     
     /// 设置进度条的进度。

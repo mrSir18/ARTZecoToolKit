@@ -27,6 +27,9 @@ open class ARTWebViewController: UIViewController {
     /// 是否自动获取网页标题  默认为 `true`
     public var shouldAutoFetchTitle: Bool = true
     
+    /// 导航栏标题
+    public var navigationBarTitle: String = "成长智库"
+    
     
     // MARK: - Initialization
     
@@ -74,7 +77,7 @@ open class ARTWebViewController: UIViewController {
         progressBarView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(webView)
-            make.height.equalTo(22.0)
+            make.height.equalTo(ARTAdaptedValue(2.0))
         }
     }
     
@@ -232,7 +235,7 @@ extension ARTWebViewController: ARTWebNavigationBarViewProtocol {
     }
     
     open func titleContent(for navigationBar: ARTWebNavigationBarView) -> String { /// 标题内容
-        return "成长智库"
+        return navigationBarTitle
     }
     
     open func titleFont(for navigationBar: ARTWebNavigationBarView) -> UIFont { /// 标题字体

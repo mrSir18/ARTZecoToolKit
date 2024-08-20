@@ -48,6 +48,8 @@ class ARTViewController_WebView: ARTBaseViewController {
     
     @objc func defaultButtonAction () {
         let webViewController = ARTWebViewController()
+        webViewController.shouldAutoFetchTitle = false
+        webViewController.navigationBarTitle = "育儿教育我们是认真的"
         webViewController.customCookies = [
             "name": "mrSir18",
             "bundleName": "zecoart"

@@ -14,7 +14,7 @@ class ARTWebCustomViewController: ARTWebViewController {
         createButtons()
         
         // 全屏显示
-        showFullScreen()
+//        showFullScreen()
         
         // 自定义 Cookie
         customCookies = [
@@ -52,13 +52,13 @@ class ARTWebCustomViewController: ARTWebViewController {
         }
     }
     
-    @objc func addCookieButtonAction () {
+    @objc func addCookieButtonAction () { // 添加Cookie
         customCookies["sex"] = "gg"
         customCookies["age"] = "24"
         reloadWebView()
     }
     
-    @objc func deleteCookieButtonAction () {
+    @objc func deleteCookieButtonAction () { // 删除Cookie
         customCookies.removeValue(forKey: "age")
         reloadWebView()
     }
