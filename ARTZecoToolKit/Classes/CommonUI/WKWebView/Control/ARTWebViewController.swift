@@ -100,7 +100,7 @@ open class ARTWebViewController: UIViewController {
     // MARK: - Register Methods
     
     /// 添加观察者
-    open func addWebViewObservers() {
+    open func registerWebViewObservers() {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: [.new], context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.title), options: [.new], context: nil)
     }
@@ -135,26 +135,23 @@ open class ARTWebViewController: UIViewController {
     }
     
     /// 移除观察者
-    deinit {
+    open func unregisterWebViewObservers() {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.title))
-        unregisterScriptMessageHandlers(jsMethodNames)
     }
     
-    /// 注册脚本消息处理器到 WebView 的用户内容控制器。
-    /// - Parameter scriptNames: 需要注册的脚本消息处理器名称列表。
+    /// 注册JS消息处理器到 WebView 的用户内容控制器。
+    /// - Parameter scriptNames: 需要注册的JS消息处理器名称列表。
     open func registerScriptMessageHandlers(_ scriptNames: [String]) {
         scriptNames.forEach { scriptName in
-            print("注册脚本消息处理器：\(scriptMessageDelegate) scriptName: \(scriptName)")
             webView.configuration.userContentController.add(scriptMessageDelegate, name: scriptName)
         }
     }
     
-    /// 移除已注册的脚本消息处理器。
-    /// - Parameter scriptNames: 需要移除的脚本消息处理器名称列表。
+    /// 移除已注册的JS消息处理器。
+    /// - Parameter scriptNames: 需要移除的JS消息处理器名称列表。
     open func unregisterScriptMessageHandlers(_ scriptNames: [String]) {
         scriptNames.forEach { scriptName in
-            print("移除脚本消息处理器：\(scriptMessageDelegate) scriptName: \(scriptName)")
             webView.configuration.userContentController.removeScriptMessageHandler(forName: scriptName)
         }
     }
@@ -164,10 +161,16 @@ open class ARTWebViewController: UIViewController {
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
-        navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
+        navigationController?.interactivePopGestureRecognizer?.delegate  = self as? UIGestureRecognizerDelegate
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        registerWebViewObservers()
         registerScriptMessageHandlers(jsMethodNames)
-        addWebViewObservers()
+    }
+    
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unregisterWebViewObservers()
+        unregisterScriptMessageHandlers(jsMethodNames)
     }
 }
 
