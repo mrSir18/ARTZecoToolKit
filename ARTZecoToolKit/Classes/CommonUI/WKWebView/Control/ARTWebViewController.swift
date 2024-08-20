@@ -163,7 +163,9 @@ open class ARTWebViewController: UIViewController {
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         registerScriptMessageHandlers(jsMethodNames)
         addWebViewObservers()
     }

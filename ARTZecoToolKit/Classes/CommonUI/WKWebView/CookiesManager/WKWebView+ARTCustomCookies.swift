@@ -29,8 +29,8 @@ extension WKWebView {
     ///  - cookieDelegate: Cookie 代理
     ///  - customCookies:  自定义 Cookies
     private enum AssociatedKeys {
-        static let cookieDelegate   = "cookieDelegate"
-        static let customCookies    = "customCookies"
+        static let cookieDelegate = "cookieDelegate"
+        static let customCookies = "customCookies"
     }
     
     // MARK: - 获取键值的指针
