@@ -154,6 +154,7 @@ open class ARTWebViewController: UIViewController {
     /// - Parameter scriptNames: 需要移除的脚本消息处理器名称列表。
     open func unregisterScriptMessageHandlers(_ scriptNames: [String]) {
         scriptNames.forEach { scriptName in
+            print("移除脚本消息处理器：\(scriptMessageDelegate) scriptName: \(scriptName)")
             webView.configuration.userContentController.removeScriptMessageHandler(forName: scriptName)
         }
     }
