@@ -23,7 +23,7 @@ open class ARTPhotoBrowserNavigationBar: UIView {
     public var dismissPhotoBrowserCallback: (() -> Void)?
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     public init(_ delegate: ARTPhotoBrowserNavigationBarDelegate? = nil) {
         super.init(frame: .zero)

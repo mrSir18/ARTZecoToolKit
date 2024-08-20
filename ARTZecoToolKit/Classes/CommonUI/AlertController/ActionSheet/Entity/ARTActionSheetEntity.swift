@@ -21,7 +21,7 @@ public struct ARTActionSheetContainerEntity {
     public let enableAutoHeight: Bool
 
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     public init(height: CGFloat, backgroundColor: UIColor, radius: CGFloat, allowDismissByPullDown: Bool, allowDismissByTapOnBackground: Bool, enableAutoHeight: Bool) {
         self.height = max(0.0, round(height))
@@ -56,7 +56,7 @@ public struct ARTActionSheetLineEntity {
     public let showSeparatorLine: Bool
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     public init(backgroundColor: UIColor, size: CGSize, radius: CGFloat, showSeparatorLine: Bool) {
         self.backgroundColor = backgroundColor
@@ -95,7 +95,7 @@ public struct ARTActionSheetCollectionEntity {
     public let headerSpacing: CGFloat
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     public init(backgroundColor: UIColor,
                 radius: CGFloat,
@@ -149,7 +149,7 @@ public struct ARTActionSheetContentEntity {
     public let textInset: UIEdgeInsets
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     public init(text: String,
                 textFont: UIFont,

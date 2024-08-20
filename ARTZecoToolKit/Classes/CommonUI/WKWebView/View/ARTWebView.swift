@@ -9,7 +9,7 @@ import WebKit
 
 public class ARTWebView: WKWebView {
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     public convenience init(_ delegate: ARTWebViewDelegate) {
         WKWebView.loadSwizzling()

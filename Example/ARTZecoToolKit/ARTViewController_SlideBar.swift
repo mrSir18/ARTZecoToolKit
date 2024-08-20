@@ -11,7 +11,7 @@ import ARTZecoToolKit
 class ARTViewController_SlideBar: ARTBaseViewController {
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()

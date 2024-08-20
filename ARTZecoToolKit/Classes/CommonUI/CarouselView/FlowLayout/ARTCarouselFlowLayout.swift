@@ -33,7 +33,7 @@ open class ARTCarouselFlowLayout: UICollectionViewFlowLayout {
     internal var art_itemScale: CGFloat = 1.0
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     public init(_ delegate: ARTCarouselFlowLayoutProtocol?) {
         super.init()

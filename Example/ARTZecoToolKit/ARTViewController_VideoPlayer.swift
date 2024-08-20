@@ -23,7 +23,7 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
     }()
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()

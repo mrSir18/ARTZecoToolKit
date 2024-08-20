@@ -31,7 +31,7 @@ class ARTViewController_CitySelector: ARTBaseViewController {
     }()
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()

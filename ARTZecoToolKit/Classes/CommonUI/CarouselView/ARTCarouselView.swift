@@ -148,7 +148,7 @@ open class ARTCarouselView: UIView {
     internal var art_minimumLineSpacing: CGFloat = 0.0
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     public convenience init(_ delegate: ARTCarouselViewProtocol) {  /// 调用指定初始化方法
         self.init(frame: .zero, delegate: delegate)

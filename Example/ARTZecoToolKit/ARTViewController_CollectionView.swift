@@ -17,7 +17,7 @@ class ARTViewController_CollectionView: ARTBaseViewController {
     private var collectionView: UICollectionView!
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -22,7 +22,7 @@ class ARTViewController_ScrollView: ARTBaseViewController {
     private var pageControl: UIPageControl!
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()

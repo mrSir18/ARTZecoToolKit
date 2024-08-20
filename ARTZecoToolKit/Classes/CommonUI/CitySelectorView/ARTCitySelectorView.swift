@@ -38,7 +38,7 @@ public class ARTCitySelectorView: UIView {
     var collectionView: UICollectionView!
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     public convenience init(_ delegate: ARTCitySelectorViewProtocol) {
         self.init()

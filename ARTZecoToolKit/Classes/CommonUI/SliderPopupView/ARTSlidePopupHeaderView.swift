@@ -31,7 +31,7 @@ open class ARTSlidePopupHeaderView: UIView {
     weak var delegate: ARTSlidePopupHeaderViewProtocol?
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     convenience init(_ delegate: ARTSlidePopupHeaderViewProtocol) {
         self.init()

@@ -14,7 +14,7 @@ class ARTActionSheetCell: UICollectionViewCell {
     private var separatorLineView: UIView!
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -25,7 +25,7 @@ class ARTViewController_Debug: ARTBaseViewController {
                                 "ARTViewController_WebView"]
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()

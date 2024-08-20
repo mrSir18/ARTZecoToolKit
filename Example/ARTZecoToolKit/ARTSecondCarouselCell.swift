@@ -10,7 +10,7 @@ import ARTZecoToolKit
 
 class ARTSecondCarouselCell: UICollectionViewCell {
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)

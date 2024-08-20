@@ -56,7 +56,7 @@ public class ARTScrollView: UIView {
     }
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     public convenience init(_ delegate: ARTScrollViewProtocol) {
         self.init()

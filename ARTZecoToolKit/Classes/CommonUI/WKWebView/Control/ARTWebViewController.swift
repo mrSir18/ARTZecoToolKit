@@ -24,8 +24,11 @@ open class ARTWebViewController: UIViewController {
     /// URL 地址
     public var url: String?
     
+    /// 是否自动获取网页标题  默认为 `true`
+    public var shouldAutoFetchTitle: Bool = true
     
-    // MARK: - Life Cycle
+    
+    // MARK: - Initialization
     
     open override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,11 +43,11 @@ open class ARTWebViewController: UIViewController {
     // MARK: - Override Setup Methods
     
     open func setupNetworkStatusView() {
-        // 子类重写: 此方法以自定义网络状态视图
+        /// 子类重写: 此方法以自定义网络状态视图
     }
     
     open func setupNavigationBarView() {
-        // 子类重写: 此方法以自定义导航栏视图
+        /// 子类重写: 此方法以自定义导航栏视图
         navigationBarView = ARTWebNavigationBarView(self)
         view.addSubview(navigationBarView)
         navigationBarView.snp.makeConstraints { make in
@@ -54,7 +57,7 @@ open class ARTWebViewController: UIViewController {
     }
     
     open func setupWebView() {
-        // 子类重写: 此方法以自定义 WebView
+        /// 子类重写: 此方法以自定义 WebView
         webView = ARTWebView(self)
         view.addSubview(webView)
         view.sendSubviewToBack(webView)
@@ -65,24 +68,70 @@ open class ARTWebViewController: UIViewController {
     }
     
     open func setupProgressBarView() {
-        // 子类重写: 此方法以自定义进度条视图
+        /// 子类重写: 此方法以自定义进度条视图
         progressBarView = ARTProgressBarView(self)
         view.addSubview(progressBarView)
         progressBarView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(webView)
-            make.height.equalTo(2.0)
+            make.height.equalTo(22.0)
         }
     }
     
     open func setupLoadwebView() {
-        // 子类重写: 此方法以自定义加载 WebView
+        /// 子类重写: 此方法以自定义加载 WebView
         if let url = url { webView.loadURL(url) }
     }
+    
+    // MARK: - Public Methods
+    
+    /// 添加观察者
+    open func addWebViewObservers() {
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: [.new], context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.title), options: [.new], context: nil)
+    }
+    
+    /// 观察者回调
+    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        guard let keyPath = keyPath, let webView = webView else { /// 调用父类的 observeValue 方法处理其他情况
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+            return
+        }
+        guard object as? WKWebView == webView else { /// 调用父类的 observeValue 方法处理其他情况
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+            return
+        }
+        switch keyPath {
+        case #keyPath(WKWebView.estimatedProgress): /// 更新进度条的进度
+            DispatchQueue.main.async {
+                let progress = Float(webView.estimatedProgress)
+                self.progressBarView.setProgress(progress, animated: true) { /// 当进度达到 100% 时隐藏进度条
+                    if progress >= 1.0 { self.progressBarView.isHidden = true }
+                }
+            }
+        case #keyPath(WKWebView.title): /// 更新导航栏的标题
+            DispatchQueue.main.async {
+                if self.shouldAutoFetchTitle { /// 自动获取标题
+                    self.navigationBarView.updateTitleContent(webView.title ?? "")
+                }
+            }
+        default: /// 调用父类的 observeValue 方法处理其他情况
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+        }
+    }
+    
+    /// 移除观察者
+    deinit {
+         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
+         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.title))
+     }
+    
+    // MARK: - Life Cycle
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        addWebViewObservers()
     }
 }
 
@@ -91,6 +140,7 @@ open class ARTWebViewController: UIViewController {
 extension ARTWebViewController {
     
     /// 加载 URL
+    ///
     /// - Parameter url: URL 地址
     @objc open func loadURL(_ url: String) {
         if url.isEmpty { return }
@@ -112,43 +162,36 @@ extension ARTWebViewController {
 }
 
 extension ARTWebViewController: ARTWebViewDelegate {
-    
-    open func webviewCustomCookies() -> [String : String] { /// 获取自定义的 Cookie 字典
+
+    open func webviewCustomCookies() -> [String : String] { /// 配置自定义 Cookie
         return customCookies
     }
     
-    open func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        self.title = "加载中..."
+    open func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) { /// 开始加载网页
+        print("开始加载网页: \(webView.url?.absoluteString ?? "")")
     }
     
-    open func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-        self.title = ""
+    open func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) { /// 网页内容开始返回
         webView.evaluateJavaScript("document.cookie") { result, error in
-            if let cookies = result as? String {
-                // 用换行符替代分隔符，使得每个 cookie 另起一行
-                let formattedCookies = cookies.replacingOccurrences(of: "; ", with: "\n")
+            if let cookies = result as? String { /// 用换行符替代分隔符，使得每个 cookie 另起一行
+                let formattedCookies = cookies
+                    .replacingOccurrences(of: "; ", with: "\n")
+                    .trimmingCharacters(in: .whitespacesAndNewlines) // 去除多余的空白字符
                 print("网页中的 cookies 为：\n\(formattedCookies)")
-            } else if let error = error {
+            } else if let error = error { /// 打印获取 cookies 时发生的错误
                 print("获取 cookies 时发生错误：\(error.localizedDescription)")
             }
         }
     }
     
-    open func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        // Handle completion
-    }
-    
-    open func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        self.title = ""
-        print("======sssss")
+    open func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) { /// 网页加载完成
+        print("网页加载完成: \(webView.title ?? "")")
     }
 }
-
 
 // MARK: - UIScrollViewDelegate
 
 extension ARTWebViewController {
-    
     open func scrollViewDidScroll(_ scrollView: UIScrollView) { // 根据滚动位置调整顶部导航栏透明度
         let offsetY = scrollView.contentOffset.y / 100.0
         let alpha = min(max(offsetY, 0), 1.0)

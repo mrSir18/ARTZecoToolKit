@@ -22,7 +22,7 @@ class ARTViewController_SlidePopup: ARTBaseViewController {
     }()
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -129,7 +129,7 @@ open class ARTPhotoBrowserViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     open override func viewDidLoad() {
         super.viewDidLoad()

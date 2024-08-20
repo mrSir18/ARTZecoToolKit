@@ -40,7 +40,7 @@ class ARTCitySelectorHeader: UIView {
     private var cityNames: [String] = []
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     convenience init(_ delegate: ARTCitySelectorHeaderProtocol) {
         self.init()

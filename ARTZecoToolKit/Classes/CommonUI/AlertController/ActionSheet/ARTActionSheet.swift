@@ -22,7 +22,7 @@ open class ARTActionSheet: UIView {
     public var didSelectItemCallback: ((ARTAlertControllerMode) -> Void)?
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     public override init(frame: CGRect) {
         super.init(frame: frame)

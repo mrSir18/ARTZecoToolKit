@@ -48,7 +48,7 @@ public class ARTSliderBarView: UIView {
     }
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     public convenience init(_ delegate: ARTSliderBarViewProtocol) {
         self.init()

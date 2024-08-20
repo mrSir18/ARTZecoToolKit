@@ -37,7 +37,7 @@ class ARTPhotoBrowserCell: UICollectionViewCell {
     public var singleTapCallback: ((_ tapType: CellSingleTapType) -> Void)?
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -13,14 +13,15 @@ class ARTWebCustomViewController: ARTWebViewController {
         super.viewDidLoad()
         createButtons()
         
-//        showFullScreen()
+        // 全屏显示
+        showFullScreen()
         
         // 自定义 Cookie
         customCookies = [
             "name": "mrSir18",
             "bundleName": "zecoart"
         ]
-        loadURL("https://www.zecoart.com")
+        loadURL("https://www.zecoart.com") // 加载网页
     }
     
     private func createButtons() { // 创建测试按钮方法

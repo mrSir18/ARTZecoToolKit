@@ -14,8 +14,8 @@ public class ARTScriptMessageHandlerDelegate: NSObject, WKScriptMessageHandler {
     private weak var delegate: WKScriptMessageHandler?
     
     
-    // MARK: - Life Cycle
-
+    // MARK: - Initialization
+    
     init(_ delegate: WKScriptMessageHandler) {
         self.delegate = delegate
         super.init()

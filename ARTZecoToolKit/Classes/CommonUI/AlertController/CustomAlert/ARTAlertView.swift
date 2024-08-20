@@ -28,7 +28,7 @@ open class ARTAlertView: UIView {
     public var buttonTappedCallback: ((ARTAlertControllerMode) -> Void)?
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     override public init(frame: CGRect) {
         super.init(frame: frame)

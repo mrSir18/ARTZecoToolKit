@@ -20,7 +20,7 @@ class ARTViewController_Carousel: ARTBaseViewController {
     private var carouselView:ARTCarouselView!
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()

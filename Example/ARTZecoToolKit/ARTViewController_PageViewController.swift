@@ -17,7 +17,7 @@ class ARTViewController_PageViewController: ARTBaseViewController {
     var pageViewController: ARTPageViewController!
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()

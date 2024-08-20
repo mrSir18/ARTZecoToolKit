@@ -14,7 +14,7 @@ class ARTCollectionViewModel {
     public var collectionSections: [CollectionSectionProtocol] = []
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     func loadData(completion: () -> Void) {
         if let result = requestJsonString().art_toDictionary() {

@@ -28,55 +28,61 @@ open class ARTProgressBarView: UIView {
     private weak var delegate: ARTProgressBarViewProtocol?
     
     /// 进度条视图
-    private var progressView: UIProgressView?
+    private var progressView: UIView!
     
     /// 是否隐藏进度条
     private var shouldHideProgressBar: Bool = false
     
+    /// 进度条的颜色
+    private var progressColor: UIColor!
+ 
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     convenience init(_ delegate: ARTProgressBarViewProtocol) {
         self.init()
-        self.backgroundColor = tintColor()
         self.delegate = delegate
+        self.progressColor = delegate_tintColor()
+        self.shouldHideProgressBar = delegate_shouldHideProgressBar()
+        self.isHidden = shouldHideProgressBar
         setupViews()
     }
     
     private func setupViews() {
-        shouldHideProgressBar = delegate_shouldHideProgressBar()
-        
         // 创建进度条视图
-        progressView = UIProgressView()
-        progressView?.progressTintColor = tintColor()
-        progressView?.trackTintColor    = .clear
-        progressView?.isHidden          = shouldHideProgressBar
-        progressView?.transform         = CGAffineTransformMakeScale(1.0, 1.0)
-        progressView?.setProgress(0.0, animated: true)
-        addSubview(progressView!)
-        progressView?.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        progressView = UIView()
+        progressView.backgroundColor = progressColor
+        addSubview(progressView)
+        progressView.snp.makeConstraints { make in
+            make.top.left.bottom.equalToSuperview()
+            make.width.equalTo(0)
         }
     }
     
-    // MARK: - Public Methods
-    
     /// 设置进度条的进度。
-    ///
-    /// - Parameters:
-    ///  - progress: 进度值。
-    ///  - animated: 是否动画。
-    ///  - completion: 动画完成回调。
     func setProgress(_ progress: Float, animated: Bool, completion: (() -> Void)? = nil) {
-        if shouldHideProgressBar { return }
-        progressView?.isHidden = progress < 1.0 ? false : true
-        progressView?.setProgress(progress, animated: animated)
-        completion?()
+        guard !shouldHideProgressBar else { return }
+        let targetWidth = self.frame.width * CGFloat(progress)
+        let animationBlock = {
+            self.progressView.snp.updateConstraints { make in
+                make.width.equalTo(targetWidth)
+            }
+            self.layoutIfNeeded()
+        }
+        
+        if animated {
+            UIView.animate(withDuration: 0.3, animations: animationBlock, completion: { _ in
+                completion?()
+            })
+        } else {
+            animationBlock()
+            completion?()
+        }
     }
     
     // MARK: - Private Delegate Methods
     
-    private func tintColor() -> UIColor { // 进度条的颜色
+    private func delegate_tintColor() -> UIColor { // 进度条的颜色
         return delegate?.tintColor(for: self) ?? .art_color(withHEXValue: 0xFE5C01)
     }
     

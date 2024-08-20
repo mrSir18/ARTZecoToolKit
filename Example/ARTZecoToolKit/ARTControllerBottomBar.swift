@@ -28,7 +28,7 @@ class ARTControllerBottomBar: ARTPhotoBrowserBottomBar {
     }
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     // 该方法不实现则默认执行父类的方法
     init(_ delegate: ARTControllerBottomBarDelegate? = nil) {

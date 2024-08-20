@@ -23,7 +23,7 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
     private var initialY: CGFloat = 0.0
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     public override init(frame: CGRect) {
         super.init(frame: frame)

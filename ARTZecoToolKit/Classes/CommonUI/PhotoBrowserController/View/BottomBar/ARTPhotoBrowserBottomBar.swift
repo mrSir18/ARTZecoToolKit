@@ -26,7 +26,7 @@ open class ARTPhotoBrowserBottomBar: UIView {
     public var pageIndexLabel: UILabel!
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     public init(_ delegate: ARTPhotoBrowserBottomBarDelegate? = nil) {
         super.init(frame: .zero)

@@ -10,7 +10,7 @@ import ARTZecoToolKit
 
 class ARTViewController_WebView: ARTBaseViewController {
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()

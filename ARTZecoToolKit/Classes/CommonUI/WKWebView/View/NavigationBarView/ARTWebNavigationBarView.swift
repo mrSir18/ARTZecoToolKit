@@ -18,7 +18,6 @@
     
     // MARK: - navigationBar Style
     
-    
     /// 是否隐藏导航栏
     ///
     /// - Parameter navigationBar: 导航栏视图。
@@ -89,11 +88,14 @@ open class ARTWebNavigationBarView: UIView {
     /// 导航栏视图
     private var containerBar: UIView!
     
+    /// 标题标签
+    private var titleLabel: UILabel!
+    
     /// 是否滚动视图
     private var isFollowScrollView: Bool = false
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     convenience init(_ delegate: ARTWebNavigationBarViewProtocol) {
         self.init()
@@ -140,7 +142,7 @@ open class ARTWebNavigationBarView: UIView {
         }
         
         // 创建标题标签
-        let titleLabel = UILabel()
+        titleLabel = UILabel()
         titleLabel.text             = delegate_titleContent()
         titleLabel.textAlignment    = .center
         titleLabel.font             = delegate_titleFont()
@@ -178,6 +180,14 @@ open class ARTWebNavigationBarView: UIView {
     /// - Returns: 无
     public func updateNavigationBarAlpha(_ alpha: CGFloat) {
         if isFollowScrollView { containerBar.alpha = alpha } // 如果跟随滚动视图，不更新透明度
+    }
+    
+    /// 标题内容
+    ///
+    /// - Parameter title: 标题内容
+    /// - Returns: 无
+    public func updateTitleContent(_ title: String) {
+        titleLabel.text = title
     }
     
     // MARK: - Private Button Actions
