@@ -10,6 +10,7 @@
 		00D720F0978D3EC0635E3472DF57661E /* ConstraintConstantTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0963F38B227707582EC3DE2514689265 /* ConstraintConstantTarget.swift */; };
 		010E4B3C3DB1598E23FD47DDF42EDAFB /* ARTCarouselFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DA4B3D439AC4F72911F85FA39CA0AC /* ARTCarouselFlowLayout.swift */; };
 		01DD61BF7C45A72DBF9178A78FFC142B /* UICollectionView+ARTExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153C7D1D410E35BB2959E0B71FFCB00B /* UICollectionView+ARTExtension.swift */; };
+		0248E3772C762E0000BC7C36 /* ARTWebToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0248E3762C762E0000BC7C36 /* ARTWebToolbar.swift */; };
 		02769AA42902BB894CF0A1B34E0F0145 /* SDImageFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C82A36991BCC7861FDA04DCD767C151 /* SDImageFrame.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		028BFB8ECE171CA1C650DCFDF61BDF45 /* SDImageLoadersManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0524C23FFE531C15366D7BC9678923 /* SDImageLoadersManager.m */; };
 		029E01FD98DB7E382E0A53E1996B0A3A /* SDImageGIFCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1D3B8A9F8B1450D130959E041C5CD0 /* SDImageGIFCoder.m */; };
@@ -85,7 +86,7 @@
 		325DC8EB4F4F47919372261905D3F5DC /* SmartAny.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F83B0F7C6873246510A0B2D6823A0C /* SmartAny.swift */; };
 		32689EEB9AD1FA87D65AE5A61E65C958 /* SDAsyncBlockOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C5C1F9F6DB2EF2F65AE951F38DAD1C /* SDAsyncBlockOperation.m */; };
 		3466283BEBD900BC835CAEFD01792F35 /* SmartAnyImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA73827A53CA43A7D0AFD0ECDCED0752 /* SmartAnyImpl.swift */; };
-		34D8670C47DE830DC93E818AE8F01A4B /* ARTWebProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688845DF93031826B607CC7D2DB9E2D0 /* ARTWebProgressBarView.swift */; };
+		34D8670C47DE830DC93E818AE8F01A4B /* ARTWebProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688845DF93031826B607CC7D2DB9E2D0 /* ARTWebProgressBar.swift */; };
 		3506AECC70FF3362EA3D05C683026011 /* SDImageCacheDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A2502DE783E693ECA42FD1F5CEF51C0 /* SDImageCacheDefine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		360DAE0BDB26080FBBA5598973449560 /* ARTPhotoBrowserNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E271081514880C7F33A9F59062FE56 /* ARTPhotoBrowserNavigationBar.swift */; };
 		370EC1051A14FECEB7440F41D89AF6AC /* SDImageCoder.h in Headers */ = {isa = PBXBuildFile; fileRef = A08E6B4A6996E073E8541197079FA68F /* SDImageCoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -243,7 +244,7 @@
 		A73357EDD68313AFDFAC633336C26A62 /* ARTStarRatingStyleConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA69A0D7995BC00B957FE8CDFA6E16D /* ARTStarRatingStyleConfiguration.swift */; };
 		A80CAC4430A668D90B7B9E3FE07ECE33 /* SDImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 17BDD46135E190D6792DAF8EA9E8D46A /* SDImageLoader.m */; };
 		A8CCC6F4CAD2F56929AD7F79CA2BD922 /* KeysMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216C35ABAB9212170B920C9A226BE0E1 /* KeysMapper.swift */; };
-		A97D7D101A724FC157CA4B8F2C80120C /* ARTWebNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46D18F72D4F767DB15A56FC3050BECE /* ARTWebNavigationBarView.swift */; };
+		A97D7D101A724FC157CA4B8F2C80120C /* ARTWebNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46D18F72D4F767DB15A56FC3050BECE /* ARTWebNavigationBar.swift */; };
 		A9FEFEAA11594499CE58F9403D1613BB /* SmartCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD4FFEDF6FD4CC945B124B64A4177E2 /* SmartCodable.swift */; };
 		AB4276CD7FE7E1AEF2BC6359B76911DE /* UIView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F92CE3CE8EA6D8D1B262FBA53AEC7E /* UIView+WebCache.m */; };
 		AC2F0FE565D69E8CC81845479B9E1FD9 /* JSONUnkeyedEncodingContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F8A64DC80D365DB7D6ED2D57EDE4C6 /* JSONUnkeyedEncodingContainer.swift */; };
@@ -440,6 +441,7 @@
 		00D9224040AC1C9A9802AAA05B75E5E6 /* UIImage+Transform.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+Transform.h"; path = "SDWebImage/Core/UIImage+Transform.h"; sourceTree = "<group>"; };
 		00F2C75A85753951E17D1C7BFB35E8A5 /* ConstraintInsets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintInsets.swift; path = Sources/ConstraintInsets.swift; sourceTree = "<group>"; };
 		01DC918508E114EDF889C6663DE7E0F4 /* LogCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LogCache.swift; path = SmartCodable/Classes/Log/LogCache.swift; sourceTree = "<group>"; };
+		0248E3762C762E0000BC7C36 /* ARTWebToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTWebToolbar.swift; sourceTree = "<group>"; };
 		037853FE35A66BD3B37BB1485726EA80 /* ARTStarRatingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTStarRatingView.swift; sourceTree = "<group>"; };
 		03D5EBFA1BA4F9ADD1231D67FA283F5E /* SDImageIOAnimatedCoder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageIOAnimatedCoder.h; path = SDWebImage/Core/SDImageIOAnimatedCoder.h; sourceTree = "<group>"; };
 		045145FD33AEBFB7F7AC843DAE8A5FC3 /* SDImageCoder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDImageCoder.m; path = SDWebImage/Core/SDImageCoder.m; sourceTree = "<group>"; };
@@ -525,7 +527,7 @@
 		40B9C49040C456A446C9BC003421ED47 /* ARTStarRatingStyleConfiguration+Chaining.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ARTStarRatingStyleConfiguration+Chaining.swift"; sourceTree = "<group>"; };
 		40D2701BFF6D01AF881597DD8DF2469D /* UIImage+ForceDecode.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+ForceDecode.m"; path = "SDWebImage/Core/UIImage+ForceDecode.m"; sourceTree = "<group>"; };
 		40D9507E46634D79F9DBC79585CBA7DB /* SDAnimatedImagePlayer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDAnimatedImagePlayer.m; path = SDWebImage/Core/SDAnimatedImagePlayer.m; sourceTree = "<group>"; };
-		41B4188A319BB8E58E1E19BD9D31694D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		41B4188A319BB8E58E1E19BD9D31694D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4279FFE588FA38567AE59C2DDFC9C507 /* SmartCodable.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SmartCodable.modulemap; sourceTree = "<group>"; };
 		42C97E6DD31D9B7C8597BC79A0A6543E /* ARTAlertViewStyleConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTAlertViewStyleConfiguration.swift; sourceTree = "<group>"; };
 		4304304BB611232AD6230FD06103F09F /* UIImage+GIF.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+GIF.m"; path = "SDWebImage/Core/UIImage+GIF.m"; sourceTree = "<group>"; };
@@ -566,7 +568,7 @@
 		5D16039BC07D988C8D2F1BF78FC7AF53 /* Dictionary+ARTExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Dictionary+ARTExtension.swift"; sourceTree = "<group>"; };
 		5D1D79914EAD299995651B17B4CFE106 /* JSONFuture.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = JSONFuture.swift; path = SmartCodable/Classes/JSONEncoder/JSONFuture.swift; sourceTree = "<group>"; };
 		5F107FC4EF88CE5154DAE9A404634938 /* SmartFlat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SmartFlat.swift; path = SmartCodable/Classes/SmartType/SmartFlat.swift; sourceTree = "<group>"; };
-		608723EB0D01D3C93292628B5DFA265B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Sources/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		608723EB0D01D3C93292628B5DFA265B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Sources/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		60FDEFE01F7C4652C3EA7A11D99E5794 /* Encodable+ARTExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Encodable+ARTExtension.swift"; sourceTree = "<group>"; };
 		626CC25153ED14DC10291EDF25EB68FA /* Date+ARTExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Date+ARTExtension.swift"; sourceTree = "<group>"; };
 		6286906F6BD4602824759BAF8DC43C1E /* ARTSlidePopupHeaderView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTSlidePopupHeaderView.swift; sourceTree = "<group>"; };
@@ -581,7 +583,7 @@
 		6760A50EAD7F671448D03678F9971199 /* SDImageTransformer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageTransformer.h; path = SDWebImage/Core/SDImageTransformer.h; sourceTree = "<group>"; };
 		68070A0B30329E550F628AB4D3243940 /* SDImageCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageCache.h; path = SDWebImage/Core/SDImageCache.h; sourceTree = "<group>"; };
 		683EE0BE48E08BC0D038F672714ADB11 /* ConstraintDescription.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDescription.swift; path = Sources/ConstraintDescription.swift; sourceTree = "<group>"; };
-		688845DF93031826B607CC7D2DB9E2D0 /* ARTWebProgressBarView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTWebProgressBarView.swift; sourceTree = "<group>"; };
+		688845DF93031826B607CC7D2DB9E2D0 /* ARTWebProgressBar.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTWebProgressBar.swift; sourceTree = "<group>"; };
 		6A83810EE4845E019D8411A0B897965E /* ARTCarouselView+CollectionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ARTCarouselView+CollectionView.swift"; sourceTree = "<group>"; };
 		6AB4A4C521662F7FF9DF6C6D9BAAF741 /* LogItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LogItem.swift; path = SmartCodable/Classes/Log/LogItem.swift; sourceTree = "<group>"; };
 		6AB993FA98C4E8021C8B751774439859 /* ConstraintMakerEditable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerEditable.swift; path = Sources/ConstraintMakerEditable.swift; sourceTree = "<group>"; };
@@ -642,7 +644,7 @@
 		8EE7CB0F105C84F7AECCABE81877A4C5 /* JSONDecoderImpl+KeyedContainer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "JSONDecoderImpl+KeyedContainer.swift"; path = "SmartCodable/Classes/JSONDecoder/Decoder/Impl/JSONDecoderImpl+KeyedContainer.swift"; sourceTree = "<group>"; };
 		8F22AD3FA6FE58218114FF2A067AF613 /* UIView+WebCacheState.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+WebCacheState.h"; path = "SDWebImage/Core/UIView+WebCacheState.h"; sourceTree = "<group>"; };
 		9074F2913EE942A40ACD1E93FD52528E /* ARTSliderBarStyleConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTSliderBarStyleConfiguration.swift; sourceTree = "<group>"; };
-		90D6658D551361FC199751928B5DA209 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = WebImage/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		90D6658D551361FC199751928B5DA209 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = WebImage/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		914A9F9FA80C92C8680BCD2FA5755D8F /* NSImage+Compatibility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSImage+Compatibility.h"; path = "SDWebImage/Core/NSImage+Compatibility.h"; sourceTree = "<group>"; };
 		9221FE134B1CD6A237A607DB39E423A1 /* Pods-ARTZecoToolKit_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ARTZecoToolKit_Tests-dummy.m"; sourceTree = "<group>"; };
 		9249BF010333E795990C9120E6F99AEC /* UIImageView+WebCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImageView+WebCache.h"; path = "SDWebImage/Core/UIImageView+WebCache.h"; sourceTree = "<group>"; };
@@ -662,13 +664,13 @@
 		979486118B3E90C08386079D57962701 /* SnapKit */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SnapKit; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		993DF358586CF7618A8CC46915112AC7 /* slider_header_arrow_down.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = slider_header_arrow_down.png; path = ARTZecoToolKit/Assets/slider_header_arrow_down.png; sourceTree = "<group>"; };
 		9BB3EB9C9196361CC5D5FEBB4D613601 /* SDImageGIFCoder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageGIFCoder.h; path = SDWebImage/Core/SDImageGIFCoder.h; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A0208603065400F5182A7C94071D63E7 /* ConstraintLayoutGuideDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutGuideDSL.swift; path = Sources/ConstraintLayoutGuideDSL.swift; sourceTree = "<group>"; };
 		A025539E227B16CD69BAE4FE7505C712 /* SDWebImageDownloaderOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageDownloaderOperation.m; path = SDWebImage/Core/SDWebImageDownloaderOperation.m; sourceTree = "<group>"; };
 		A056E4ADA9E469C92216790C5AABEB0D /* Patcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Patcher.swift; path = SmartCodable/Classes/JSONDecoder/Patcher/Patcher.swift; sourceTree = "<group>"; };
 		A08E6B4A6996E073E8541197079FA68F /* SDImageCoder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageCoder.h; path = SDWebImage/Core/SDImageCoder.h; sourceTree = "<group>"; };
 		A101AD118BAFB5F6A5AFC6514ED0CA15 /* SDImageCacheConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageCacheConfig.h; path = SDWebImage/Core/SDImageCacheConfig.h; sourceTree = "<group>"; };
-		A46D18F72D4F767DB15A56FC3050BECE /* ARTWebNavigationBarView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTWebNavigationBarView.swift; sourceTree = "<group>"; };
+		A46D18F72D4F767DB15A56FC3050BECE /* ARTWebNavigationBar.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTWebNavigationBar.swift; sourceTree = "<group>"; };
 		A4D594FC869F6EE898188DDCD967A122 /* SDWebImageDownloaderConfig.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageDownloaderConfig.m; path = SDWebImage/Core/SDWebImageDownloaderConfig.m; sourceTree = "<group>"; };
 		A5B05C2BB4310F2F714CF37735317E6C /* SDWebImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImage.h; path = WebImage/SDWebImage.h; sourceTree = "<group>"; };
 		A5C8DDDF5B8966F3DF12453CDE509A5C /* UIImageView+HighlightedWebCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+HighlightedWebCache.m"; path = "SDWebImage/Core/UIImageView+HighlightedWebCache.m"; sourceTree = "<group>"; };
@@ -735,7 +737,7 @@
 		C8525B33BFB1460CDBA1D0FD118A5465 /* NSData+ImageContentType.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSData+ImageContentType.m"; path = "SDWebImage/Core/NSData+ImageContentType.m"; sourceTree = "<group>"; };
 		C86FE46F6A348D1A6C9D991B8D80E6D2 /* SDWebImagePrefetcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImagePrefetcher.m; path = SDWebImage/Core/SDWebImagePrefetcher.m; sourceTree = "<group>"; };
 		C9C8911B7F3D24C8010EDDF490B0ED91 /* ARTPhotoBrowserViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTPhotoBrowserViewController.swift; sourceTree = "<group>"; };
-		CA3DFFF21B590D32806DE5D3B1C72614 /* ARTCookieManager.js */ = {isa = PBXFileReference; includeInIndex = 1; name = ARTCookieManager.js; path = ARTZecoToolKit/Assets/ARTCookieManager.js; sourceTree = "<group>"; };
+		CA3DFFF21B590D32806DE5D3B1C72614 /* ARTCookieManager.js */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.javascript; name = ARTCookieManager.js; path = ARTZecoToolKit/Assets/ARTCookieManager.js; sourceTree = "<group>"; };
 		CA54D19AB47DA61F0E62C33BD1E0B416 /* SDImageGraphics.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageGraphics.h; path = SDWebImage/Core/SDImageGraphics.h; sourceTree = "<group>"; };
 		CAE4CF2547E28021182F0C6D7ADEC147 /* Data+ARTExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Data+ARTExtension.swift"; sourceTree = "<group>"; };
 		CB55F1DACDE30AF0CC6908D360CF8D2A /* ARTPhotoBrowserBottomBar.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTPhotoBrowserBottomBar.swift; sourceTree = "<group>"; };
@@ -776,7 +778,7 @@
 		E0DFD91A0DC1661E49328823B893D07B /* UIImage+ExtendedCacheData.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+ExtendedCacheData.h"; path = "SDWebImage/Core/UIImage+ExtendedCacheData.h"; sourceTree = "<group>"; };
 		E1AA6A59220EF6FCB2C5E2A1ACCBFC92 /* UIButton+WebCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIButton+WebCache.m"; path = "SDWebImage/Core/UIButton+WebCache.m"; sourceTree = "<group>"; };
 		E25BCB6F5CB0B3D6192DD066344209C2 /* UIImage+MemoryCacheCost.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+MemoryCacheCost.m"; path = "SDWebImage/Core/UIImage+MemoryCacheCost.m"; sourceTree = "<group>"; };
-		E25FE08EA716879A3E6781B941299B54 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		E25FE08EA716879A3E6781B941299B54 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		E2C4F324A741AC5A055C10123F41E2F2 /* SDImageLoadersManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageLoadersManager.h; path = SDWebImage/Core/SDImageLoadersManager.h; sourceTree = "<group>"; };
 		E2F322ADCFCEDE0A87B5C2FEB3454C42 /* _SpecialTreatmentEncoder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = _SpecialTreatmentEncoder.swift; path = SmartCodable/Classes/JSONEncoder/Impl/_SpecialTreatmentEncoder.swift; sourceTree = "<group>"; };
 		E3DD6E051FBCE17CC08D8A86AB5456A1 /* Pods-ARTZecoToolKit_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ARTZecoToolKit_Tests-umbrella.h"; sourceTree = "<group>"; };
@@ -803,7 +805,7 @@
 		EF71341CD82FB4097BA7BE17DF4D3B1A /* SmartCodable-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SmartCodable-prefix.pch"; sourceTree = "<group>"; };
 		EF9407B1C3899C4BA3CBA0BA655B625E /* SDWebImageOptionsProcessor.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageOptionsProcessor.m; path = SDWebImage/Core/SDWebImageOptionsProcessor.m; sourceTree = "<group>"; };
 		F0604215D3F24686733A074E7856DFBA /* ARTActionSheetStyleConfiguration+Chaining.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ARTActionSheetStyleConfiguration+Chaining.swift"; sourceTree = "<group>"; };
-		F0968964F68446A82060F29C596C8D82 /* ARTZecoToolKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = ARTZecoToolKit.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		F0968964F68446A82060F29C596C8D82 /* ARTZecoToolKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = ARTZecoToolKit.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		F13E622A417A3DDE66EFDEBC548DA4B0 /* ARTCitySelectorHotCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTCitySelectorHotCell.swift; sourceTree = "<group>"; };
 		F210C7925C9D9C355583AB11ED4A1FA8 /* ARTSlidePopupView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTSlidePopupView.swift; sourceTree = "<group>"; };
 		F221C808C3F4E89DB6C8FE538E687F9C /* SDDiskCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDDiskCache.h; path = SDWebImage/Core/SDDiskCache.h; sourceTree = "<group>"; };
@@ -905,8 +907,15 @@
 				ADA69A0D7995BC00B957FE8CDFA6E16D /* ARTStarRatingStyleConfiguration.swift */,
 				40B9C49040C456A446C9BC003421ED47 /* ARTStarRatingStyleConfiguration+Chaining.swift */,
 			);
-			name = StyleConfiguration;
 			path = StyleConfiguration;
+			sourceTree = "<group>";
+		};
+		0248E3782C762E0A00BC7C36 /* Toolbar */ = {
+			isa = PBXGroup;
+			children = (
+				0248E3762C762E0000BC7C36 /* ARTWebToolbar.swift */,
+			);
+			path = Toolbar;
 			sourceTree = "<group>";
 		};
 		06F008D46DCA48DC51C087FC9D6C0A40 /* CityCell */ = {
@@ -915,7 +924,6 @@
 				E551A5A153187181AB1408D2F62A909C /* ARTCitySelectorCell.swift */,
 				F13E622A417A3DDE66EFDEBC548DA4B0 /* ARTCitySelectorHotCell.swift */,
 			);
-			name = CityCell;
 			path = CityCell;
 			sourceTree = "<group>";
 		};
@@ -949,7 +957,6 @@
 				970CD84142DE81AC69312605B6658026 /* ARTCityStyleConfiguration.swift */,
 				E6AEB85E2108845883C33DFB46758B2E /* ARTCityStyleConfiguration+Chaining.swift */,
 			);
-			name = StyleConfiguration;
 			path = StyleConfiguration;
 			sourceTree = "<group>";
 		};
@@ -958,7 +965,6 @@
 			children = (
 				CFC38B8875205CF05527524926701C41 /* ARTPageViewController.swift */,
 			);
-			name = PageViewController;
 			path = PageViewController;
 			sourceTree = "<group>";
 		};
@@ -967,7 +973,6 @@
 			children = (
 				835153EB795985B1A0524F9D84216594 /* ARTWebViewController.swift */,
 			);
-			name = Control;
 			path = Control;
 			sourceTree = "<group>";
 		};
@@ -993,7 +998,6 @@
 				E7E97203A2249C8345A9B6E8B613C013 /* ARTCitySelectorHeader.swift */,
 				F74B853A2E033D114250E808BCFBCFA1 /* ARTCitySelectorHotHeader.swift */,
 			);
-			name = ReusableView;
 			path = ReusableView;
 			sourceTree = "<group>";
 		};
@@ -1002,7 +1006,6 @@
 			children = (
 				C9C8911B7F3D24C8010EDDF490B0ED91 /* ARTPhotoBrowserViewController.swift */,
 			);
-			name = Control;
 			path = Control;
 			sourceTree = "<group>";
 		};
@@ -1014,7 +1017,6 @@
 				3AC39519F06CFE4841927A651A655731 /* StyleConfiguration */,
 				7BC6903875C1EE6958C5E695759BDDBB /* View */,
 			);
-			name = PhotoBrowserController;
 			path = PhotoBrowserController;
 			sourceTree = "<group>";
 		};
@@ -1025,7 +1027,6 @@
 				F210C7925C9D9C355583AB11ED4A1FA8 /* ARTSlidePopupView.swift */,
 				4CD25638F72E88E188EB0A7568C7EB6D /* StyleConfiguration */,
 			);
-			name = SliderPopupView;
 			path = SliderPopupView;
 			sourceTree = "<group>";
 		};
@@ -1035,7 +1036,6 @@
 				21E01BC69611BBA236E02028A3D0AFE0 /* ARTActionSheetStyleConfiguration.swift */,
 				F0604215D3F24686733A074E7856DFBA /* ARTActionSheetStyleConfiguration+Chaining.swift */,
 			);
-			name = StyleConfiguration;
 			path = StyleConfiguration;
 			sourceTree = "<group>";
 		};
@@ -1045,7 +1045,6 @@
 				E7D899F0769207FAE987B2551E5A7849 /* ARTQuantityControlView.swift */,
 				4233369015C6A2331BEDCFC1DC51919B /* StyleConfiguration */,
 			);
-			name = QuantityView;
 			path = QuantityView;
 			sourceTree = "<group>";
 		};
@@ -1055,7 +1054,6 @@
 				8C2363E26EA2EC4F87F3E48CD149D713 /* ARTPhotoBrowserStyleConfiguration.swift */,
 				BC1A09835601DE7ABF4D8C9541798440 /* ARTPhotoBrowserStyleConfiguration+Chaining.swift */,
 			);
-			name = StyleConfiguration;
 			path = StyleConfiguration;
 			sourceTree = "<group>";
 		};
@@ -1221,7 +1219,6 @@
 				AF3AD66C5730EA4A51DC4384A6EFE82C /* ARTQuantityStyleConfiguration.swift */,
 				DADC889000539D4F69539ABA000BF07B /* ARTQuantityStyleConfiguration+Chaining.swift */,
 			);
-			name = StyleConfiguration;
 			path = StyleConfiguration;
 			sourceTree = "<group>";
 		};
@@ -1231,7 +1228,6 @@
 				9074F2913EE942A40ACD1E93FD52528E /* ARTSliderBarStyleConfiguration.swift */,
 				3044D5FCD47F18199E8182B3F5AD2F8B /* ARTSliderBarStyleConfiguration+Chaining.swift */,
 			);
-			name = StyleConfiguration;
 			path = StyleConfiguration;
 			sourceTree = "<group>";
 		};
@@ -1241,7 +1237,6 @@
 				73C0ACDADF3A29FB90D8403025170D92 /* ARTSlidePopupStyleConfiguration.swift */,
 				513FD85519C2A6C01347152D5EC86E12 /* ARTSlidePopupStyleConfiguration+Chaining.swift */,
 			);
-			name = StyleConfiguration;
 			path = StyleConfiguration;
 			sourceTree = "<group>";
 		};
@@ -1272,7 +1267,6 @@
 				1C37659756606B3B945B94C2BB466944 /* StyleConfiguration */,
 				52E34233352249565A62B0D2930262F8 /* ViewModel */,
 			);
-			name = CitySelectorView;
 			path = CitySelectorView;
 			sourceTree = "<group>";
 		};
@@ -1281,7 +1275,6 @@
 			children = (
 				660A56C9F3EBD766DAA1C96B0EFFC600 /* ARTScriptMessageHandlerDelegate.swift */,
 			);
-			name = HandlerDelegate;
 			path = HandlerDelegate;
 			sourceTree = "<group>";
 		};
@@ -1290,7 +1283,6 @@
 			children = (
 				84252B68F97B8E432B0B8D34CA285F3C /* ARTCitySelectorViewModel.swift */,
 			);
-			name = ViewModel;
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
@@ -1321,7 +1313,6 @@
 			children = (
 				8677774966192EA2C3658F7189C849C9 /* ARTActionSheetEntity.swift */,
 			);
-			name = Entity;
 			path = Entity;
 			sourceTree = "<group>";
 		};
@@ -1347,13 +1338,12 @@
 			path = ../..;
 			sourceTree = "<group>";
 		};
-		65A0E8D121C053AECD1BBDB0279F307F /* ProgressBarView */ = {
+		65A0E8D121C053AECD1BBDB0279F307F /* ProgressBar */ = {
 			isa = PBXGroup;
 			children = (
-				688845DF93031826B607CC7D2DB9E2D0 /* ARTWebProgressBarView.swift */,
+				688845DF93031826B607CC7D2DB9E2D0 /* ARTWebProgressBar.swift */,
 			);
-			name = ProgressBarView;
-			path = ProgressBarView;
+			path = ProgressBar;
 			sourceTree = "<group>";
 		};
 		691B442A74DE2C9B64120C7AD55ECCD7 /* AlignmentButton */ = {
@@ -1361,7 +1351,6 @@
 			children = (
 				3738C22EE3B997FFBBF27BBFEDD20160 /* ARTAlignmentButton.swift */,
 			);
-			name = AlignmentButton;
 			path = AlignmentButton;
 			sourceTree = "<group>";
 		};
@@ -1370,7 +1359,6 @@
 			children = (
 				C3E271081514880C7F33A9F59062FE56 /* ARTPhotoBrowserNavigationBar.swift */,
 			);
-			name = NavigationBar;
 			path = NavigationBar;
 			sourceTree = "<group>";
 		};
@@ -1380,7 +1368,6 @@
 				CC382469B983FA874AE545DE4706ED4F /* ARTActionSheet+CollectionView.swift */,
 				78A892C6B206CDFDB371584B8E8B5596 /* ARTActionSheetCell.swift */,
 			);
-			name = View;
 			path = View;
 			sourceTree = "<group>";
 		};
@@ -1389,7 +1376,6 @@
 			children = (
 				CBCF4FE578AAEDF540D2F34A7DEA01DA /* ARTCitySelectorEntity.swift */,
 			);
-			name = Entity;
 			path = Entity;
 			sourceTree = "<group>";
 		};
@@ -1414,7 +1400,6 @@
 				3E04773E49AFA3D7FE41C1D1604688A4 /* Core */,
 				78DB298BFB54936D1F2F433A6560310C /* Support Files */,
 			);
-			name = SDWebImage;
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
@@ -1423,7 +1408,6 @@
 			children = (
 				CB55F1DACDE30AF0CC6908D360CF8D2A /* ARTPhotoBrowserBottomBar.swift */,
 			);
-			name = BottomBar;
 			path = BottomBar;
 			sourceTree = "<group>";
 		};
@@ -1477,7 +1461,6 @@
 				A23A8A91B648FC6365D1300E78FCB6C5 /* Cell */,
 				6A92B48598181CCE74F99026B4D52FE1 /* NavigationBar */,
 			);
-			name = View;
 			path = View;
 			sourceTree = "<group>";
 		};
@@ -1497,7 +1480,6 @@
 				7B8D1EA2DE584FC49CE6C6DDDD7613B6 /* ARTAlertView.swift */,
 				A02432C5042524504DDE31C21970585F /* StyleConfiguration */,
 			);
-			name = CustomAlert;
 			path = CustomAlert;
 			sourceTree = "<group>";
 		};
@@ -1543,7 +1525,6 @@
 				42C97E6DD31D9B7C8597BC79A0A6543E /* ARTAlertViewStyleConfiguration.swift */,
 				0D51D00AF28280044DC33DBDB6541607 /* ARTAlertViewStyleConfiguration+Chaining.swift */,
 			);
-			name = StyleConfiguration;
 			path = StyleConfiguration;
 			sourceTree = "<group>";
 		};
@@ -1552,7 +1533,6 @@
 			children = (
 				0880475E0295482EC0C986B841FC8BBD /* ARTPhotoBrowserCell.swift */,
 			);
-			name = Cell;
 			path = Cell;
 			sourceTree = "<group>";
 		};
@@ -1579,7 +1559,6 @@
 				F82A419994CB7B3A88342E51BAB08537 /* ARTSlideBarView.swift */,
 				434ED538CE31BC74E2EB2D6FD4FC0FDA /* StyleConfiguration */,
 			);
-			name = SlideBarView;
 			path = SlideBarView;
 			sourceTree = "<group>";
 		};
@@ -1589,7 +1568,6 @@
 				037853FE35A66BD3B37BB1485726EA80 /* ARTStarRatingView.swift */,
 				01831495B80354DF9FF81E67BCFC0CC2 /* StyleConfiguration */,
 			);
-			name = StarRatingView;
 			path = StarRatingView;
 			sourceTree = "<group>";
 		};
@@ -1617,7 +1595,6 @@
 				6A83810EE4845E019D8411A0B897965E /* ARTCarouselView+CollectionView.swift */,
 				E80931B66CAEA9D0CDD328F85426E1F7 /* FlowLayout */,
 			);
-			name = CarouselView;
 			path = CarouselView;
 			sourceTree = "<group>";
 		};
@@ -1673,7 +1650,6 @@
 				D157A8DF3FF3477059F9BCA3B617720F /* Resources */,
 				4D93200B74253064CD1B20441242F576 /* Support Files */,
 			);
-			name = SnapKit;
 			path = SnapKit;
 			sourceTree = "<group>";
 		};
@@ -1682,7 +1658,6 @@
 			children = (
 				389CCD224E68A9688D28DC4092CF3F82 /* ARTFadeOutAnimator.swift */,
 			);
-			name = FadeOutAnimator;
 			path = FadeOutAnimator;
 			sourceTree = "<group>";
 		};
@@ -1714,7 +1689,6 @@
 				5069FF3C34F19652116FB3CF045042FE /* HandlerDelegate */,
 				E2BDB5A097505327860A2D4FE565C100 /* View */,
 			);
-			name = WKWebView;
 			path = WKWebView;
 			sourceTree = "<group>";
 		};
@@ -1726,7 +1700,6 @@
 				9574523AF0DC702D0A12ABA0466A0C18 /* WKWebView+ARTCookieInjection.swift */,
 				257B5958981C47FC33FE9B367CD29386 /* WKWebView+ARTCustomCookies.swift */,
 			);
-			name = CookiesManager;
 			path = CookiesManager;
 			sourceTree = "<group>";
 		};
@@ -1736,7 +1709,6 @@
 				783C63A44726C741DE0611792F6627EC /* ARTScrollView.swift */,
 				59C92C3E24DA8D8C8526716C1F4A6988 /* ARTScrollViewItem.swift */,
 			);
-			name = ScrollView;
 			path = ScrollView;
 			sourceTree = "<group>";
 		};
@@ -1746,7 +1718,6 @@
 				1BD736055B250E7FAFB1BCE6B0671456 /* ARTCustomButton.swift */,
 				334D7E107727EE6B5CEDE5BFADE2431E /* ARTCustomView.swift */,
 			);
-			name = CustomControl;
 			path = CustomControl;
 			sourceTree = "<group>";
 		};
@@ -1755,7 +1726,6 @@
 			children = (
 				23FDE64EBDDBF0D1CBF85F52213A4CBF /* ARTAlertController.swift */,
 			);
-			name = SystemAlertController;
 			path = SystemAlertController;
 			sourceTree = "<group>";
 		};
@@ -1767,7 +1737,6 @@
 				8E87328127907E0B325FB8EC7FAABBCC /* CustomAlert */,
 				DAE1EED700EEFC94DCF00D9FAE31706F /* SystemAlertController */,
 			);
-			name = AlertController;
 			path = AlertController;
 			sourceTree = "<group>";
 		};
@@ -1787,7 +1756,6 @@
 				35CEBF3DA9BE6753F44CDD2AAA0EA5DE /* StyleConfiguration */,
 				6EAD3496A35CEA1247F4517F6068E265 /* View */,
 			);
-			name = ActionSheet;
 			path = ActionSheet;
 			sourceTree = "<group>";
 		};
@@ -1841,7 +1809,6 @@
 				EE044C07112482530D85E9929653A315 /* URLTransformer.swift */,
 				7212FD3FEA46E04ADC88D0C2F073077D /* Support Files */,
 			);
-			name = SmartCodable;
 			path = SmartCodable;
 			sourceTree = "<group>";
 		};
@@ -1849,20 +1816,19 @@
 			isa = PBXGroup;
 			children = (
 				C1DBFB7775A683B730D24B4E5610BF81 /* ARTWebView.swift */,
-				E743349488D57C693D7174E684493E78 /* NavigationBarView */,
-				65A0E8D121C053AECD1BBDB0279F307F /* ProgressBarView */,
+				E743349488D57C693D7174E684493E78 /* NavigationBar */,
+				65A0E8D121C053AECD1BBDB0279F307F /* ProgressBar */,
+				0248E3782C762E0A00BC7C36 /* Toolbar */,
 			);
-			name = View;
 			path = View;
 			sourceTree = "<group>";
 		};
-		E743349488D57C693D7174E684493E78 /* NavigationBarView */ = {
+		E743349488D57C693D7174E684493E78 /* NavigationBar */ = {
 			isa = PBXGroup;
 			children = (
-				A46D18F72D4F767DB15A56FC3050BECE /* ARTWebNavigationBarView.swift */,
+				A46D18F72D4F767DB15A56FC3050BECE /* ARTWebNavigationBar.swift */,
 			);
-			name = NavigationBarView;
-			path = NavigationBarView;
+			path = NavigationBar;
 			sourceTree = "<group>";
 		};
 		E80931B66CAEA9D0CDD328F85426E1F7 /* FlowLayout */ = {
@@ -1870,7 +1836,6 @@
 			children = (
 				44DA4B3D439AC4F72911F85FA39CA0AC /* ARTCarouselFlowLayout.swift */,
 			);
-			name = FlowLayout;
 			path = FlowLayout;
 			sourceTree = "<group>";
 		};
@@ -1881,7 +1846,6 @@
 				500C29EA52BB65B66F91956E12C22D6D /* ARTCollectionViewConfigModel.swift */,
 				0F4579BFE7A28900C8EADDBA8A4CA7B4 /* ARTCollectionViewFlowLayout.swift */,
 			);
-			name = CollectionView;
 			path = CollectionView;
 			sourceTree = "<group>";
 		};
@@ -2418,6 +2382,7 @@
 				C00CA53B675669956C69A39076AA329D /* ARTCollectionViewFlowLayout.swift in Sources */,
 				932CFE6EC50063540B0D6A06C72638F4 /* ARTCustomButton.swift in Sources */,
 				B95C01D70A58E4973C091B6CD4EB38CE /* ARTCustomView.swift in Sources */,
+				0248E3772C762E0000BC7C36 /* ARTWebToolbar.swift in Sources */,
 				3CF01D728B48FB80A793EDDEA1F80560 /* ARTDeviceExtension .swift in Sources */,
 				499DC00EF415B06CBBE11A213B0C90D9 /* ARTFadeOutAnimator.swift in Sources */,
 				D9A4EC1A665507F2EB2372B7D0E738BB /* ARTJavaScriptBundleLoader.swift in Sources */,
@@ -2446,8 +2411,8 @@
 				A73357EDD68313AFDFAC633336C26A62 /* ARTStarRatingStyleConfiguration.swift in Sources */,
 				F39DD4BAC27A31902F9BB25F16EECC41 /* ARTStarRatingStyleConfiguration+Chaining.swift in Sources */,
 				BF14B8A53DAB399A26209F2ACD07B86F /* ARTStarRatingView.swift in Sources */,
-				A97D7D101A724FC157CA4B8F2C80120C /* ARTWebNavigationBarView.swift in Sources */,
-				34D8670C47DE830DC93E818AE8F01A4B /* ARTWebProgressBarView.swift in Sources */,
+				A97D7D101A724FC157CA4B8F2C80120C /* ARTWebNavigationBar.swift in Sources */,
+				34D8670C47DE830DC93E818AE8F01A4B /* ARTWebProgressBar.swift in Sources */,
 				B8BA954D703FADEBB6BFB5F83284BF3E /* ARTWebView.swift in Sources */,
 				A0AE53722FF49F6B51DFF8BF09EB2124 /* ARTWebViewController.swift in Sources */,
 				8CDCC255AE0E3D1EA4FA73D674055852 /* ARTZecoToolKit-dummy.m in Sources */,
@@ -3116,8 +3081,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};

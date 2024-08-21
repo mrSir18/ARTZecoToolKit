@@ -10,13 +10,16 @@ import WebKit
 open class ARTWebViewController: UIViewController {
     
     /// 导航栏视图
-    public var navigationBarView: ARTWebNavigationBarView!
+    public var navigationBarView: ARTWebNavigationBar!
     
     /// WebView视图
     public var webView: ARTWebView!
     
+    /// 工具栏视图
+    public var toolbar: ARTWebToolbar!
+    
     /// 进度条视图
-    public var progressBarView: ARTProgressBarView!
+    public var progressBarView: ARTWebProgressBar!
     
     /// 自定义 Cookie 字典
     public var customCookies: [String: String] = [:]
@@ -33,6 +36,9 @@ open class ARTWebViewController: UIViewController {
     /// 返回按钮图片
     public var backButtonImageName: String = "back_black_left"
     
+    /// 是否隐藏工具栏  默认为 `false`
+    public var shouldHideToolbar: Bool = false
+    
     /// 自定义 JS 方法名数组
     public var jsMethodNames: [String] = []
     
@@ -48,6 +54,15 @@ open class ARTWebViewController: UIViewController {
     public var dismissCompletion: (() -> Void)?
     
     
+    // MARK: - Private Properties
+    
+    /// 激活链接  隐藏工具栏  默认为 `true`
+    private var isLinkActivated: Bool = true
+    
+    /// 上次滚动位置
+    private var lastContentOffset: CGFloat = 0.0
+    
+    
     // MARK: - Initialization
     
     open override func viewDidLoad() {
@@ -55,6 +70,7 @@ open class ARTWebViewController: UIViewController {
         self.view.backgroundColor = .white
         setupNavigationBarView()
         setupWebView()
+        setupToolBarView()
         setupNetworkStatusView()
         setupProgressBarView()
         setupLoadwebView()
@@ -68,7 +84,7 @@ open class ARTWebViewController: UIViewController {
     
     open func setupNavigationBarView() {
         /// 子类重写: 此方法以自定义导航栏视图
-        navigationBarView = ARTWebNavigationBarView(self)
+        navigationBarView = ARTWebNavigationBar(self)
         view.addSubview(navigationBarView)
         navigationBarView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
@@ -87,9 +103,21 @@ open class ARTWebViewController: UIViewController {
         }
     }
     
+    open func setupToolBarView() {
+        /// 子类重写: 此方法以自定义工具栏视图
+        toolbar = ARTWebToolbar(self)
+        toolbar.isHidden = shouldHideToolbar
+        view.addSubview(toolbar)
+        toolbar.snp.makeConstraints { make in
+            make.size.equalTo(ARTAdaptedSize(width: 132.0, height: 66.0))
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(-art_safeAreaBottom())
+        }
+    }
+    
     open func setupProgressBarView() {
         /// 子类重写: 此方法以自定义进度条视图
-        progressBarView = ARTProgressBarView(self)
+        progressBarView = ARTWebProgressBar(self)
         view.addSubview(progressBarView)
         progressBarView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
@@ -111,6 +139,8 @@ open class ARTWebViewController: UIViewController {
     open func registerWebViewObservers() {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: [.new], context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.title), options: [.new], context: nil)
+        webView.addObserver(self, forKeyPath: "canGoForward", options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: "canGoBack", options: .new, context: nil)
     }
     
     /// 观察者回调
@@ -124,18 +154,25 @@ open class ARTWebViewController: UIViewController {
             return
         }
         switch keyPath {
-        case #keyPath(WKWebView.estimatedProgress): /// 更新进度条的进度
+        case #keyPath(WKWebView.estimatedProgress): /// 监听 WebView 的 estimatedProgress 属性
             DispatchQueue.main.async {
                 let progress = Float(webView.estimatedProgress)
                 self.progressBarView.setProgress(progress, animated: true) { /// 当进度达到 100% 时隐藏进度条
                     if progress >= 1.0 { self.progressBarView.isHidden = true }
                 }
             }
-        case #keyPath(WKWebView.title): /// 更新导航栏的标题
+        case #keyPath(WKWebView.title): /// 监听 WebView 的 title 属性
             DispatchQueue.main.async {
                 if self.shouldAutoFetchTitle { /// 自动获取标题
                     self.navigationBarView.updateTitleContent(webView.title ?? "")
                 }
+            }
+        case #keyPath(WKWebView.canGoBack), #keyPath(WKWebView.canGoForward): /// 监听 WebView 的 canGoBack 和 canGoForward 属性
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return  }
+                if self.shouldHideToolbar { return }
+                self.isLinkActivated = true
+                self.toolbar.updateToolButtonsState(canGoBack: webView.canGoBack, canGoForward: webView.canGoForward) /// 更新工具栏按钮状态
             }
         default: /// 调用父类的 observeValue 方法处理其他情况
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
@@ -146,6 +183,8 @@ open class ARTWebViewController: UIViewController {
     open func unregisterWebViewObservers() {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.title))
+        webView.removeObserver(self, forKeyPath: "canGoForward")
+        webView.removeObserver(self, forKeyPath: "canGoBack")
     }
     
     /// 注册JS消息处理器到 WebView 的用户内容控制器。
@@ -236,11 +275,11 @@ extension ARTWebViewController: ARTWebViewDelegate {
         return customCookies
     }
     
-    open func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) { /// 开始加载网页
+    open func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation) { /// 开始加载网页
         print("开始加载网页: \(webView.url?.absoluteString ?? "")")
     }
     
-    open func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) { /// 网页内容开始返回
+    open func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) { /// 获取网页中的 cookies
         webView.evaluateJavaScript("document.cookie") { result, error in
             if let cookies = result as? String { /// 用换行符替代分隔符，使得每个 cookie 另起一行
                 let formattedCookies = cookies
@@ -253,7 +292,7 @@ extension ARTWebViewController: ARTWebViewDelegate {
         }
     }
     
-    open func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) { /// 网页加载完成
+    open func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) { /// 网页加载完成
         print("网页加载完成: \(webView.title ?? "")")
     }
     
@@ -264,23 +303,68 @@ extension ARTWebViewController: ARTWebViewDelegate {
     open func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) { /// 网页加载失败
         print("网页加载失败: \(error.localizedDescription)")
     }
+    
+    open func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) { /// 拦截导航请求，检测用户是否点击了链接，用于调整工具栏透明度
+        guard navigationAction.navigationType == .linkActivated, !shouldHideToolbar else {
+            decisionHandler(.allow)
+            return
+        }
+        isLinkActivated = true
+        toolbar.alpha = 1.0
+        webView.evaluateJavaScript("window.scrollY") { [weak self] result, error in /// 获取当前滚动位置
+            guard let self = self else { return }
+            if let scrollY = result as? Double {
+                lastContentOffset = CGFloat(scrollY)
+            }
+            resetLinkActivationFlag(after: 1.0) /// 重置 isLinkActivated
+        }
+        decisionHandler(.allow)
+    }
 }
 
 // MARK: - UIScrollViewDelegate
 
 extension ARTWebViewController {
-    open func scrollViewDidScroll(_ scrollView: UIScrollView) { // 根据滚动位置调整顶部导航栏透明度
-        let offsetY = scrollView.contentOffset.y / 100.0
-        let alpha = min(max(offsetY, 0), 1.0)
-        navigationBarView.updateNavigationBarAlpha(alpha)
+    
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let currentOffset = scrollView.contentOffset.y
+        /// 根据滚动位置调整顶底栏透明度
+        let navigationAlpha = min(max(currentOffset / 100.0, 0), 1.0)
+        navigationBarView.updateNavigationBarAlpha(navigationAlpha)
+        
+        /// 如果用户点击了链接，则不调整工具栏透明度
+        if isLinkActivated { return }
+        if currentOffset <= 0 { /// 当滚动位置小于等于0时，工具栏保持完全可见
+            if toolbar.alpha != 1.0 { animateToolbarAlpha(to: 1.0) }
+            return
+        }
+        
+        /// 根据滚动方向调整工具栏透明度
+        let targetAlpha: CGFloat = currentOffset > lastContentOffset ? 0.0 : 1.0
+        if toolbar.alpha != targetAlpha {
+            animateToolbarAlpha(to: targetAlpha)
+        }
+        lastContentOffset = currentOffset
+    }
+    
+    private func animateToolbarAlpha(to alpha: CGFloat) { /// 动画调整工具栏透明度
+        UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.3, delay: 0, options: [], animations: {
+            self.toolbar.alpha = alpha
+        }, completion: nil)
+    }
+    
+    private func resetLinkActivationFlag(after seconds: TimeInterval) { /// 重置 isLinkActivated
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+            self.isLinkActivated = false
+        }
     }
 }
 
-// MARK: - ARTWebNavigationBarViewProtocol
+// MARK: - ARTWebNavigationBarProtocol
 
-extension ARTWebViewController: ARTWebNavigationBarViewProtocol {
+extension ARTWebViewController: ARTWebNavigationBarProtocol {
     
-    open func navigationBarDidTapBackButton(_ navigationBar: ARTWebNavigationBarView) { /// 点击返回按钮
+    open func navigationBarDidTapBackButton(_ navigationBar: ARTWebNavigationBar) { /// 点击返回按钮
         if presentingViewController != nil {
             dismiss(animated: true, completion: dismissCompletion)
         } else {
@@ -288,56 +372,71 @@ extension ARTWebViewController: ARTWebNavigationBarViewProtocol {
         }
     }
     
-    open func shouldHideNavigationBar(for navigationBar: ARTWebNavigationBarView) -> Bool { // 是否隐藏导航栏
+    open func shouldHideNavigationBar(for navigationBar: ARTWebNavigationBar) -> Bool { // 是否隐藏导航栏
         return false
     }
     
-    open func navigationBarBackgroundColor(for navigationBar: ARTWebNavigationBarView) -> UIColor { /// 导航栏背景颜色
+    open func navigationBarBackgroundColor(for navigationBar: ARTWebNavigationBar) -> UIColor { /// 导航栏背景颜色
         return .white
     }
     
-    open func navigationBarAlpha(for navigationBar: ARTWebNavigationBarView) -> CGFloat { /// 导航栏透明度
+    open func navigationBarAlpha(for navigationBar: ARTWebNavigationBar) -> CGFloat { /// 导航栏透明度
         return 1.0
     }
     
-    open func shouldFollowScrollView(for navigationBar: ARTWebNavigationBarView) -> Bool { /// 是否跟随滚动
+    open func shouldFollowScrollView(for navigationBar: ARTWebNavigationBar) -> Bool { /// 是否跟随滚动
         return false
     }
     
-    open func backButtonImageName(for navigationBar: ARTWebNavigationBarView) -> String? { /// 返回按钮图片名称
+    open func backButtonImageName(for navigationBar: ARTWebNavigationBar) -> String? { /// 返回按钮图片名称
         return backButtonImageName
     }
     
-    open func shouldHideBackButton(for navigationBar: ARTWebNavigationBarView) -> Bool { /// 是否隐藏返回按钮
+    open func shouldHideBackButton(for navigationBar: ARTWebNavigationBar) -> Bool { /// 是否隐藏返回按钮
         return false
     }
     
-    open func titleContent(for navigationBar: ARTWebNavigationBarView) -> String { /// 标题内容
+    open func titleContent(for navigationBar: ARTWebNavigationBar) -> String { /// 标题内容
         return navigationBarTitle
     }
     
-    open func titleFont(for navigationBar: ARTWebNavigationBarView) -> UIFont { /// 标题字体
+    open func titleFont(for navigationBar: ARTWebNavigationBar) -> UIFont { /// 标题字体
         return .art_medium(ARTAdaptedValue(17.0)) ?? .systemFont(ofSize: 17.0)
     }
     
-    open func titleColor(for navigationBar: ARTWebNavigationBarView) -> UIColor { /// 标题颜色
+    open func titleColor(for navigationBar: ARTWebNavigationBar) -> UIColor { /// 标题颜色
         return .art_color(withHEXValue: 0x000000)
     }
     
-    open func customRightView(for navigationBar: ARTWebNavigationBarView) -> UIView? { /// 自定义右侧视图
+    open func customRightView(for navigationBar: ARTWebNavigationBar) -> UIView? { /// 自定义右侧视图
         return nil
     }
 }
 
-// MARK: - ARTProgressBarViewProtocol
+// MARK: - ARTWebToolbarProtocol
 
-extension ARTWebViewController: ARTProgressBarViewProtocol {
+extension ARTWebViewController: ARTWebToolbarProtocol {
     
-    open func tintColor(for progressBar: ARTProgressBarView) -> UIColor { /// 进度条的颜色
+    open func toolbar(_ toolbar: ARTWebToolbar, didTapGoBackButton button: UIButton) { /// 点击返回按钮
+        webView.goBack()
+        resetLinkActivationFlag(after: 1.0) /// 重置 isLinkActivated
+    }
+    
+    open func toolbar(_ toolbar: ARTWebToolbar, didTapGoForwardButton button: UIButton) { /// 点击前进按钮
+        webView.goForward()
+        resetLinkActivationFlag(after: 1.0) /// 重置 isLinkActivated
+    }
+}
+
+// MARK: - ARTWebProgressBarProtocol
+
+extension ARTWebViewController: ARTWebProgressBarProtocol {
+    
+    open func tintColor(for progressBar: ARTWebProgressBar) -> UIColor { /// 进度条的颜色
         return .art_color(withHEXValue: 0xFE5C01)
     }
     
-    open func shouldHideProgressBar(for progressBar: ARTProgressBarView) -> Bool { /// 是否隐藏进度条
+    open func shouldHideProgressBar(for progressBar: ARTWebProgressBar) -> Bool { /// 是否隐藏进度条
         return false
     }
 }

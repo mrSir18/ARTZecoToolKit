@@ -1,31 +1,31 @@
 //
-//  ARTProgressBarView.swift
+//  ARTWebProgressBar.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/8/20.
 //
 
-/// `ARTProgressBarViewProtocol` 协议用于提供 `ARTProgressBarView` 的配置。
+/// `ARTWebProgressBarProtocol` 协议用于提供 `ARTWebProgressBar` 的配置。
 /// 通过实现这个协议，可以定制进度条的颜色、隐藏状态等属性。
-@objc public protocol ARTProgressBarViewProtocol: AnyObject {
+@objc public protocol ARTWebProgressBarProtocol: AnyObject {
     
     /// 返回进度条的自定义颜色。
     ///
     /// - Parameter progressBar: 进度条视图。
     /// - Returns: 进度条的颜色。
-    func tintColor(for progressBar: ARTProgressBarView) -> UIColor
+    func tintColor(for progressBar: ARTWebProgressBar) -> UIColor
     
     /// 进度条是否应隐藏。
     ///
     /// - Parameter progressBar: 进度条视图。
     /// - Returns: `true` 表示隐藏进度条，`false` 表示显示进度条。
-    func shouldHideProgressBar(for progressBar: ARTProgressBarView) -> Bool
+    func shouldHideProgressBar(for progressBar: ARTWebProgressBar) -> Bool
 }
 
-open class ARTProgressBarView: UIView {
+open class ARTWebProgressBar: UIView {
     
     /// 代理对象
-    private weak var delegate: ARTProgressBarViewProtocol?
+    private weak var delegate: ARTWebProgressBarProtocol?
     
     /// 进度条视图
     private var progressView: UIView!
@@ -42,7 +42,7 @@ open class ARTProgressBarView: UIView {
     
     // MARK: - Initialization
     
-    convenience init(_ delegate: ARTProgressBarViewProtocol) {
+    convenience init(_ delegate: ARTWebProgressBarProtocol) {
         self.init()
         self.delegate = delegate
         self.progressColor = delegate_tintColor()
@@ -51,7 +51,9 @@ open class ARTProgressBarView: UIView {
         setupViews()
     }
     
-    private func setupViews() {
+    open func setupViews() {
+        // 子类继承: 重写此方法以自定义视图
+        
         // 创建进度条视图
         progressView = UIView()
         progressView.backgroundColor = progressColor
@@ -71,7 +73,7 @@ open class ARTProgressBarView: UIView {
     }
     
     /// 设置进度条的进度。
-    func setProgress(_ progress: Float, animated: Bool, completion: (() -> Void)? = nil) {
+    open func setProgress(_ progress: Float, animated: Bool, completion: (() -> Void)? = nil) {
         guard !shouldHideProgressBar else { return }
         let targetWidth = self.frame.width * CGFloat(progress)
         let animationBlock = {

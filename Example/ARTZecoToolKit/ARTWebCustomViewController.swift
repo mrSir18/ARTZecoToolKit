@@ -11,7 +11,7 @@ class ARTWebCustomViewController: ARTWebViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        createButtons()
+//        createButtons()
         
         // 全屏显示
 //        showFullScreen()
@@ -22,7 +22,7 @@ class ARTWebCustomViewController: ARTWebViewController {
             "bundleName": "zecoart"
         ]
         jsMethodNames = ["testMethod", "customJumpToH5"] // 自定义 JS 方法名数组
-        loadURL("https://www.zecoart.com") // 加载网页
+        loadURL("https://www.zecoart.com/privacy-policy.html") // 加载网页
         
         /// 设置脚本消息处理代理
         didReceiveScriptMessage = { message in
@@ -69,7 +69,7 @@ class ARTWebCustomViewController: ARTWebViewController {
         reloadWebView()
     }
 
-    override func backButtonImageName(for navigationBar: ARTWebNavigationBarView) -> String? {
+    override func backButtonImageName(for navigationBar: ARTWebNavigationBar) -> String? {
         return "navigation_back_black"
     }
 }

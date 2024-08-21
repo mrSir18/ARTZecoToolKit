@@ -55,11 +55,15 @@ class ARTViewController_WebView: ARTBaseViewController {
             "name": "mrSir18",
             "bundleName": "zecoart"
         ]
-        webViewController.url = "https://www.zecoart.com"
+        webViewController.url = "https://www.zecoart.com/"
         webViewController.didReceiveScriptMessage = { message in
             print("接收到脚本消息：\(message.name) - \(message.body)")
         }
-        navigationController?.pushViewController(webViewController, animated: true)
+        webViewController.dismissCompletion = {
+            print("退出完成")
+        }
+        present(webViewController, animated: true, completion: nil)
+
     }
     
     @objc func customButtonAction () {
@@ -67,6 +71,6 @@ class ARTViewController_WebView: ARTBaseViewController {
         webViewController.dismissCompletion = {
             print("退出完成")
         }
-        present(webViewController, animated: true, completion: nil)
+        navigationController?.pushViewController(webViewController, animated: true)
     }
 }

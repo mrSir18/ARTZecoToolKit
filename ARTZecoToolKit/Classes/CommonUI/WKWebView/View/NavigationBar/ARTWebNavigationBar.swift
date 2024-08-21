@@ -1,19 +1,19 @@
 //
-//  ARTWebNavigationBarView.swift
+//  ARTWebNavigationBar.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/8/20.
 //
 
-/// `ARTWebNavigationBarViewProtocol` 协议用于提供 `ARTWebNavigationBarView` 的配置。
+/// `ARTWebNavigationBarProtocol` 协议用于提供 `ARTWebNavigationBar` 的配置。
 /// 通过实现这个协议，可以定制导航栏的背景色、返回按钮图片、标题内容等属性等。
-@objc public protocol ARTWebNavigationBarViewProtocol: AnyObject {
+@objc public protocol ARTWebNavigationBarProtocol: AnyObject {
     
     /// 点击返回按钮时调用。
     ///
     /// - Parameter navigationBar: 导航栏视图。
     /// - Returns: 无。
-    func navigationBarDidTapBackButton(_ navigationBar: ARTWebNavigationBarView)
+    func navigationBarDidTapBackButton(_ navigationBar: ARTWebNavigationBar)
     
     
     // MARK: - navigationBar Style
@@ -23,67 +23,67 @@
     /// - Parameter navigationBar: 导航栏视图。
     /// - Returns: `true` 表示隐藏导航栏，`false` 表示显示导航栏。
     /// - Note: 默认为 `false`。
-    func shouldHideNavigationBar(for navigationBar: ARTWebNavigationBarView) -> Bool
+    func shouldHideNavigationBar(for navigationBar: ARTWebNavigationBar) -> Bool
     
     /// 导航栏的背景色。
     ///
     /// - Parameter navigationBar: 导航栏视图。
     /// - Returns: 背景色。
-    func navigationBarBackgroundColor(for navigationBar: ARTWebNavigationBarView) -> UIColor
+    func navigationBarBackgroundColor(for navigationBar: ARTWebNavigationBar) -> UIColor
     
     /// 导航栏的透明度。
     ///
     /// - Parameter navigationBar: 导航栏视图。
     /// - Returns: 透明度。
-    func navigationBarAlpha(for navigationBar: ARTWebNavigationBarView) -> CGFloat
+    func navigationBarAlpha(for navigationBar: ARTWebNavigationBar) -> CGFloat
     
     /// 导航栏背景色自动透明度是否跟随滚动视图。
     ///
     /// - Parameter navigationBar: 导航栏视图。
     /// - Returns: `true` 表示跟随滚动视图，`false` 表示不跟随滚动视图。
-    func shouldFollowScrollView(for navigationBar: ARTWebNavigationBarView) -> Bool
+    func shouldFollowScrollView(for navigationBar: ARTWebNavigationBar) -> Bool
     
     /// 返回导航栏的返回按钮图片。
     ///
     /// - Parameter navigationBar: 导航栏视图。
     /// - Returns: 返回按钮图片名称。
-    func backButtonImageName(for navigationBar: ARTWebNavigationBarView) -> String?
+    func backButtonImageName(for navigationBar: ARTWebNavigationBar) -> String?
     
     /// 导航栏的返回按钮是否应隐藏。
     ///
     /// - Parameter navigationBar: 导航栏视图。
     /// - Returns: `true` 表示隐藏返回按钮，`false` 表示显示返回按钮。
-    func shouldHideBackButton(for navigationBar: ARTWebNavigationBarView) -> Bool
+    func shouldHideBackButton(for navigationBar: ARTWebNavigationBar) -> Bool
     
     /// 返回导航栏标题的内容。
     ///
     /// - Parameter navigationBar: 导航栏视图。
     /// - Returns: 标题内容。
-    func titleContent(for navigationBar: ARTWebNavigationBarView) -> String
+    func titleContent(for navigationBar: ARTWebNavigationBar) -> String
     
     /// 返回导航栏标题的字体。
     ///
     /// - Parameter navigationBar: 导航栏视图。
     /// - Returns: 标题字体。
-    func titleFont(for navigationBar: ARTWebNavigationBarView) -> UIFont
+    func titleFont(for navigationBar: ARTWebNavigationBar) -> UIFont
     
     /// 返回导航栏标题的颜色。
     ///
     /// - Parameter navigationBar: 导航栏视图。
     /// - Returns: 标题颜色。
-    func titleColor(for navigationBar: ARTWebNavigationBarView) -> UIColor
+    func titleColor(for navigationBar: ARTWebNavigationBar) -> UIColor
     
     /// 返回导航栏右侧自定义视图。
     ///
     /// - Parameter navigationBar: 导航栏视图。
     /// - Returns: 自定义视图，如果没有返回 `nil`。
-    func customRightView(for navigationBar: ARTWebNavigationBarView) -> UIView?
+    func customRightView(for navigationBar: ARTWebNavigationBar) -> UIView?
 }
 
-open class ARTWebNavigationBarView: UIView {
+open class ARTWebNavigationBar: UIView {
     
     /// 代理对象
-    private weak var delegate: ARTWebNavigationBarViewProtocol?
+    private weak var delegate: ARTWebNavigationBarProtocol?
     
     /// 导航栏视图
     private var containerBar: UIView!
@@ -97,7 +97,7 @@ open class ARTWebNavigationBarView: UIView {
     
     // MARK: - Initialization
     
-    convenience init(_ delegate: ARTWebNavigationBarViewProtocol) {
+    convenience init(_ delegate: ARTWebNavigationBarProtocol) {
         self.init()
         self.delegate = delegate
         self.isHidden = delegate_shouldHideNavigationBar() // 是否隐藏导航栏
@@ -105,7 +105,9 @@ open class ARTWebNavigationBarView: UIView {
         setupViews()
     }
     
-    private func setupViews() {
+    open func setupViews() {
+        // 子类继承: 重写此方法以自定义视图
+        
         // 创建透明容器视图
         containerBar = UIView()
         containerBar.backgroundColor = delegate_navigationBarBackgroundColor()
