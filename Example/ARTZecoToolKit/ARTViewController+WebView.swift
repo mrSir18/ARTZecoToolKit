@@ -59,11 +59,14 @@ class ARTViewController_WebView: ARTBaseViewController {
         webViewController.didReceiveScriptMessage = { message in
             print("接收到脚本消息：\(message.name) - \(message.body)")
         }
-        self.navigationController?.pushViewController(webViewController, animated: true)
+        navigationController?.pushViewController(webViewController, animated: true)
     }
     
     @objc func customButtonAction () {
         let webViewController = ARTWebCustomViewController()
-        self.navigationController?.pushViewController(webViewController, animated: true)
+        webViewController.dismissCompletion = {
+            print("退出完成")
+        }
+        present(webViewController, animated: true, completion: nil)
     }
 }

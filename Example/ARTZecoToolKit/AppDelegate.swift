@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WebKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
+        
+        /// 预加载 WKWebView
+        let webView = WKWebView()
+        webView.load(URLRequest(url: URL(string: "about:blank")!))
         
         let tabBarController   = ARTBaseTabBarController()
         let navigationController = ARTBaseNavigationController(rootViewController: tabBarController)

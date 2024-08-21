@@ -30,6 +30,9 @@ open class ARTWebViewController: UIViewController {
     /// 导航栏标题
     public var navigationBarTitle: String = "成长智库"
     
+    /// 返回按钮图片
+    public var backButtonImageName: String = "back_black_left"
+    
     /// 自定义 JS 方法名数组
     public var jsMethodNames: [String] = []
     
@@ -40,6 +43,9 @@ open class ARTWebViewController: UIViewController {
     public lazy var scriptMessageDelegate: ARTScriptMessageHandlerDelegate = {
         return ARTScriptMessageHandlerDelegate(self)
     }()
+    
+    /// 退出控制器完成回调
+    public var dismissCompletion: (() -> Void)?
     
     
     // MARK: - Initialization
@@ -94,7 +100,9 @@ open class ARTWebViewController: UIViewController {
     
     open func setupLoadwebView() {
         /// 子类重写: 此方法以自定义加载 WebView
-        if let url = url { webView.loadURL(url) }
+        if let url = url {
+            url.hasPrefix("http") ? webView.loadURL(url) : webView.loadLocalHTML(fileName: url)
+        }
     }
     
     // MARK: - Register Methods
@@ -183,7 +191,7 @@ extension ARTWebViewController {
     /// - Parameter url: URL 地址
     @objc open func loadURL(_ url: String) {
         if url.isEmpty { return }
-        webView.loadURL(url)
+        url.hasPrefix("http") ? webView.loadURL(url) : webView.loadLocalHTML(fileName: url)
     }
     
     /// 刷新 WebView
@@ -273,7 +281,11 @@ extension ARTWebViewController {
 extension ARTWebViewController: ARTWebNavigationBarViewProtocol {
     
     open func navigationBarDidTapBackButton(_ navigationBar: ARTWebNavigationBarView) { /// 点击返回按钮
-        navigationController?.popViewController(animated: true)
+        if presentingViewController != nil {
+            dismiss(animated: true, completion: dismissCompletion)
+        } else {
+            popViewControllerWithCompletion(dismissCompletion)
+        }
     }
     
     open func shouldHideNavigationBar(for navigationBar: ARTWebNavigationBarView) -> Bool { // 是否隐藏导航栏
@@ -293,7 +305,7 @@ extension ARTWebViewController: ARTWebNavigationBarViewProtocol {
     }
     
     open func backButtonImageName(for navigationBar: ARTWebNavigationBarView) -> String? { /// 返回按钮图片名称
-        return "back_black_left"
+        return backButtonImageName
     }
     
     open func shouldHideBackButton(for navigationBar: ARTWebNavigationBarView) -> Bool { /// 是否隐藏返回按钮
@@ -327,5 +339,27 @@ extension ARTWebViewController: ARTProgressBarViewProtocol {
     
     open func shouldHideProgressBar(for progressBar: ARTProgressBarView) -> Bool { /// 是否隐藏进度条
         return false
+    }
+}
+
+// MARK: - Controller Transition
+
+extension ARTWebViewController {
+    
+    /// 弹出控制器
+    ///
+    /// - Parameters:
+    ///  - completion: 完成回调
+    public func popViewControllerWithCompletion(_ completion: (() -> Void)?) {
+        if let coordinator = self.transitionCoordinator {
+            coordinator.animate(alongsideTransition: nil) { _ in
+                completion?()
+            }
+        } else {
+            navigationController?.popViewController(animated: true)
+            DispatchQueue.main.async {
+                completion?()
+            }
+        }
     }
 }
