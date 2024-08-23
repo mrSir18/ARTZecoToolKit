@@ -31,4 +31,3 @@ class ARTFadeOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         })
     }
 }
-

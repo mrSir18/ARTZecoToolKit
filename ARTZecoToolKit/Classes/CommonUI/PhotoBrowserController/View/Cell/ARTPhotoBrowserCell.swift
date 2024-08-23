@@ -101,6 +101,9 @@ class ARTPhotoBrowserCell: UICollectionViewCell {
     // MARK: - Private UITapGestureRecognizer Methods
     
     @objc private func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
+        /// 图片宽度小于等于scrollView宽度时，不进行缩放
+        if imageView.bounds.width <= scrollView.bounds.width { return }
+        
         UIView.animate(withDuration: 0.35) {
             /// 获取点击位置
             let pointInView = gesture.location(in: self.imageView)
@@ -137,14 +140,14 @@ class ARTPhotoBrowserCell: UICollectionViewCell {
     private func adjustFrameToCenter() {
         var frameToCenter = imageView.frame
         
-        // 水平居中
+        // 如果图片的宽度小于 scrollView 的宽度，则居中显示
         if frameToCenter.size.width < scrollView.bounds.size.width {
             frameToCenter.origin.x = (scrollView.bounds.size.width - frameToCenter.size.width) / 2.0
         } else {
             frameToCenter.origin.x = 0.0
         }
         
-        // 垂直居中
+        // 如果图片的高度小于 scrollView 的高度，则居中显示
         if frameToCenter.size.height < scrollView.bounds.size.height {
             frameToCenter.origin.y = (scrollView.bounds.size.height - frameToCenter.size.height) / 2.0
         } else {

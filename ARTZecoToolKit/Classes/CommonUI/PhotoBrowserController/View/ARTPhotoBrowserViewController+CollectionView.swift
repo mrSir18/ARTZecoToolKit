@@ -40,4 +40,3 @@ extension ARTPhotoBrowserViewController: UICollectionViewDelegate, UICollectionV
         return collectionView.frame.size
     }
 }
-
