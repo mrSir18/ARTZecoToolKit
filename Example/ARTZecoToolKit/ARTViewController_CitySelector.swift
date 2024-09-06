@@ -11,10 +11,10 @@ import ARTZecoToolKit
 class ARTViewController_CitySelector: ARTBaseViewController {
 
     /// 热门城市数
-    private var hotCities: [ARTCitySelectorEntity] = []
+    private var hotCities: [ARTCityPickerEntity] = []
     
     /// 城市数据源
-    private var allCities: [ARTCitySelectorEntity] = []
+    private var allCities: [ARTCityPickerEntity] = []
     
     /// 城市名称
     var cityName: String = ""
@@ -50,7 +50,7 @@ class ARTViewController_CitySelector: ARTBaseViewController {
     
     @objc private func citySelectorButtonAction () {
         ARTCityStyleConfiguration.default().closeImage(UIImage(named: "black_close"))
-        let citySelectorView = ARTCitySelectorView(self)
+        let citySelectorView = ARTCityPickerView(self)
         citySelectorView.showCitySelector(cityName, hotCities, allCities)
     }
     
@@ -60,7 +60,7 @@ class ARTViewController_CitySelector: ARTBaseViewController {
             guard let hotFilePath = Bundle.main.path(forResource: "hot_area_format_user", ofType: "json"),
                   let hotJsonData = try? Data(contentsOf: URL(fileURLWithPath: hotFilePath)),
                   let hotJsonString = String(data: hotJsonData, encoding: .utf8),
-                  let hotCityArray = [ARTCitySelectorEntity].deserialize(from: hotJsonString) else {
+                  let hotCityArray = [ARTCityPickerEntity].deserialize(from: hotJsonString) else {
                 DispatchQueue.main.async {
                     print("解析失败")
                 }
@@ -70,7 +70,7 @@ class ARTViewController_CitySelector: ARTBaseViewController {
             guard let filePath = Bundle.main.path(forResource: "area_format_user", ofType: "json"),
                   let jsonData = try? Data(contentsOf: URL(fileURLWithPath: filePath)),
                   let jsonString = String(data: jsonData, encoding: .utf8),
-                  let allCityArray = [ARTCitySelectorEntity].deserialize(from: jsonString) else {
+                  let allCityArray = [ARTCityPickerEntity].deserialize(from: jsonString) else {
                 DispatchQueue.main.async {
                     print("解析失败")
                 }
@@ -86,11 +86,11 @@ class ARTViewController_CitySelector: ARTBaseViewController {
     }
 }
 
-// MARK: - ARTCitySelectorViewProtocol
+// MARK: - ARTCityPickerViewProtocol
 
-extension ARTViewController_CitySelector: ARTCitySelectorViewProtocol {
+extension ARTViewController_CitySelector: ARTCityPickerViewProtocol {
 
-    public func citySelectorView(_ citySelectorView: ARTCitySelectorView, didSelectItemAt cityName: String) {
+    public func citySelectorView(_ citySelectorView: ARTCityPickerView, didSelectItemAt cityName: String) {
         self.cityName = cityName
         citySelectorButton.setTitle(self.cityName, for: .normal)
     }

@@ -1,12 +1,12 @@
 //
-//  ARTCitySelectorHotCell.swift
+//  ARTCityPickerHotCell.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/5/17.
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-class ARTCitySelectorHotCell: UICollectionViewCell {
+class ARTCityPickerHotCell: UICollectionViewCell {
     
     /// 容器视图
     public var containerView: ARTCustomView!
@@ -18,7 +18,7 @@ class ARTCitySelectorHotCell: UICollectionViewCell {
     private var locationImageView: UIImageView!
     
     /// 城市数据
-    public var citySelectorEntity: ARTCitySelectorEntity? {
+    public var citySelectorEntity: ARTCityPickerEntity? {
         didSet {
             guard let citySelectorEntity = citySelectorEntity else { return }
             locationLabel.text  = citySelectorEntity.ext_name

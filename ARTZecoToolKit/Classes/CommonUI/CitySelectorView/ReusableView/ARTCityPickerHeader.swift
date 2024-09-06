@@ -1,31 +1,31 @@
 //
-//  ARTCitySelectorHotHeader.swift
+//  ARTCityPickerHotHeader.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/5/17.
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-@objc protocol ARTCitySelectorHeaderProtocol: AnyObject {
+@objc protocol ARTCityPickerHeaderProtocol: AnyObject {
     
     /// 视图的委托方法，点击关闭按钮时，收起城市选择器.
     ///
     /// - Parameters:
     ///   - headerView:  视图管理对象.
-    @objc optional func didTapCloseCitySelector(_ headerView: ARTCitySelectorHeader)
+    @objc optional func didTapCloseCitySelector(_ headerView: ARTCityPickerHeader)
     
     /// 视图的委托方法，点击城市标题.
     ///
     /// - Parameters:
     ///   - headerView:  视图管理对象.
     ///   - headerView:  视图管理对象.
-    @objc optional func citySelectorElementKindHeader(_ headerView: ARTCitySelectorHeader, didSelectItemAt index: Int)
+    @objc optional func citySelectorElementKindHeader(_ headerView: ARTCityPickerHeader, didSelectItemAt index: Int)
 }
 
-class ARTCitySelectorHeader: UIView {
+class ARTCityPickerHeader: UIView {
     
-    /// 遵循 ARTCitySelectorHeaderProtocol 协议的弱引用委托对象.
-    weak var delegate: ARTCitySelectorHeaderProtocol?
+    /// 遵循 ARTCityPickerHeaderProtocol 协议的弱引用委托对象.
+    weak var delegate: ARTCityPickerHeaderProtocol?
     
     /// 标题滚动视图.
     private var titleScrollView: UIScrollView!
@@ -42,7 +42,7 @@ class ARTCitySelectorHeader: UIView {
     
     // MARK: - Initialization
     
-    convenience init(_ delegate: ARTCitySelectorHeaderProtocol) {
+    convenience init(_ delegate: ARTCityPickerHeaderProtocol) {
         self.init()
         self.backgroundColor = .white
         self.delegate        = delegate
@@ -231,7 +231,7 @@ class ARTCitySelectorHeader: UIView {
 
 // MARK: - Public Method
 
-extension ARTCitySelectorHeader {
+extension ARTCityPickerHeader {
     
     /// 更新城市选择器的标题
     public func updateCitySelectorHeader(_ cityNames: [String]) {

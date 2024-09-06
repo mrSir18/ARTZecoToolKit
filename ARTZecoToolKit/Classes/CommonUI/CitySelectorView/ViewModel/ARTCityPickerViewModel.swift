@@ -1,5 +1,5 @@
 //
-//  ARTCitySelectorViewModel.swift
+//  ARTCityPickerViewModel.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/5/17.
@@ -7,7 +7,7 @@
 //
 
 /// 城市选择器模式.
-enum ARTCitySelectorType: Int {
+enum ARTCityPickerType: Int {
     /// 默认值.
     case none       = 0
     /// 热门城市.
@@ -16,11 +16,11 @@ enum ARTCitySelectorType: Int {
     case allCities  = 2
 }
 
-extension ARTCitySelectorViewModel {
+extension ARTCityPickerViewModel {
     
     /// 配置模型.
     struct LayoutConfig {
-        let sectionType: ARTCitySelectorType
+        let sectionType: ARTCityPickerType
         let columnCount: Int
         let itemHeight: CGFloat
         let insets: UIEdgeInsets
@@ -31,15 +31,15 @@ extension ARTCitySelectorViewModel {
     }
 }
 
-struct ARTCitySelectorViewModel {
+struct ARTCityPickerViewModel {
 
     /// 热门城市数组.
-    var hotCities: [ARTCitySelectorEntity] = []
+    var hotCities: [ARTCityPickerEntity] = []
     var hotLastSelectedIndex: IndexPath?
     
     /// 所有城市数组.
-    var originaAllCities: [[Int: [ARTCitySelectorEntity]]] = [] 
-    var allCities: [ARTCitySelectorEntity] = []
+    var originaAllCities: [[Int: [ARTCityPickerEntity]]] = [] 
+    var allCities: [ARTCityPickerEntity] = []
     var cityLastSelectedIndex: IndexPath?
     
     /// collectionView配置数组.
@@ -49,7 +49,7 @@ struct ARTCitySelectorViewModel {
     var isShouldRollback: Bool = false
     
     /// 记录最后一次点击的所有城市列表
-    var lastAllCities: [ARTCitySelectorEntity] = []
+    var lastAllCities: [ARTCityPickerEntity] = []
     
     ///  点击标题按钮的索引
     var clickTitleCitiesIndex: Int!
@@ -61,8 +61,8 @@ struct ARTCitySelectorViewModel {
     ///  - hotCities: 热门城市数组.
     ///  - allCities: 所有城市数组.
     mutating func receiveData(_ cityName: String,
-                              _ hotCityArray: [ARTCitySelectorEntity],
-                              _ allCityArray: [ARTCitySelectorEntity],
+                              _ hotCityArray: [ARTCityPickerEntity],
+                              _ allCityArray: [ARTCityPickerEntity],
                               swapCityNames: @escaping ([String]) -> Void) {
         allCities = private_sortCityArray(allCityArray)
         private_clearDuplicatePrefixes(in: &allCities)
@@ -147,7 +147,7 @@ struct ARTCitySelectorViewModel {
     /// - Parameters:
     ///  - section: 索引.
     /// - Returns: 城市类型.
-    public func cityType(for section: Int) -> ARTCitySelectorType {
+    public func cityType(for section: Int) -> ARTCityPickerType {
         return layoutConfigs[section].sectionType
     }
     
@@ -160,9 +160,9 @@ struct ARTCitySelectorViewModel {
     ///  - completion: 完成回调.
     ///  - Returns: 城市数组，完整城市名..
     mutating func addToOriginalAllCities(_ indexPath: IndexPath,
-                                         _ sectionType: ARTCitySelectorType,
+                                         _ sectionType: ARTCityPickerType,
                                          cityName: @escaping ([String]) -> Void,
-                                         completion: @escaping ([[Int: [ARTCitySelectorEntity]]], _ fullCityName: String) -> Void) {
+                                         completion: @escaping ([[Int: [ARTCityPickerEntity]]], _ fullCityName: String) -> Void) {
         guard indexPath.row < allCities.count else {
             print("indexPath 越界")
             return
@@ -182,7 +182,7 @@ struct ARTCitySelectorViewModel {
         }
 
         var clickIndexPath = indexPath
-        var hotCityEntity: ARTCitySelectorEntity!
+        var hotCityEntity: ARTCityPickerEntity!
         if sectionType == .hotCities {
             hotLastSelectedIndex = clickIndexPath
             hotCityEntity = hotCities[indexPath.row]
@@ -304,7 +304,7 @@ struct ARTCitySelectorViewModel {
 
 // MARK: - Private Method.
 
-extension ARTCitySelectorViewModel {
+extension ARTCityPickerViewModel {
     
     /// 配置布局.
     ///
@@ -320,8 +320,8 @@ extension ARTCitySelectorViewModel {
     ///  - footerSize: footer大小.
     /// - Note: 如果cities为空, 则不会添加配置.
     private mutating func private_configureLayout(for
-                                                  cities: [ARTCitySelectorEntity],
-                                                  sectionType: ARTCitySelectorType,
+                                                  cities: [ARTCityPickerEntity],
+                                                  sectionType: ARTCityPickerType,
                                                   columnCount: Int,
                                                   itemHeight: CGFloat,
                                                   insets: UIEdgeInsets,
@@ -342,10 +342,10 @@ extension ARTCitySelectorViewModel {
     }
     
     
-    private func private_findIndexAndUpdateAllCities(in allCities: inout [ARTCitySelectorEntity],
+    private func private_findIndexAndUpdateAllCities(in allCities: inout [ARTCityPickerEntity],
                                                      withButtonTitle buttonTitle: [String],
                                                      andIndex index: Int,
-                                                     into originaAllCities: inout [[Int: [ARTCitySelectorEntity]]]) -> IndexPath? {
+                                                     into originaAllCities: inout [[Int: [ARTCityPickerEntity]]]) -> IndexPath? {
         guard let indexInAllCities = allCities.firstIndex(where: { $0.ext_name == buttonTitle[index] }) else {
             return nil
         }
@@ -366,7 +366,7 @@ extension ARTCitySelectorViewModel {
     /// - Note: 递归排序.
     /// - Note: 递归排序的逻辑为: 先对当前数组进行排序, 然后对子数组进行排序.
     /// - Note: 递归排序的终止条件为: 子数组为空.
-    private mutating func private_sortCityArray(_ cityArray: [ARTCitySelectorEntity]) -> [ARTCitySelectorEntity] {
+    private mutating func private_sortCityArray(_ cityArray: [ARTCityPickerEntity]) -> [ARTCityPickerEntity] {
         return cityArray.sorted { (city1, city2) -> Bool in
             return city1.pinyin < city2.pinyin
         }.map { city in
@@ -381,7 +381,7 @@ extension ARTCitySelectorViewModel {
     /// - Returns: 去重后的城市数组.
     /// - Note: 去重逻辑为: 如果前缀已经存在, 则将前缀置为空.
     /// - Note: 前缀为空的城市将会被分到独立的section中.
-    private func private_clearDuplicatePrefixes(in cities: inout [ARTCitySelectorEntity]) {
+    private func private_clearDuplicatePrefixes(in cities: inout [ARTCityPickerEntity]) {
         var seenPrefixes: Set<String> = Set()
         
         for city in cities {

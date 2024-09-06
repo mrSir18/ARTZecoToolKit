@@ -1,5 +1,5 @@
 //
-//  ARTCitySelectorEntity.swift
+//  ARTCityPickerEntity.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/5/17.
@@ -8,14 +8,14 @@
 
 import SmartCodable
 
-public class ARTCitySelectorEntity: SmartCodable {
+public class ARTCityPickerEntity: SmartCodable {
     
     var id: String                      = "" /// Id
     var pid: Int                        = 0  /// 父级Id
     var pinyin: String                  = "" /// 拼音
     var pinyin_prefix: String           = "" /// 拼音首字母
     var ext_name: String                = "" /// 城市名字
-    var childs: [ARTCitySelectorEntity] = []
+    var childs: [ARTCityPickerEntity] = []
 
     required public init() {
         
@@ -41,10 +41,10 @@ public class ARTCitySelectorEntity: SmartCodable {
 
 // MARK: 热门城市数
 
-public class ARTCitySelectorHotEntity: SmartCodable {
+public class ARTCityPickerHotEntity: SmartCodable {
 
-    var provinceInfo: ARTCitySelectorEntity = ARTCitySelectorEntity() /// 省份信息
-    var cityInfo: ARTCitySelectorEntity     = ARTCitySelectorEntity() /// 城市信息
+    var provinceInfo: ARTCityPickerEntity = ARTCityPickerEntity() /// 省份信息
+    var cityInfo: ARTCityPickerEntity     = ARTCityPickerEntity() /// 城市信息
 
     required public init() {
         

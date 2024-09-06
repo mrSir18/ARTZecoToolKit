@@ -1,5 +1,5 @@
 //
-//  ARTCitySelectorView.swift
+//  ARTCityPickerView.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/5/17.
@@ -8,31 +8,31 @@
 
 import SnapKit
 
-@objc public protocol ARTCitySelectorViewProtocol: AnyObject {
+@objc public protocol ARTCityPickerViewProtocol: AnyObject {
     
     /// 城市选择器视图中选定项目时调用.
     ///
     /// - Parameters:
     ///   - citySelectorView: 城市选择器视图。
     ///   - cityName: 选定的城市名称
-    @objc optional func citySelectorView(_ citySelectorView: ARTCitySelectorView, didSelectItemAt cityName: String)
+    @objc optional func citySelectorView(_ citySelectorView: ARTCityPickerView, didSelectItemAt cityName: String)
 }
 
-public class ARTCitySelectorView: UIView {
+public class ARTCityPickerView: UIView {
 
-    /// 遵循 ARTCitySelectorViewProtocol 协议的弱引用委托对象.
-    weak var delegate: ARTCitySelectorViewProtocol?
+    /// 遵循 ARTCityPickerViewProtocol 协议的弱引用委托对象.
+    weak var delegate: ARTCityPickerViewProtocol?
     
     /// 数据源.处理
-    var viewModel: ARTCitySelectorViewModel = {
-        return ARTCitySelectorViewModel()
+    var viewModel: ARTCityPickerViewModel = {
+        return ARTCityPickerViewModel()
     }()
     
     /// 容器视图.
     private var containerView: UIView!
     
     /// 头部视图
-    var headerView: ARTCitySelectorHeader!
+    var headerView: ARTCityPickerHeader!
     
     /// 列表视图
     var collectionView: UICollectionView!
@@ -40,7 +40,7 @@ public class ARTCitySelectorView: UIView {
     
     // MARK: - Initialization
     
-    public convenience init(_ delegate: ARTCitySelectorViewProtocol) {
+    public convenience init(_ delegate: ARTCityPickerViewProtocol) {
         self.init()
         self.backgroundColor = .clear
         self.delegate        = delegate
@@ -72,13 +72,13 @@ public class ARTCitySelectorView: UIView {
         }
         
         // 创建头部视图
-        headerView = ARTCitySelectorHeader(self)
+        headerView = ARTCityPickerHeader(self)
         containerView.addSubview(headerView)
         headerView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
             make.height.equalTo(ARTAdaptedValue(90.0))
         }
-//        let headerView = ARTCitySelectorHeader(self)
+//        let headerView = ARTCityPickerHeader(self)
 //        containerView.addSubview(headerView)
 //        headerView.snp.makeConstraints { make in
 //            make.left.top.right.equalTo(0.0)
@@ -95,9 +95,9 @@ public class ARTCitySelectorView: UIView {
         collectionView.delegate                       = self
         collectionView.dataSource                     = self
         collectionView.contentInset                   = UIEdgeInsets(top: 0.0, left: 0.0, bottom: art_safeAreaBottom(), right: 0.0)
-        collectionView.registerCell(ARTCitySelectorHotCell.self)
-        collectionView.registerCell(ARTCitySelectorCell.self)
-        collectionView.registerSectionHeader(ARTCitySelectorHotHeader.self)
+        collectionView.registerCell(ARTCityPickerHotCell.self)
+        collectionView.registerCell(ARTCityPickerCell.self)
+        collectionView.registerSectionHeader(ARTCityPickerHotHeader.self)
         collectionView.registerSectionHeader(ARTSectionHeaderView.self)
         collectionView.registerSectionFooter(ARTSectionFooterView.self)
         containerView.addSubview(collectionView)
@@ -116,7 +116,7 @@ public class ARTCitySelectorView: UIView {
 
 // MARK: - Public Method
 
-extension ARTCitySelectorView {
+extension ARTCityPickerView {
     
     /// 创建并显示城市选择器.
     ///
@@ -124,8 +124,8 @@ extension ARTCitySelectorView {
     ///  - cityArray: 数据源数 组.
     ///  - hotArray: 热门城市数组.
     public func showCitySelector(_ cityName: String, 
-                                 _ hotCities: [ARTCitySelectorEntity],
-                                 _ allCities: [ARTCitySelectorEntity]) {
+                                 _ hotCities: [ARTCityPickerEntity],
+                                 _ allCities: [ARTCityPickerEntity]) {
         viewModel.receiveData(cityName, hotCities, allCities) { cityNames in
             self.headerView.updateCitySelectorHeader(cityNames)
         }
@@ -154,15 +154,15 @@ extension ARTCitySelectorView {
     }
 }
 
-// MARK: - ARTCitySelectorHeaderProtocol
+// MARK: - ARTCityPickerHeaderProtocol
 
-extension ARTCitySelectorView: ARTCitySelectorHeaderProtocol {
+extension ARTCityPickerView: ARTCityPickerHeaderProtocol {
     
-    func didTapCloseCitySelector(_ headerView: ARTCitySelectorHeader) {
+    func didTapCloseCitySelector(_ headerView: ARTCityPickerHeader) {
         removeCitySelector()
     }
     
-    func citySelectorElementKindHeader(_ headerView: ARTCitySelectorHeader, didSelectItemAt index: Int) {
+    func citySelectorElementKindHeader(_ headerView: ARTCityPickerHeader, didSelectItemAt index: Int) {
         viewModel.updateCitiesList(index: index)
         collectionView.reloadData()
     }

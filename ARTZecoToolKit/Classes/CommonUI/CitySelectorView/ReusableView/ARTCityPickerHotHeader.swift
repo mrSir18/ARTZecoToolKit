@@ -1,12 +1,12 @@
 //
-//  ARTCitySelectorHotHeader.swift
+//  ARTCityPickerHotHeader.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/5/17.
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
-class ARTCitySelectorHotHeader: ARTSectionHeaderView {
+class ARTCityPickerHotHeader: ARTSectionHeaderView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)

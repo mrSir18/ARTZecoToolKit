@@ -1,5 +1,5 @@
 //
-//  ARTCitySelectorView+CollectionView.swift
+//  ARTCityPickerView+CollectionView.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/5/17.
@@ -8,7 +8,7 @@
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
-extension ARTCitySelectorView: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ARTCityPickerView: UICollectionViewDelegate, UICollectionViewDataSource {
     
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return self.viewModel.layoutConfigs.count
@@ -30,13 +30,13 @@ extension ARTCitySelectorView: UICollectionViewDelegate, UICollectionViewDataSou
         let sectionType = viewModel.cityType(for: indexPath.section)
         switch sectionType {
         case .hotCities:
-            let cell = collectionView.dequeueCell(for: indexPath) as ARTCitySelectorHotCell
+            let cell = collectionView.dequeueCell(for: indexPath) as ARTCityPickerHotCell
             cell.isSelectedCity     = indexPath == self.viewModel.hotLastSelectedIndex
             cell.citySelectorEntity = self.viewModel.hotCities[indexPath.row]
             return cell
             
         case .allCities:
-            let cell = collectionView.dequeueCell(for: indexPath) as ARTCitySelectorCell
+            let cell = collectionView.dequeueCell(for: indexPath) as ARTCityPickerCell
             cell.isSelectedCity     = indexPath == self.viewModel.cityLastSelectedIndex
             cell.citySelectorEntity = self.viewModel.allCities[indexPath.row]
             return cell
@@ -49,7 +49,7 @@ extension ARTCitySelectorView: UICollectionViewDelegate, UICollectionViewDataSou
         if kind == UICollectionView.elementKindSectionHeader {
             let sectionType = viewModel.cityType(for: indexPath.section)
             if sectionType == .hotCities {
-                let reusableView = ARTCitySelectorHotHeader.dequeueHeader(from: collectionView, for: indexPath)
+                let reusableView = ARTCityPickerHotHeader.dequeueHeader(from: collectionView, for: indexPath)
                 return reusableView
             }
             let reusableView = ARTSectionHeaderView.dequeueHeader(from: collectionView, for: indexPath)
@@ -96,7 +96,7 @@ extension ARTCitySelectorView: UICollectionViewDelegate, UICollectionViewDataSou
 
 // MARK: - ARTCollectionViewDelegateFlowLayout
 
-extension ARTCitySelectorView: ARTCollectionViewDelegateFlowLayout {
+extension ARTCityPickerView: ARTCollectionViewDelegateFlowLayout {
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, columnForSectionAt section: Int) -> Int {
         return self.viewModel.layoutConfigs[section].columnCount
