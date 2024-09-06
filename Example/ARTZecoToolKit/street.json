@@ -1,0 +1,92 @@
+{
+    "code": 0,
+    "msg": "ok",
+    "data": {
+        "streetList": [{
+            "streetId": "110101001",
+            "streetName": "东华门街道",
+            "streetPinYin": "dong hua men",
+            "streetPrefix": "d"
+        }, {
+            "streetId": "110101002",
+            "streetName": "景山街道",
+            "streetPinYin": "jing shan",
+            "streetPrefix": "j"
+        }, {
+            "streetId": "110101003",
+            "streetName": "交道口街道",
+            "streetPinYin": "jiao dao kou",
+            "streetPrefix": "j"
+        }, {
+            "streetId": "110101004",
+            "streetName": "安定门街道",
+            "streetPinYin": "an ding men",
+            "streetPrefix": "a"
+        }, {
+            "streetId": "110101005",
+            "streetName": "北新桥街道",
+            "streetPinYin": "bei xin qiao",
+            "streetPrefix": "b"
+        }, {
+            "streetId": "110101006",
+            "streetName": "东四街道",
+            "streetPinYin": "dong si",
+            "streetPrefix": "d"
+        }, {
+            "streetId": "110101007",
+            "streetName": "朝阳门街道",
+            "streetPinYin": "zhao yang men",
+            "streetPrefix": "z"
+        }, {
+            "streetId": "110101008",
+            "streetName": "建国门街道",
+            "streetPinYin": "jian guo men",
+            "streetPrefix": "j"
+        }, {
+            "streetId": "110101009",
+            "streetName": "东直门街道",
+            "streetPinYin": "dong zhi men",
+            "streetPrefix": "d"
+        }, {
+            "streetId": "110101010",
+            "streetName": "和平里街道",
+            "streetPinYin": "he ping li",
+            "streetPrefix": "h"
+        }, {
+            "streetId": "110101011",
+            "streetName": "前门街道",
+            "streetPinYin": "qian men",
+            "streetPrefix": "q"
+        }, {
+            "streetId": "110101012",
+            "streetName": "崇文门外街道",
+            "streetPinYin": "chong wen men wai",
+            "streetPrefix": "c"
+        }, {
+            "streetId": "110101013",
+            "streetName": "东花市街道",
+            "streetPinYin": "dong hua shi",
+            "streetPrefix": "d"
+        }, {
+            "streetId": "110101014",
+            "streetName": "龙潭街道",
+            "streetPinYin": "long tan",
+            "streetPrefix": "l"
+        }, {
+            "streetId": "110101015",
+            "streetName": "体育馆路街道",
+            "streetPinYin": "ti yu guan lu",
+            "streetPrefix": "t"
+        }, {
+            "streetId": "110101016",
+            "streetName": "天坛街道",
+            "streetPinYin": "tian tan",
+            "streetPrefix": "t"
+        }, {
+            "streetId": "110101017",
+            "streetName": "永定门外街道",
+            "streetPinYin": "yong ding men wai",
+            "streetPrefix": "y"
+        }]
+    }
+}

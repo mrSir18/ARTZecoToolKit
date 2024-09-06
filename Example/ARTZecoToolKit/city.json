@@ -1,0 +1,12 @@
+{
+    "code": 0,
+    "msg": "ok",
+    "data": {
+        "cityList": [{
+            "cityId": "1101",
+            "cityName": "北京市",
+            "cityPinYin": "bei jing",
+            "cityPrefix": "b"
+        }]
+    }
+}

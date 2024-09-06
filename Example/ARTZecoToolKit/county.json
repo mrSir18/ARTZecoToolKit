@@ -1,0 +1,87 @@
+{
+    "code": 0,
+    "msg": "ok",
+    "data": {
+        "countyList": [{
+            "countryId": "110101",
+            "countryName": "东城区",
+            "countryPinYin": "dong cheng",
+            "countryPrefix": "d"
+        }, {
+            "countryId": "110102",
+            "countryName": "西城区",
+            "countryPinYin": "xi cheng",
+            "countryPrefix": "x"
+        }, {
+            "countryId": "110105",
+            "countryName": "朝阳区",
+            "countryPinYin": "chao yang",
+            "countryPrefix": "c"
+        }, {
+            "countryId": "110106",
+            "countryName": "丰台区",
+            "countryPinYin": "feng tai",
+            "countryPrefix": "f"
+        }, {
+            "countryId": "110107",
+            "countryName": "石景山区",
+            "countryPinYin": "shi jing shan",
+            "countryPrefix": "s"
+        }, {
+            "countryId": "110108",
+            "countryName": "海淀区",
+            "countryPinYin": "hai dian",
+            "countryPrefix": "h"
+        }, {
+            "countryId": "110109",
+            "countryName": "门头沟区",
+            "countryPinYin": "men tou gou",
+            "countryPrefix": "m"
+        }, {
+            "countryId": "110111",
+            "countryName": "房山区",
+            "countryPinYin": "fang shan",
+            "countryPrefix": "f"
+        }, {
+            "countryId": "110112",
+            "countryName": "通州区",
+            "countryPinYin": "tong zhou",
+            "countryPrefix": "t"
+        }, {
+            "countryId": "110113",
+            "countryName": "顺义区",
+            "countryPinYin": "shun yi",
+            "countryPrefix": "s"
+        }, {
+            "countryId": "110114",
+            "countryName": "昌平区",
+            "countryPinYin": "chang ping",
+            "countryPrefix": "c"
+        }, {
+            "countryId": "110115",
+            "countryName": "大兴区",
+            "countryPinYin": "da xing",
+            "countryPrefix": "d"
+        }, {
+            "countryId": "110116",
+            "countryName": "怀柔区",
+            "countryPinYin": "huai rou",
+            "countryPrefix": "h"
+        }, {
+            "countryId": "110117",
+            "countryName": "平谷区",
+            "countryPinYin": "ping gu",
+            "countryPrefix": "p"
+        }, {
+            "countryId": "110118",
+            "countryName": "密云区",
+            "countryPinYin": "mi yun",
+            "countryPrefix": "m"
+        }, {
+            "countryId": "110119",
+            "countryName": "延庆区",
+            "countryPinYin": "yan qing",
+            "countryPrefix": "y"
+        }]
+    }
+}

@@ -75,8 +75,8 @@ public class ARTCitySelectorView: UIView {
         headerView = ARTCitySelectorHeader(self)
         containerView.addSubview(headerView)
         headerView.snp.makeConstraints { make in
-            make.left.top.right.equalTo(0.0)
-            make.height.equalTo(90.0)
+            make.left.top.right.equalToSuperview()
+            make.height.equalTo(ARTAdaptedValue(90.0))
         }
 //        let headerView = ARTCitySelectorHeader(self)
 //        containerView.addSubview(headerView)

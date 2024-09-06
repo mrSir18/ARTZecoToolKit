@@ -9,7 +9,7 @@
 class ARTCitySelectorHotCell: UICollectionViewCell {
     
     /// 容器视图
-     var containerView: UIView!
+    public var containerView: ARTCustomView!
     
     /// 位置标签
     private var locationLabel: UILabel!
@@ -28,10 +28,10 @@ class ARTCitySelectorHotCell: UICollectionViewCell {
     /// 是否选中城市
     lazy var isSelectedCity: Bool = false {
         didSet {
-            containerView.backgroundColor   = isSelectedCity ? ARTCityStyleConfiguration.default().themeColor.withAlphaComponent(0.15) : UIColor.art_color(withHEXValue: 0xf8f8f8)
-            containerView.layer.borderWidth = isSelectedCity ? 1.0 : 0.0
-            containerView.layer.borderColor = isSelectedCity ? ARTCityStyleConfiguration.default().themeColor.withAlphaComponent(0.6).cgColor : UIColor.clear.cgColor
-            locationLabel.textColor         = isSelectedCity ? ARTCityStyleConfiguration.default().themeColor : .art_color(withHEXValue: 0x8a8a8a)
+            containerView.customBackgroundColor = isSelectedCity ? ARTCityStyleConfiguration.default().themeColor.withAlphaComponent(0.15) : UIColor.art_color(withHEXValue: 0xf8f8f8)
+            containerView.borderWidth   = isSelectedCity ? 0.5 : 0.0
+            containerView.borderColor   = isSelectedCity ? ARTCityStyleConfiguration.default().themeColor.withAlphaComponent(0.6) : UIColor.clear
+            locationLabel.textColor     = isSelectedCity ? ARTCityStyleConfiguration.default().themeColor : .art_color(withHEXValue: 0x999999)
         }
     }
     
@@ -50,10 +50,9 @@ class ARTCitySelectorHotCell: UICollectionViewCell {
     private func setupViews() {
         
         // 创建容器视图
-        containerView = UIView()
-        containerView.backgroundColor    = .art_color(withHEXValue: 0xf8f8f8)
-        containerView.layer.cornerRadius = 2.0
-        containerView.layer.masksToBounds = true
+        containerView = ARTCustomView()
+        containerView.customBackgroundColor = .art_color(withHEXValue: 0xf8f8f8)
+        containerView.cornerRadius          = ARTAdaptedValue(6.0)
         contentView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -61,8 +60,8 @@ class ARTCitySelectorHotCell: UICollectionViewCell {
         
         // 创建标题标签视图
         locationLabel = UILabel()
-        locationLabel.textColor       = .art_color(withHEXValue: 0x8a8a8a)
-        locationLabel.font            = .art_regular(12.0)
+        locationLabel.textColor       = .art_color(withHEXValue: 0x999999)
+        locationLabel.font            = .art_regular(ARTAdaptedValue(10.0))
         locationLabel.textAlignment   = .center
         containerView.addSubview(locationLabel)
         locationLabel.snp.makeConstraints { make in

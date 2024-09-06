@@ -49,6 +49,7 @@ class ARTViewController_CitySelector: ARTBaseViewController {
     }
     
     @objc private func citySelectorButtonAction () {
+        ARTCityStyleConfiguration.default().closeImage(UIImage(named: "black_close"))
         let citySelectorView = ARTCitySelectorView(self)
         citySelectorView.showCitySelector(cityName, hotCities, allCities)
     }

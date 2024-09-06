@@ -56,32 +56,32 @@ class ARTCitySelectorHeader: UIView {
         addSubview(headerContainerView)
         headerContainerView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
-            make.height.equalTo(60.0)
+            make.height.equalTo(ARTAdaptedValue(62.0))
         }
         
         let titleLabel = UILabel()
         titleLabel.text             = "所在地区"
         titleLabel.textAlignment    = .left
-        titleLabel.font             = .art_medium(18.0)
+        titleLabel.font             = .art_medium(ARTAdaptedValue(16.0))
         titleLabel.textColor        = .art_color(withHEXValue: 0x000000)
         headerContainerView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.left.equalTo(18.0)
+            make.left.equalTo(ARTAdaptedValue(12.0))
             make.centerY.equalToSuperview()
         }
 
-        let file = art_resourcePath(file: "city_selector_close.png", object: self)
+        let image = ARTCityStyleConfiguration.default().closeImage
         let closeButton = ARTAlignmentButton()
         closeButton.imageAlignment       = .right
-        closeButton.titleAlignment       = .right
-        closeButton.contentInset         = 18.0
-        closeButton.imageSize            = CGSize(width: 28.0, height: 28.0)
-        closeButton.setImage(UIImage(contentsOfFile: file), for: .normal)
+        closeButton.titleAlignment       = .left
+        closeButton.contentInset         = ARTAdaptedValue(12.0)
+        closeButton.imageSize            = ARTAdaptedSize(width: 18.0, height: 18.0)
+        closeButton.setImage(image, for: .normal)
         closeButton.addTarget(self, action: #selector(closeButtonTapped(sender:)), for: .touchUpInside)
         headerContainerView.addSubview(closeButton)
         closeButton.snp.makeConstraints { make in
             make.top.right.bottom.equalToSuperview()
-            make.width.equalTo(80.0)
+            make.width.equalTo(ARTAdaptedValue(65.0))
         }
         
 //        // 创建定位容器视图
@@ -141,7 +141,7 @@ class ARTCitySelectorHeader: UIView {
         titleScrollView.isPagingEnabled  = true
         titleScrollView.showsHorizontalScrollIndicator   = false
         titleScrollView.showsVerticalScrollIndicator     = false
-        titleScrollView.contentInset    = UIEdgeInsets(top: 0.0, left: 18.0, bottom: 0.0, right: 18.0)
+        titleScrollView.contentInset = UIEdgeInsets(top: 0.0, left: ARTAdaptedValue(12.0), bottom: 0.0, right: ARTAdaptedValue(12.0))
         addSubview(titleScrollView)
         titleScrollView.snp.makeConstraints { make in
             make.left.bottom.right.equalToSuperview()
@@ -149,11 +149,11 @@ class ARTCitySelectorHeader: UIView {
         }
         
         let selectorCityLabel = UILabel()
-        selectorCityLabel.tag           = 1000
-        selectorCityLabel.text          = "请选择"
-        selectorCityLabel.textAlignment = .left
-        selectorCityLabel.font          = .art_regular(14.0)
-        selectorCityLabel.textColor     = ARTCityStyleConfiguration.default().themeColor
+        selectorCityLabel.tag               = 1000
+        selectorCityLabel.text              = "请选择"
+        selectorCityLabel.textAlignment     = .left
+        selectorCityLabel.font              = .art_light(ARTAdaptedValue(14.0))
+        selectorCityLabel.textColor         = ARTCityStyleConfiguration.default().themeColor
         titleScrollView.addSubview(selectorCityLabel)
         selectorCityLabel.snp.makeConstraints { make in
             make.left.equalToSuperview()
@@ -162,19 +162,22 @@ class ARTCitySelectorHeader: UIView {
         
         // 创建分割线
         separatorLinee = UIView()
-        separatorLinee.backgroundColor = .art_color(withHEXValue: 0xe1e1e1)
+        separatorLinee.backgroundColor = .art_color(withHEXValue: 0xD8D8D8)
         addSubview(separatorLinee)
         separatorLinee.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
-            make.height.equalTo(1.0)
+            make.size.equalTo(CGSize(width: UIScreen.art_currentScreenWidth-ARTAdaptedValue(24.0), height: 0.5))
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
         
         sliderControlLine = UIView()
-        sliderControlLine.tag = 2000
-        sliderControlLine.backgroundColor = ARTCityStyleConfiguration.default().themeColor
+        sliderControlLine.tag                   = 2000
+        sliderControlLine.layer.cornerRadius    = ARTAdaptedValue(1.0)
+        sliderControlLine.layer.masksToBounds   = true
+        sliderControlLine.backgroundColor       = ARTCityStyleConfiguration.default().themeColor
         titleScrollView.addSubview(sliderControlLine)
         sliderControlLine.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 32.0, height: 2.0))
+            make.size.equalTo(ARTAdaptedSize(width: 24.0, height: 1.0))
             make.centerX.equalTo(selectorCityLabel)
             make.bottom.equalTo(separatorLinee)
         }
@@ -183,7 +186,7 @@ class ARTCitySelectorHeader: UIView {
             sliderControlLine.layer.masksToBounds = true
         }
         if let gradientLayer = ARTCityStyleConfiguration.default().gradientLayer {
-            gradientLayer.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: 2.0)
+            gradientLayer.frame = CGRect(x: 0.0, y: 0.0, width: ARTAdaptedValue(24.0), height: ARTAdaptedValue(1.0))
             sliderControlLine.layer.addSublayer(gradientLayer)
         }
     }
@@ -200,7 +203,7 @@ class ARTCitySelectorHeader: UIView {
     
     @objc private func titleButtonTapped(sender: UIButton) {
         let selectedColor = ARTCityStyleConfiguration.default().themeColor
-        let normalColor = UIColor.art_color(withHEXValue: 0x18171f)
+        let normalColor = UIColor.art_color(withHEXValue: 0x000000)
         
         cityNames.enumerated().forEach { (index, title) in
             guard let button = sender.superview?.viewWithTag(index + 1000) as? UIButton else { return }
@@ -208,7 +211,7 @@ class ARTCitySelectorHeader: UIView {
             if index + 1000 == sender.tag {
                 button.setTitleColor(selectedColor, for: .normal)
                 sliderControlLine.snp.remakeConstraints { make in
-                    make.size.equalTo(CGSize(width: 32.0, height: 2.0))
+                    make.size.equalTo(ARTAdaptedSize(width: 24.0, height: 1.0))
                     make.centerX.equalTo(button)
                     make.bottom.equalTo(separatorLinee)
                 }
@@ -239,19 +242,19 @@ extension ARTCitySelectorHeader {
         
         var previousButton: ARTAlignmentButton?
         let selectedColor = ARTCityStyleConfiguration.default().themeColor
-        let normalColor = UIColor.art_color(withHEXValue: 0x18171f)
+        let normalColor = UIColor.art_color(withHEXValue: 0x000000)
         cityNames.enumerated().forEach { (index, title) in
             let titleButton = ARTAlignmentButton()
             titleButton.tag                         = index + 1000
-            titleButton.titleLabel?.font            = .art_regular(14.0)
+            titleButton.titleLabel?.font            = .art_light(ARTAdaptedValue(14.0))
             titleButton.contentHorizontalAlignment  = .left
             titleButton.setTitleColor(index == cityNames.count - 1 ? selectedColor : normalColor, for: .normal)
             titleButton.setTitle(title, for: .normal)
             titleButton.addTarget(self, action: #selector(titleButtonTapped(sender:)), for: .touchUpInside)
             titleScrollView.addSubview(titleButton)
-            titleButton.snp.makeConstraints { make in
+            titleButton.snp.remakeConstraints { make in
                 if let previousButton = previousButton {
-                    make.left.equalTo(previousButton.snp.right).offset(60.0)
+                    make.left.equalTo(previousButton.snp.right).offset(ARTAdaptedValue(36.0))
                 } else {
                     make.left.equalToSuperview()
                 }
@@ -261,10 +264,12 @@ extension ARTCitySelectorHeader {
             previousButton = titleButton
         }
         
-        self.sliderControlLine.snp.remakeConstraints { make in
-            make.size.equalTo(CGSize(width: 32.0, height: 2.0))
-            make.centerX.equalTo(previousButton!)
-            make.bottom.equalTo(self.separatorLinee)
+        if let previousButton = previousButton {
+            self.sliderControlLine.snp.remakeConstraints { make in
+                make.size.equalTo(ARTAdaptedSize(width: 24.0, height: 1.0))
+                make.centerX.equalTo(previousButton)
+                make.bottom.equalTo(self.separatorLinee)
+            }
         }
         
         titleScrollView.layoutIfNeeded()

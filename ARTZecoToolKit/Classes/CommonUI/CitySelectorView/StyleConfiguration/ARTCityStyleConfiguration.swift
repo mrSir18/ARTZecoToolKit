@@ -38,8 +38,8 @@ public class ARTCityStyleConfiguration: NSObject {
     
     /// 容器高度.
     ///
-    /// - Note: 默认681.0.
-    private var pri_containerHeight: CGFloat = 681.0
+    /// - Note: 默认632.0.
+    private var pri_containerHeight: CGFloat = ARTAdaptedValue(632.0)
     public var containerHeight: CGFloat {
         get {
             pri_containerHeight
@@ -51,8 +51,8 @@ public class ARTCityStyleConfiguration: NSObject {
     
     /// 主题色.
     ///
-    /// - Note: 默认0xFF5C00.
-    private var pri_themeColor: UIColor = .art_color(withHEXValue: 0xFF5C00)
+    /// - Note: 默认0xFE5C01.
+    private var pri_themeColor: UIColor = .art_color(withHEXValue: 0xFE5C01)
     public var themeColor: UIColor {
         get {
             pri_themeColor
@@ -64,8 +64,8 @@ public class ARTCityStyleConfiguration: NSObject {
     
     /// 容器圆角.
     ///
-    /// - Note: 默认16.0.
-    private var pri_cornerRadius: CGFloat = 16.0
+    /// - Note: 默认18.0.
+    private var pri_cornerRadius: CGFloat = ARTAdaptedValue(18.0)
     public var cornerRadius: CGFloat {
         get {
             pri_cornerRadius
@@ -130,6 +130,19 @@ public class ARTCityStyleConfiguration: NSObject {
         }
         set {
             pri_gradientLayer = newValue
+        }
+    }
+    
+    /// 关闭按钮图片对象.
+    ///
+    /// - Note: 默认关闭按钮图片.
+    private var pri_closeImage: UIImage?
+    public var closeImage: UIImage? {
+        get {
+            pri_closeImage
+        }
+        set {
+            pri_closeImage = newValue
         }
     }
     

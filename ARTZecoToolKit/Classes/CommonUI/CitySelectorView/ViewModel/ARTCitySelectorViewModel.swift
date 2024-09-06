@@ -83,11 +83,11 @@ struct ARTCitySelectorViewModel {
                                     hotCities,
                                 sectionType: .hotCities,
                                 columnCount: 4,
-                                itemHeight: 37.0,
-                                insets: UIEdgeInsets(top: 0.0, left: 18.0, bottom: 0.0, right: 18.0),
-                                lineSpacing: 8.0,
-                                interitemSpacing: 8.0,
-                                headerSize: CGSize(width: UIScreen.art_currentScreenWidth, height: 52.0),
+                                itemHeight: ARTAdaptedValue(30.0),
+                                insets: UIEdgeInsets(top: 0.0, left: ARTAdaptedValue(12.0), bottom: 0.0, right: ARTAdaptedValue(12.0)),
+                                lineSpacing: ARTAdaptedValue(10.0),
+                                interitemSpacing: ARTAdaptedValue(10.0),
+                                headerSize: CGSize(width: UIScreen.art_currentScreenWidth, height: ARTAdaptedValue(40.0)),
                                 footerSize: .zero)
         
         // 所有城市.
@@ -95,11 +95,11 @@ struct ARTCitySelectorViewModel {
                                     allCities,
                                 sectionType: .allCities,
                                 columnCount: 1,
-                                itemHeight: 45.0,
+                                itemHeight: ARTAdaptedValue(42.0),
                                 insets: .zero,
                                 lineSpacing: 0.0,
                                 interitemSpacing: 0.0,
-                                headerSize: CGSize(width: UIScreen.art_currentScreenWidth, height: 12.0),
+                                headerSize: CGSize(width: UIScreen.art_currentScreenWidth, height: ARTAdaptedValue(12.0)),
                                 footerSize: .zero)
     }
     

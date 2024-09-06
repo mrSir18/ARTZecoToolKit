@@ -50,23 +50,23 @@ class ARTCitySelectorCell: UICollectionViewCell {
         
         // 创建索引标签视图
         indexLabel = UILabel()
-        indexLabel.textColor       = .art_color(withHEXValue: 0x808080)
-        indexLabel.font            = .art_regular(13.0)
-        indexLabel.textAlignment   = .left
+        indexLabel.textColor        = .art_color(withHEXValue: 0x999999)
+        indexLabel.font             = .art_regular(ARTAdaptedValue(12.0))
+        indexLabel.textAlignment    = .left
         contentView.addSubview(indexLabel)
         indexLabel.snp.makeConstraints { make in
-            make.left.equalTo(18.0)
+            make.left.equalTo(ARTAdaptedValue(12.0))
             make.centerY.equalToSuperview()
         }
         
         // 创建城市标签视图
         locationLabel = UILabel()
-        locationLabel.textColor       = .art_color(withHEXValue: 0x18171f)
-        locationLabel.font            = .art_regular(15.0)
-        locationLabel.textAlignment   = .left
+        locationLabel.textColor     = .art_color(withHEXValue: 0x000000)
+        locationLabel.font          = .art_regular(ARTAdaptedValue(12.0))
+        locationLabel.textAlignment = .left
         contentView.addSubview(locationLabel)
         locationLabel.snp.makeConstraints { make in
-            make.left.equalTo(55.0)
+            make.left.equalTo(ARTAdaptedValue(46.0))
             make.centerY.equalToSuperview()
         }
         
@@ -74,9 +74,9 @@ class ARTCitySelectorCell: UICollectionViewCell {
         tickImageView = UIImageView()
         contentView.addSubview(tickImageView)
         tickImageView.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 16.0, height: 16.0))
+            make.size.equalTo(ARTAdaptedSize(width: 16.0, height: 16.0))
             make.centerY.equalToSuperview()
-            make.right.equalTo(-39.0)
+            make.right.equalTo(-ARTAdaptedValue(12.0))
         }
         if let tickImage = ARTCityStyleConfiguration.default().tickImage {
             tickImageView.image = tickImage

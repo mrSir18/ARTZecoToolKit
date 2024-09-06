@@ -56,6 +56,12 @@ public extension ARTCityStyleConfiguration {
     }
     
     @discardableResult
+    func closeImage(_ image: UIImage?) -> ARTCityStyleConfiguration {
+        closeImage = image
+        return self
+    }
+    
+    @discardableResult
     func tickImage(_ image: UIImage?) -> ARTCityStyleConfiguration {
         tickImage = image
         return self

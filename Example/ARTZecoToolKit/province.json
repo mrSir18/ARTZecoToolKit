@@ -1,0 +1,321 @@
+{
+    "code": 0,
+    "msg": "ok",
+    "data": {
+        "provinceList": [{
+            "provinceId": "11",
+            "provinceName": "北京市",
+            "provincePinYin": "bei jing",
+            "provincePrefix": "b"
+        }, {
+            "provinceId": "12",
+            "provinceName": "天津市",
+            "provincePinYin": "tian jin",
+            "provincePrefix": "t"
+        }, {
+            "provinceId": "13",
+            "provinceName": "河北省",
+            "provincePinYin": "he bei",
+            "provincePrefix": "h"
+        }, {
+            "provinceId": "14",
+            "provinceName": "山西省",
+            "provincePinYin": "shan xi",
+            "provincePrefix": "s"
+        }, {
+            "provinceId": "15",
+            "provinceName": "内蒙古自治区",
+            "provincePinYin": "nei meng gu",
+            "provincePrefix": "n"
+        }, {
+            "provinceId": "21",
+            "provinceName": "辽宁省",
+            "provincePinYin": "liao ning",
+            "provincePrefix": "l"
+        }, {
+            "provinceId": "22",
+            "provinceName": "吉林省",
+            "provincePinYin": "ji lin",
+            "provincePrefix": "j"
+        }, {
+            "provinceId": "23",
+            "provinceName": "黑龙江省",
+            "provincePinYin": "hei long jiang",
+            "provincePrefix": "h"
+        }, {
+            "provinceId": "31",
+            "provinceName": "上海市",
+            "provincePinYin": "shang hai",
+            "provincePrefix": "s"
+        }, {
+            "provinceId": "32",
+            "provinceName": "江苏省",
+            "provincePinYin": "jiang su",
+            "provincePrefix": "j"
+        }, {
+            "provinceId": "33",
+            "provinceName": "浙江省",
+            "provincePinYin": "zhe jiang",
+            "provincePrefix": "z"
+        }, {
+            "provinceId": "34",
+            "provinceName": "安徽省",
+            "provincePinYin": "an hui",
+            "provincePrefix": "a"
+        }, {
+            "provinceId": "35",
+            "provinceName": "福建省",
+            "provincePinYin": "fu jian",
+            "provincePrefix": "f"
+        }, {
+            "provinceId": "36",
+            "provinceName": "江西省",
+            "provincePinYin": "jiang xi",
+            "provincePrefix": "j"
+        }, {
+            "provinceId": "37",
+            "provinceName": "山东省",
+            "provincePinYin": "shan dong",
+            "provincePrefix": "s"
+        }, {
+            "provinceId": "41",
+            "provinceName": "河南省",
+            "provincePinYin": "he nan",
+            "provincePrefix": "h"
+        }, {
+            "provinceId": "42",
+            "provinceName": "湖北省",
+            "provincePinYin": "hu bei",
+            "provincePrefix": "h"
+        }, {
+            "provinceId": "43",
+            "provinceName": "湖南省",
+            "provincePinYin": "hu nan",
+            "provincePrefix": "h"
+        }, {
+            "provinceId": "44",
+            "provinceName": "广东省",
+            "provincePinYin": "guang dong",
+            "provincePrefix": "g"
+        }, {
+            "provinceId": "45",
+            "provinceName": "广西壮族自治区",
+            "provincePinYin": "guang xi",
+            "provincePrefix": "g"
+        }, {
+            "provinceId": "46",
+            "provinceName": "海南省",
+            "provincePinYin": "hai nan",
+            "provincePrefix": "h"
+        }, {
+            "provinceId": "50",
+            "provinceName": "重庆市",
+            "provincePinYin": "chong qing",
+            "provincePrefix": "c"
+        }, {
+            "provinceId": "51",
+            "provinceName": "四川省",
+            "provincePinYin": "si chuan",
+            "provincePrefix": "s"
+        }, {
+            "provinceId": "52",
+            "provinceName": "贵州省",
+            "provincePinYin": "gui zhou",
+            "provincePrefix": "g"
+        }, {
+            "provinceId": "53",
+            "provinceName": "云南省",
+            "provincePinYin": "yun nan",
+            "provincePrefix": "y"
+        }, {
+            "provinceId": "54",
+            "provinceName": "西藏自治区",
+            "provincePinYin": "xi zang",
+            "provincePrefix": "x"
+        }, {
+            "provinceId": "61",
+            "provinceName": "陕西省",
+            "provincePinYin": "shan xi",
+            "provincePrefix": "s"
+        }, {
+            "provinceId": "62",
+            "provinceName": "甘肃省",
+            "provincePinYin": "gan su",
+            "provincePrefix": "g"
+        }, {
+            "provinceId": "63",
+            "provinceName": "青海省",
+            "provincePinYin": "qing hai",
+            "provincePrefix": "q"
+        }, {
+            "provinceId": "64",
+            "provinceName": "宁夏回族自治区",
+            "provincePinYin": "ning xia",
+            "provincePrefix": "n"
+        }, {
+            "provinceId": "65",
+            "provinceName": "新疆维吾尔自治区",
+            "provincePinYin": "xin jiang",
+            "provincePrefix": "x"
+        }, {
+            "provinceId": "71",
+            "provinceName": "台湾省",
+            "provincePinYin": "tai wan",
+            "provincePrefix": "t"
+        }, {
+            "provinceId": "81",
+            "provinceName": "香港特别行政区",
+            "provincePinYin": "xiang gang",
+            "provincePrefix": "x"
+        }, {
+            "provinceId": "82",
+            "provinceName": "澳门特别行政区",
+            "provincePinYin": "ao men",
+            "provincePrefix": "a"
+        }],
+        "favoriteCity": [{
+            "cityInfo": {
+                "cityId": "1101",
+                "cityName": "北京市",
+                "cityPinYin": "bei jing",
+                "cityPrefix": "b"
+            },
+            "provinceInfo": {
+                "provinceId": "11",
+                "provinceName": "北京市",
+                "provincePinYin": "bei jing",
+                "provincePrefix": "b"
+            }
+        }, {
+            "cityInfo": {
+                "cityId": "1201",
+                "cityName": "天津市",
+                "cityPinYin": "tian jin",
+                "cityPrefix": "t"
+            },
+            "provinceInfo": {
+                "provinceId": "12",
+                "provinceName": "天津市",
+                "provincePinYin": "tian jin",
+                "provincePrefix": "t"
+            }
+        }, {
+            "cityInfo": {
+                "cityId": "3101",
+                "cityName": "上海市",
+                "cityPinYin": "shang hai",
+                "cityPrefix": "s"
+            },
+            "provinceInfo": {
+                "provinceId": "31",
+                "provinceName": "上海市",
+                "provincePinYin": "shang hai",
+                "provincePrefix": "s"
+            }
+        }, {
+            "cityInfo": {
+                "cityId": "3201",
+                "cityName": "南京市",
+                "cityPinYin": "nan jing",
+                "cityPrefix": "n"
+            },
+            "provinceInfo": {
+                "provinceId": "32",
+                "provinceName": "江苏省",
+                "provincePinYin": "jiang su",
+                "provincePrefix": "j"
+            }
+        }, {
+            "cityInfo": {
+                "cityId": "3205",
+                "cityName": "苏州市",
+                "cityPinYin": "su zhou",
+                "cityPrefix": "s"
+            },
+            "provinceInfo": {
+                "provinceId": "32",
+                "provinceName": "江苏省",
+                "provincePinYin": "jiang su",
+                "provincePrefix": "j"
+            }
+        }, {
+            "cityInfo": {
+                "cityId": "3301",
+                "cityName": "杭州市",
+                "cityPinYin": "hang zhou",
+                "cityPrefix": "h"
+            },
+            "provinceInfo": {
+                "provinceId": "33",
+                "provinceName": "浙江省",
+                "provincePinYin": "zhe jiang",
+                "provincePrefix": "z"
+            }
+        }, {
+            "cityInfo": {
+                "cityId": "4201",
+                "cityName": "武汉市",
+                "cityPinYin": "wu han",
+                "cityPrefix": "w"
+            },
+            "provinceInfo": {
+                "provinceId": "42",
+                "provinceName": "湖北省",
+                "provincePinYin": "hu bei",
+                "provincePrefix": "h"
+            }
+        }, {
+            "cityInfo": {
+                "cityId": "4301",
+                "cityName": "长沙市",
+                "cityPinYin": "chang sha",
+                "cityPrefix": "c"
+            },
+            "provinceInfo": {
+                "provinceId": "43",
+                "provinceName": "湖南省",
+                "provincePinYin": "hu nan",
+                "provincePrefix": "h"
+            }
+        }, {
+            "cityInfo": {
+                "cityId": "4401",
+                "cityName": "广州市",
+                "cityPinYin": "guang zhou",
+                "cityPrefix": "g"
+            },
+            "provinceInfo": {
+                "provinceId": "44",
+                "provinceName": "广东省",
+                "provincePinYin": "guang dong",
+                "provincePrefix": "g"
+            }
+        }, {
+            "cityInfo": {
+                "cityId": "4403",
+                "cityName": "深圳市",
+                "cityPinYin": "shen zhen",
+                "cityPrefix": "s"
+            },
+            "provinceInfo": {
+                "provinceId": "44",
+                "provinceName": "广东省",
+                "provincePinYin": "guang dong",
+                "provincePrefix": "g"
+            }
+        }, {
+            "cityInfo": {
+                "cityId": "5101",
+                "cityName": "成都市",
+                "cityPinYin": "cheng du",
+                "cityPrefix": "c"
+            },
+            "provinceInfo": {
+                "provinceId": "51",
+                "provinceName": "四川省",
+                "provincePinYin": "si chuan",
+                "provincePrefix": "s"
+            }
+        }]
+    }
+}
