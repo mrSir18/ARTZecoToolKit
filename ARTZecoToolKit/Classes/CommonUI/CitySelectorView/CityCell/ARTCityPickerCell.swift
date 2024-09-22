@@ -72,18 +72,12 @@ class ARTCityPickerCell: UICollectionViewCell {
         
         // 标记视图
         tickImageView = UIImageView()
+        tickImageView.image = ARTCityStyleConfiguration.default().tickImage
         contentView.addSubview(tickImageView)
         tickImageView.snp.makeConstraints { make in
             make.size.equalTo(ARTAdaptedSize(width: 16.0, height: 16.0))
             make.centerY.equalToSuperview()
             make.right.equalTo(-ARTAdaptedValue(12.0))
-        }
-        if let tickImage = ARTCityStyleConfiguration.default().tickImage {
-            tickImageView.image = tickImage
-        } else {
-            let file = art_resourcePath(file: "city_selector_tick.png", object: self)
-            tickImageView.image = UIImage(contentsOfFile: file)
-            ARTCityStyleConfiguration.default().tickImage(tickImageView.image)
         }
     }
 }

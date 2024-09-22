@@ -65,18 +65,11 @@ public class ARTQuantityControlView: UIView {
         }
 
         // 创建减少按钮
-        var decreaseImage: UIImage?
-        if let decreaseImageName = configuration.decreaseImageName {
-            decreaseImage = UIImage(named: decreaseImageName)
-        } else {
-            let decreaseFile = art_resourcePath(file: "quantity_decrease_icon.png", object: self)
-            decreaseImage    = UIImage(contentsOfFile: decreaseFile)
-        }
         decreaseButton = ARTAlignmentButton(type: .custom)
         decreaseButton.alpha                = buttonAlpha(for: quantity, second: configuration.minimumQuantity, comparison: .greaterThan)
         decreaseButton.backgroundColor      = configuration.buttonBackgroundColor
         decreaseButton.imageSize            = configuration.imageSize
-        decreaseButton.setImage(decreaseImage, for: .normal)
+        decreaseButton.setImage(UIImage(named: "quantity_decrease_icon"), for: .normal)
         decreaseButton.addTarget(self, action: #selector(decreaseQuantity), for: .touchUpInside)
         containerView.addSubview(decreaseButton)
         decreaseButton.snp.makeConstraints { make in
@@ -85,18 +78,11 @@ public class ARTQuantityControlView: UIView {
         }
         
         // 创建增加按钮
-        var increaseImage: UIImage?
-        if let increaseImageName = configuration.increaseImageName {
-            increaseImage = UIImage(named: increaseImageName)
-        } else {
-            let increaseFile = art_resourcePath(file: "quantity_increase_icon.png", object: self)
-            increaseImage    = UIImage(contentsOfFile: increaseFile)
-        }
         increaseButton = ARTAlignmentButton(type: .custom)
         increaseButton.alpha                = buttonAlpha(for: quantity, second: configuration.maximumQuantity, comparison: .lessThan)
         increaseButton.backgroundColor      = configuration.buttonBackgroundColor
         increaseButton.imageSize            = configuration.imageSize
-        increaseButton.setImage(increaseImage, for: .normal)
+        increaseButton.setImage(UIImage(named: "quantity_increase_icon"), for: .normal)
         increaseButton.addTarget(self, action: #selector(increaseQuantity), for: .touchUpInside)
         containerView.addSubview(increaseButton)
         increaseButton.snp.makeConstraints { make in
