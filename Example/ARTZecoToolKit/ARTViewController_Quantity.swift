@@ -19,7 +19,9 @@ class ARTViewController_Quantity: ARTBaseViewController {
         // 默认配置 图片大小18.0x18.0
         ARTQuantityStyleConfiguration.default()
             .imageSize(CGSize(width: 20.0, height: 20.0))
-        
+            .decreaseImageName("quantity_decrease_icon")
+            .increaseImageName("quantity_increase_icon")
+
         // 创建数量控制视图
         let quantityControlView = ARTQuantityControlView()
         quantityControlView.quantity = 3

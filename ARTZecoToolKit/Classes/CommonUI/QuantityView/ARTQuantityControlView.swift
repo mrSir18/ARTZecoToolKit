@@ -69,20 +69,20 @@ public class ARTQuantityControlView: UIView {
         decreaseButton.alpha                = buttonAlpha(for: quantity, second: configuration.minimumQuantity, comparison: .greaterThan)
         decreaseButton.backgroundColor      = configuration.buttonBackgroundColor
         decreaseButton.imageSize            = configuration.imageSize
-        decreaseButton.setImage(UIImage(named: "quantity_decrease_icon"), for: .normal)
+        decreaseButton.setImage(UIImage(named: configuration.decreaseImageName ?? ""), for: .normal)
         decreaseButton.addTarget(self, action: #selector(decreaseQuantity), for: .touchUpInside)
         containerView.addSubview(decreaseButton)
         decreaseButton.snp.makeConstraints { make in
             make.left.top.bottom.equalToSuperview()
             make.width.equalTo(configuration.buttonWidth)
         }
-        
+
         // 创建增加按钮
         increaseButton = ARTAlignmentButton(type: .custom)
         increaseButton.alpha                = buttonAlpha(for: quantity, second: configuration.maximumQuantity, comparison: .lessThan)
         increaseButton.backgroundColor      = configuration.buttonBackgroundColor
         increaseButton.imageSize            = configuration.imageSize
-        increaseButton.setImage(UIImage(named: "quantity_increase_icon"), for: .normal)
+        increaseButton.setImage(UIImage(named: configuration.increaseImageName ?? ""), for: .normal)
         increaseButton.addTarget(self, action: #selector(increaseQuantity), for: .touchUpInside)
         containerView.addSubview(increaseButton)
         increaseButton.snp.makeConstraints { make in
