@@ -6,7 +6,7 @@ PODS:
   - SDWebImage (5.19.7):
     - SDWebImage/Core (= 5.19.7)
   - SDWebImage/Core (5.19.7)
-  - SmartCodable (4.1.10)
+  - SmartCodable (4.2.0)
   - SnapKit (5.7.1)
 
 DEPENDENCIES:
@@ -25,7 +25,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   ARTZecoToolKit: 0b2bc51c4ac2a43f6744960ed35477b17c91dac6
   SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
-  SmartCodable: f1e865bb983fdcf51b8bc45c6dda8a08379c315c
+  SmartCodable: e1b30d724aa0c1c82964a8cef06709dc93154f4f
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
 
 PODFILE CHECKSUM: e42b632d9da101dc1ff28202d40e5a5c26042761
