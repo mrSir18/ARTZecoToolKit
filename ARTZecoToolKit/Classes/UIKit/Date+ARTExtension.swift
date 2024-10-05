@@ -85,7 +85,7 @@ extension Date {
     /// 计算时间差并返回相应的字符串
     ///
     /// - Parameter dateString: 日期字符串
-    public func timeAgoSinceDate(_ dateString: String) -> String? {
+    public static func timeAgoSinceDate(_ dateString: String) -> String? {
         // 定义日期格式
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
