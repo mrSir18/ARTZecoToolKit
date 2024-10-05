@@ -81,4 +81,55 @@ extension Date {
             return "\(days)天"
         }
     }
+    
+    /// 计算时间差并返回相应的字符串
+    ///
+    /// - Parameter dateString: 日期字符串
+    public func timeAgoSinceDate(_ dateString: String) -> String? {
+        // 定义日期格式
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.locale = Locale.current
+        
+        // 将日期字符串转换为 Date 对象
+        guard let date = dateFormatter.date(from: dateString) else {
+            return nil
+        }
+        
+        // 获取当前时间和日历对象
+        let now = Date()
+        let calendar = Calendar.current
+        
+        // 计算时间差
+        let components = calendar.dateComponents([.minute, .hour, .day], from: date, to: now)
+        
+        // 判断时间差并返回相应的字符串
+        if let day = components.day, day >= 1 {
+            if day == 1 {
+                return "昨天"
+            } else if day == 2 {
+                return "前天"
+            } else if day == 3 {
+                return "\(day)天前"
+            } else {
+                // 如果超过 3 天，返回具体日期
+                return dateFormatter.string(from: date)
+            }
+        }
+        
+        if let hour = components.hour, hour >= 1 {
+            return "\(hour)小时前"
+        }
+        
+        if let minute = components.minute {
+            if minute < 5 {
+                return "刚刚"
+            } else {
+                return "\(minute)分钟前"
+            }
+        }
+        
+        return nil
+    }
 }
