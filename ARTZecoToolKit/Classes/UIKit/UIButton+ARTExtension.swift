@@ -37,4 +37,3 @@ extension UIButton {
         setImage(scaledImage, for: state)
     }
 }
-

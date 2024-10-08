@@ -47,4 +47,3 @@ extension UICollectionView {
         return dequeueReusableCell(withReuseIdentifier: String(describing: T.self), for: indexPath) as! T
     }
 }
-

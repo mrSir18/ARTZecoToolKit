@@ -29,17 +29,29 @@ extension UIScreen {
         let screenWidth = ceil(art_currentScreenWidth)
         let screenHeight = ceil(art_currentScreenHeight)
         
+        // iPhone X, XR, XS, XS Max 等机型的尺寸判断
         if (screenWidth == 375 && screenHeight == 812) || (screenWidth == 414 && screenHeight == 896) {
             return true
         }
         
-        if #available(iOS 11.0, *), 
-            let appDelegate = UIApplication.shared.delegate,
-            let window = appDelegate.window!,
-            window.safeAreaInsets.bottom > 0 && UIDevice.current.userInterfaceIdiom == .phone {
-            return true
+        // iOS 11.0+ 且使用 Safe Area 判断是否为 iPhone X 系列
+        if #available(iOS 11.0, *) {
+            var keyWindow: UIWindow?
+            
+            if #available(iOS 13.0, *) {
+                keyWindow = UIApplication.shared.connectedScenes
+                    .compactMap { $0 as? UIWindowScene }
+                    .flatMap { $0.windows }
+                    .first { $0.isKeyWindow }
+            } else {
+                keyWindow = UIApplication.shared.keyWindow
+            }
+            
+            // 判断窗口是否有圆角（iPhone X 系列有 Safe Area Insets 的 bottom 大于 0）
+            if let window = keyWindow, window.safeAreaInsets.bottom > 0 && UIDevice.current.userInterfaceIdiom == .phone {
+                return true
+            }
         }
         return false
     }
 }
-

@@ -17,14 +17,14 @@ extension UIImage {
     public class func art_image(_ color: UIColor, with size: CGSize) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
         defer { UIGraphicsEndImageContext() }
-
+        
         guard let context = UIGraphicsGetCurrentContext() else { return nil }
         context.setFillColor(color.cgColor)
         context.fill(CGRect(origin: .zero, size: size))
-
+        
         return UIGraphicsGetImageFromCurrentImageContext()
     }
-
+    
     /// 创建一个指定颜色的 1x1 大小的图片.
     ///
     /// - Parameter color: 图片的颜色.
@@ -39,7 +39,7 @@ extension UIImage {
     public func art_stretchImageFromCenter() -> UIImage {
         return self.stretchableImage(withLeftCapWidth: Int(self.size.width * 0.5), topCapHeight: Int(self.size.height * 0.5))
     }
-
+    
     /// 返回一个缩放到指定大小的图片.
     ///
     /// - Parameter size: 图片的目标大小.
@@ -51,4 +51,3 @@ extension UIImage {
         return UIGraphicsGetImageFromCurrentImageContext()
     }
 }
-
