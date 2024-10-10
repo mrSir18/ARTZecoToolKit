@@ -67,7 +67,7 @@ open class ARTAlertView: UIView {
         
         // 创建标题标签
         titleLabel = UILabel()
-        titleLabel.textAlignment        = .center
+        titleLabel.textAlignment        = configuration.titleTextAlignment
         titleLabel.font                 = configuration.titleFont
         titleLabel.textColor            = configuration.titleColor
         titleLabel.numberOfLines        = 0
@@ -80,7 +80,7 @@ open class ARTAlertView: UIView {
         
         // 创建描述标签
         descLabel = UILabel()
-        descLabel.textAlignment         = .center
+        descLabel.textAlignment         = configuration.descTextAlignment
         descLabel.font                  = configuration.descFont
         descLabel.textColor             = configuration.descColor
         descLabel.numberOfLines         = 0

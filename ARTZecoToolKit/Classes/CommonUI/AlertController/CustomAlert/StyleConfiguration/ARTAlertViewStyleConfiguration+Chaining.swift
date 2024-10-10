@@ -25,6 +25,12 @@ public extension ARTAlertViewStyleConfiguration {
     }
     
     @discardableResult
+    func titleTextAlignment(_ alignment: NSTextAlignment) -> ARTAlertViewStyleConfiguration {
+        titleTextAlignment = alignment
+        return self
+    }
+    
+    @discardableResult
     func titleTopSpacing(_ spacing: CGFloat) -> ARTAlertViewStyleConfiguration {
         titleTopSpacing = spacing
         return self
@@ -39,6 +45,12 @@ public extension ARTAlertViewStyleConfiguration {
     @discardableResult
     func titleColor(_ color: UIColor) -> ARTAlertViewStyleConfiguration {
         titleColor = color
+        return self
+    }
+    
+    @discardableResult
+    func descTextAlignment(_ alignment: NSTextAlignment) -> ARTAlertViewStyleConfiguration {
+        descTextAlignment = alignment
         return self
     }
     

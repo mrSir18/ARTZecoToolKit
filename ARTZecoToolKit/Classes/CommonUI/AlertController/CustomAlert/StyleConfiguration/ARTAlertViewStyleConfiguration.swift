@@ -58,6 +58,19 @@ public class ARTAlertViewStyleConfiguration: NSObject {
         }
     }
     
+    /// 标题对齐方式.
+    ///
+    /// - Note: 默认.center
+    private var pri_titleTextAlignment: NSTextAlignment = .center
+    public var titleTextAlignment: NSTextAlignment {
+        get {
+            pri_titleTextAlignment
+        }
+        set {
+            pri_titleTextAlignment = newValue
+        }
+    }
+    
     /// 标题距离顶部间距.
     ///
     /// - Note: 默认28.0.
@@ -94,6 +107,19 @@ public class ARTAlertViewStyleConfiguration: NSObject {
         }
         set {
             pri_titleColor = newValue
+        }
+    }
+    
+    /// 描述对齐方式.
+    ///
+    /// - Note: 默认.center
+    private var pri_descTextAlignment: NSTextAlignment = .center
+    public var descTextAlignment: NSTextAlignment {
+        get {
+            pri_descTextAlignment
+        }
+        set {
+            pri_descTextAlignment = newValue
         }
     }
     
@@ -136,7 +162,7 @@ public class ARTAlertViewStyleConfiguration: NSObject {
         }
     }
     
-    /// 按钮左右间距.
+    /// 描述内容左右间距.
     ///
     /// - Note: 默认12.0.
     private var pri_textHorizontalMargin: CGFloat = ARTAdaptedValue(12.0)
