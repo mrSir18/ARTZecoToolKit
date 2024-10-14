@@ -11,41 +11,25 @@ import ARTZecoToolKit
 
 class ARTViewController_VideoPlayer: ARTBaseViewController {
     
-    /// 按钮
-    private lazy var playerButton: ARTAlignmentButton = {
-        let button = ARTAlignmentButton(type: .custom)
-        button.titleLabel?.font = .art_regular(16.0)
-        button.backgroundColor  = .art_randomColor()
-        button.setTitle("播放视频", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(videoPlayerButtonAction), for: .touchUpInside)
-        return button
-    }()
-    
+    /// 播放器视图
+    private var playerView: ARTVideoPlayerView!
+
     
     // MARK: - Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.isNavigationBarHidden = true
-        view.addSubview(playerButton)
-        playerButton.snp.makeConstraints { make in
-            make.size.equalTo(ARTAdaptedSize(width: 200.0, height: 200.0))
-            make.center.equalToSuperview()
-        }
+        setupPlayerView()
     }
-    
-    @objc private func videoPlayerButtonAction () {
-        
-        // 创建播放器
-        guard let videoURL = Bundle.main.url(forResource: "video", withExtension: "MOV") else {
-            fatalError("视频文件不存在")
+
+    private func setupPlayerView() { // 创建播放器视图
+        playerView = ARTVideoPlayerView()
+        playerView.backgroundColor = .art_randomColor()
+        view.addSubview(playerView)
+        playerView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.height.equalTo(ARTAdaptedValue(300.0))
         }
-        let player = AVPlayer(url: videoURL)
-        let playerLayer = AVPlayerLayer(player: player)
-        playerLayer.frame = UIScreen.main.bounds
-        playerLayer.videoGravity = .resizeAspectFill
-        art_keyWindow.layer.addSublayer(playerLayer)
-        player.play()
     }
 }

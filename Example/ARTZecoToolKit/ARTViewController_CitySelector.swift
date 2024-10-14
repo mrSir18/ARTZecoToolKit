@@ -17,7 +17,7 @@ class ARTViewController_CitySelector: ARTBaseViewController {
     private var allCities: [ARTCityPickerEntity] = []
     
     /// 城市名称
-    var cityName: String = ""
+    public var cityName: String = ""
     
     /// 城市选择器按钮
     private lazy var citySelectorButton: ARTAlignmentButton = {

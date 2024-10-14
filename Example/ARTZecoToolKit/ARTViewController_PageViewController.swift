@@ -11,10 +11,10 @@ import ARTZecoToolKit
 class ARTViewController_PageViewController: ARTBaseViewController {
     
     /// 菜单栏视图
-    var slideBarView: ARTSliderBarView!
+    private var slideBarView: ARTSliderBarView!
     
     /// 分页控制器
-    var pageViewController: ARTPageViewController!
+    private var pageViewController: ARTPageViewController!
     
     
     // MARK: - Initialization

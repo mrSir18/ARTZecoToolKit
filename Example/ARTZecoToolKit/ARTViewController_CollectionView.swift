@@ -11,7 +11,7 @@ import ARTZecoToolKit
 class ARTViewController_CollectionView: ARTBaseViewController {
     
     // 视图模型
-    var viewModel: ARTCollectionViewModel!
+    public var viewModel: ARTCollectionViewModel!
     
     // 列表视图
     private var collectionView: UICollectionView!
