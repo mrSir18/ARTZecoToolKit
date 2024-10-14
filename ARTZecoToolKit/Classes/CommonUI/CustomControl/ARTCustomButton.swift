@@ -71,7 +71,7 @@ public class ARTCustomButton: UIButton {
         setupLayer()
     }
     
-    public required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         super.init(coder: coder)
         setupLayer()
     }

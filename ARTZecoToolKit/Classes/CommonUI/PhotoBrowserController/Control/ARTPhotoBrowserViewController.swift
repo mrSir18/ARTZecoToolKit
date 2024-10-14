@@ -125,7 +125,7 @@ open class ARTPhotoBrowserViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    public required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
