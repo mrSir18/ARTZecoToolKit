@@ -92,4 +92,3 @@ public class ARTAlertController {
         viewController.present(alertController, animated: true, completion: nil)
     }
 }
-

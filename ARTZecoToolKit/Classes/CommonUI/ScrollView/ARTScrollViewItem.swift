@@ -33,4 +33,3 @@ public struct ARTScrollViewItem: SmartCodable {
         self.extParams  = extParams
     }
 }
-

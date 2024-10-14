@@ -68,5 +68,3 @@ open class ARTSectionFooterView: ARTCollectionReusableView {
         return dequeueReusableView(from: collectionView, ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: self, for: indexPath) as! ARTSectionFooterView
     }
 }
-
-

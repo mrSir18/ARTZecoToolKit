@@ -160,4 +160,3 @@ extension ARTSlidePopupView {
         headerView.removeFromSuperview()
     }
 }
-

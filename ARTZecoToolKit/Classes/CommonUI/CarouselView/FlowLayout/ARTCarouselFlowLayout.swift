@@ -221,4 +221,3 @@ extension ARTCarouselFlowLayout {
         return self.art_delegate?.collectionView?(collectionView!, layout: self, scaleForItemAtIndexPath: indexPath) ?? 1.0
     }
 }
-

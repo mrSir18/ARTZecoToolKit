@@ -14,9 +14,6 @@ class ARTCityPickerHotCell: UICollectionViewCell {
     /// 位置标签
     private var locationLabel: UILabel!
     
-    /// 位置图片
-    private var locationImageView: UIImageView!
-    
     /// 城市数据
     public var citySelectorEntity: ARTCityPickerEntity? {
         didSet {
@@ -67,48 +64,5 @@ class ARTCityPickerHotCell: UICollectionViewCell {
         locationLabel.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
         }
-        
-//        // 创建容器视图
-//        let containerView = UIView()
-//        containerView.backgroundColor    = .art_color(withHEXValue: 0xf8f8f8)
-//        containerView.layer.cornerRadius = 2.0
-//        containerView.layer.masksToBounds = true
-//        contentView.addSubview(containerView)
-//        containerView.snp.makeConstraints { make in
-//            make.edges.equalToSuperview()
-//        }
-//        
-//        // 创建内容容器视图
-//        let contentContainerView = UIView()
-//        contentView.addSubview(contentContainerView)
-//        
-//        // 创建标题标签视图
-//        let file = art_resourcePath(file: "city_location_gary.png", object: self)
-//        locationImageView = UIImageView()
-//        locationImageView.image = UIImage(contentsOfFile: file)
-//        contentContainerView.addSubview(locationImageView)
-//        locationImageView.snp.makeConstraints { make in
-//            make.size.equalTo(CGSize(width: 14.0, height: 14.0))
-//            make.left.equalTo(0.0)
-//            make.centerY.equalToSuperview()
-//        }
-//        
-//        // 创建标题标签视图
-//        locationLabel = UILabel()
-//        locationLabel.textColor       = .art_color(withHEXValue: 0x8a8a8a)
-//        locationLabel.font            = .art_regular(12.0)
-//        locationLabel.textAlignment   = .center
-//        contentContainerView.addSubview(locationLabel)
-//        locationLabel.snp.makeConstraints { make in
-//            make.left.equalTo(locationImageView.snp.right).offset(4.0)
-//            make.centerY.equalTo(locationImageView)
-//        }
-//        
-//        contentContainerView.snp.makeConstraints { make in
-//            make.top.bottom.equalToSuperview()
-//            make.left.equalTo(locationImageView)
-//            make.right.equalTo(locationLabel.snp.right)
-//            make.centerX.centerY.equalTo(containerView)
-//        }
     }
 }

@@ -226,10 +226,3 @@ extension ARTQuantityControlView: UITextFieldDelegate {
         quantityChanged?(quantity)
     }
 }
-
-
-
-
-
-
-
