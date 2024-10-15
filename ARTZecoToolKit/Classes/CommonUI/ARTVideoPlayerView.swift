@@ -137,6 +137,64 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
 //            make.height.equalTo(ARTAdaptedValue(88.0))
         }
     }
+    
+    // MARK: - Public Methods
+    
+    /// 播放视频
+    ///
+    /// - Parameters:
+    ///  - url: 视频地址
+    ///  - isLocal: 是否为本地视频
+    ///  - isAutoPlay: 是否自动播放
+    ///  - isLoop: 是否循环播放
+    ///  - isMuted: 是否静音
+    ///  - isFullScreen: 是否全屏
+    ///  - isShowControl: 是否显示控制面板
+    ///  - isShowTopBar: 是否显示顶部工具栏
+    ///  - isShowBottomBar: 是否显示底部工具栏
+    ///  - isShowLoading: 是否显示加载动画
+    ///  - isShowPlayButton: 是否显示播放按钮
+    ///  - isShowPauseButton: 是否显示暂停按钮
+    ///  - isShowReplayButton: 是否显示重播按钮
+    ///  - isShowFullScreenButton: 是否显示全屏按钮
+    ///  - isShowExitFullScreenButton: 是否显示退出全屏按钮
+    ///  - isShowMuteButton: 是否显示静音按钮
+    ///  - isShowUnmuteButton: 是否显示取消静音按钮
+    ///  - isShowBackButton: 是否显示返回按钮
+    ///  - isShowTitle: 是否显示标题
+    ///  - isShowCurrentTime: 是否显示当前时间
+    ///  - isShowTotalTime: 是否显示总时间
+    ///  - isShowProgressSlider: 是否显示进度条
+    ///  - isShowBufferProgress: 是否显示缓冲进度
+    ///  - isShowVolumeSlider: 是否显示音量条
+    ///  - isShowBrightnessSlider: 是否显示亮度条
+    ///  - isShowRateButton: 是否显示倍速按钮
+    ///  - isShowDefinitionButton: 是否显示清晰度按钮
+    ///  - isShowScreenshotButton: 是否显示截图按钮
+    ///  - isShowDanmakuButton: 是否显示弹幕按钮
+    ///  - isShowSubtitleButton: 是否显示字幕按钮
+    ///  - isShowSettingButton: 是否显示设置按钮
+    ///  - isShowShareButton: 是否显示分享按钮
+    ///  - isShowMoreButton: 是否显示更多按钮
+    ///  - isShowLockButton: 是否显示锁定按钮
+    ///  - isShowUnlockButton: 是否显示解锁按钮
+    ///  - isShowErrorView: 是否显示错误视图
+    ///  - isShowCompleteView: 是否显示完成视图
+    ///  - isShowLoadingView: 是否显示加载视图
+    ///  - isShowCoverView: 是否显示封面视图
+    ///  - isShowPreviewView: 是否显示预览视图
+    ///  - isShowWatermarkView: 是否显示水印视图
+    ///  - isShowBackgroundView: 是否显示背景视图
+    ///  - isShowBrightnessView: 是否显示亮度视图
+    ///  - isShowVolumeView: 是否显示音量视图
+    ///  - isShowDefinitionView: 是否显示清晰度视图
+    ///  - isShowDanmakuView: 是否显示弹幕视图
+    ///  - isShowSubtitleView: 是否显示字幕视图
+    ///  - isShowSettingView: 是否显示设置视图
+    ///  - isShowShareView: 是否显示分享视图
+    ///  - isShowMoreView: 是否显示更多视图
+    ///  - isShowLockView: 是否显示锁定视图
+    ///  - isShowUnlockView: 是否显示解锁视图
 }
 
 // MARK: - ARTVideoPlayerTopbarDelegate

@@ -14,6 +14,7 @@
 		00A2C7B2905CBAFE2DDEC75BC63221A3 /* SDAnimatedImageView+WebCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 8C811C3CA44756D12C009FDA43FBB312 /* SDAnimatedImageView+WebCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		011AB5550A10D981F0FE4BD7EA590E00 /* UIImage+ForceDecode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD411774835E5DCBDE2F6576B6A91D5 /* UIImage+ForceDecode.m */; };
 		012C4F0ABAD4FE1640C4A5B18877C3E3 /* ARTActionSheetStyleConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41D8C2A38D8E8FCD7A8262EE0A85FB2 /* ARTActionSheetStyleConfiguration.swift */; };
+		0236E5882CBEC6830050662A /* ARTVideoPlayerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0236E5872CBEC67A0050662A /* ARTVideoPlayerConfig.swift */; };
 		0259F8142CBD1CCD0083CA9C /* ARTVideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0259F8132CBD1CC90083CA9C /* ARTVideoPlayerView.swift */; };
 		02A750D32CBE6F6D00739D2F /* ARTBaseVideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A750D22CBE6F5800739D2F /* ARTBaseVideoPlayerView.swift */; };
 		02AC102D2CBD5FF20077AA73 /* ARTVideoPlayerTopbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AC102C2CBD5FE20077AA73 /* ARTVideoPlayerTopbar.swift */; };
@@ -444,6 +445,7 @@
 		004C44F798E2B8D1841ADD25754058EC /* SDWebImage-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SDWebImage-prefix.pch"; sourceTree = "<group>"; };
 		00EF16BB7103A67DD632D2FC9D5CAEA7 /* SDFileAttributeHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDFileAttributeHelper.h; path = SDWebImage/Private/SDFileAttributeHelper.h; sourceTree = "<group>"; };
 		01F4C9F3781B85D91966A704730E6A5A /* NSData+ImageContentType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSData+ImageContentType.h"; path = "SDWebImage/Core/NSData+ImageContentType.h"; sourceTree = "<group>"; };
+		0236E5872CBEC67A0050662A /* ARTVideoPlayerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ARTVideoPlayerConfig.swift; path = ../ARTVideoPlayerConfig.swift; sourceTree = "<group>"; };
 		0259F8132CBD1CC90083CA9C /* ARTVideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ARTVideoPlayerView.swift; path = ../../ARTVideoPlayerView.swift; sourceTree = "<group>"; };
 		02A750D22CBE6F5800739D2F /* ARTBaseVideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTBaseVideoPlayerView.swift; sourceTree = "<group>"; };
 		02AC102C2CBD5FE20077AA73 /* ARTVideoPlayerTopbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ARTVideoPlayerTopbar.swift; path = ../ARTVideoPlayerTopbar.swift; sourceTree = "<group>"; };
@@ -918,6 +920,14 @@
 			path = CustomAlert;
 			sourceTree = "<group>";
 		};
+		0236E5892CBEC68F0050662A /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				0236E5872CBEC67A0050662A /* ARTVideoPlayerConfig.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
 		0259F8152CBD1D700083CA9C /* VideoPlayerView */ = {
 			isa = PBXGroup;
 			children = (
@@ -925,6 +935,7 @@
 				02A750D42CBE6F7400739D2F /* PlayerView */,
 				02AC10302CBD60060077AA73 /* Topbar */,
 				02AC10312CBD60140077AA73 /* Bottombar */,
+				0236E5892CBEC68F0050662A /* Config */,
 			);
 			path = VideoPlayerView;
 			sourceTree = "<group>";
@@ -2405,6 +2416,7 @@
 				02A750D32CBE6F6D00739D2F /* ARTBaseVideoPlayerView.swift in Sources */,
 				7AAF6E99E09F0B7418CFFF6BC2265F62 /* ARTCityPickerHeader.swift in Sources */,
 				F500464880835079DCD793A7B1378D99 /* ARTCityPickerHotCell.swift in Sources */,
+				0236E5882CBEC6830050662A /* ARTVideoPlayerConfig.swift in Sources */,
 				741B937AF54C8F109D7E4B328F3B29A3 /* ARTCityPickerHotHeader.swift in Sources */,
 				9D9381F17D602181BD0B6F677DA2272A /* ARTCityPickerView.swift in Sources */,
 				68BC2BCF2BE50D5920719A0B1F43817A /* ARTCityPickerView+CollectionView.swift in Sources */,
