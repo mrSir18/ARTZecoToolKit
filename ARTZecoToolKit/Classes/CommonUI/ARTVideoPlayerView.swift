@@ -160,6 +160,17 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
 
 extension ARTVideoPlayerView: ARTVideoPlayerTopbarDelegate {
     
+    public func videoPlayerTopbarDidTapBack(_ topbar: ARTVideoPlayerTopbar) { // 点击返回按钮
+        print("didTapBackButton")
+    }
+    
+    public func videoPlayerTopbarDidTapFavorite(_ topbar: ARTVideoPlayerTopbar, isFavorited: Bool) { // 点击收藏按钮
+        print("didTapFavoriteButton")
+    }
+
+    public func videoPlayerTopbarDidTapShare(_ topbar: ARTVideoPlayerTopbar) { // 点击分享按钮
+        print("didTapShareButton")
+    }
 }
 
 // MARK: - ARTVideoPlayerTopbar

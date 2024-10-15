@@ -75,7 +75,7 @@ open class ARTBaseVideoPlayerView: UIView {
     
     open func setupViews() {
         /// 子类重写: 设置视图
-        addPlayerObservers()
+//        addPlayerObservers()
     }
     
     // MARK: - add Observers

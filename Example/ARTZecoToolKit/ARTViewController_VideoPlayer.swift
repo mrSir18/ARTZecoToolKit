@@ -24,7 +24,7 @@ class ARTViewController_VideoPlayer: ARTBaseViewController, ARTVideoPlayerViewPr
 
     private func setupPlayerView() { // 创建播放器视图
         playerView = ARTVideoPlayerView(self)
-        playerView.backgroundColor = .art_randomColor()
+        playerView.backgroundColor = .black
         view.addSubview(playerView)
         playerView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
