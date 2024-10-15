@@ -7,7 +7,6 @@
 
 import AVFoundation
 
-
 @objc public protocol ARTVideoPlayerViewProtocol: AnyObject {
     
     /// 自定义顶部工具栏视图
@@ -47,7 +46,7 @@ extension ARTVideoPlayerView {
     }
 }
 
-open class ARTVideoPlayerView: UIView {
+open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
     
     // MARK: - Private Properties
     
@@ -56,33 +55,6 @@ open class ARTVideoPlayerView: UIView {
     
     
     // MARK: - 播放器相关属性
-    
-    /// 视频播放器
-    private var player: AVPlayer!
-    
-    /// 播放器图层
-    private var layerLayer: AVPlayerLayer!
-    
-    /// 播放器的状态
-    private var playerItem: AVPlayerItem!
-    
-    /// 播放器的播放状态
-    private var isPlaying = false
-    
-    /// 播放器的时间观察者
-    private var timeObserver: Any?
-    
-    /// 播放器的时间观察者间隔
-    private var timeObserverInterval = CMTime(value: 1, timescale: 1)
-
-    /// 是否正在拖动音量条
-    private var isDraggingVolumeSlider = false
-    
-    /// 是否正在拖动亮度条
-    private var isDraggingBrightnessSlider = false
-    
-    /// 是否正在拖动进度条
-    private var isDraggingProgressSlider = false
     
     /// 播放器视图模式
     private var playerMode: ARTVideoPlayerView.VideoPlayerMode = .window
@@ -98,39 +70,40 @@ open class ARTVideoPlayerView: UIView {
     
     
     // MARK: - Initialization
-    
-    public init(_ delegate: ARTVideoPlayerViewProtocol? = nil) {
-        super.init(frame: .zero)
+
+    public init(_ delegate: ARTVideoPlayerViewProtocol) {
+        super.init()
         self.delegate = delegate
-        self.backgroundColor = .clear
-        setupViews()
     }
     
     required public init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
     // MARK: - Override Methods
     
-    open func setupViews() {
+    open override func setupViews() {
         setupVideoPlayerView()
-        setupWindowTopBar()
-        setupWindowBottomBar()
+        setupTopBar()
+        setupBottomBar()
+        super.setupViews()
     }
+    
+    // MARK: - Setup Methods
     
     /// 创建视频播放器视图
     ///
     /// 重写父类方法，设置子视图
     /// - Note: 使用代理返回的自定义视频播放器视图，若返回 nil 则创建默认的视频播放器视图
     open func setupVideoPlayerView() {
-        
+
     }
     
     /// 创建顶部工具栏
     ///
     /// 重写父类方法，设置子视图
     /// - Note: 默认导航栏视图需继承 ARTVideoPlayerTopbar
-    open func setupWindowTopBar() {
+    open func setupTopBar() {
         if let customTopBar = delegate?.customTopBar?(for: self, playerMode: playerMode) { // 获取自定义顶部工具栏视图
             topBar = customTopBar
             
@@ -149,7 +122,7 @@ open class ARTVideoPlayerView: UIView {
     ///
     /// 重写父类方法，设置子视图
     /// - Note: 默认底部工具栏视图需继承 ARTVideoPlayerBottombar
-    open func setupWindowBottomBar() {
+    open func setupBottomBar() {
         if let customBottomBar = delegate?.customBottomBar?(for: self, playerMode: playerMode) { // 获取自定义底部工具栏视图
             bottomBar = customBottomBar
             

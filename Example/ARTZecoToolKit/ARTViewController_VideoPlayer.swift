@@ -9,7 +9,7 @@
 import AVFoundation
 import ARTZecoToolKit
 
-class ARTViewController_VideoPlayer: ARTBaseViewController {
+class ARTViewController_VideoPlayer: ARTBaseViewController, ARTVideoPlayerViewProtocol {
     
     /// 播放器视图
     private var playerView: ARTVideoPlayerView!
@@ -23,7 +23,7 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
     }
 
     private func setupPlayerView() { // 创建播放器视图
-        playerView = ARTVideoPlayerView()
+        playerView = ARTVideoPlayerView(self)
         playerView.backgroundColor = .art_randomColor()
         view.addSubview(playerView)
         playerView.snp.makeConstraints { make in
