@@ -14,24 +14,32 @@ import AVFoundation
     ///
     /// - Parameters:
     ///  - playerView: 视频播放器视
+    ///  - playerMode: 视频播放器视图模式
     ///  - Returns: 自定义顶部工具栏视图
-    ///  - Note: 返回自定义顶部工具栏视图，若返回 nil 则使用默认顶部工具栏视图
     ///  - Note: 自定义顶部工具栏视图需继承 ARTVideoPlayerTopBar
-    @objc optional func customTopBar(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerTopBar?
+    @objc optional func customTopBar(for playerView: ARTVideoPlayerView, playerMode: ARTVideoPlayerView.VideoPlayerMode) -> ARTVideoPlayerTopBar?
     
     /// 自定义底部工具栏视图
     ///
     /// - Parameters:
     ///  - playerView: 视频播放器视
     ///  - Returns: 自定义底部工具栏视图
-    ///  - Note: 返回自定义底部工具栏视图，若返回 nil 则使用默认底部工具栏视图
     ///  - Note: 自定义底部工具栏视图需继承 ARTVideoPlayerBottomBar
-    @objc optional func customBottomBar(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerBottomBar?
+    @objc optional func customBottomBar(for playerView: ARTVideoPlayerView, playerMode: ARTVideoPlayerView.VideoPlayerMode) -> ARTVideoPlayerBottomBar?
 }
 
 extension ARTVideoPlayerView {
+    
+    /// 视频播放器视图模式
+    @objc public enum VideoPlayerMode: Int {
+        /// 窗口模式
+        case window = 1
+        /// 全屏模式
+        case fullscreen = 2
+    }
+    
     /// 顶部和底部栏状态
-    public enum TopBottomBarState {
+    public enum TopBottomBarState: Int  {
         /// 隐藏
         case hidden
         /// 显示
@@ -64,6 +72,21 @@ open class ARTVideoPlayerView: UIView {
     /// 播放器的时间观察者
     private var timeObserver: Any?
     
+    /// 播放器的时间观察者间隔
+    private var timeObserverInterval = CMTime(value: 1, timescale: 1)
+
+    /// 是否正在拖动音量条
+    private var isDraggingVolumeSlider = false
+    
+    /// 是否正在拖动亮度条
+    private var isDraggingBrightnessSlider = false
+    
+    /// 是否正在拖动进度条
+    private var isDraggingProgressSlider = false
+    
+    /// 播放器视图模式
+    private var playerMode: ARTVideoPlayerView.VideoPlayerMode = .window
+    
     
     // MARK: - 控件属性
     
@@ -91,8 +114,8 @@ open class ARTVideoPlayerView: UIView {
     
     open func setupViews() {
         setupVideoPlayerView()
-        setupTopBar()
-        setupBottomBar()
+        setupWindowTopBar()
+        setupWindowBottomBar()
     }
     
     /// 创建视频播放器视图
@@ -106,38 +129,39 @@ open class ARTVideoPlayerView: UIView {
     /// 创建顶部工具栏
     ///
     /// 重写父类方法，设置子视图
-    /// - Note: 使用代理返回的自定义顶部工具栏视图，若返回 nil 则创建默认的底部工具栏视图
     /// - Note: 默认导航栏视图需继承 ARTVideoPlayerTopBar
-    open func setupTopBar() {
-        if let customTopBar = delegate?.customTopBar?(for: self) { // 使用代理返回的自定义顶部工具栏视图
+    open func setupWindowTopBar() {
+        if let customTopBar = delegate?.customTopBar?(for: self, playerMode: playerMode) { // 获取自定义顶部工具栏视图
             topBar = customTopBar
             
-        } else { // 创建默认的导航栏视图
-            topBar = ARTVideoPlayerTopBar(self)
+        } else { // 创建顶部工具栏视图
+            topBar = ARTVideoPlayerWindowTopBar(self)
             addSubview(topBar)
             topBar.snp.makeConstraints { make in
                 make.top.left.right.equalToSuperview()
-                make.height.equalTo(art_navigationFullHeight())
+                make.height.equalTo(art_navigationBarHeight())
             }
+//            make.height.equalTo(ARTAdaptedValue(66.0))
         }
     }
     
     /// 创建底部工具栏
     ///
     /// 重写父类方法，设置子视图
-    /// - Note: 使用代理返回的自定义底部工具栏视图，若返回 nil 则创建默认的底部工具栏视图
     /// - Note: 默认底部工具栏视图需继承 ARTVideoPlayerBottomBar
-    open func setupBottomBar() {
-        if let customBottomBar = delegate?.customBottomBar?(for: self) { // 使用代理返回的自定义底部工具栏视图
+    open func setupWindowBottomBar() {
+        if let customBottomBar = delegate?.customBottomBar?(for: self, playerMode: playerMode) { // 获取自定义底部工具栏视图
             bottomBar = customBottomBar
             
-        } else { // 创建默认的底部工具栏视图
-            bottomBar = ARTVideoPlayerBottomBar(self)
+        } else { // 创建底部工具栏视图
+            bottomBar = ARTVideoPlayerWindowBottomBar(self)
             addSubview(bottomBar)
             bottomBar.snp.makeConstraints { make in
                 make.left.bottom.right.equalToSuperview()
-                make.height.equalTo(art_tabBarFullHeight())
+                make.height.equalTo(art_tabBarHeight())
             }
+            
+//            make.height.equalTo(ARTAdaptedValue(88.0))
         }
     }
 }

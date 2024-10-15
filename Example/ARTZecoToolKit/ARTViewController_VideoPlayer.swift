@@ -29,7 +29,7 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
         playerView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.centerY.equalToSuperview()
-            make.height.equalTo(ARTAdaptedValue(300.0))
+            make.height.equalTo(ARTAdaptedValue(208.0))
         }
     }
 }

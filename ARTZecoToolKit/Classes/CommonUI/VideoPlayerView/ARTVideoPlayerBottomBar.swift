@@ -22,7 +22,7 @@ open class ARTVideoPlayerBottomBar: UIView {
     public init(_ delegate: ARTVideoPlayerBottomBarDelegate? = nil) {
         super.init(frame: .zero)
         self.delegate = delegate
-        self.backgroundColor = .clear
+        self.backgroundColor = .art_randomColor()
         setupViews()
     }
     
