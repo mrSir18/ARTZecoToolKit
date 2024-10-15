@@ -16,16 +16,16 @@ import AVFoundation
     ///  - playerView: 视频播放器视
     ///  - playerMode: 视频播放器视图模式
     ///  - Returns: 自定义顶部工具栏视图
-    ///  - Note: 自定义顶部工具栏视图需继承 ARTVideoPlayerTopBar
-    @objc optional func customTopBar(for playerView: ARTVideoPlayerView, playerMode: ARTVideoPlayerView.VideoPlayerMode) -> ARTVideoPlayerTopBar?
+    ///  - Note: 自定义顶部工具栏视图需继承 ARTVideoPlayerTopbar
+    @objc optional func customTopBar(for playerView: ARTVideoPlayerView, playerMode: ARTVideoPlayerView.VideoPlayerMode) -> ARTVideoPlayerTopbar?
     
     /// 自定义底部工具栏视图
     ///
     /// - Parameters:
     ///  - playerView: 视频播放器视
     ///  - Returns: 自定义底部工具栏视图
-    ///  - Note: 自定义底部工具栏视图需继承 ARTVideoPlayerBottomBar
-    @objc optional func customBottomBar(for playerView: ARTVideoPlayerView, playerMode: ARTVideoPlayerView.VideoPlayerMode) -> ARTVideoPlayerBottomBar?
+    ///  - Note: 自定义底部工具栏视图需继承 ARTVideoPlayerBottombar
+    @objc optional func customBottomBar(for playerView: ARTVideoPlayerView, playerMode: ARTVideoPlayerView.VideoPlayerMode) -> ARTVideoPlayerBottombar?
 }
 
 extension ARTVideoPlayerView {
@@ -91,10 +91,10 @@ open class ARTVideoPlayerView: UIView {
     // MARK: - 控件属性
     
     /// 导航栏视图
-    private var topBar: ARTVideoPlayerTopBar!
+    private var topBar: ARTVideoPlayerTopbar!
     
     ///  底部工具栏视图
-    private var bottomBar: ARTVideoPlayerBottomBar!
+    private var bottomBar: ARTVideoPlayerBottombar!
     
     
     // MARK: - Initialization
@@ -129,13 +129,13 @@ open class ARTVideoPlayerView: UIView {
     /// 创建顶部工具栏
     ///
     /// 重写父类方法，设置子视图
-    /// - Note: 默认导航栏视图需继承 ARTVideoPlayerTopBar
+    /// - Note: 默认导航栏视图需继承 ARTVideoPlayerTopbar
     open func setupWindowTopBar() {
         if let customTopBar = delegate?.customTopBar?(for: self, playerMode: playerMode) { // 获取自定义顶部工具栏视图
             topBar = customTopBar
             
         } else { // 创建顶部工具栏视图
-            topBar = ARTVideoPlayerWindowTopBar(self)
+            topBar = ARTVideoPlayerWindowTopbar(self)
             addSubview(topBar)
             topBar.snp.makeConstraints { make in
                 make.top.left.right.equalToSuperview()
@@ -148,13 +148,13 @@ open class ARTVideoPlayerView: UIView {
     /// 创建底部工具栏
     ///
     /// 重写父类方法，设置子视图
-    /// - Note: 默认底部工具栏视图需继承 ARTVideoPlayerBottomBar
+    /// - Note: 默认底部工具栏视图需继承 ARTVideoPlayerBottombar
     open func setupWindowBottomBar() {
         if let customBottomBar = delegate?.customBottomBar?(for: self, playerMode: playerMode) { // 获取自定义底部工具栏视图
             bottomBar = customBottomBar
             
         } else { // 创建底部工具栏视图
-            bottomBar = ARTVideoPlayerWindowBottomBar(self)
+            bottomBar = ARTVideoPlayerWindowBottombar(self)
             addSubview(bottomBar)
             bottomBar.snp.makeConstraints { make in
                 make.left.bottom.right.equalToSuperview()
@@ -166,14 +166,14 @@ open class ARTVideoPlayerView: UIView {
     }
 }
 
-// MARK: - ARTVideoPlayerTopBarDelegate
+// MARK: - ARTVideoPlayerTopbarDelegate
 
-extension ARTVideoPlayerView: ARTVideoPlayerTopBarDelegate {
+extension ARTVideoPlayerView: ARTVideoPlayerTopbarDelegate {
     
 }
 
-// MARK: - ARTVideoPlayerTopBar
+// MARK: - ARTVideoPlayerTopbar
 
-extension ARTVideoPlayerView: ARTVideoPlayerBottomBarDelegate {
+extension ARTVideoPlayerView: ARTVideoPlayerBottombarDelegate {
     
 }

@@ -1,5 +1,5 @@
 //
-//  ARTVideoPlayerFullscreenTopBar.swift
+//  ARTVideoPlayerFullscreenBottombar.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/10/15.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ARTVideoPlayerFullscreenTopBar: ARTVideoPlayerTopBar {
+class ARTVideoPlayerFullscreenBottombar: ARTVideoPlayerBottombar {
 
     
     // MARK: - Override Super Methods

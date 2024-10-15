@@ -1,25 +1,25 @@
 //
-//  ARTVideoPlayerBottomBar.swift
+//  ARTVideoPlayerBottombar.swift
 //  Pods
 //
 //  Created by mrSir18 on 2024/10/14.
 //
 
-public protocol ARTVideoPlayerBottomBarDelegate: AnyObject {
+public protocol ARTVideoPlayerBottombarDelegate: AnyObject {
     /// 协议方法
     ///
     /// - NOTE: 可继承该协议方法
 }
 
-open class ARTVideoPlayerBottomBar: UIView {
+open class ARTVideoPlayerBottombar: UIView {
 
     /// 代理对象
-    public weak var delegate: ARTVideoPlayerBottomBarDelegate?
+    public weak var delegate: ARTVideoPlayerBottombarDelegate?
     
     
     // MARK: - Initialization
 
-    public init(_ delegate: ARTVideoPlayerBottomBarDelegate? = nil) {
+    public init(_ delegate: ARTVideoPlayerBottombarDelegate? = nil) {
         super.init(frame: .zero)
         self.delegate = delegate
         self.backgroundColor = .art_randomColor()

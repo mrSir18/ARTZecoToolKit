@@ -1,11 +1,11 @@
 //
-//  ARTVideoPlayerWindowBottomBar.swift
+//  ARTVideoPlayerWindowTopbar.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/10/15.
 //
 
-class ARTVideoPlayerWindowBottomBar: ARTVideoPlayerBottomBar {
+class ARTVideoPlayerWindowTopbar: ARTVideoPlayerTopbar {
 
     
     // MARK: - Override Super Methods
