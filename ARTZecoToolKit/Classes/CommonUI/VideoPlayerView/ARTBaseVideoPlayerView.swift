@@ -83,10 +83,9 @@ open class ARTBaseVideoPlayerView: UIView {
     /// 添加播放器的观察者
     ///
     /// - Note: 类重写此方法，添加播放器的观察者
-    open func addPlayerObservers() {
-        /// 子类重写: 添加播放器的观察者
+    private func addPlayerObservers() {
         guard let player = player, let playerItem = playerItem else {
-            print("请先初始化 player 和 playerItem")
+            assert(player != nil, "【请先初始化 player 和 playerItem】")
             return
         }
         
@@ -109,96 +108,21 @@ open class ARTBaseVideoPlayerView: UIView {
         player.addObserver(self, forKeyPath: PlayerObserverKeyPath.timeControlStatus, options: [.new, .initial], context: nil)
         
         // 监听播放完成
-        NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidPlayToEnd(_:)), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
+        NotificationCenter.default.addObserver(self, selector: #selector(didPlayerItemDidPlayToEnd(_:)), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
         
         // 监听播放失败
-        NotificationCenter.default.addObserver(self, selector: #selector(playerItemFailedToPlayToEnd(_:)), name: .AVPlayerItemFailedToPlayToEndTime, object: playerItem)
+        NotificationCenter.default.addObserver(self, selector: #selector(didPlayerItemFailedToPlayToEnd(_:)), name: .AVPlayerItemFailedToPlayToEndTime, object: playerItem)
         
         // 监听播放中断（如电话打断）
-        NotificationCenter.default.addObserver(self, selector: #selector(audioSessionInterrupted(_:)), name: AVAudioSession.interruptionNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didAudioSessionInterrupted(_:)), name: AVAudioSession.interruptionNotification, object: nil)
         
         // 添加观察者以跟踪播放器的当前时间
         timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
-            self?.playerProgressDidChange(time: time)
+            self?.didPlayerProgressDidChange(time: time)
         }
     }
     
-    // MARK: - Private Methods
-        
-    /// 播放完成的处理
-    ///
-    /// - Parameter notification: 通知
-    /// - Note: 子类重写此方法，处理播放失败
-    @objc open func playerItemDidPlayToEnd(_ notification: Notification) {
-        /// 子类重写: 处理播放完成
-//        player.seek(to: .zero)
-//        bottomBar.playPauseButton.setTitle("播放", for: .normal)
-//        isPlaying = false
-        
-        print("播放完成")
-    }
-    
-    /// 播放失败的处理
-    ///
-    /// - Parameter notification: 通知
-    /// - Note: 子类重写此方法，处理播放失败
-    @objc open func playerItemFailedToPlayToEnd(_ notification: Notification) {
-        /// 子类重写: 处理播放失败
-        print("播放失败")
-    }
-    
-    /// 音频会话中断的处理
-    ///
-    /// - Parameter notification: 通知
-    /// - Note: 子类重写此方法，处理音频会话中断
-    @objc open func audioSessionInterrupted(_ notification: Notification) {
-        /// 子类重写: 处理音频会话中断
-        guard let userInfo = notification.userInfo,
-              let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
-              let interruptionType = AVAudioSession.InterruptionType(rawValue: typeValue) else { // 获取通知中的用户信息
-            return
-        }
-        
-        switch interruptionType {
-        case .began: // 音频会话中断开始
-            player.pause()
-            
-        case .ended: // 音频会话中断结束
-            if let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt { // 检查中断结束时的选项
-                let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
-                if options.contains(.shouldResume) { // 如果选项包含应恢复播放，则继续播放
-                    player.play()
-                }
-            }
-        @unknown default:
-            break
-        }
-    }
-    
-    /// 当前播放时间
-    ///
-    /// - Parameter time: 当前播放时间
-    /// - Note: 子类重写此方法，更新播放时间
-    @objc open func playerProgressDidChange(time: CMTime) {
-        /// 子类重写: 更新播放时间
-//        let currentSeconds = CMTimeGetSeconds(time)
-//        let durationSeconds = CMTimeGetSeconds(playerItem.duration ?? CMTime.zero)
-//        bottomBar.timeLabel.text = String(format: "%02d:%02d/%02d:%02d", Int(currentSeconds / 60), Int(currentSeconds) % 60, Int(durationSeconds / 60), Int(durationSeconds) % 60)
-//        bottomBar.progressSlider.value = Float(currentSeconds / durationSeconds)
-        
-        print("当前播放时间: \(time) 秒")
-    }
-    
-    // 移除观察者
-    open func removePeriodicTimeObserver() {
-        /// 子类重写: 移除时间观察者
-        if let timeObserverToken = timeObserverToken {
-            player?.removeTimeObserver(timeObserverToken)
-            self.timeObserverToken = nil
-        }
-    }
-    
-    // MARK: - Override Methods
+    // MARK: - Override KVO Methods
     
     /// 添加观察者
     ///
@@ -211,98 +135,261 @@ open class ARTBaseVideoPlayerView: UIView {
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         switch keyPath {
         case PlayerObserverKeyPath.status: // 监听播放器状态
-            handlePlayerStatusChange()
+            didPlayerStatusChanged(change: change)
             
         case PlayerObserverKeyPath.loadedTimeRanges: // 监听缓冲进度
-            handleLoadedTimeRangesChange()
+            didLoadedTimeRangesChanged(change: change)
             
         case PlayerObserverKeyPath.playbackBufferEmpty: // 监听是否为空缓冲
-            handlePlaybackBufferEmpty()
+            didPlaybackBufferEmptyChanged(change: change)
             
         case PlayerObserverKeyPath.playbackLikelyToKeepUp: // 监听是否可能保持播放
-            handlePlaybackLikelyToKeepUp()
+            didPlaybackLikelyToKeepUpChanged(change: change)
             
         case PlayerObserverKeyPath.presentationSize: // 监听视频尺寸变化
-            handlePresentationSizeChange()
+            didPresentationSizeChanged(change: change)
             
         case PlayerObserverKeyPath.timeControlStatus: // 监听时间控制状态
-            handleTimeControlStatusChange()
+            didTimeControlStatusChanged(change: change)
             
         default:
             break
         }
     }
-
-    // MARK: - KVO 处理方法
-
+    
+    // MARK: - Private KVO Methods
+    
     /// 处理播放器状态变化
-    ///
-    /// - Note: 子类重写此方法，处理播放器状态变化
-    open func handlePlayerStatusChange() {
+    private func didPlayerStatusChanged(change: [NSKeyValueChangeKey: Any]?) {
         switch player.status {
         case .readyToPlay:
-            print("播放器准备好了")
-            player.play()
+            onReceivePlayerReadyToPlay()
+            
         case .failed:
-            print("播放器加载失败")
+            onReceivePlayerFailed()
         default:
             break
         }
     }
-
-    /// 处理加载时间范围变化
-    ///
-    /// - Note: 子类重写此方法，处理加载时间范围变化
-    open func handleLoadedTimeRangesChange() {
+    
+    /// 处理缓冲进度变化
+    private func didLoadedTimeRangesChanged(change: [NSKeyValueChangeKey: Any]?) {
         let timeRanges = playerItem.loadedTimeRanges
         if let timeRange = timeRanges.first?.timeRangeValue {
             let start = CMTimeGetSeconds(timeRange.start)
             let duration = CMTimeGetSeconds(timeRange.duration)
             let totalBuffer = start + duration
-            print("缓冲进度：\(totalBuffer)")
+            onReceiveLoadedTimeRangesChanged(totalBuffer: totalBuffer)
         }
     }
-
-    /// 处理缓冲为空的情况
-    ///
-    /// - Note: 子类重写此方法，处理缓冲
-    open func handlePlaybackBufferEmpty() {
-        print("缓冲为空")
+    
+    /// 处理播放缓冲是否为空
+    private func didPlaybackBufferEmptyChanged(change: [NSKeyValueChangeKey: Any]?) {
+        onReceivePlaybackBufferEmptyChanged()
     }
-
-    /// 处理缓冲可保持播放的情况
-    ///
-    /// - Note: 子类重写此方法，处理缓冲
-    open func handlePlaybackLikelyToKeepUp() {
+    
+    /// 处理播放可能性变化
+    private func didPlaybackLikelyToKeepUpChanged(change: [NSKeyValueChangeKey: Any]?) {
         if playerItem.isPlaybackLikelyToKeepUp {
-            print("缓冲可保持播放")
+            onReceivePlaybackLikelyToKeepUp()
         } else {
-            print("缓冲不足，可能无法继续播放")
+            onReceivePlaybackLikelyToKeepUpInsufficient()
         }
     }
-
+    
     /// 处理视频尺寸变化
-    ///
-    /// - Note: 子类重写此方法，处理视频
-    open func handlePresentationSizeChange() {
-        let size = playerItem.presentationSize
-        print("视频尺寸：\(size.width)x\(size.height)")
+    private func didPresentationSizeChanged(change: [NSKeyValueChangeKey: Any]?) {
+        onReceivePresentationSizeChanged(size: playerItem.presentationSize)
     }
-
+    
     /// 处理时间控制状态变化
-    ///
-    /// - Note: 子类重写此方法，处理时间控制状态变化
-    open func handleTimeControlStatusChange() {
+    private func didTimeControlStatusChanged(change: [NSKeyValueChangeKey: Any]?) {
         switch player.timeControlStatus {
         case .playing:
-            print("播放器正在播放")
+            onReceiveTimeControlStatusPlaying()
+            
         case .paused:
-            print("播放器已暂停")
+            onReceiveTimeControlStatusPaused()
+            
         case .waitingToPlayAtSpecifiedRate:
-            print("播放器正在等待")
+            onReceiveTimeControlStatusWaiting()
         default:
             break
         }
+    }
+    
+    /// 播放完成的处理
+    @objc private func didPlayerItemDidPlayToEnd(_ notification: Notification) {
+        /// 子类重写: 处理播放完成
+        onReceivePlayerItemDidPlayToEnd(notification)
+    }
+    
+    /// 播放失败的处理
+    @objc private func didPlayerItemFailedToPlayToEnd(_ notification: Notification) {
+        onReceivePlayerItemFailedToPlayToEnd(notification)
+    }
+    
+    /// 音频会话中断的处理
+    @objc private func didAudioSessionInterrupted(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+              let interruptionType = AVAudioSession.InterruptionType(rawValue: typeValue) else { // 获取通知中的用户信息
+            return
+        }
+        
+        switch interruptionType {
+        case .began: // 音频会话中断开始
+            onReceiveAudioSessionInterruptionBegan(notification)
+            
+        case .ended: // 音频会话中断结束
+            if let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt { // 检查中断结束时的选项
+                let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
+                if options.contains(.shouldResume) { // 如果选项包含应恢复播放，则继续播放
+                    onReceiveAudioSessionInterruptionEnded(notification)
+                }
+            }
+        @unknown default:
+            break
+        }
+    }
+    
+    /// 当前播放时间
+    ///
+    /// - Parameter time: 当前播放时间
+    @objc private func didPlayerProgressDidChange(time: CMTime) {
+        onReceivePlayerProgressDidChange(time: time)
+    }
+    
+    /// 移除观察者
+    private func didRemovePeriodicTimeObserver() {
+        onReceiveRemovePeriodicTimeObserver()
+    }
+    
+    // MARK: Public Methods
+    
+    /// 播放视频
+    ///
+    /// - Parameter notification: 通知
+    /// - Note: 子类重写此方法，处理播放完成
+    open func onReceivePlayerItemDidPlayToEnd(_ notification: Notification) {
+        print("播放完成")
+    }
+    
+    /// 播放失败
+    ///
+    /// - Parameter notification: 通知
+    /// - Note: 子类重写此方法，处理播放完成
+    open func onReceivePlayerItemFailedToPlayToEnd(_ notification: Notification) {
+        print("播放失败")
+    }
+    
+    /// 音频会话中断开始
+    ///
+    /// - Parameter notification: 通知
+    /// - Note: 子类重写此方法，处理音频会话中断开始
+    open func onReceiveAudioSessionInterruptionBegan(_ notification: Notification) {
+        player.pause()
+        print("音频会话中断开始")
+    }
+    
+    /// 音频会话中断结束
+    ///
+    /// - Parameter notification: 通知
+    /// - Note: 子类重写此方法，处理音频会话中断结束
+    open func onReceiveAudioSessionInterruptionEnded(_ notification: Notification) {
+        player.play()
+        print("音频会话中断结束")
+    }
+    
+    /// 更新播放时间
+    ///
+    /// - Parameter time: 当前播放时间
+    /// - Note: 子类重写此方法，更新播放时间
+    open func onReceivePlayerProgressDidChange(time: CMTime) {
+        print("当前播放时间: \(time) 秒")
+    }
+    
+    /// 播放器准备好时的处理
+    ///
+    /// - Note: 子类重写此方法以处理播放器准备好后的逻辑
+    open func onReceivePlayerReadyToPlay() {
+        player.play()
+        print("播放器准备好了")
+    }
+    
+    /// 播放器加载失败时的处理
+    ///
+    /// - Note: 子类重写此方法以处理播放器加载失败后的逻辑
+    open func onReceivePlayerFailed() {
+        print("播放器加载失败")
+    }
+    
+    /// 处理缓冲进度变化
+    ///
+    /// - Parameter totalBuffer: 当前缓冲的总时间
+    /// - Note: 子类重写此方法以处理缓冲进度变化
+    open func onReceiveLoadedTimeRangesChanged(totalBuffer: Double) {
+        print("缓冲进度：\(totalBuffer)")
+    }
+    
+    /// 处理缓冲是否为空
+    ///
+    /// - Note: 子类重写此方法以处理缓
+    open func onReceivePlaybackBufferEmptyChanged() {
+        print("缓冲为空")
+    }
+    
+    /// 处理缓冲可保持播放的
+    ///
+    /// - Note: 子类重写此方法以处理缓冲可保持播放的情况
+    open func onReceivePlaybackLikelyToKeepUp() {
+        print("缓冲可保持播放")
+    }
+    
+    /// 处理缓冲不足，可能无法继续播放
+    ///
+    /// - Note: 子类重写此方法以处理缓冲不足，可能无法继续播放
+    open func onReceivePlaybackLikelyToKeepUpInsufficient() {
+        print("缓冲不足，可能无法继续播放")
+    }
+    
+    /// 处理视频尺寸变化
+    ///
+    /// - Parameter size: 当前视频尺寸
+    /// - Note: 子类重写此方法以处理视频尺寸变化
+    open func onReceivePresentationSizeChanged(size: CGSize) {
+        print("视频尺寸：\(size.width)x\(size.height)")
+    }
+    
+    /// 处理播放器正在播放状态
+    ///
+    /// - Note: 子类重写此方法，处理播放器正在播放状态
+    open func onReceiveTimeControlStatusPlaying() {
+        print("播放器正在播放")
+    }
+    
+    /// 处理播放器已暂停状态
+    ///
+    /// - Note: 子类重写此方法，处理播
+    open func onReceiveTimeControlStatusPaused() {
+        print("播放器已暂停")
+    }
+    
+    /// 处理播放器正在等待状态
+    ///
+    /// - Note: 子类重写此方法，处理播放器正在等待状态
+    open func onReceiveTimeControlStatusWaiting() {
+        print("播放器正在等待")
+    }
+    
+    /// 移除时间观察者
+    open func onReceiveRemovePeriodicTimeObserver() {
+        /// 子类重写: 移除时间观察者
+        if let timeObserverToken = timeObserverToken {
+            player?.removeTimeObserver(timeObserverToken)
+            self.timeObserverToken = nil
+        }
+        print("移除时间观察")
     }
     
     // MARK: - remove Observers
@@ -327,7 +414,7 @@ open class ARTBaseVideoPlayerView: UIView {
         player.removeObserver(self, forKeyPath: PlayerObserverKeyPath.timeControlStatus)
         
         // 移除播放完成监听
-        removePeriodicTimeObserver()
+        didRemovePeriodicTimeObserver()
         
         // 移除播放完成通知
         NotificationCenter.default.removeObserver(self)

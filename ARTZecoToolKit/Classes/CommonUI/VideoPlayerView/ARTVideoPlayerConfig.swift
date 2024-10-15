@@ -6,10 +6,10 @@
 //
 
 /// 视频播放器配置模型
-struct VideoPlayerConfig {
+public struct ARTVideoPlayerConfig {
     
     // MARK: - 基础配置
-    var url: String = ""                        // 视频地址
+    var url: URL?                               // 视频地址
     var isAutoPlay: Bool = true                 // 是否自动播放
     var isLoop: Bool = false                    // 是否循环播放
     var isMuted: Bool = false                   // 是否静音

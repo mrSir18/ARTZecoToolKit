@@ -2,7 +2,7 @@
 //  ARTVideoPlayerTopbar.swift
 //  Pods
 //
-//  Created by mrSir18 on 2024/10/14.
+//  Created by mrSir18 on 2024/10/15.
 //
 
 public protocol ARTVideoPlayerTopbarDelegate: AnyObject {
