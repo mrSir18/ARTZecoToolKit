@@ -15,7 +15,7 @@ public struct ARTVideoPlayerConfig {
     var isMuted: Bool = false                   // 是否静音
     var isFullScreen: Bool = false              // 是否全屏播放
     var isShowCoverView: Bool = true            // 是否显示封面视图
-    var isShowPreviewView: Bool = true          // 是否显示预览视图
+    var isShowPreviewView: Bool = true          // 是否显示预览缩略图
     
     
     // MARK: - 顶部栏状态
