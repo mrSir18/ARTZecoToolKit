@@ -37,6 +37,6 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
 extension ARTViewController_VideoPlayer: ARTVideoPlayerViewProtocol {
     
     func customPlayerMode(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerView.VideoPlayerMode {
-        return .fullscreen
+        return .window
     }
 }

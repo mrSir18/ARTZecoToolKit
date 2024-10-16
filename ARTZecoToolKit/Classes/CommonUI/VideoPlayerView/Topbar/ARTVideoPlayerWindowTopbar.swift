@@ -34,7 +34,7 @@ class ARTVideoPlayerWindowTopbar: ARTVideoPlayerTopbar {
     
     private func setupContainerView() { // 创建容器视图
         containerView = UIView()
-        containerView.backgroundColor = .clear
+        containerView.backgroundColor   = .clear
         addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -43,10 +43,10 @@ class ARTVideoPlayerWindowTopbar: ARTVideoPlayerTopbar {
     
     private func setupBackButton() { // 创建返回按钮
         backButton = ARTAlignmentButton(type: .custom)
-        backButton.imageAlignment   = .left
-        backButton.titleAlignment   = .right
-        backButton.contentInset     = ARTAdaptedValue(12.0)
-        backButton.imageSize        = ARTAdaptedSize(width: 18.0, height: 18.0)
+        backButton.imageAlignment       = .left
+        backButton.titleAlignment       = .right
+        backButton.contentInset         = ARTAdaptedValue(12.0)
+        backButton.imageSize            = ARTAdaptedSize(width: 18.0, height: 18.0)
         backButton.setImage(UIImage(named: "video_back"), for: .normal)
         backButton.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
         addSubview(backButton)
@@ -58,10 +58,10 @@ class ARTVideoPlayerWindowTopbar: ARTVideoPlayerTopbar {
     
     private func setupShareButton() { // 创建分享按钮
         shareButton = ARTAlignmentButton(type: .custom)
-        shareButton.imageAlignment   = .right
-        shareButton.titleAlignment   = .left
-        shareButton.contentInset     = ARTAdaptedValue(12.0)
-        shareButton.imageSize        = ARTAdaptedSize(width: 18.0, height: 18.0)
+        shareButton.imageAlignment      = .right
+        shareButton.titleAlignment      = .left
+        shareButton.contentInset        = ARTAdaptedValue(12.0)
+        shareButton.imageSize           = ARTAdaptedSize(width: 18.0, height: 18.0)
         shareButton.setImage(UIImage(named: "video_share"), for: .normal)
         shareButton.addTarget(self, action: #selector(didTapShareButton), for: .touchUpInside)
         containerView.addSubview(shareButton)
