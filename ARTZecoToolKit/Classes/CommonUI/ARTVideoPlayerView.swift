@@ -16,7 +16,7 @@ import AVFoundation
     ///  - playerMode: 视频播放器视图模式
     ///  - Returns: 自定义顶部工具栏视图
     ///  - Note: 自定义顶部工具栏视图需继承 ARTVideoPlayerTopbar
-    @objc optional func customTopBar(for playerView: ARTVideoPlayerView, playerMode: ARTVideoPlayerView.VideoPlayerMode) -> ARTVideoPlayerTopbar?
+    @objc optional func customTopBar(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerTopbar?
     
     /// 自定义底部工具栏视图
     ///
@@ -24,7 +24,15 @@ import AVFoundation
     ///  - playerView: 视频播放器视
     ///  - Returns: 自定义底部工具栏视图
     ///  - Note: 自定义底部工具栏视图需继承 ARTVideoPlayerBottombar
-    @objc optional func customBottomBar(for playerView: ARTVideoPlayerView, playerMode: ARTVideoPlayerView.VideoPlayerMode) -> ARTVideoPlayerBottombar?
+    @objc optional func customBottomBar(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerBottombar?
+    
+    /// 自定义播放模式
+    ///
+    /// - Parameters:
+    /// - playerView: 视频播放器视
+    /// - Returns: 自定义播放模式
+    /// - Note: 自定义播放模式ARTVideoPlayerView.VideoPlayerMode
+    @objc optional func customPlayerMode(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerView.VideoPlayerMode
 }
 
 extension ARTVideoPlayerView {
@@ -74,8 +82,8 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
     // MARK: - Initialization
 
     public init(_ delegate: ARTVideoPlayerViewProtocol) {
-        super.init()
         self.delegate = delegate
+        super.init()
     }
     
     required public init?(coder: NSCoder) {
@@ -85,6 +93,7 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
     // MARK: - Override Methods
     
     open override func setupViews() {
+        setup_privateDelegate()
         setupVideoPlayerView()
         setupTopBar()
         setupBottomBar()
@@ -92,6 +101,11 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
     }
     
     // MARK: - Setup Methods
+    
+    /// 设置代理对象
+    open func setup_privateDelegate() {
+        self.playerMode = delegate_customPlayerMode()
+    }
     
     /// 创建视频播放器视图
     ///
@@ -106,7 +120,7 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
     /// 重写父类方法，设置子视图
     /// - Note: 默认导航栏视图需继承 ARTVideoPlayerTopbar
     open func setupTopBar() {
-        if let customTopBar = delegate?.customTopBar?(for: self, playerMode: playerMode) { // 获取自定义顶部工具栏视图
+        if let customTopBar = delegate?.customTopBar?(for: self) { // 获取自定义顶部工具栏视图
             topBar = customTopBar
             
         } else { // 创建顶部工具栏视图
@@ -125,7 +139,7 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
     /// 重写父类方法，设置子视图
     /// - Note: 默认底部工具栏视图需继承 ARTVideoPlayerBottombar
     open func setupBottomBar() {
-        if let customBottomBar = delegate?.customBottomBar?(for: self, playerMode: playerMode) { // 获取自定义底部工具栏视图
+        if let customBottomBar = delegate?.customBottomBar?(for: self) { // 获取自定义底部工具栏视图
             bottomBar = customBottomBar
             
         } else { // 创建底部工具栏视图
@@ -177,4 +191,17 @@ extension ARTVideoPlayerView: ARTVideoPlayerTopbarDelegate {
 
 extension ARTVideoPlayerView: ARTVideoPlayerBottombarDelegate {
     
+}
+
+// MARK: - Private ARTVideoPlayerViewProtocol
+
+extension ARTVideoPlayerView {
+    
+    /// 获取自定义播放模式
+    ///
+    /// - Returns: 自定义播放模式
+    /// - Note: 优先使用代理返回的自定义播放模式，若代理未实现则使用默认播放模式
+    private func delegate_customPlayerMode() -> ARTVideoPlayerView.VideoPlayerMode {
+        return self.delegate?.customPlayerMode?(for: self) ?? .window
+    }
 }

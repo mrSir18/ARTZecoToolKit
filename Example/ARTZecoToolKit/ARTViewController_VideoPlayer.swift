@@ -9,7 +9,7 @@
 import AVFoundation
 import ARTZecoToolKit
 
-class ARTViewController_VideoPlayer: ARTBaseViewController, ARTVideoPlayerViewProtocol {
+class ARTViewController_VideoPlayer: ARTBaseViewController {
     
     /// 播放器视图
     private var playerView: ARTVideoPlayerView!
@@ -31,5 +31,12 @@ class ARTViewController_VideoPlayer: ARTBaseViewController, ARTVideoPlayerViewPr
             make.centerY.equalToSuperview()
             make.height.equalTo(ARTAdaptedValue(208.0))
         }
+    }
+}
+
+extension ARTViewController_VideoPlayer: ARTVideoPlayerViewProtocol {
+    
+    func customPlayerMode(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerView.VideoPlayerMode {
+        return .fullscreen
     }
 }
