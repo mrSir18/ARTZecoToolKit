@@ -84,18 +84,15 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
             // 根据手势速度确定是否收起containerView
             let velocity = gesture.velocity(in: containerView).y
             if velocity > 100.0 {
-                UIView.animate(withDuration: 0.2) { [weak self] in
-                    guard let self = self else { return }
+                UIView.animate(withDuration: 0.2) {
                     self.containerView.frame.origin.y = UIScreen.art_currentScreenHeight
-                } completion: { [weak self] finish in
-                    guard let self = self else { return }
+                } completion: { finish in
                     if finish {
                         self.hidePopupView()
                     }
                 }
             } else {
-                UIView.animate(withDuration: 0.3) { [weak self] in
-                    guard let self = self else { return }
+                UIView.animate(withDuration: 0.3) {
                     self.containerView.frame.origin.y = self.initialY
                 }
             }
@@ -125,8 +122,7 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
             make.left.top.equalToSuperview()
         }
         
-        UIView.animate(withDuration: 0.25) { [weak self] in
-            guard let self = self else { return }
+        UIView.animate(withDuration: 0.25) {
             self.containerView.transform = CGAffineTransformTranslate(self.containerView.transform, 0, -self.configuration.containerHeight - art_safeAreaBottom())
         } completion: { _ in
             completion?()
@@ -135,11 +131,9 @@ open class ARTSlidePopupView: UIView, ARTSlidePopupHeaderViewProtocol {
     
     /// 隐藏动画
     open func hidePopupView(_ completion: (() -> Void)? = nil) {
-        UIView.animate(withDuration: 0.25) { [weak self] in
-            guard let self = self else { return}
+        UIView.animate(withDuration: 0.25) {
             self.containerView.transform = CGAffineTransformTranslate(self.containerView.transform, 0, self.configuration.containerHeight + art_safeAreaBottom())
-        } completion: { [weak self] finish in
-            guard let self = self else { return}
+        } completion: { _ in
             self.removeFromSuperview()
             completion?()
         }

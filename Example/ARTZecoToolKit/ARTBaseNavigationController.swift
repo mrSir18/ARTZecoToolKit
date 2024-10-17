@@ -19,3 +19,8 @@ class ARTBaseNavigationController: UINavigationController {
     }
 }
 
+extension UINavigationController { // 隐藏状态栏
+    open override var prefersStatusBarHidden: Bool {
+        return topViewController?.prefersStatusBarHidden ?? true
+    }
+}

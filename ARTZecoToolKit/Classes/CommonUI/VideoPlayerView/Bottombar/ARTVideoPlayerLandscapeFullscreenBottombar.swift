@@ -1,13 +1,11 @@
 //
-//  ARTVideoPlayerFullscreenBottombar.swift
+//  ARTVideoPlayerLandscapeFullscreenBottombar.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/10/15.
 //
 
-import UIKit
-
-class ARTVideoPlayerFullscreenBottombar: ARTVideoPlayerBottombar {
+class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
 
     
     // MARK: - Override Super Methods

@@ -9,48 +9,54 @@ import AVFoundation
 
 @objc public protocol ARTVideoPlayerViewProtocol: AnyObject {
     
+    /// 自定义播放模式
+    ///
+    /// - Parameters:
+    ///   - playerView: 视频播放器视图
+    ///   - Returns: 自定义播放模式
+    ///   - Note: 自定义播放模式 ARTVideoPlayerView.VideoPlayerMode
+    @objc optional func customScreenOrientation(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerView.ScreenOrientation
+    
     /// 自定义顶部工具栏视图
     ///
     /// - Parameters:
-    ///  - playerView: 视频播放器视
-    ///  - playerMode: 视频播放器视图模式
-    ///  - Returns: 自定义顶部工具栏视图
-    ///  - Note: 自定义顶部工具栏视图需继承 ARTVideoPlayerTopbar
-    @objc optional func customTopBar(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerTopbar?
+    ///   - playerView: 视频播放器视图
+    ///   - screenOrientation: 当前屏幕方向
+    ///   - Returns: 自定义顶部工具栏视图
+    ///   - Note: 自定义顶部工具栏视图需继承 ARTVideoPlayerTopbar
+    @objc optional func customTopBar(for playerView: ARTVideoPlayerView, screenOrientation: ARTVideoPlayerView.ScreenOrientation) -> ARTVideoPlayerTopbar?
     
     /// 自定义底部工具栏视图
     ///
     /// - Parameters:
-    ///  - playerView: 视频播放器视
-    ///  - Returns: 自定义底部工具栏视图
-    ///  - Note: 自定义底部工具栏视图需继承 ARTVideoPlayerBottombar
-    @objc optional func customBottomBar(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerBottombar?
+    ///   - playerView: 视频播放器视图
+    ///   - screenOrientation: 当前屏幕方向
+    ///   - Returns: 自定义底部工具栏视图
+    ///   - Note: 自定义底部工具栏视图需继承 ARTVideoPlayerBottombar
+    @objc optional func customBottomBar(for playerView: ARTVideoPlayerView, screenOrientation: ARTVideoPlayerView.ScreenOrientation) -> ARTVideoPlayerBottombar?
     
-    /// 自定义播放模式
+    /// 刷新状态栏外观
     ///
     /// - Parameters:
-    /// - playerView: 视频播放器视
-    /// - Returns: 自定义播放模式
-    /// - Note: 自定义播放模式ARTVideoPlayerView.VideoPlayerMode
-    @objc optional func customPlayerMode(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerView.VideoPlayerMode
+    ///   - playerView: 视频播放器视图
+    ///   - isStatusBarHidden: 是否隐藏状态栏的状态
+    ///   - Note: 调用此方法以更新状态栏外观
+    @objc optional func refreshStatusBarAppearance(for playerView: ARTVideoPlayerView, isStatusBarHidden: Bool)
 }
 
 extension ARTVideoPlayerView {
     
-    /// 视频播放器视图模式
-    @objc public enum VideoPlayerMode: Int {
-        /// 窗口模式
-        case window = 1
-        /// 全屏模式
-        case fullscreen = 2
+    /// 播放器当前的屏幕方向
+    @objc public enum ScreenOrientation: Int {
+        case portraitFullScreen     = 1 // 竖屏全屏
+        case landscapeFullScreen    = 2 // 横屏全屏
+        case window                 = 3 // 普通窗口模式
     }
     
-    /// 顶部和底部栏状态
-    public enum TopBottomBarState: Int  {
-        /// 隐藏
-        case hidden
-        /// 显示
-        case visible
+    /// 顶底栏显示状态
+    public enum ToolbarVisibility: Int {
+        case hidden     = 1 // 隐藏
+        case visible    = 2 // 显示
     }
 }
 
@@ -64,21 +70,26 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
     /// 播放器配置模型
     private var playerConfig: ARTVideoPlayerConfig?
     
-    // MARK: - 播放器相关属性
+    /// 播放器当前的屏幕方向
+    private lazy var screenOrientation: ScreenOrientation = {
+        return delegate_customScreenOrientation()
+    }()
     
-    /// 播放器视图模式
-    private var playerMode: ARTVideoPlayerView.VideoPlayerMode = .window
+    /// 当前顶底栏显示状态
+    private var toolbarVisibility: ToolbarVisibility = .visible // 默认显示
+    
+    /// 记录初始化Frame
+    private var initialFrame: CGRect = .zero
     
     
-    // MARK: - 控件属性
+    // MARK: - 播放器组件
     
     /// 导航栏视图
     private var topBar: ARTVideoPlayerTopbar!
     
-    ///  底部工具栏视图
+    /// 底部工具栏视图
     private var bottomBar: ARTVideoPlayerBottombar!
     
-    public var onOrientationChange: (() -> Void)?
     
     // MARK: - Initialization
     
@@ -94,62 +105,9 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
     // MARK: - Override Methods
     
     open override func setupViews() {
-        setup_privateDelegate()
         setupPlayerContainer()
-        setupTopBar()
-        setupBottomBar()
+        setupToolBars()
         super.setupViews()
-    }
-    
-    // MARK: - Setup Methods
-    
-    /// 设置代理对象
-    open func setup_privateDelegate() {
-        self.playerMode = delegate_customPlayerMode()
-    }
-    
-    open func setupPlayerContainer() {
-        playerContainer = UIView(frame: bounds)
-        addSubview(playerContainer)
-    }
-    
-    /// 创建顶部工具栏
-    ///
-    /// 重写父类方法，设置子视图
-    /// - Note: 默认导航栏视图需继承 ARTVideoPlayerTopbar
-    open func setupTopBar() {
-        if let customTopBar = delegate?.customTopBar?(for: self) { // 获取自定义顶部工具栏视图
-            topBar = customTopBar
-            
-        } else { // 创建顶部工具栏视图
-            topBar = ARTVideoPlayerWindowTopbar(self)
-            addSubview(topBar)
-            topBar.snp.makeConstraints { make in
-                make.top.left.right.equalToSuperview()
-                make.height.equalTo(art_navigationBarHeight())
-            }
-            //            make.height.equalTo(ARTAdaptedValue(66.0))
-        }
-    }
-    
-    /// 创建底部工具栏
-    ///
-    /// 重写父类方法，设置子视图
-    /// - Note: 默认底部工具栏视图需继承 ARTVideoPlayerBottombar
-    open func setupBottomBar() {
-        if let customBottomBar = delegate?.customBottomBar?(for: self) { // 获取自定义底部工具栏视图
-            bottomBar = customBottomBar
-            
-        } else { // 创建底部工具栏视图
-            bottomBar = ARTVideoPlayerWindowBottombar(self)
-            addSubview(bottomBar)
-            bottomBar.snp.makeConstraints { make in
-                make.left.bottom.right.equalToSuperview()
-                make.height.equalTo(art_tabBarHeight())
-            }
-            
-            //            make.height.equalTo(ARTAdaptedValue(88.0))
-        }
     }
     
     // MARK: - Public Methods
@@ -164,7 +122,7 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
             print("Invalid video configuration or URL.")
             return
         }
-        preparePlayer(with: url)
+        setupPreparePlayer(with: url)
         setupPlayerLayer()
         addPlayerObservers()
     }
@@ -179,26 +137,177 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
         player?.play()
     }
     
-    // MARK: - Private Methods
+    /// 旋转屏幕
+    ///
+    /// - Parameter orientation: 屏幕方向
+    /// - Note: 重写父类方法，旋转屏幕时，切换全屏和窗口模式
+    open func transitionToFullscreen(orientation: ScreenOrientation) {
+        let duration: TimeInterval = 0.25 // 动画时长
+        
+        // 定义变换和框架
+        let (transform, frame): (CGAffineTransform, CGRect) = {
+            switch orientation {
+            case .portraitFullScreen: // 竖屏全屏
+                return (.identity, initialFrame)
+            case .landscapeFullScreen: // 横屏全屏
+                return (CGAffineTransform(rotationAngle: CGFloat.pi / 2), UIScreen.main.bounds)
+            case .window: // 普通窗口模式
+                return (.identity, initialFrame)
+            }
+        }()
+        
+        // 刷新状态栏外观
+        delegate_refreshStatusBarAppearance(isHidden: (orientation == .landscapeFullScreen))
+        
+        UIView.animate(withDuration: duration, animations: {
+            self.transform = transform
+            self.topBar.removeFromSuperview()
+            self.bottomBar.removeFromSuperview()
+            
+            // 更新播放器视图的框架
+            self.frame = frame
+            self.playerLayer.frame = self.bounds
+            self.playerContainer.frame = self.bounds
+            
+            self.layoutIfNeeded()
+        }) { _ in
+            self.changeToFullscreen(orientation: orientation)
+        }
+    }
+}
+
+// MARK: - Setup Initializer
+
+extension ARTVideoPlayerView {
     
-    private func preparePlayer(with url: URL) { // 准备播放器
+    /// 创建播放器容器
+    ///
+    /// - Note: 重写父类方法，设置子视图
+    @objc open func setupPlayerContainer() {
+        playerContainer = UIView(frame: bounds)
+        addSubview(playerContainer)
+    }
+    
+    /// 创建顶部和底部工具栏
+    ///
+    /// - Note: 重写父类方法，设置子视图
+    @objc open func setupToolBars() {
+        setupTopBar()
+        setupBottomBar()
+    }
+    
+    /// 创建顶部工具栏
+    ///
+    /// 重写父类方法，设置子视图
+    /// - Note: 默认导航栏视图需继承 ARTVideoPlayerTopbar
+    @objc open func setupTopBar() {
+        if let customTopBar = delegate_customTopBar() { // 获取自定义顶部工具栏视图
+            topBar = customTopBar
+        } else {
+            topBar = defaultTopBarForOrientation()
+            addSubview(topBar)
+            topBar.snp.makeConstraints { make in
+                make.top.left.right.equalToSuperview()
+                make.height.equalTo(topBarHeight(for: screenOrientation))
+            }
+        }
+    }
+    
+    /// 创建底部工具栏
+    ///
+    /// 重写父类方法，设置子视图
+    /// - Note: 默认底部工具栏视图需继承 ARTVideoPlayerBottombar
+    @objc open func setupBottomBar() {
+        if let customBottomBar = delegate_customBottomBar() { // 获取自定义底部工具栏视图
+            bottomBar = customBottomBar
+        } else {
+            bottomBar = defaultBottomBarForOrientation()
+            addSubview(bottomBar)
+            bottomBar.snp.makeConstraints { make in
+                make.left.bottom.right.equalToSuperview()
+                make.height.equalTo(bottomBarHeight(for: screenOrientation))
+            }
+        }
+    }
+    
+    /// - Note: 准备播放器
+    @objc open func setupPreparePlayer(with url: URL) {
         playerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: playerItem)
     }
     
-    private func setupPlayerLayer() { // 设置播放器图层
+    /// - Note: 设置播放器图层
+    @objc open func setupPlayerLayer() {
         guard let player = player else {
             print("Player is not initialized.")
             return
         }
         layoutIfNeeded()
+        initialFrame = frame
         playerLayer?.removeFromSuperlayer()
         playerLayer = AVPlayerLayer(player: player)
         playerLayer.frame = bounds
         playerLayer.videoGravity = .resizeAspect
-
+        
         if let playerLayer = playerLayer { // 添加播放器图层
             playerContainer.layer.addSublayer(playerLayer)
+        }
+    }
+    
+    // MARK: Private Methods
+    
+    /// - Note: 根据屏幕方向返认顶部栏
+    private func defaultTopBarForOrientation() -> ARTVideoPlayerTopbar {
+        switch screenOrientation {
+        case .portraitFullScreen:
+            return ARTVideoPlayerPortraitFullscreenTopbar(self)
+        case .landscapeFullScreen:
+            return ARTVideoPlayerLandscapeFullscreenTopbar(self)
+        case .window:
+            return ARTVideoPlayerWindowTopbar(self)
+        }
+    }
+    
+    /// - Note: 根据屏幕方向返回底部栏
+    private func defaultBottomBarForOrientation() -> ARTVideoPlayerBottombar {
+        switch screenOrientation {
+        case .portraitFullScreen:
+            return ARTVideoPlayerPortraitFullscreenBottombar(self)
+        case .landscapeFullScreen:
+            return ARTVideoPlayerLandscapeFullscreenBottombar(self)
+        case .window:
+            return ARTVideoPlayerWindowBottombar(self)
+        }
+    }
+    
+    /// - Note: 切换到全屏模式，设置屏幕方向并刷新顶部和底部栏
+    private func changeToFullscreen(orientation: ScreenOrientation) {
+        self.screenOrientation = orientation
+        setupTopBar()
+        setupBottomBar()
+    }
+    
+    /// - Note: 切换到窗口模式，设置屏幕方向并刷新顶部和底部栏
+    private func topBarHeight(for orientation: ScreenOrientation) -> CGFloat {
+        switch orientation {
+        case .portraitFullScreen:
+            return ARTAdaptedValue(66.0) // 竖屏高度
+        case .landscapeFullScreen:
+            return ARTAdaptedValue(66.0) // 横屏高度
+        case .window:
+            return art_navigationBarHeight() // 普通窗口模式的高度
+        }
+    }
+    
+    /// - Note: 切换到窗口模式，设置屏幕方向并刷新顶部和底部栏
+    private func bottomBarHeight(for orientation: ScreenOrientation) -> CGFloat {
+        switch orientation {
+        case .portraitFullScreen:
+            return ARTAdaptedValue(88.0) // 竖屏高度
+        case .landscapeFullScreen:
+            return ARTAdaptedValue(88.0) // 横屏高度
+        case .window:
+            return art_tabBarHeight()    // 普通窗口模式的高度
         }
     }
 }
@@ -213,48 +322,12 @@ extension ARTVideoPlayerView: ARTVideoPlayerTopbarDelegate {
     
     public func videoPlayerTopbarDidTapFavorite(_ topbar: ARTVideoPlayerTopbar, isFavorited: Bool) { // 点击收藏按钮
         print("didTapFavoriteButton")
-
-        UIView.animate(withDuration: 0.3, animations: {
-            self.transform = CGAffineTransform.identity
-            
-            // 设置视图的frame为全屏
-            self.frame = CGRect(x: 0, y: ARTAdaptedValue(200.0), width: UIScreen.main.bounds.width, height: ARTAdaptedValue(208))
-            self.playerLayer.frame = self.bounds
-            self.playerContainer.frame = self.bounds
-            self.layoutIfNeeded()
-        })
+        transitionToFullscreen(orientation: .window) // 进入窗口
     }
     
     public func videoPlayerTopbarDidTapShare(_ topbar: ARTVideoPlayerTopbar) { // 点击分享按钮
         print("didTapShareButton")
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            self.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
-            self.topBar.removeFromSuperview()
-            
-            // 设置视图的frame为全屏
-            self.frame = UIScreen.main.bounds
-            self.playerLayer.frame = self.bounds
-            self.playerContainer.frame = self.bounds
-            
-            self.layoutIfNeeded()
-        }) { _ in
-
-        
-            DispatchQueue.main.async {
-                self.onOrientationChange?()
-                
-                // 创建并添加全屏顶部工具栏
-                self.topBar = ARTVideoPlayerFullscreenTopbar(self)
-                self.addSubview(self.topBar)
-                
-                // 确保工具栏约束设置在这里
-                self.topBar.snp.makeConstraints { make in
-                    make.top.left.right.equalToSuperview()
-                    make.height.equalTo(ARTAdaptedValue(66.0))
-                }
-            }
-        }
+        transitionToFullscreen(orientation: .landscapeFullScreen) // 进入横屏
     }
 }
 
@@ -264,7 +337,7 @@ extension ARTVideoPlayerView: ARTVideoPlayerBottombarDelegate {
     
 }
 
-// MARK: - Private ARTVideoPlayerViewProtocol
+// MARK: - Private Delegate Methods
 
 extension ARTVideoPlayerView {
     
@@ -272,7 +345,39 @@ extension ARTVideoPlayerView {
     ///
     /// - Returns: 自定义播放模式
     /// - Note: 优先使用代理返回的自定义播放模式，若代理未实现则使用默认播放模式
-    private func delegate_customPlayerMode() -> ARTVideoPlayerView.VideoPlayerMode {
-        return self.delegate?.customPlayerMode?(for: self) ?? .window
+    private func delegate_customScreenOrientation() -> ScreenOrientation {
+        guard let screenOrientation = delegate?.customScreenOrientation?(for: self) else {
+            return .window
+        }
+        return screenOrientation
+    }
+    
+    /// 获取自定义顶部工具栏
+    ///
+    /// - Returns: 自定义顶部工具栏
+    /// - Note: 优先使用代理返回的自定义顶部工具栏，若代理未实现则使用默认
+    private func delegate_customTopBar() -> ARTVideoPlayerTopbar? {
+        guard let customTopBar = delegate?.customTopBar?(for: self, screenOrientation: screenOrientation) else {
+            return nil
+        }
+        return customTopBar
+    }
+    
+    /// 获取自定义底部工具栏
+    ///
+    /// - Returns: 自定义底部工具栏
+    /// - Note: 优先使用代理返回的自定义底部工具栏，若代理未实现则使用默认
+    private func delegate_customBottomBar() -> ARTVideoPlayerBottombar? {
+        guard let customBottomBar = delegate?.customBottomBar?(for: self, screenOrientation: screenOrientation) else {
+            return nil
+        }
+        return customBottomBar
+    }
+    
+    /// 刷新状态栏外观
+    ///
+    /// - Note: 调用代理方法刷新状态栏外观
+    private func delegate_refreshStatusBarAppearance(isHidden: Bool) {
+        delegate?.refreshStatusBarAppearance?(for: self, isStatusBarHidden: isHidden)
     }
 }

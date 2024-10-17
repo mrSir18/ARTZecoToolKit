@@ -34,7 +34,6 @@ class ARTVideoPlayerWindowTopbar: ARTVideoPlayerTopbar {
     
     private func setupContainerView() { // 创建容器视图
         containerView = UIView()
-        containerView.backgroundColor   = .art_randomColor()
         addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()

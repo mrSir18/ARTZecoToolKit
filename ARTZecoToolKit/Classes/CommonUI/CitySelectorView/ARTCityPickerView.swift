@@ -136,19 +136,16 @@ extension ARTCityPickerView {
                                          UIScreen.art_currentScreenHeight))
             make.left.top.equalToSuperview()
         }
-        UIView.animate(withDuration: 0.25) { [weak self] in
-            guard let self = self else { return}
+        UIView.animate(withDuration: 0.25) {
             self.containerView.transform = CGAffineTransformTranslate(self.containerView.transform, 0, -ARTCityStyleConfiguration.default().containerHeight - art_safeAreaBottom())
         }
     }
     
     /// 移除城市选择器.
     public func removeCitySelector() {
-        UIView.animate(withDuration: 0.25) { [weak self] in
-            guard let self = self else { return}
+        UIView.animate(withDuration: 0.25) {
             self.containerView.transform = CGAffineTransformTranslate(self.containerView.transform, 0, ARTCityStyleConfiguration.default().containerHeight + art_safeAreaBottom())
-        } completion: { [weak self] finish in
-            guard let self = self else { return}
+        } completion: { _ in
             self.removeFromSuperview()
         }
     }

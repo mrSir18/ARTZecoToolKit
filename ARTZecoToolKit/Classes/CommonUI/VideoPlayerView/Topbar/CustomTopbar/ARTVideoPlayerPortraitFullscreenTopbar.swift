@@ -1,0 +1,16 @@
+//
+//  ARTVideoPlayerPortraitFullscreenTopbar.swift
+//  Pods
+//
+//  Created by mrSir18 on 2024/10/17.
+//
+
+class ARTVideoPlayerPortraitFullscreenTopbar: ARTVideoPlayerTopbar {
+
+    
+    // MARK: - Override Super Methods
+    
+    override func setupViews() {
+        
+    }
+}

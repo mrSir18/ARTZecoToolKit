@@ -1,11 +1,11 @@
 //
-//  ARTVideoPlayerFullscreenTopbar.swift
+//  ARTVideoPlayerLandscapeFullscreenTopbar.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/10/15.
 //
 
-class ARTVideoPlayerFullscreenTopbar: ARTVideoPlayerTopbar {
+class ARTVideoPlayerLandscapeFullscreenTopbar: ARTVideoPlayerTopbar {
     
     /// 容器视图
     private var containerView: UIView!
