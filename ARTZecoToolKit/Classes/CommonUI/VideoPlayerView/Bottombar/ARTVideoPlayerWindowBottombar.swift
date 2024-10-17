@@ -45,13 +45,13 @@ class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
         currentTimeLabel = UILabel()
         currentTimeLabel.text               = "01:14/19:08"
         currentTimeLabel.textAlignment      = .left
-        currentTimeLabel.font               = .art_medium(ARTAdaptedValue(8.0))
+        currentTimeLabel.font               = .art_medium(ARTAdaptedValue(10.0))
         currentTimeLabel.textColor          = .art_color(withHEXValue: 0xFFFFFF)
         containerView.addSubview(currentTimeLabel)
         currentTimeLabel.snp.makeConstraints { make in
             make.left.equalTo(ARTAdaptedValue(12.0))
-            make.top.equalTo(ARTAdaptedValue(7.0))
-            make.height.equalTo(ARTAdaptedValue(11.0))
+            make.top.equalTo(ARTAdaptedValue(6.0))
+            make.height.equalTo(ARTAdaptedValue(12.0))
         }
     }
     

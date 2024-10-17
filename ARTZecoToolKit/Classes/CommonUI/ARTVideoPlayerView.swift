@@ -78,9 +78,10 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
     ///  底部工具栏视图
     private var bottomBar: ARTVideoPlayerBottombar!
     
+    public var onOrientationChange: (() -> Void)?
     
     // MARK: - Initialization
-
+    
     public init(_ delegate: ARTVideoPlayerViewProtocol) {
         self.delegate = delegate
         super.init()
@@ -94,7 +95,7 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
     
     open override func setupViews() {
         setup_privateDelegate()
-        setupVideoPlayerView()
+        setupPlayerContainer()
         setupTopBar()
         setupBottomBar()
         super.setupViews()
@@ -107,12 +108,9 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
         self.playerMode = delegate_customPlayerMode()
     }
     
-    /// 创建视频播放器视图
-    ///
-    /// 重写父类方法，设置子视图
-    /// - Note: 使用代理返回的自定义视频播放器视图，若返回 nil 则创建默认的视频播放器视图
-    open func setupVideoPlayerView() {
-
+    open func setupPlayerContainer() {
+        playerContainer = UIView(frame: bounds)
+        addSubview(playerContainer)
     }
     
     /// 创建顶部工具栏
@@ -130,7 +128,7 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
                 make.top.left.right.equalToSuperview()
                 make.height.equalTo(art_navigationBarHeight())
             }
-//            make.height.equalTo(ARTAdaptedValue(66.0))
+            //            make.height.equalTo(ARTAdaptedValue(66.0))
         }
     }
     
@@ -150,7 +148,7 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
                 make.height.equalTo(art_tabBarHeight())
             }
             
-//            make.height.equalTo(ARTAdaptedValue(88.0))
+            //            make.height.equalTo(ARTAdaptedValue(88.0))
         }
     }
     
@@ -162,11 +160,46 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
     /// - config: 视频播放器配置模型
     /// - Note: 重写父类方法，播放视频
     open func playVideo(with config: ARTVideoPlayerConfig?) {
-        guard let playerConfig = config, let url = playerConfig.url else {
-            print("Invalid URL string")
+        guard let config = config, let url = config.url else {
+            print("Invalid video configuration or URL.")
             return
         }
-        
+        preparePlayer(with: url)
+        setupPlayerLayer()
+        addPlayerObservers()
+    }
+    
+    /// 播放下一集视频
+    ///
+    /// - Parameter url: 新的视频 URL
+    /// - Note: 重写父类方法，播放下一集视频
+    open func playNextEpisode(with url: URL) {
+        let playerItem = AVPlayerItem(url: url)
+        player?.replaceCurrentItem(with: playerItem)
+        player?.play()
+    }
+    
+    // MARK: - Private Methods
+    
+    private func preparePlayer(with url: URL) { // 准备播放器
+        playerItem = AVPlayerItem(url: url)
+        player = AVPlayer(playerItem: playerItem)
+    }
+    
+    private func setupPlayerLayer() { // 设置播放器图层
+        guard let player = player else {
+            print("Player is not initialized.")
+            return
+        }
+        layoutIfNeeded()
+        playerLayer?.removeFromSuperlayer()
+        playerLayer = AVPlayerLayer(player: player)
+        playerLayer.frame = bounds
+        playerLayer.videoGravity = .resizeAspect
+
+        if let playerLayer = playerLayer { // 添加播放器图层
+            playerContainer.layer.addSublayer(playerLayer)
+        }
     }
 }
 
@@ -180,10 +213,48 @@ extension ARTVideoPlayerView: ARTVideoPlayerTopbarDelegate {
     
     public func videoPlayerTopbarDidTapFavorite(_ topbar: ARTVideoPlayerTopbar, isFavorited: Bool) { // 点击收藏按钮
         print("didTapFavoriteButton")
-    }
 
+        UIView.animate(withDuration: 0.3, animations: {
+            self.transform = CGAffineTransform.identity
+            
+            // 设置视图的frame为全屏
+            self.frame = CGRect(x: 0, y: ARTAdaptedValue(200.0), width: UIScreen.main.bounds.width, height: ARTAdaptedValue(208))
+            self.playerLayer.frame = self.bounds
+            self.playerContainer.frame = self.bounds
+            self.layoutIfNeeded()
+        })
+    }
+    
     public func videoPlayerTopbarDidTapShare(_ topbar: ARTVideoPlayerTopbar) { // 点击分享按钮
         print("didTapShareButton")
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
+            self.topBar.removeFromSuperview()
+            
+            // 设置视图的frame为全屏
+            self.frame = UIScreen.main.bounds
+            self.playerLayer.frame = self.bounds
+            self.playerContainer.frame = self.bounds
+            
+            self.layoutIfNeeded()
+        }) { _ in
+
+        
+            DispatchQueue.main.async {
+                self.onOrientationChange?()
+                
+                // 创建并添加全屏顶部工具栏
+                self.topBar = ARTVideoPlayerFullscreenTopbar(self)
+                self.addSubview(self.topBar)
+                
+                // 确保工具栏约束设置在这里
+                self.topBar.snp.makeConstraints { make in
+                    make.top.left.right.equalToSuperview()
+                    make.height.equalTo(ARTAdaptedValue(66.0))
+                }
+            }
+        }
     }
 }
 

@@ -34,7 +34,7 @@ class ARTVideoPlayerWindowTopbar: ARTVideoPlayerTopbar {
     
     private func setupContainerView() { // 创建容器视图
         containerView = UIView()
-        containerView.backgroundColor   = .clear
+        containerView.backgroundColor   = .art_randomColor()
         addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -61,13 +61,13 @@ class ARTVideoPlayerWindowTopbar: ARTVideoPlayerTopbar {
         shareButton.imageAlignment      = .right
         shareButton.titleAlignment      = .left
         shareButton.contentInset        = ARTAdaptedValue(12.0)
-        shareButton.imageSize           = ARTAdaptedSize(width: 18.0, height: 18.0)
+        shareButton.imageSize           = ARTAdaptedSize(width: 19.0, height: 19.0)
         shareButton.setImage(UIImage(named: "video_share"), for: .normal)
         shareButton.addTarget(self, action: #selector(didTapShareButton), for: .touchUpInside)
         containerView.addSubview(shareButton)
         shareButton.snp.makeConstraints { make in
             make.top.right.bottom.equalToSuperview()
-            make.width.equalTo(backButton)
+            make.width.equalTo(ARTAdaptedValue(52.0))
         }
     }
     
@@ -75,15 +75,14 @@ class ARTVideoPlayerWindowTopbar: ARTVideoPlayerTopbar {
         favoriteButton = ARTAlignmentButton(type: .custom)
         favoriteButton.imageAlignment   = .right
         favoriteButton.titleAlignment   = .left
-        favoriteButton.contentInset     = ARTAdaptedValue(8.0)
-        favoriteButton.imageSize        = ARTAdaptedSize(width: 18.0, height: 18.0)
+        favoriteButton.imageSize        = ARTAdaptedSize(width: 19.0, height: 19.0)
         favoriteButton.setImage(UIImage(named: "video_favorite"), for: .normal)
         favoriteButton.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
         containerView.addSubview(favoriteButton)
         favoriteButton.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
             make.right.equalTo(shareButton.snp.left)
-            make.width.equalTo(backButton)
+            make.width.equalTo(shareButton)
         }
     }
 }

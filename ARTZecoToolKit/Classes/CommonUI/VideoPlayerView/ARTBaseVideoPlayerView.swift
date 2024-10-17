@@ -33,6 +33,9 @@ extension ARTBaseVideoPlayerView {
 
 open class ARTBaseVideoPlayerView: UIView {
     
+    /// 播放器容器
+    public var playerContainer: UIView!
+    
     /// 视频播放器
     public var player: AVPlayer!
     
@@ -65,7 +68,7 @@ open class ARTBaseVideoPlayerView: UIView {
     
     public init() {
         super.init(frame: .zero)
-        self.backgroundColor = .clear
+        self.backgroundColor = .black
         setupViews()
     }
     
@@ -75,7 +78,6 @@ open class ARTBaseVideoPlayerView: UIView {
     
     open func setupViews() {
         /// 子类重写: 设置视图
-//        addPlayerObservers()
     }
     
     // MARK: - add Observers
@@ -83,7 +85,7 @@ open class ARTBaseVideoPlayerView: UIView {
     /// 添加播放器的观察者
     ///
     /// - Note: 类重写此方法，添加播放器的观察者
-    private func addPlayerObservers() {
+    open func addPlayerObservers() {
         guard let player = player, let playerItem = playerItem else {
             assert(player != nil, "【请先初始化 player 和 playerItem】")
             return
