@@ -12,12 +12,13 @@ import ARTZecoToolKit
 class ARTBaseViewController: UIViewController {
     
     ///导航容器视图
-    var baseContainerView: UIView!
+    public var baseContainerView: UIView!
     
+    /// 返回按钮
     private var backButton: ARTAlignmentButton!
     
     /// 返回按钮是否隐藏
-    var backButtonHidden: Bool = false {
+    public var backButtonHidden: Bool = false {
         didSet {
             backButton.isHidden = backButtonHidden
         }
@@ -37,11 +38,10 @@ class ARTBaseViewController: UIViewController {
         
         // 容器视图
         let containerView = UIView()
-        view.addSubview(containerView)
+        baseContainerView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.top.equalTo(art_statusBarHeight())
-            make.left.right.equalToSuperview()
-            make.height.equalTo(art_navigationBarHeight())
+            make.left.bottom.right.equalToSuperview()
         }
         
         // 创建返回按钮

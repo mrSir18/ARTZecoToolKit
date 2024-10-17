@@ -148,7 +148,7 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
         let (transform, frame): (CGAffineTransform, CGRect) = {
             switch orientation {
             case .portraitFullScreen: // 竖屏全屏
-                return (.identity, initialFrame)
+                return (.identity, UIScreen.main.bounds)
             case .landscapeFullScreen: // 横屏全屏
                 return (CGAffineTransform(rotationAngle: CGFloat.pi / 2), UIScreen.main.bounds)
             case .window: // 普通窗口模式
@@ -291,9 +291,9 @@ extension ARTVideoPlayerView {
     private func topBarHeight(for orientation: ScreenOrientation) -> CGFloat {
         switch orientation {
         case .portraitFullScreen:
-            return ARTAdaptedValue(66.0) // 竖屏高度
+            return art_navigationFullHeight() // 竖屏高度
         case .landscapeFullScreen:
-            return ARTAdaptedValue(66.0) // 横屏高度
+            return ARTAdaptedValue(60.0) // 横屏高度
         case .window:
             return art_navigationBarHeight() // 普通窗口模式的高度
         }

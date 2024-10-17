@@ -41,36 +41,39 @@ class ARTVideoPlayerLandscapeFullscreenTopbar: ARTVideoPlayerTopbar {
     }
     
     private func setupBackButton() { // 创建返回按钮
+        let leftInset = UIScreen.art_currentScreenIsIphoneX ? ARTAdaptedValue(54.0) : 0.0
         backButton = ARTAlignmentButton(type: .custom)
         backButton.imageAlignment       = .left
         backButton.titleAlignment       = .right
         backButton.contentInset         = ARTAdaptedValue(12.0)
-        backButton.imageSize            = ARTAdaptedSize(width: 20.0, height: 20.0)
+        backButton.imageTitleSpacing    = ARTAdaptedValue(4.0)
+        backButton.imageSize            = ARTAdaptedSize(width: 18.0, height: 18.0)
         backButton.setTitle("轻松陪伴宝宝成长", for: .normal)
         backButton.setImage(UIImage(named: "video_back"), for: .normal)
         backButton.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
         containerView.addSubview(backButton)
         backButton.snp.makeConstraints { make in
-            make.left.equalTo(art_statusBarHeight())
+            make.left.equalTo(leftInset)
             make.top.equalToSuperview()
             make.right.equalTo(snp.centerX)
-            make.height.equalTo(ARTAdaptedValue(64.0))
+            make.height.equalToSuperview()
         }
     }
     
     private func setupShareButton() { // 创建分享按钮
+        let rightInset = UIScreen.art_currentScreenIsIphoneX ? ARTAdaptedValue(42.0) : 0.0
         shareButton = ARTAlignmentButton(type: .custom)
         shareButton.imageAlignment      = .right
         shareButton.titleAlignment      = .left
-        shareButton.contentInset        = ARTAdaptedValue(24.0)
-        shareButton.imageSize           = ARTAdaptedSize(width: 24.0, height: 24.0)
+        shareButton.contentInset        = ARTAdaptedValue(12.0)
+        shareButton.imageSize           = ARTAdaptedSize(width: 19.0, height: 19.0)
         shareButton.setImage(UIImage(named: "video_share"), for: .normal)
         shareButton.addTarget(self, action: #selector(didTapShareButton), for: .touchUpInside)
         containerView.addSubview(shareButton)
         shareButton.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.right.equalTo(-ARTAdaptedValue(52.0))
-            make.width.equalTo(ARTAdaptedValue(72.0))
+            make.right.equalTo(-rightInset)
+            make.width.equalTo(ARTAdaptedValue(51.0))
             make.height.equalTo(backButton)
         }
     }
@@ -79,7 +82,7 @@ class ARTVideoPlayerLandscapeFullscreenTopbar: ARTVideoPlayerTopbar {
         favoriteButton = ARTAlignmentButton(type: .custom)
         favoriteButton.imageAlignment   = .right
         favoriteButton.titleAlignment   = .left
-        favoriteButton.imageSize        = ARTAdaptedSize(width: 24.0, height: 24.0)
+        favoriteButton.imageSize        = ARTAdaptedSize(width: 19.0, height: 19.0)
         favoriteButton.setImage(UIImage(named: "video_favorite"), for: .normal)
         favoriteButton.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
         containerView.addSubview(favoriteButton)

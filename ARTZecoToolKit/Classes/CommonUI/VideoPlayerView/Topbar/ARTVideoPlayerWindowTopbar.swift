@@ -66,7 +66,7 @@ class ARTVideoPlayerWindowTopbar: ARTVideoPlayerTopbar {
         containerView.addSubview(shareButton)
         shareButton.snp.makeConstraints { make in
             make.top.right.bottom.equalToSuperview()
-            make.width.equalTo(ARTAdaptedValue(52.0))
+            make.width.equalTo(ARTAdaptedValue(51.0))
         }
     }
     

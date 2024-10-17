@@ -23,8 +23,8 @@ import ARTZecoToolKit
 
 class ARTViewController_VideoPlayer: ARTBaseViewController {
     
-    /// 播放器视图
-    private var playerView: ARTVideoPlayerView!
+    /// 播放器容器视图
+    private var containerView: UIView!
     
     /// 是否隐藏状态栏
     private var isStatusBarHidden: Bool = false
@@ -34,17 +34,43 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupContainerView()
         setupPlayerView()
     }
-
+    
+    // MARK: - Setup Methods
+    
+    private func setupContainerView() { // 创建容器视图
+        containerView = UIView()
+        containerView.backgroundColor = .white
+        view.addSubview(containerView)
+        containerView.snp.makeConstraints { make in
+            make.left.bottom.right.equalToSuperview()
+            make.top.equalTo(art_statusBarHeight())
+        }
+    }
+    
     private func setupPlayerView() { // 创建播放器视图
-        playerView = ARTVideoPlayerView(self)
-        playerView.frame = CGRectMake(0.0, ARTAdaptedValue(200.0), self.view.frame.size.width, ARTAdaptedValue(208))
+        let playerView = ARTVideoPlayerView(self)
+        playerView.frame.origin = CGPoint(x: 0.0, y: art_statusBarHeight())
+        playerView.frame.size = CGSize(width: UIScreen.art_currentScreenWidth,
+                                       height: ARTAdaptedValue(208))
         view.addSubview(playerView)
         
         let config = ARTVideoPlayerConfig()
         config.url = URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")
+//        config.url = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MOV")!)
+//        https://www.w3school.com.cn/example/html5/mov_bbb.mp4
+//        http://vjs.zencdn.net/v/oceans.mp4
         playerView.playVideo(with: config)
+    }
+    
+    // MARK: Override Methods
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.backgroundColor = .black
+        baseContainerView.isHidden = true
     }
     
     override var prefersStatusBarHidden: Bool { // 状态栏是否隐藏

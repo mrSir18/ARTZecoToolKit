@@ -22,7 +22,7 @@ open class ARTVideoPlayerBottombar: UIView {
     public init(_ delegate: ARTVideoPlayerBottombarDelegate? = nil) {
         super.init(frame: .zero)
         self.delegate = delegate
-        self.backgroundColor = .art_randomColor()
+        self.backgroundColor = .clear
         setupViews()
     }
     
