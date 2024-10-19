@@ -87,3 +87,32 @@ class ARTBaseViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
 }
+
+
+extension ARTBaseViewController {
+    
+    /// 是否支持自动旋转
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
+    /// 支持哪些屏幕方向
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
+    /// 默认的屏幕方向
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
+    }
+    
+    /// 状态栏样式
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
+    
+    /// 是否隐藏状态栏
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+}

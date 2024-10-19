@@ -20,6 +20,7 @@
 		0258B7B12BFA862B00AEB349 /* video.MOV in Resources */ = {isa = PBXBuildFile; fileRef = 0258B7B02BFA862B00AEB349 /* video.MOV */; };
 		0258CA9E2C03995300A486E7 /* ARTViewController_PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0258CA9D2C03995300A486E7 /* ARTViewController_PageViewController.swift */; };
 		025D29982C48459D00F611D6 /* ARTViewController_Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29972C48459D00F611D6 /* ARTViewController_Carousel.swift */; };
+		026398AC2CC32E460023C814 /* MRVideoFullscreenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026398AB2CC32E430023C814 /* MRVideoFullscreenManager.swift */; };
 		026A7B6C2C3431AE00D3134E /* ARTViewController_ActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A7B6B2C3431AE00D3134E /* ARTViewController_ActionSheet.swift */; };
 		0282385F2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282385E2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift */; };
 		0292ECA72C733B7A00D08248 /* ARTViewController+WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0292ECA62C733B7A00D08248 /* ARTViewController+WebView.swift */; };
@@ -29,6 +30,10 @@
 		02B4908C2C8AEA4C007F379A /* city.json in Resources */ = {isa = PBXBuildFile; fileRef = 02B490882C8AEA4C007F379A /* city.json */; };
 		02B4908D2C8AEA4C007F379A /* province.json in Resources */ = {isa = PBXBuildFile; fileRef = 02B490892C8AEA4C007F379A /* province.json */; };
 		02B4908E2C8AEA4C007F379A /* street.json in Resources */ = {isa = PBXBuildFile; fileRef = 02B4908A2C8AEA4C007F379A /* street.json */; };
+		02BABF612CC2D285000C7BB5 /* MRVideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BABF602CC2D26E000C7BB5 /* MRVideoPlayerView.swift */; };
+		02BABF642CC2D71B000C7BB5 /* MRVideoPlayerWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BABF632CC2D70A000C7BB5 /* MRVideoPlayerWrapperView.swift */; };
+		02BABF662CC2EAFC000C7BB5 /* MRFullScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BABF652CC2EAF8000C7BB5 /* MRFullScreenController.swift */; };
+		02BABF682CC2EB73000C7BB5 /* MRAnimationTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BABF672CC2EB6F000C7BB5 /* MRAnimationTransitioning.swift */; };
 		02BB292D2C49671100DE706C /* ARTFirstCarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB292C2C49671100DE706C /* ARTFirstCarouselCell.swift */; };
 		02BB292F2C49673200DE706C /* ARTSecondCarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB292E2C49673200DE706C /* ARTSecondCarouselCell.swift */; };
 		02C95B412C42700600200438 /* ARTViewController+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C95B402C42700600200438 /* ARTViewController+CollectionView.swift */; };
@@ -86,6 +91,7 @@
 		0258B7B02BFA862B00AEB349 /* video.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = video.MOV; sourceTree = "<group>"; };
 		0258CA9D2C03995300A486E7 /* ARTViewController_PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_PageViewController.swift; sourceTree = "<group>"; };
 		025D29972C48459D00F611D6 /* ARTViewController_Carousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_Carousel.swift; sourceTree = "<group>"; };
+		026398AB2CC32E430023C814 /* MRVideoFullscreenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRVideoFullscreenManager.swift; sourceTree = "<group>"; };
 		026A7B6B2C3431AE00D3134E /* ARTViewController_ActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_ActionSheet.swift; sourceTree = "<group>"; };
 		0282385E2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_AlignmentButton.swift; sourceTree = "<group>"; };
 		0292ECA62C733B7A00D08248 /* ARTViewController+WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTViewController+WebView.swift"; sourceTree = "<group>"; };
@@ -95,6 +101,10 @@
 		02B490882C8AEA4C007F379A /* city.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = city.json; sourceTree = "<group>"; };
 		02B490892C8AEA4C007F379A /* province.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = province.json; sourceTree = "<group>"; };
 		02B4908A2C8AEA4C007F379A /* street.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = street.json; sourceTree = "<group>"; };
+		02BABF602CC2D26E000C7BB5 /* MRVideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRVideoPlayerView.swift; sourceTree = "<group>"; };
+		02BABF632CC2D70A000C7BB5 /* MRVideoPlayerWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRVideoPlayerWrapperView.swift; sourceTree = "<group>"; };
+		02BABF652CC2EAF8000C7BB5 /* MRFullScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRFullScreenController.swift; sourceTree = "<group>"; };
+		02BABF672CC2EB6F000C7BB5 /* MRAnimationTransitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRAnimationTransitioning.swift; sourceTree = "<group>"; };
 		02BB292C2C49671100DE706C /* ARTFirstCarouselCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTFirstCarouselCell.swift; sourceTree = "<group>"; };
 		02BB292E2C49673200DE706C /* ARTSecondCarouselCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTSecondCarouselCell.swift; sourceTree = "<group>"; };
 		02C95B402C42700600200438 /* ARTViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTViewController+CollectionView.swift"; sourceTree = "<group>"; };
@@ -208,6 +218,18 @@
 			name = BottomBar;
 			sourceTree = "<group>";
 		};
+		02BABF622CC2D28F000C7BB5 /* VideoPlayerBusiness */ = {
+			isa = PBXGroup;
+			children = (
+				02BABF602CC2D26E000C7BB5 /* MRVideoPlayerView.swift */,
+				02BABF632CC2D70A000C7BB5 /* MRVideoPlayerWrapperView.swift */,
+				02BABF672CC2EB6F000C7BB5 /* MRAnimationTransitioning.swift */,
+				026398AB2CC32E430023C814 /* MRVideoFullscreenManager.swift */,
+				02BABF652CC2EAF8000C7BB5 /* MRFullScreenController.swift */,
+			);
+			path = VideoPlayerBusiness;
+			sourceTree = "<group>";
+		};
 		02BB29302C49673F00DE706C /* CarouselBusiness */ = {
 			isa = PBXGroup;
 			children = (
@@ -242,6 +264,7 @@
 				0298808C2C46E43000176ED3 /* PhotoBrowserBusiness */,
 				02BB29302C49673F00DE706C /* CarouselBusiness */,
 				0209353F2C73F08700696C0F /* WebViewBusiness */,
+				02BABF622CC2D28F000C7BB5 /* VideoPlayerBusiness */,
 			);
 			name = Business;
 			sourceTree = "<group>";
@@ -639,8 +662,10 @@
 				02F8AE552BF67E7E00A111F6 /* ARTViewController_SlideBar.swift in Sources */,
 				02F8AE502BF67E7E00A111F6 /* ARTViewController_ScrollView.swift in Sources */,
 				02F8AE4C2BF67E7E00A111F6 /* ARTViewController_CitySelector.swift in Sources */,
+				026398AC2CC32E460023C814 /* MRVideoFullscreenManager.swift in Sources */,
 				0258B7AF2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift in Sources */,
 				02F8AE4F2BF67E7E00A111F6 /* ARTViewController_SlidePopup.swift in Sources */,
+				02BABF682CC2EB73000C7BB5 /* MRAnimationTransitioning.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				0298808B2C46E3EF00176ED3 /* ARTControllerNavigationBar.swift in Sources */,
 				02C95B442C42705D00200438 /* ARTCollectionViewModel.swift in Sources */,
@@ -656,6 +681,8 @@
 				02C95B412C42700600200438 /* ARTViewController+CollectionView.swift in Sources */,
 				02F8AE4E2BF67E7E00A111F6 /* ARTViewController_CollectionView.swift in Sources */,
 				024F9A4F2C456D50008DF3AB /* ARTViewController_PhotoBrowser.swift in Sources */,
+				02BABF612CC2D285000C7BB5 /* MRVideoPlayerView.swift in Sources */,
+				02BABF642CC2D71B000C7BB5 /* MRVideoPlayerWrapperView.swift in Sources */,
 				025D29982C48459D00F611D6 /* ARTViewController_Carousel.swift in Sources */,
 				0282385F2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift in Sources */,
 				02F8AE312BF66BCE00A111F6 /* ARTBaseViewController.swift in Sources */,
@@ -664,6 +691,7 @@
 				02F8AE522BF67E7E00A111F6 /* ARTBaseNavigationController.swift in Sources */,
 				029880902C46E97C00176ED3 /* ARTControllerBottomBar.swift in Sources */,
 				02C95B4B2C42725E00200438 /* ARTCollectionHeader.swift in Sources */,
+				02BABF662CC2EAFC000C7BB5 /* MRFullScreenController.swift in Sources */,
 				022E01232C429EB50069BA7A /* CollectionSectionProtocol.swift in Sources */,
 				0258CA9E2C03995300A486E7 /* ARTViewController_PageViewController.swift in Sources */,
 			);
