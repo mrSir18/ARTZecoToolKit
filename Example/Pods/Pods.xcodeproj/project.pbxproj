@@ -23,6 +23,8 @@
 		02AC102F2CBD5FFE0077AA73 /* ARTVideoPlayerBottombar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AC102E2CBD5FFA0077AA73 /* ARTVideoPlayerBottombar.swift */; };
 		02AD1355E31E97D912478D247CE99F36 /* UIImage+MultiFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 76177DDD2E7BF7A343CDDBB18B9A1D1C /* UIImage+MultiFormat.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		02BA8DCBCA988ECDE42ADA1C1550D205 /* NSImage+Compatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8373B5943392C6D7FD633AA2C91B3759 /* NSImage+Compatibility.m */; };
+		02C1C9432CC3D9E900C1F856 /* ARTVideoPlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1C9422CC3D9E700C1F856 /* ARTVideoPlayerControlsView.swift */; };
+		02C1C9462CC3EC5200C1F856 /* ARTVideoPlayerOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1C9452CC3EC5200C1F856 /* ARTVideoPlayerOverlayView.swift */; };
 		02ECC3C12CBDAB83003CFDE5 /* ARTVideoPlayerWindowTopbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02ECC3C02CBDAB83003CFDE5 /* ARTVideoPlayerWindowTopbar.swift */; };
 		02ECC3C32CBDAB9E003CFDE5 /* ARTVideoPlayerWindowBottombar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02ECC3C22CBDAB9E003CFDE5 /* ARTVideoPlayerWindowBottombar.swift */; };
 		02ECC3C52CBDAEA9003CFDE5 /* ARTVideoPlayerLandscapeFullscreenTopbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02ECC3C42CBDAEA9003CFDE5 /* ARTVideoPlayerLandscapeFullscreenTopbar.swift */; };
@@ -458,6 +460,8 @@
 		02A750D22CBE6F5800739D2F /* ARTBaseVideoPlayerWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ARTBaseVideoPlayerWrapperView.swift; path = ../ARTBaseVideoPlayerWrapperView.swift; sourceTree = "<group>"; };
 		02AC102C2CBD5FE20077AA73 /* ARTVideoPlayerTopbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ARTVideoPlayerTopbar.swift; path = ../ARTVideoPlayerTopbar.swift; sourceTree = "<group>"; };
 		02AC102E2CBD5FFA0077AA73 /* ARTVideoPlayerBottombar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ARTVideoPlayerBottombar.swift; path = ../ARTVideoPlayerBottombar.swift; sourceTree = "<group>"; };
+		02C1C9422CC3D9E700C1F856 /* ARTVideoPlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ARTVideoPlayerControlsView.swift; path = ../../ARTVideoPlayerControlsView.swift; sourceTree = "<group>"; };
+		02C1C9452CC3EC5200C1F856 /* ARTVideoPlayerOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ARTVideoPlayerOverlayView.swift; path = ../ARTVideoPlayerOverlayView.swift; sourceTree = "<group>"; };
 		02ECC3C02CBDAB83003CFDE5 /* ARTVideoPlayerWindowTopbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ARTVideoPlayerWindowTopbar.swift; path = ../ARTVideoPlayerWindowTopbar.swift; sourceTree = "<group>"; };
 		02ECC3C22CBDAB9E003CFDE5 /* ARTVideoPlayerWindowBottombar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ARTVideoPlayerWindowBottombar.swift; path = ../ARTVideoPlayerWindowBottombar.swift; sourceTree = "<group>"; };
 		02ECC3C42CBDAEA9003CFDE5 /* ARTVideoPlayerLandscapeFullscreenTopbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ARTVideoPlayerLandscapeFullscreenTopbar.swift; path = ../ARTVideoPlayerLandscapeFullscreenTopbar.swift; sourceTree = "<group>"; };
@@ -956,8 +960,8 @@
 			children = (
 				02A750D22CBE6F5800739D2F /* ARTBaseVideoPlayerWrapperView.swift */,
 				02ED39572CC3C6E9009CB1F5 /* PlayerWrapperView */,
-				02AC10302CBD60060077AA73 /* Topbar */,
-				02AC10312CBD60140077AA73 /* Bottombar */,
+				02C1C9472CC3EC6700C1F856 /* PlayerOverlayView */,
+				02C1C9442CC3DA0200C1F856 /* PlayerControlsView */,
 				0236E5892CBEC68F0050662A /* Config */,
 			);
 			path = VideoPlayerWrapperView;
@@ -970,7 +974,7 @@
 				02ECC3C82CBE51EC003CFDE5 /* CustomTopbar */,
 			);
 			name = Topbar;
-			path = ../Topbar;
+			path = ../../Topbar;
 			sourceTree = "<group>";
 		};
 		02AC10312CBD60140077AA73 /* Bottombar */ = {
@@ -980,7 +984,25 @@
 				02ECC3C92CBE5206003CFDE5 /* CustomBottombar */,
 			);
 			name = Bottombar;
-			path = ../Bottombar;
+			path = ../../Bottombar;
+			sourceTree = "<group>";
+		};
+		02C1C9442CC3DA0200C1F856 /* PlayerControlsView */ = {
+			isa = PBXGroup;
+			children = (
+				02C1C9422CC3D9E700C1F856 /* ARTVideoPlayerControlsView.swift */,
+				02AC10302CBD60060077AA73 /* Topbar */,
+				02AC10312CBD60140077AA73 /* Bottombar */,
+			);
+			path = PlayerControlsView;
+			sourceTree = "<group>";
+		};
+		02C1C9472CC3EC6700C1F856 /* PlayerOverlayView */ = {
+			isa = PBXGroup;
+			children = (
+				02C1C9452CC3EC5200C1F856 /* ARTVideoPlayerOverlayView.swift */,
+			);
+			path = PlayerOverlayView;
 			sourceTree = "<group>";
 		};
 		02ECC3C82CBE51EC003CFDE5 /* CustomTopbar */ = {
@@ -2454,6 +2476,7 @@
 				02A750D32CBE6F6D00739D2F /* ARTBaseVideoPlayerWrapperView.swift in Sources */,
 				7AAF6E99E09F0B7418CFFF6BC2265F62 /* ARTCityPickerHeader.swift in Sources */,
 				F500464880835079DCD793A7B1378D99 /* ARTCityPickerHotCell.swift in Sources */,
+				02C1C9432CC3D9E900C1F856 /* ARTVideoPlayerControlsView.swift in Sources */,
 				0236E5882CBEC6830050662A /* ARTVideoPlayerConfig.swift in Sources */,
 				0250021E2CC165A50049D0A4 /* ARTVideoPlayerPortraitFullscreenBottombar.swift in Sources */,
 				741B937AF54C8F109D7E4B328F3B29A3 /* ARTCityPickerHotHeader.swift in Sources */,
@@ -2507,6 +2530,7 @@
 				AA1972A497176E9402AA43512C3593EA /* ARTWebView.swift in Sources */,
 				E62653CB575723A4135C4C1EFEEE003D /* ARTWebViewController.swift in Sources */,
 				2872CF649A910E940D57B75D7570920A /* ARTZecoToolKit-dummy.m in Sources */,
+				02C1C9462CC3EC5200C1F856 /* ARTVideoPlayerOverlayView.swift in Sources */,
 				F485B5E7F565B8356BD4818E4049B3FB /* CALayer+ARTExtension.swift in Sources */,
 				648E1BFB6F4FF371A2CC093E9CA5D422 /* Data+ARTExtension.swift in Sources */,
 				00595497E5A86F464BF01FAC717DF240 /* Date+ARTExtension.swift in Sources */,

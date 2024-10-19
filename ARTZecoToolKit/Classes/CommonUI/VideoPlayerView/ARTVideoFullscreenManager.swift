@@ -30,18 +30,19 @@ open class ARTVideoFullscreenManager: NSObject {
     }
     
     /// 关闭全屏视频播放
-    open func dismiss() {
+    open func dismiss(completion: (() -> Void)? = nil) {
         executeOnMainThread { [weak self] in
             guard let self = self, let controller = self.fullScreenController else { return }
             controller.dismiss(animated: true) {
                 self.fullScreenController = nil
                 UIViewController.attemptRotationToDeviceOrientation()
+                completion?()
             }
         }
     }
     
     /// 展示全屏视频播放
-    open func presentFullscreenWithRotation() {
+    open func presentFullscreenWithRotation(completion: (() -> Void)? = nil) {
         executeOnMainThread { [weak self] in
             guard let self = self, let videoWrapperView = self.videoWrapperView, videoWrapperView.superview != nil,
                   self.fullScreenController == nil,
@@ -52,7 +53,8 @@ open class ARTVideoFullscreenManager: NSObject {
             self.fullScreenController = ARTFullScreenController()
             self.fullScreenController.transitioningDelegate = self
             self.fullScreenController.modalPresentationStyle = .fullScreen
-            rootViewController.present(self.fullScreenController!, animated: true) {
+            rootViewController.present(self.fullScreenController, animated: true) {
+                completion?()
                 UIViewController.attemptRotationToDeviceOrientation()
             }
         }

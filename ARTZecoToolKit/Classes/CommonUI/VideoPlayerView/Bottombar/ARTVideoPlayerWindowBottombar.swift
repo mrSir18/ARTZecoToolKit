@@ -5,7 +5,21 @@
 //  Created by mrSir18 on 2024/10/15.
 //
 
-class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
+/// 协议方法
+///
+/// - NOTE: 可继承该协议方法
+public protocol ARTVideoPlayerWindowBottombarDelegate: ARTVideoPlayerBottombarDelegate {
+    
+    /// 点击全屏按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    func videoPlayerBottombarDidTapFullscreen(_ bottombar: ARTVideoPlayerWindowBottombar)
+}
+
+open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
+    
+    /// 代理对象
+    private weak var subclassDelegate: ARTVideoPlayerWindowBottombarDelegate?
     
     /// 容器视图
     private var containerView: UIView!
@@ -20,9 +34,20 @@ class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     private var progressView: UIProgressView!
     
     
+    // MARK: - Initializatio
+
+    public init(_ subclassDelegate: ARTVideoPlayerWindowBottombarDelegate? = nil) {
+        self.subclassDelegate = subclassDelegate
+        super.init(subclassDelegate)
+    }
+    
+    required public init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Override Super Methods
     
-    override func setupViews() {
+    open override func setupViews() {
         super.setupViews()
         setupContainerView()
         setupCurrentTimeLabel()
@@ -92,6 +117,6 @@ class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     ///
     /// - Note: 子类实现该方法处理全屏操作
     @objc private func didTapFullscreenButton() {
-        print("点击全屏按钮")
+        subclassDelegate?.videoPlayerBottombarDidTapFullscreen(self)
     }
 }

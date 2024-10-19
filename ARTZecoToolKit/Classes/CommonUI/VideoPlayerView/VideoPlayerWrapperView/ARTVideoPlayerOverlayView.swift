@@ -1,26 +1,26 @@
 //
-//  ARTVideoPlayerBottombar.swift
+//  ARTVideoPlayerOverlayView.swift
 //  Pods
 //
-//  Created by mrSir18 on 2024/10/15.
+//  Created by mrSir18 on 2024/10/19.
 //
 
 /// 协议方法
 ///
 /// - NOTE: 可继承该协议方法
-public protocol ARTVideoPlayerBottombarDelegate: AnyObject {
+public protocol ARTVideoPlayerOverlayViewDelegate: AnyObject {
     
 }
 
-open class ARTVideoPlayerBottombar: UIView {
-
+open class ARTVideoPlayerOverlayView: UIView {
+    
     /// 代理对象
-    public weak var delegate: ARTVideoPlayerBottombarDelegate?
+    public weak var delegate: ARTVideoPlayerOverlayViewDelegate?
     
     
     // MARK: - Initialization
-
-    public init(_ delegate: ARTVideoPlayerBottombarDelegate? = nil) {
+    
+    public init(_ delegate: ARTVideoPlayerOverlayViewDelegate? = nil) {
         super.init(frame: .zero)
         self.delegate = delegate
         self.backgroundColor = .clear

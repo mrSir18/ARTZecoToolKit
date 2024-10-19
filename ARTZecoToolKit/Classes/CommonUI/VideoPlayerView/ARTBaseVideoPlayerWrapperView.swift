@@ -7,6 +7,13 @@
 
 import AVFoundation
 
+/// 播放器当前的屏幕方向
+@objc public enum ScreenOrientation: Int {
+    case portraitFullScreen     = 1 // 竖屏全屏
+    case landscapeFullScreen    = 2 // 横屏全屏
+    case window                 = 3 // 普通窗口模式
+}
+
 extension ARTBaseVideoPlayerWrapperView {
     
     // 定义常量，存储播放器和播放项的 KeyPath
@@ -32,9 +39,6 @@ extension ARTBaseVideoPlayerWrapperView {
 }
 
 open class ARTBaseVideoPlayerWrapperView: UIView {
-    
-    /// 播放器容器
-    public var playerContainer: UIView!
     
     /// 视频播放器
     public var player: AVPlayer!

@@ -7,9 +7,14 @@
 
 /// 获取适配比例
 public func ARTAdaptScaleFactor() -> CGFloat {
-    let screenWidth = UIScreen.main.bounds.size.width
+    let screenSize = UIScreen.main.bounds.size
     let designWidth: CGFloat = 375.0
-    return screenWidth / designWidth
+    let designHeight: CGFloat = 812.0 // 通常为667.0 或 812.0
+
+    // 根据当前设备方向选择设计宽度或高度
+    let isPortrait = screenSize.width < screenSize.height
+    let referenceWidth = isPortrait ? designWidth : designHeight
+    return screenSize.width / referenceWidth
 }
 
 /// 适配值

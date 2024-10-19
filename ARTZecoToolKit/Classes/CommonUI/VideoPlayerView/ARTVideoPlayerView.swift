@@ -39,13 +39,21 @@ open class ARTVideoPlayerView: UIStackView {
     ///
     /// - Parameter playerView: 播放器视图
     open func setupVideoPlayerView() {
-//        let videoWrapperView = ARTVideoPlayerWrapperView()
-//        addArrangedSubview(videoWrapperView)
+        let videoWrapperView = ARTVideoPlayerWrapperView(self)
+        addArrangedSubview(videoWrapperView)
         
         
         // MARK: - Test Methods
         
-//        let url = URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")!
-//        videoWrapperView.playVideo(with: url) // 播放视频
+        let config = ARTVideoPlayerConfig()
+        config.url = URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")
+//        config.url = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MOV")!)
+//        https://www.w3school.com.cn/example/html5/mov_bbb.mp4
+//        http://vjs.zencdn.net/v/oceans.mp4
+        videoWrapperView.startVideoPlayback(with: config)
     }
+}
+
+extension ARTVideoPlayerView: ARTVideoPlayerWrapperViewProtocol {
+
 }
