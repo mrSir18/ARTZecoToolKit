@@ -79,7 +79,7 @@ open class ARTVideoPlayerControlsView: UIView {
     
     /// 代理对象
     private weak var delegate: ARTVideoPlayerControlsViewDelegate?
-    
+ 
     /// 播放器当前的屏幕方向
     private lazy var screenOrientation: ScreenOrientation = {
         return delegate_customScreenOrientation()
@@ -88,6 +88,13 @@ open class ARTVideoPlayerControlsView: UIView {
     /// 当前顶底栏显示状态
     private var toolbarVisibility: ToolbarVisibility = .visible // 默认显示
     
+    /// 是否横向全屏
+    public var isLandscape: Bool = true
+    
+    /// 自动获取视频屏幕方向
+    private lazy var videoScreenOrientation: ScreenOrientation = {
+        return isLandscape ? .landscapeFullScreen : .portraitFullScreen
+    }()
     
     // MARK: - 播放器组件
     
@@ -155,7 +162,7 @@ extension ARTVideoPlayerControlsView {
             topBar = defaultTopBarForOrientation()
             addSubview(topBar)
             topBar.snp.makeConstraints { make in
-                make.top.left.right.equalToSuperview()
+                make.left.top.right.equalToSuperview()
                 make.height.equalTo(topBarHeight(for: screenOrientation))
             }
         }
@@ -266,7 +273,7 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerWindowBottombarDelegate {
     
     public func videoPlayerBottombarDidTapFullscreen(_ bottombar: ARTVideoPlayerWindowBottombar) { // 点击全屏按钮
         removeToolBars() // 移除顶底栏
-        delegate?.transitionToFullscreen?(for: self, orientation: .landscapeFullScreen)
+        delegate?.transitionToFullscreen?(for: self, orientation: videoScreenOrientation)
     }
 }
 

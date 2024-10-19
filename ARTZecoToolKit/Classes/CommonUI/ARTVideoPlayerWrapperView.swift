@@ -55,7 +55,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     private var fullscreenManager: ARTVideoFullscreenManager!
     
     /// 播放器配置模型
-    private var playerConfig: ARTVideoPlayerConfig?
+    public var playerConfig: ARTVideoPlayerConfig!
     
     
     // MARK: - 播放器组件 AVPlayer（最底层：播放器视图）
@@ -87,6 +87,49 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         setupControlsView()
     }
     
+    open override func onReceivePlayerFailed() { // 播放器加载失败
+        print("播放器加载失败")
+    }
+    
+    open override func onReceivePlayerReadyToPlay() { // 播放器准备好
+        player.play()
+        print("播放器准备好了")
+    }
+    
+    open override func onReceiveLoadedTimeRangesChanged(totalBuffer: Double) { // 缓冲进度变化
+        print("缓冲进度：\(totalBuffer)")
+    }
+    
+    open override func onReceivePlayerProgressDidChange(time: CMTime) { // 更新播放时间
+        print("当前播放时间: \(time) 秒")
+    }
+    
+    open override func onReceivePresentationSizeChanged(size: CGSize) { // 视频尺寸变化，最优方案根据服务器返回的视频尺寸判断是否横屏/竖屏 (全屏)
+        guard size != .zero else { return }
+        playerConfig.isLandscape = size.width > size.height // 根据视频尺寸判断是否横屏/竖屏 (全屏)
+        playControlsView.isLandscape = playerConfig.isLandscape
+    }
+    
+    open override func onReceiveTimeControlStatusPlaying() { // 播放器正在播放
+        print("播放器正在播放")
+    }
+    
+    open override func onReceiveTimeControlStatusPaused() { // 播放器已暂停
+        print("播放器已暂停")
+    }
+    
+    open override func onReceiveTimeControlStatusWaiting() { // 播放器正在等待
+        print("播放器正在等待")
+    }
+    
+    open override func onReceivePlayerItemDidPlayToEnd(_ notification: Notification) { // 播放完成
+        print("播放完成")
+    }
+    
+    open override func onReceivePlayerItemFailedToPlayToEnd(_ notification: Notification) { // 播放失败
+        print("播放失败")
+    }
+    
     // MARK: - Public Methods
     
     /// 开始播放视频
@@ -98,6 +141,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
             print("无效的视频配置或 URL。")
             return
         }
+        playerConfig = config
         setupPreparePlayer(with: url)
         addPlayerObservers()
     }
@@ -233,6 +277,7 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     
     public func videoPlayerControlsDidTapShare(_ playerControlsView: ARTVideoPlayerControlsView) { // 点击分享按钮
         print("didTapShareButton")
+        player.play()
     }
     
     public func transitionToFullscreen(for playerControlsView: ARTVideoPlayerControlsView, orientation: ScreenOrientation) { // 点击全屏按钮
@@ -245,7 +290,7 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
 // MARK: - AVPlayerLayer layerClass
 
 extension ARTVideoPlayerWrapperView {
-    open override class var layerClass: AnyClass {
+    open override class var layerClass: AnyClass { // 重写 layerClass 方法
         return AVPlayerLayer.self
     }
 }

@@ -319,7 +319,6 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     ///
     /// - Note: 子类重写此方法以处理播放器准备好后的逻辑
     open func onReceivePlayerReadyToPlay() {
-        player.play()
         print("播放器准备好了")
     }
     
@@ -361,7 +360,7 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     
     /// 处理视频尺寸变化
     ///
-    /// - Parameter size: 当前视频尺寸
+    /// - Parameter size: 当前视频尺寸，最优解决方式从服务端获取视频尺寸，防止视频尺寸变化
     /// - Note: 子类重写此方法以处理视频尺寸变化
     open func onReceivePresentationSizeChanged(size: CGSize) {
         print("视频尺寸：\(size.width)x\(size.height)")

@@ -10,6 +10,9 @@ import UIKit
 /// 全屏控制器，用于展示视频内容
 open class ARTFullScreenController: UIViewController {
     
+    /// 是否横向全屏
+    public var isLandscape: Bool = true
+    
     /// 内容栈视图，用于承载全屏视频及其相关组件
     public var contentStackView: UIStackView!
     
@@ -51,7 +54,7 @@ extension ARTFullScreenController {
     
     /// 支持的界面方向
     open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .landscape // 仅支持横屏
+        return isLandscape ? .landscape : .portrait
     }
     
     /// 状态栏样式
@@ -61,7 +64,7 @@ extension ARTFullScreenController {
     
     /// 是否隐藏状态栏
     open override var prefersStatusBarHidden: Bool {
-        return true
+        return isLandscape
     }
     
     /// 是否自动隐藏主屏幕指示器

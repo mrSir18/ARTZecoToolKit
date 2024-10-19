@@ -7,16 +7,18 @@
 
 
 import UIKit
+import AVFoundation
+import MobileCoreServices
 
 /// 视频播放器栈视图，管理视频播放器的显示
 open class ARTVideoPlayerView: UIStackView {
 
     // MARK: - Initialization
     
-    /// 初始化方法
     public init() {
         super.init(frame: .zero)
         setupDefaults()
+        setupSupportedAVPlayerFileExtensions()
         setupVideoPlayerView()
     }
     
@@ -31,6 +33,11 @@ open class ARTVideoPlayerView: UIStackView {
         insetsLayoutMarginsFromSafeArea = false // 不受安全区域影响
         distribution = .fill // 填充整个栈视图
         alignment = .fill // 子视图填充对齐
+    }
+    
+    /// 设置支持的 AVPlayer 文件扩展名
+    private func setupSupportedAVPlayerFileExtensions() {
+        print("\n\n本框架基于 AVPlayer 封装，支持格式：\n\n【\(supportedAVPlayerFileExtensions())】\n")
     }
 
     // MARK: - Override Methods
@@ -56,4 +63,18 @@ open class ARTVideoPlayerView: UIStackView {
 
 extension ARTVideoPlayerView: ARTVideoPlayerWrapperViewProtocol {
 
+}
+
+// MARK: - Supported AVPlayer File Extensions
+
+extension ARTVideoPlayerView {
+    
+    /// 获取支持的 AVPlayer 文件扩展名
+    ///
+    /// - Returns: 支持的 AVPlayer 文件扩展名
+    private func supportedAVPlayerFileExtensions() -> String {
+        return AVURLAsset.audiovisualTypes().compactMap {
+            UTTypeCopyPreferredTagWithClass($0 as CFString, kUTTagClassFilenameExtension)?.takeRetainedValue() as String?
+        }.joined(separator: ", ")
+    }
 }
