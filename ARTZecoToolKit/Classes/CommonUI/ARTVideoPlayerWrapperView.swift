@@ -1,5 +1,5 @@
 //
-//  ARTVideoPlayerView.swift
+//  ARTVideoPlayerWrapperView.swift
 //  Pods
 //
 //  Created by mrSir18 on 2024/10/15.
@@ -7,44 +7,44 @@
 
 import AVFoundation
 
-@objc public protocol ARTVideoPlayerViewProtocol: AnyObject {
+@objc public protocol ARTVideoPlayerWrapperViewProtocol: AnyObject {
     
     /// 自定义播放模式
     ///
     /// - Parameters:
-    ///   - playerView: 视频播放器视图
+    ///   - playerWrapperView: 视频播放器视图
     ///   - Returns: 自定义播放模式
-    ///   - Note: 自定义播放模式 ARTVideoPlayerView.VideoPlayerMode
-    @objc optional func customScreenOrientation(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerView.ScreenOrientation
+    ///   - Note: 自定义播放模式 ARTVideoPlayerWrapperView.VideoPlayerMode
+    @objc optional func customScreenOrientation(for playerWrapperView: ARTVideoPlayerWrapperView) -> ARTVideoPlayerWrapperView.ScreenOrientation
     
     /// 自定义顶部工具栏视图
     ///
     /// - Parameters:
-    ///   - playerView: 视频播放器视图
+    ///   - playerWrapperView: 视频播放器视图
     ///   - screenOrientation: 当前屏幕方向
     ///   - Returns: 自定义顶部工具栏视图
     ///   - Note: 自定义顶部工具栏视图需继承 ARTVideoPlayerTopbar
-    @objc optional func customTopBar(for playerView: ARTVideoPlayerView, screenOrientation: ARTVideoPlayerView.ScreenOrientation) -> ARTVideoPlayerTopbar?
+    @objc optional func customTopBar(for playerWrapperView: ARTVideoPlayerWrapperView, screenOrientation: ARTVideoPlayerWrapperView.ScreenOrientation) -> ARTVideoPlayerTopbar?
     
     /// 自定义底部工具栏视图
     ///
     /// - Parameters:
-    ///   - playerView: 视频播放器视图
+    ///   - playerWrapperView: 视频播放器视图
     ///   - screenOrientation: 当前屏幕方向
     ///   - Returns: 自定义底部工具栏视图
     ///   - Note: 自定义底部工具栏视图需继承 ARTVideoPlayerBottombar
-    @objc optional func customBottomBar(for playerView: ARTVideoPlayerView, screenOrientation: ARTVideoPlayerView.ScreenOrientation) -> ARTVideoPlayerBottombar?
+    @objc optional func customBottomBar(for playerWrapperView: ARTVideoPlayerWrapperView, screenOrientation: ARTVideoPlayerWrapperView.ScreenOrientation) -> ARTVideoPlayerBottombar?
     
     /// 刷新状态栏外观
     ///
     /// - Parameters:
-    ///   - playerView: 视频播放器视图
+    ///   - playerWrapperView: 视频播放器视图
     ///   - isStatusBarHidden: 是否隐藏状态栏的状态
     ///   - Note: 调用此方法以更新状态栏外观
-    @objc optional func refreshStatusBarAppearance(for playerView: ARTVideoPlayerView, isStatusBarHidden: Bool)
+    @objc optional func refreshStatusBarAppearance(for playerWrapperView: ARTVideoPlayerWrapperView, isStatusBarHidden: Bool)
 }
 
-extension ARTVideoPlayerView {
+extension ARTVideoPlayerWrapperView {
     
     /// 播放器当前的屏幕方向
     @objc public enum ScreenOrientation: Int {
@@ -60,12 +60,12 @@ extension ARTVideoPlayerView {
     }
 }
 
-open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
+open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     // MARK: - Private Properties
     
     /// 代理对象
-    private weak var delegate: ARTVideoPlayerViewProtocol?
+    private weak var delegate: ARTVideoPlayerWrapperViewProtocol?
     
     /// 播放器配置模型
     private var playerConfig: ARTVideoPlayerConfig?
@@ -93,7 +93,7 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
     
     // MARK: - Initialization
     
-    public init(_ delegate: ARTVideoPlayerViewProtocol) {
+    public init(_ delegate: ARTVideoPlayerWrapperViewProtocol) {
         self.delegate = delegate
         super.init()
     }
@@ -178,7 +178,7 @@ open class ARTVideoPlayerView: ARTBaseVideoPlayerView {
 
 // MARK: - Setup Initializer
 
-extension ARTVideoPlayerView {
+extension ARTVideoPlayerWrapperView {
     
     /// 创建播放器容器
     ///
@@ -314,7 +314,7 @@ extension ARTVideoPlayerView {
 
 // MARK: - ARTVideoPlayerTopbarDelegate
 
-extension ARTVideoPlayerView: ARTVideoPlayerTopbarDelegate {
+extension ARTVideoPlayerWrapperView: ARTVideoPlayerTopbarDelegate {
     
     public func videoPlayerTopbarDidTapBack(_ topbar: ARTVideoPlayerTopbar) { // 点击返回按钮
         print("didTapBackButton")
@@ -333,13 +333,13 @@ extension ARTVideoPlayerView: ARTVideoPlayerTopbarDelegate {
 
 // MARK: - ARTVideoPlayerTopbar
 
-extension ARTVideoPlayerView: ARTVideoPlayerBottombarDelegate {
+extension ARTVideoPlayerWrapperView: ARTVideoPlayerBottombarDelegate {
     
 }
 
 // MARK: - Private Delegate Methods
 
-extension ARTVideoPlayerView {
+extension ARTVideoPlayerWrapperView {
     
     /// 获取自定义播放模式
     ///

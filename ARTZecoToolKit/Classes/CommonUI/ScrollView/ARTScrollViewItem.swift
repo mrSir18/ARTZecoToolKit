@@ -23,7 +23,7 @@ public struct ARTScrollViewItem: SmartCodable {
         
     }
     
-    public init(id: String?, title: String?, desc: String?, imageUrl: String?, videoUrl: String?, linkUrl: String?, extParams: Any?) {
+    public init(id: String?, title: String? = nil, desc: String? = nil, imageUrl: String? = nil, videoUrl: String? = nil, linkUrl: String? = nil, extParams: Any? = nil) {
         self.id         = id
         self.title      = title
         self.desc       = desc

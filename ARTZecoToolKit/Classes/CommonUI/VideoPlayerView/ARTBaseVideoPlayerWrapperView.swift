@@ -1,5 +1,5 @@
 //
-//  ARTBaseVideoPlayerView.swift
+//  ARTBaseVideoPlayerWrapperView.swift
 //  Pods
 //
 //  Created by mrSir18 on 2024/10/15.
@@ -7,7 +7,7 @@
 
 import AVFoundation
 
-extension ARTBaseVideoPlayerView {
+extension ARTBaseVideoPlayerWrapperView {
     
     // 定义常量，存储播放器和播放项的 KeyPath
     struct PlayerObserverKeyPath {
@@ -31,7 +31,7 @@ extension ARTBaseVideoPlayerView {
     }
 }
 
-open class ARTBaseVideoPlayerView: UIView {
+open class ARTBaseVideoPlayerWrapperView: UIView {
     
     /// 播放器容器
     public var playerContainer: UIView!

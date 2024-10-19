@@ -163,7 +163,7 @@ import ARTZecoToolKit
 //    }
 //    
 //    private func setupPlayerView() { // 创建播放器视图
-//        let playerView = ARTVideoPlayerView(self)
+//        let playerView = ARTVideoPlayerWrapperView(self)
 //        playerView.frame.origin = CGPoint(x: 0.0, y: art_statusBarHeight())
 //        playerView.frame.size = CGSize(width: UIScreen.art_currentScreenWidth,
 //                                       height: ARTAdaptedValue(208))
@@ -190,13 +190,13 @@ import ARTZecoToolKit
 //    }
 //}
 //
-//extension ARTViewController_VideoPlayer: ARTVideoPlayerViewProtocol {
+//extension ARTViewController_VideoPlayer: ARTVideoPlayerWrapperViewProtocol {
 //    
-//    func customScreenOrientation(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerView.ScreenOrientation { // 自定义屏幕方向
+//    func customScreenOrientation(for playerView: ARTVideoPlayerWrapperView) -> ARTVideoPlayerWrapperView.ScreenOrientation { // 自定义屏幕方向
 //        return .window
 //    }
 //    
-//    func refreshStatusBarAppearance(for playerView: ARTVideoPlayerView, isStatusBarHidden: Bool) { // 刷新状态栏显示
+//    func refreshStatusBarAppearance(for playerView: ARTVideoPlayerWrapperView, isStatusBarHidden: Bool) { // 刷新状态栏显示
 //        self.isStatusBarHidden = isStatusBarHidden
 //        setNeedsStatusBarAppearanceUpdate()
 //    }
