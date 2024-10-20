@@ -87,6 +87,18 @@ open class ARTVideoPlayerControlsView: UIView {
     
     /// 当前顶底栏显示状态
     private var toolbarVisibility: ToolbarVisibility = .visible // 默认显示
+
+
+    // MARK: - 播放器组件
+    
+    /// 导航栏视图
+    private var topBar: ARTVideoPlayerTopbar!
+    
+    /// 底部工具栏视图
+    private var bottomBar: ARTVideoPlayerBottombar!
+    
+    
+    // MARK: - 自定义播放器属性
     
     /// 是否横向全屏
     public var isLandscape: Bool = true
@@ -95,14 +107,6 @@ open class ARTVideoPlayerControlsView: UIView {
     private lazy var videoScreenOrientation: ScreenOrientation = {
         return isLandscape ? .landscapeFullScreen : .portraitFullScreen
     }()
-    
-    // MARK: - 播放器组件
-    
-    /// 导航栏视图
-    private var topBar: ARTVideoPlayerTopbar!
-    
-    /// 底部工具栏视图
-    private var bottomBar: ARTVideoPlayerBottombar!
     
     
     // MARK: - Initialization

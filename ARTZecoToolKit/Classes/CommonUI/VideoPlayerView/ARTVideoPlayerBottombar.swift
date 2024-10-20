@@ -17,6 +17,12 @@ open class ARTVideoPlayerBottombar: UIView {
     /// 代理对象
     public weak var delegate: ARTVideoPlayerBottombarDelegate?
     
+    /// 缓冲进度视图
+    public var progressView: UIProgressView!
+    
+    /// 滑块视图
+    public var sliderView: ARTVideoPlayerSlider!
+    
     
     // MARK: - Initialization
 

@@ -30,12 +30,9 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     /// 全屏按钮
     private var fullscreenButton: ARTAlignmentButton!
     
-    /// 进度条
-    private var progressView: UIProgressView!
-    
     
     // MARK: - Initializatio
-
+    
     public init(_ subclassDelegate: ARTVideoPlayerWindowBottombarDelegate? = nil) {
         self.subclassDelegate = subclassDelegate
         super.init(subclassDelegate)
@@ -53,6 +50,7 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
         setupCurrentTimeLabel()
         setupFullscreenButton()
         setupProgressView()
+        setupSliderView()
     }
     
     // MARK: - Setup Methods
@@ -97,8 +95,8 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     
     private func setupProgressView() { // 创建进度条
         progressView = UIProgressView()
-        progressView.progressTintColor      = .art_color(withHEXValue: 0x00FF00)
-        progressView.trackTintColor         = .art_color(withHEXValue: 0x666666)
+        progressView.trackTintColor         = .art_color(withHEXValue: 0xFFFFFF, alpha: 0.2)
+        progressView.progressTintColor      = .art_color(withHEXValue: 0xFFFFFF, alpha: 0.2)
         progressView.progress               = 0.5
         progressView.layer.cornerRadius     = ARTAdaptedValue(1.0)
         progressView.layer.masksToBounds    = true
@@ -109,6 +107,25 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
             make.right.equalTo(fullscreenButton)
             make.height.equalTo(ARTAdaptedValue(3.0))
         }
+    }
+    
+    private func setupSliderView() { // 创建滑块视图
+        sliderView = ARTVideoPlayerSlider()
+        sliderView.minimumValue = 0.0
+        sliderView.maximumValue = 1.0
+        sliderView.minimumTrackTintColor = .art_color(withHEXValue: 0xFFFFFF, alpha: 0.5)
+        sliderView.trackHeight = ARTAdaptedValue(3.0)
+        if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: ARTAdaptedSize(width: 7.0, height: 7.0)) {
+            sliderView.setThumbImage(thumbImage, for: .normal)
+        }
+        containerView.addSubview(sliderView)
+        sliderView.snp.makeConstraints { make in
+            make.left.right.equalTo(progressView)
+            make.centerY.equalTo(progressView)
+            make.height.equalTo(ARTAdaptedValue(32.0))
+        }
+        // 将 progressView 移动到最顶层
+        containerView.bringSubviewToFront(fullscreenButton)
     }
     
     // MARK: - Button Actions
