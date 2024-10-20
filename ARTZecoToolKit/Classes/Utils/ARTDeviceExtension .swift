@@ -64,10 +64,10 @@ public func art_tabBarFullHeight() -> CGFloat {
 
 /// 获取Window窗口
 public var art_keyWindow: UIWindow {
-    return getKeyWindow() ?? UIWindow.init(frame: UIScreen.main.bounds)
+    return art_getKeyWindow() ?? UIWindow.init(frame: UIScreen.main.bounds)
 }
 
-private func getKeyWindow() -> UIWindow? {
+private func art_getKeyWindow() -> UIWindow? {
     if #available(iOS 13.0, *) {
         if let windowScene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
             return windowScene.windows.first(where: { $0.isKeyWindow })
@@ -99,20 +99,20 @@ public func art_resourcePath(file: String, object: AnyObject) -> String {
 ///
 /// - Returns: Bool
 public func art_isDynamicIslandSupported() -> Bool {
-    guard let modelName = getDeviceModelName() else {
+    guard let modelName = art_getDeviceModelName() else {
         return false
     }
-    return isSupportedDevice(modelName: modelName)
+    return art_isSupportedDevice(modelName: modelName)
 }
 
 /// 检查设备型号是否以支持的前缀开头
-private func isSupportedDevice(modelName: String) -> Bool {
+private func art_isSupportedDevice(modelName: String) -> Bool {
     let supportedModelPrefixes = ["iPhone14", "iPhone15", "iPhone16", "iPhone17", "iPhone18", "iPhone19", "iPhone20", "iPhone21", "iPhone22"]
     return supportedModelPrefixes.contains(where: modelName.starts(with:))
 }
 
 /// 获取设备型号
-private func getDeviceModelName() -> String? {
+private func art_getDeviceModelName() -> String? {
     var systemInfo = utsname()
     uname(&systemInfo)
     let modelIdentifier = withUnsafePointer(to: &systemInfo.machine.0) {

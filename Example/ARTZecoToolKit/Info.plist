@@ -20,6 +20,14 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>DINCond-Bold.otf</string>
+		<string>DINPro-Light.ttf</string>
+		<string>DINPro-Regular.otf</string>
+		<string>DINPro-Medium.ttf</string>
+		<string>SourceHanSansCN-Heavy.otf</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

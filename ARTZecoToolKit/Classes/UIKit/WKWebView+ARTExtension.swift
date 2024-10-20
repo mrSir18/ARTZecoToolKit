@@ -10,7 +10,7 @@ import WebKit
 extension WKWebView {
     
     /// 预加载空白的 WKWebView
-    public static func preload() {
+    public static func art_preload() {
         let webView = WKWebView()
         webView.load(URLRequest(url: URL(string: "about:blank")!))
     }

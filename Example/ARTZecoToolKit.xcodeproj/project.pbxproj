@@ -25,6 +25,11 @@
 		0292ECA72C733B7A00D08248 /* ARTViewController+WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0292ECA62C733B7A00D08248 /* ARTViewController+WebView.swift */; };
 		0298808B2C46E3EF00176ED3 /* ARTControllerNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0298808A2C46E3EF00176ED3 /* ARTControllerNavigationBar.swift */; };
 		029880902C46E97C00176ED3 /* ARTControllerBottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0298808F2C46E97C00176ED3 /* ARTControllerBottomBar.swift */; };
+		02A375A52CC5588800248BBC /* SourceHanSansCN-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 02A375A42CC5588800248BBC /* SourceHanSansCN-Heavy.otf */; };
+		02A375A62CC5588800248BBC /* DINPro-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02A375A22CC5588800248BBC /* DINPro-Medium.ttf */; };
+		02A375A72CC5588800248BBC /* DINCond-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 02A375A02CC5588800248BBC /* DINCond-Bold.otf */; };
+		02A375A82CC5588800248BBC /* DINPro-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02A375A12CC5588800248BBC /* DINPro-Light.ttf */; };
+		02A375A92CC5588800248BBC /* DINPro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 02A375A32CC5588800248BBC /* DINPro-Regular.otf */; };
 		02B4908B2C8AEA4C007F379A /* county.json in Resources */ = {isa = PBXBuildFile; fileRef = 02B490872C8AEA4C007F379A /* county.json */; };
 		02B4908C2C8AEA4C007F379A /* city.json in Resources */ = {isa = PBXBuildFile; fileRef = 02B490882C8AEA4C007F379A /* city.json */; };
 		02B4908D2C8AEA4C007F379A /* province.json in Resources */ = {isa = PBXBuildFile; fileRef = 02B490892C8AEA4C007F379A /* province.json */; };
@@ -91,6 +96,11 @@
 		0292ECA62C733B7A00D08248 /* ARTViewController+WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTViewController+WebView.swift"; sourceTree = "<group>"; };
 		0298808A2C46E3EF00176ED3 /* ARTControllerNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTControllerNavigationBar.swift; sourceTree = "<group>"; };
 		0298808F2C46E97C00176ED3 /* ARTControllerBottomBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTControllerBottomBar.swift; sourceTree = "<group>"; };
+		02A375A02CC5588800248BBC /* DINCond-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINCond-Bold.otf"; sourceTree = "<group>"; };
+		02A375A12CC5588800248BBC /* DINPro-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINPro-Light.ttf"; sourceTree = "<group>"; };
+		02A375A22CC5588800248BBC /* DINPro-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINPro-Medium.ttf"; sourceTree = "<group>"; };
+		02A375A32CC5588800248BBC /* DINPro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINPro-Regular.otf"; sourceTree = "<group>"; };
+		02A375A42CC5588800248BBC /* SourceHanSansCN-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceHanSansCN-Heavy.otf"; sourceTree = "<group>"; };
 		02B490872C8AEA4C007F379A /* county.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = county.json; sourceTree = "<group>"; };
 		02B490882C8AEA4C007F379A /* city.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = city.json; sourceTree = "<group>"; };
 		02B490892C8AEA4C007F379A /* province.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = province.json; sourceTree = "<group>"; };
@@ -384,6 +394,11 @@
 				02B490882C8AEA4C007F379A /* city.json */,
 				02B490872C8AEA4C007F379A /* county.json */,
 				02B4908A2C8AEA4C007F379A /* street.json */,
+				02A375A02CC5588800248BBC /* DINCond-Bold.otf */,
+				02A375A12CC5588800248BBC /* DINPro-Light.ttf */,
+				02A375A22CC5588800248BBC /* DINPro-Medium.ttf */,
+				02A375A32CC5588800248BBC /* DINPro-Regular.otf */,
+				02A375A42CC5588800248BBC /* SourceHanSansCN-Heavy.otf */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD41AFB9204008FA782 /* Info.plist */,
@@ -532,6 +547,11 @@
 				0258B7AD2BFA845800AEB349 /* 5.png in Resources */,
 				02B4908D2C8AEA4C007F379A /* province.json in Resources */,
 				02F8AE2B2BF66B3E00A111F6 /* 0.png in Resources */,
+				02A375A52CC5588800248BBC /* SourceHanSansCN-Heavy.otf in Resources */,
+				02A375A62CC5588800248BBC /* DINPro-Medium.ttf in Resources */,
+				02A375A72CC5588800248BBC /* DINCond-Bold.otf in Resources */,
+				02A375A82CC5588800248BBC /* DINPro-Light.ttf in Resources */,
+				02A375A92CC5588800248BBC /* DINPro-Regular.otf in Resources */,
 				02F8AE2F2BF66B3E00A111F6 /* hot_area_format_user.json in Resources */,
 				02B4908C2C8AEA4C007F379A /* city.json in Resources */,
 				02F8AE2C2BF66B3E00A111F6 /* 2.png in Resources */,
