@@ -13,7 +13,7 @@ public protocol ARTVideoPlayerTopbarDelegate: AnyObject {
     /// 点击返回按钮
     ///
     /// - Note: 子类实现该方法处理返回操作
-    func videoPlayerTopbarDidTapBack(_ topbar: ARTVideoPlayerTopbar)
+    func videoPlayerTopbarDidTapBack(for topbar: ARTVideoPlayerTopbar)
     
     /// 点击收藏按钮
     ///
@@ -21,12 +21,12 @@ public protocol ARTVideoPlayerTopbarDelegate: AnyObject {
     ///   - topbar: 当前的 `ARTVideoPlayerTopbar` 实例
     ///   - isFavorited: `true` 表示添加收藏，`false` 表示取消收藏
     /// - Note: 子类实现该方法处理收藏状态的改变
-    func videoPlayerTopbarDidTapFavorite(_ topbar: ARTVideoPlayerTopbar, isFavorited: Bool)
+    func videoPlayerTopbarDidTapFavorite(for topbar: ARTVideoPlayerTopbar, isFavorited: Bool)
     
     /// 点击分享按钮
     ///
     /// - Note: 子类实现该方法处理分享操作
-    func videoPlayerTopbarDidTapShare(_ topbar: ARTVideoPlayerTopbar)
+    func videoPlayerTopbarDidTapShare(for topbar: ARTVideoPlayerTopbar)
 }
 
 open class ARTVideoPlayerTopbar: UIView {
@@ -66,7 +66,7 @@ open class ARTVideoPlayerTopbar: UIView {
     ///
     /// - Note: 子类实现该方法处理返回操作
     @objc public func didTapBackButton() {
-        delegate?.videoPlayerTopbarDidTapBack(self)
+        delegate?.videoPlayerTopbarDidTapBack(for: self)
     }
     
     /// 点击收藏按钮
@@ -75,14 +75,14 @@ open class ARTVideoPlayerTopbar: UIView {
     @objc public func didTapFavoriteButton() {
         isFavorited.toggle()
         updateFavoriteState(isFavorited: isFavorited)
-        delegate?.videoPlayerTopbarDidTapFavorite(self, isFavorited: isFavorited)
+        delegate?.videoPlayerTopbarDidTapFavorite(for: self, isFavorited: isFavorited)
     }
     
     /// 点击分享按钮
     ///
     /// - Note: 子类实现该方法处理分享
     @objc public func didTapShareButton() {
-        delegate?.videoPlayerTopbarDidTapShare(self)
+        delegate?.videoPlayerTopbarDidTapShare(for: self)
     }
     
     // MARK: - Public Methods

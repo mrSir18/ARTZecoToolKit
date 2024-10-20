@@ -15,7 +15,7 @@ public protocol ARTVideoPlayerWindowBottombarDelegate: ARTVideoPlayerBottombarDe
     /// 点击全屏按钮
     ///
     /// - Note: 子类实现该方法处理全屏操作
-    func videoPlayerBottombarDidTapFullscreen(_ bottombar: ARTVideoPlayerWindowBottombar)
+    func videoPlayerBottombarDidTapFullscreen(for bottombar: ARTVideoPlayerWindowBottombar)
 }
 
 open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
@@ -118,11 +118,6 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     }
     
     private func setupProgressView() { // 创建进度条
-        progressView = UIProgressView()
-        progressView.trackTintColor         = .art_color(withHEXValue: 0xFFFFFF, alpha: 0.2)
-        progressView.progressTintColor      = .art_color(withHEXValue: 0xFFFFFF, alpha: 0.2)
-        progressView.layer.cornerRadius     = ARTAdaptedValue(1.0)
-        progressView.layer.masksToBounds    = true
         containerView.addSubview(progressView)
         progressView.snp.makeConstraints { make in
             make.left.equalTo(currentTimeLabel)
@@ -133,14 +128,6 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     }
     
     private func setupSliderView() { // 创建滑块视图
-        sliderView = ARTVideoPlayerSlider()
-        sliderView.minimumValue = 0.0
-        sliderView.maximumValue = 1.0
-        sliderView.minimumTrackTintColor = .art_color(withHEXValue: 0xFFFFFF, alpha: 0.5)
-        sliderView.trackHeight = ARTAdaptedValue(3.0)
-        if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: ARTAdaptedSize(width: 6.0, height: 6.0)) {
-            sliderView.setThumbImage(thumbImage, for: .normal)
-        }
         containerView.addSubview(sliderView)
         sliderView.snp.makeConstraints { make in
             make.left.right.equalTo(progressView)
@@ -157,13 +144,13 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     ///
     /// - Note: 子类实现该方法处理全屏操作
     @objc private func didTapFullscreenButton() {
-        subclassDelegate?.videoPlayerBottombarDidTapFullscreen(self)
+        subclassDelegate?.videoPlayerBottombarDidTapFullscreen(for: self)
     }
     
     // MARK: - Override Super Methods
 
-    open override func updatePlaybackTime(currentTime: CMTime, duration: CMTime) {
-        super.updatePlaybackTime(currentTime: currentTime, duration: duration)
+    open override func updatePlaybackTime(currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = true) {
+        super.updatePlaybackTime(currentTime: currentTime, duration: duration, shouldUpdateSlider: shouldUpdateSlider)
         currentTimeLabel.text = currentTime.art_formattedTime()
         durationLabel.text = duration.art_formattedTime()
     }

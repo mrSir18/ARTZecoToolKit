@@ -17,7 +17,7 @@ import AVFoundation
     /// - Parameters:
     ///   - playerControlsView: 控制层视图
     ///   - Returns: 自定义播放模式
-    ///   - Note: 自定义播放模式 ARTVideoPlayerWrapperView.VideoPlayerMode
+    /// - Note: 自定义播放模式 ARTVideoPlayerWrapperView.VideoPlayerMode
     @objc optional func customScreenOrientation(for playerControlsView: ARTVideoPlayerControlsView) -> ScreenOrientation
     
     /// 自定义顶部工具栏视图
@@ -26,7 +26,7 @@ import AVFoundation
     ///   - playerControlsView: 控制层视图
     ///   - screenOrientation: 当前屏幕方向
     ///   - Returns: 自定义顶部工具栏视图
-    ///   - Note: 自定义顶部工具栏视图需继承 ARTVideoPlayerTopbar
+    /// - Note: 自定义顶部工具栏视图需继承 ARTVideoPlayerTopbar
     @objc optional func customTopBar(for playerControlsView: ARTVideoPlayerControlsView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerTopbar?
     
     /// 自定义底部工具栏视图
@@ -35,13 +35,13 @@ import AVFoundation
     ///   - playerControlsView: 控制层视图
     ///   - screenOrientation: 当前屏幕方向
     ///   - Returns: 自定义底部工具栏视图
-    ///   - Note: 自定义底部工具栏视图需继承 ARTVideoPlayerBottombar
+    /// - Note: 自定义底部工具栏视图需继承 ARTVideoPlayerBottombar
     @objc optional func customBottomBar(for playerControlsView: ARTVideoPlayerControlsView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerBottombar?
     
     /// 点击返回按钮
     ///
     /// - Note: 子类实现该方法处理返回操作
-    @objc optional func videoPlayerControlsDidTapBack(_ playerControlsView: ARTVideoPlayerControlsView)
+    @objc optional func videoPlayerControlsDidTapBack(for playerControlsView: ARTVideoPlayerControlsView)
     
     /// 点击收藏按钮
     ///
@@ -49,12 +49,12 @@ import AVFoundation
     ///  - playerControlsView: 控制层视图
     ///  - isFavorited: `true` 表示添加收藏，`false` 表示取消收藏
     /// - Note: 子类实现该方法处理收藏状态的改变
-    @objc optional func videoPlayerControlsDidTapFavorite(_ playerControlsView: ARTVideoPlayerControlsView, isFavorited: Bool)
+    @objc optional func videoPlayerControlsDidTapFavorite(for playerControlsView: ARTVideoPlayerControlsView, isFavorited: Bool)
     
     /// 点击分享按钮
     ///
     /// - Note: 子类实现该方法处理分享操作
-    @objc optional func videoPlayerControlsDidTapShare(_ playerControlsView: ARTVideoPlayerControlsView)
+    @objc optional func videoPlayerControlsDidTapShare(for playerControlsView: ARTVideoPlayerControlsView)
     
     /// 全屏切换
     ///
@@ -62,8 +62,40 @@ import AVFoundation
     ///  - playerControlsView: 控制层视图
     ///  - orientation: 屏幕方向
     ///  - Note: 切换全屏和窗口模式
-    ///  - Note: 重写父类方法，切换全屏和窗口模式
+    /// - Note: 重写父类方法，切换全屏和窗口模式
     @objc optional func transitionToFullscreen(for playerControlsView: ARTVideoPlayerControlsView, orientation: ScreenOrientation)
+    
+    /// 当滑块触摸开始时调用
+    ///
+    /// - Parameters:
+    ///   - controlsView: 控制层视图
+    ///   - slider: 被触摸的滑块
+    /// - Note: 重写父类方法，更新播放器当前播放时间
+    @objc optional func controlsViewDidBeginTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider)
+
+    /// 当滑块值改变时调用
+    ///
+    /// - Parameters:
+    ///   - controlsView: 控制层视图
+    ///   - slider: 值已改变的滑块
+    /// - Note: 重写父类方法，更新播放
+    @objc optional func controlsViewDidChangeValue(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider)
+
+    /// 当滑块触摸结束时调用
+    ///
+    /// - Parameters:
+    ///   - controlsView: 控制层视图
+    ///   - slider: 被释放的滑块
+    /// - Note: 重写父类方法，更新播放器当前播放时间
+    @objc optional func controlsViewDidEndTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider)
+
+    /// 当滑块被点击时调用
+    ///
+    /// - Parameters:
+    ///   - controlsView: 控制层视图
+    ///   - slider: 被点击的滑块
+    /// - Note: 重写父类方法，更新播放器当前播放时间
+    @objc optional func controlsViewDidTap(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider)
 }
 
 extension ARTVideoPlayerControlsView {
@@ -141,9 +173,10 @@ open class ARTVideoPlayerControlsView: UIView {
     /// - Parameters:
     ///   - currentTime: 当前播放时间
     ///   - duration: 视频总时长
+    ///   - shouldUpdateSlider: 是否正在拖动滑块
     /// - Note: 重写父类方法，更新播放器当前播放时间
-    open func updateTimeInControls(with currentTime: CMTime, duration: CMTime) {
-        bottomBar.updatePlaybackTime(currentTime: currentTime, duration: duration)
+    open func updateTimeInControls(with currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = false) {
+        bottomBar.updatePlaybackTime(currentTime: currentTime, duration: duration, shouldUpdateSlider: shouldUpdateSlider)
     }
     
     /// 更新缓冲总时间和缓冲进度
@@ -151,9 +184,10 @@ open class ARTVideoPlayerControlsView: UIView {
     /// - Parameters:
     ///  - totalBuffer: 缓冲总时间
     ///  - bufferProgress: 缓冲进度
+    ///  - shouldUpdateSlider: 是否正在拖动滑块
     /// - Note: 重写父类方法，更新播放器缓冲总时间和缓冲进度
-    open func updateBufferProgressInControls(totalBuffer: Double, bufferProgress: Float) {
-        bottomBar.updateBufferProgress(totalBuffer: totalBuffer, bufferProgress: bufferProgress)
+    open func updateBufferProgressInControls(totalBuffer: Double, bufferProgress: Float, shouldUpdateSlider: Bool = false) {
+        bottomBar.updateBufferProgress(totalBuffer: totalBuffer, bufferProgress: bufferProgress, shouldUpdateSlider: shouldUpdateSlider)
     }
 }
 
@@ -275,17 +309,17 @@ extension ARTVideoPlayerControlsView {
 /// - Note: 通用顶部工具栏代理
 extension ARTVideoPlayerControlsView: ARTVideoPlayerTopbarDelegate {
     
-    public func videoPlayerTopbarDidTapBack(_ topbar: ARTVideoPlayerTopbar) { // 点击返回按钮
+    public func videoPlayerTopbarDidTapBack(for topbar: ARTVideoPlayerTopbar) { // 点击返回按钮
         removeToolBars() // 移除顶底栏
-        delegate?.videoPlayerControlsDidTapBack?(self)
+        delegate?.videoPlayerControlsDidTapBack?(for: self)
     }
     
-    public func videoPlayerTopbarDidTapFavorite(_ topbar: ARTVideoPlayerTopbar, isFavorited: Bool) { // 点击收藏按钮
-        delegate?.videoPlayerControlsDidTapFavorite?(self, isFavorited: isFavorited)
+    public func videoPlayerTopbarDidTapFavorite(for topbar: ARTVideoPlayerTopbar, isFavorited: Bool) { // 点击收藏按钮
+        delegate?.videoPlayerControlsDidTapFavorite?(for: self, isFavorited: isFavorited)
     }
     
-    public func videoPlayerTopbarDidTapShare(_ topbar: ARTVideoPlayerTopbar) { // 点击分享按钮
-        delegate?.videoPlayerControlsDidTapShare?(self)
+    public func videoPlayerTopbarDidTapShare(for topbar: ARTVideoPlayerTopbar) { // 点击分享按钮
+        delegate?.videoPlayerControlsDidTapShare?(for: self)
     }
 }
 
@@ -294,12 +328,27 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerTopbarDelegate {
 /// - Note: 通用底部工具栏代理
 extension ARTVideoPlayerControlsView: ARTVideoPlayerBottombarDelegate {
     
+    public func bottombarDidBeginTouch(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider) { // 滑块开始触摸
+        delegate?.controlsViewDidBeginTouch?(for: self, slider: slider)
+    }
+    
+    public func bottombarDidChangeValue(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider) { // 滑块值改变
+        delegate?.controlsViewDidChangeValue?(for: self, slider: slider)
+    }
+    
+    public func bottombarDidEndTouch(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider) { // 滑块结束触摸
+        delegate?.controlsViewDidEndTouch?(for: self, slider: slider)
+    }
+    
+    public func bottombarDidTap(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider) { // 点击滑块
+        delegate?.controlsViewDidTap?(for: self, slider: slider)
+    }
 }
 
 /// - Note: 窗口模式底部工具栏代理
 extension ARTVideoPlayerControlsView: ARTVideoPlayerWindowBottombarDelegate {
     
-    public func videoPlayerBottombarDidTapFullscreen(_ bottombar: ARTVideoPlayerWindowBottombar) { // 点击全屏按钮
+    public func videoPlayerBottombarDidTapFullscreen(for bottombar: ARTVideoPlayerWindowBottombar) { // 点击全屏按钮
         removeToolBars() // 移除顶底栏
         delegate?.transitionToFullscreen?(for: self, orientation: autoVideoScreenOrientation())
     }

@@ -98,7 +98,9 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     open override func onReceiveLoadedTimeRangesChanged(totalBuffer: Double, bufferProgress: Float) { // 缓冲进度
         super.onReceiveLoadedTimeRangesChanged(totalBuffer: totalBuffer, bufferProgress: bufferProgress)
-        playControlsView.updateBufferProgressInControls(totalBuffer: totalBuffer, bufferProgress: bufferProgress)
+        playControlsView.updateBufferProgressInControls(totalBuffer: totalBuffer,
+                                                        bufferProgress: bufferProgress,
+                                                        shouldUpdateSlider: isDraggingSlider)
     }
     
     open override func onReceivePlayerProgressDidChange(time: CMTime) { // 更新播放时间
@@ -107,7 +109,9 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         guard CMTimeGetSeconds(time) > 0, CMTimeGetSeconds(duration) > 0 else {
             return // 防止除零错误
         }
-        playControlsView.updateTimeInControls(with: time, duration: duration)
+        playControlsView.updateTimeInControls(with: time,
+                                              duration: duration,
+                                              shouldUpdateSlider: isDraggingSlider)
     }
     
     open override func onReceivePresentationSizeChanged(size: CGSize) { // 视频尺寸变化，最优方案根据服务器返回的视频尺寸判断是否横屏/竖屏 (全屏)
@@ -161,6 +165,21 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         playerItem = AVPlayerItem(asset: AVAsset(url: url))
         player?.replaceCurrentItem(with: playerItem)
         player?.play()
+    }
+    
+    /// 指定播放时间
+    ///
+    /// - Parameters:
+    ///   - slider: 滑块
+    ///   - completion: 播放完成后的回调
+    /// - Note: 重写
+    open func seekToSliderValue(_ slider: ARTVideoPlayerSlider, completion: (() -> Void)? = nil) {
+        guard let duration = player.currentItem?.duration else { return }
+        let time = CMTimeMake(value: Int64(slider.value * Float(duration.value)), timescale: duration.timescale)
+        player.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero) { completed in
+            guard completed else { return }
+            completion?()
+        }
     }
 }
 
@@ -272,24 +291,58 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerOverlayViewDelegate {
 
 extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     
-    public func videoPlayerControlsDidTapBack(_ playerControlsView: ARTVideoPlayerControlsView) { // 点击返回按钮
+    /*
+     public func customScreenOrientation(for playerControlsView: ARTVideoPlayerControlsView) -> ScreenOrientation { // 自定义播放模式
+     
+     }
+     
+     public func customTopBar(for playerControlsView: ARTVideoPlayerControlsView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerTopbar? { // 自定义顶部工具栏视图
+     
+     }
+     
+     public func customBottomBar(for playerControlsView: ARTVideoPlayerControlsView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerBottombar? { // 自定义底部工具栏视图
+     
+     }
+     */
+    
+    public func videoPlayerControlsDidTapBack(for playerControlsView: ARTVideoPlayerControlsView) { // 点击返回按钮
         fullscreenManager.dismiss { [weak self] in // 切换窗口模式顶底栏
             self?.playControlsView.transitionToFullscreen(orientation: .window)
         }
     }
     
-    public func videoPlayerControlsDidTapFavorite(_ playerControlsView: ARTVideoPlayerControlsView, isFavorited: Bool) { // 点击收藏按钮
-        print("didTapFavoriteButton")
+    public func videoPlayerControlsDidTapFavorite(for playerControlsView: ARTVideoPlayerControlsView, isFavorited: Bool) { // 点击收藏按钮
+        
     }
     
-    public func videoPlayerControlsDidTapShare(_ playerControlsView: ARTVideoPlayerControlsView) { // 点击分享按钮
-        print("didTapShareButton")
-        player.play()
+    public func videoPlayerControlsDidTapShare(for playerControlsView: ARTVideoPlayerControlsView) { // 点击分享按钮
+        
     }
     
     public func transitionToFullscreen(for playerControlsView: ARTVideoPlayerControlsView, orientation: ScreenOrientation) { // 点击全屏按钮
         fullscreenManager.presentFullscreenWithRotation { [weak self] in // 切换全屏模式顶底栏
             self?.playControlsView.transitionToFullscreen(orientation: orientation)
+        }
+    }
+    
+    public func controlsViewDidBeginTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 暂停播放 (开始拖动滑块)
+        isDraggingSlider = true
+        player.pause()
+    }
+    
+    public func controlsViewDidChangeValue(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 快进/快退 (拖动滑块)
+        seekToSliderValue(slider)
+    }
+    
+    public func controlsViewDidEndTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 恢复播放 (结束拖动滑块)
+        isDraggingSlider = false
+        player.play()
+    }
+    
+    public func controlsViewDidTap(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 指定播放时间 (点击滑块)
+        controlsViewDidBeginTouch(for: controlsView, slider: slider)
+        seekToSliderValue(slider) { [weak self] in // 指定播放时间
+            self?.controlsViewDidEndTouch(for: controlsView, slider: slider)
         }
     }
 }
