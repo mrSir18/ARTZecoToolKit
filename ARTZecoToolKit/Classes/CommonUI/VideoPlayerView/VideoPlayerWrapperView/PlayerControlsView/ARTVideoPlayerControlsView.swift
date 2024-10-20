@@ -136,14 +136,24 @@ open class ARTVideoPlayerControlsView: UIView {
         setupToolBars()
     }
     
-    /// 更新控制层的当前播放时间和总时长
+    /// 更新当前播放时间和总时长
     ///
     /// - Parameters:
     ///   - currentTime: 当前播放时间
     ///   - duration: 视频总时长
     /// - Note: 重写父类方法，更新播放器当前播放时间
     open func updateTimeInControls(with currentTime: CMTime, duration: CMTime) {
-        bottomBar.updatePlaybackTime(currentTime: currentTime.art_formattedTime(), duration: duration.art_formattedTime())
+        bottomBar.updatePlaybackTime(currentTime: currentTime, duration: duration)
+    }
+    
+    /// 更新缓冲总时间和缓冲进度
+    ///
+    /// - Parameters:
+    ///  - totalBuffer: 缓冲总时间
+    ///  - bufferProgress: 缓冲进度
+    /// - Note: 重写父类方法，更新播放器缓冲总时间和缓冲进度
+    open func updateBufferProgressInControls(totalBuffer: Double, bufferProgress: Float) {
+        bottomBar.updateBufferProgress(totalBuffer: totalBuffer, bufferProgress: bufferProgress)
     }
 }
 

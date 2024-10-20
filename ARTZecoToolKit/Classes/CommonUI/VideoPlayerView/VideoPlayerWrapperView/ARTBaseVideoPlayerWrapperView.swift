@@ -56,7 +56,7 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     public var timeObserverToken: Any?
     
     /// 播放器的时间观察者间隔
-    public let interval = CMTime(seconds: 1.0, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+    public let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
     
     /// 是否正在拖动音量条
     public var isDraggingVolumeSlider = false
@@ -181,14 +181,22 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     /// 处理缓冲进度变化
     private func didLoadedTimeRangesChanged(change: [NSKeyValueChangeKey: Any]?) {
         let timeRanges = playerItem.loadedTimeRanges
-        if let timeRange = timeRanges.first?.timeRangeValue {
-            let start = CMTimeGetSeconds(timeRange.start)
-            let duration = CMTimeGetSeconds(timeRange.duration)
-            let totalBuffer = start + duration
-            onReceiveLoadedTimeRangesChanged(totalBuffer: totalBuffer)
+        guard !timeRanges.isEmpty else { // 如果没有加载的时间范围，则缓冲进度为零
+            onReceiveLoadedTimeRangesChanged(totalBuffer: 0, bufferProgress: 0)
+            return
         }
+        
+        var totalBuffer: Double = 0.0
+        for timeRange in timeRanges { // 遍历所有加载的时间范围，计算已缓冲的总时间
+            let range = timeRange.timeRangeValue
+            let duration = CMTimeGetSeconds(range.duration) // 获取缓冲段的持续时间
+            totalBuffer += duration // 累加到总缓冲时间
+        }
+        let totalDuration = CMTimeGetSeconds(playerItem.duration)
+        let bufferProgress: Float = totalDuration > 0 ? Float(totalBuffer / totalDuration) : 0.0 // 计算缓冲进度，确保总时长有效，避免除以零
+        onReceiveLoadedTimeRangesChanged(totalBuffer: totalBuffer, bufferProgress: bufferProgress)
     }
-    
+
     /// 处理播放缓冲是否为空
     private func didPlaybackBufferEmptyChanged(change: [NSKeyValueChangeKey: Any]?) {
         onReceivePlaybackBufferEmptyChanged()
@@ -307,12 +315,12 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
         print("音频会话中断结束")
     }
     
-    /// 更新播放时间
+    /// 当前播放时间
     ///
     /// - Parameter time: 当前播放时间
     /// - Note: 子类重写此方法，更新播放时间
     open func onReceivePlayerProgressDidChange(time: CMTime) {
-        print("当前播放时间: \(time) 秒")
+
     }
     
     /// 播放器准备好时的处理
@@ -331,10 +339,12 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     
     /// 处理缓冲进度变化
     ///
-    /// - Parameter totalBuffer: 当前缓冲的总时间
+    /// - Parameters:
+    ///  - totalBuffer: 缓冲总时间
+    ///  - bufferProgress: 缓冲进度
     /// - Note: 子类重写此方法以处理缓冲进度变化
-    open func onReceiveLoadedTimeRangesChanged(totalBuffer: Double) {
-        print("缓冲进度：\(totalBuffer)")
+    open func onReceiveLoadedTimeRangesChanged(totalBuffer: Double, bufferProgress: Float) {
+        print("缓冲进度: \(bufferProgress)")
     }
     
     /// 处理缓冲是否为空

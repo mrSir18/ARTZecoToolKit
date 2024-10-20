@@ -88,19 +88,21 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     }
     
     open override func onReceivePlayerFailed() { // 播放器加载失败
-        print("播放器加载失败")
+        super.onReceivePlayerFailed()
     }
     
     open override func onReceivePlayerReadyToPlay() { // 播放器准备好
+        super.onReceivePlayerReadyToPlay()
         player.play()
-        print("播放器准备好了")
     }
     
-    open override func onReceiveLoadedTimeRangesChanged(totalBuffer: Double) { // 缓冲进度变化
-        print("缓冲进度：\(totalBuffer)")
+    open override func onReceiveLoadedTimeRangesChanged(totalBuffer: Double, bufferProgress: Float) { // 缓冲进度
+        super.onReceiveLoadedTimeRangesChanged(totalBuffer: totalBuffer, bufferProgress: bufferProgress)
+        playControlsView.updateBufferProgressInControls(totalBuffer: totalBuffer, bufferProgress: bufferProgress)
     }
     
     open override func onReceivePlayerProgressDidChange(time: CMTime) { // 更新播放时间
+        super.onReceivePlayerProgressDidChange(time: time)
         let duration = player.currentItem?.duration ?? interval // 获取当前视频的时长
         guard CMTimeGetSeconds(time) > 0, CMTimeGetSeconds(duration) > 0 else {
             return // 防止除零错误
@@ -109,29 +111,30 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     }
     
     open override func onReceivePresentationSizeChanged(size: CGSize) { // 视频尺寸变化，最优方案根据服务器返回的视频尺寸判断是否横屏/竖屏 (全屏)
+        super.onReceivePresentationSizeChanged(size: size)
         guard size != .zero else { return }
         playerConfig.isLandscape = size.width > size.height // 根据视频尺寸判断是否横屏/竖屏 (全屏)
         playControlsView.isLandscape = playerConfig.isLandscape
     }
     
     open override func onReceiveTimeControlStatusPlaying() { // 播放器正在播放
-        print("播放器正在播放")
+        super.onReceiveTimeControlStatusPlaying()
     }
     
     open override func onReceiveTimeControlStatusPaused() { // 播放器已暂停
-        print("播放器已暂停")
+        super.onReceiveTimeControlStatusPaused()
     }
     
     open override func onReceiveTimeControlStatusWaiting() { // 播放器正在等待
-        print("播放器正在等待")
+        super.onReceiveTimeControlStatusWaiting()
     }
     
     open override func onReceivePlayerItemDidPlayToEnd(_ notification: Notification) { // 播放完成
-        print("播放完成")
+        super.onReceivePlayerItemDidPlayToEnd(notification)
     }
     
     open override func onReceivePlayerItemFailedToPlayToEnd(_ notification: Notification) { // 播放失败
-        print("播放失败")
+        super.onReceivePlayerItemFailedToPlayToEnd(notification)
     }
     
     // MARK: - Public Methods
