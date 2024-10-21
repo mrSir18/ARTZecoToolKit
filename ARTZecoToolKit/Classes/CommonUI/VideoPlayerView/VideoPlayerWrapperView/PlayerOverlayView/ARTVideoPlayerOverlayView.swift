@@ -12,7 +12,7 @@ public protocol ARTVideoPlayerOverlayViewDelegate: AnyObject {
     
 }
 
-open class ARTVideoPlayerOverlayView: UIView {
+open class ARTVideoPlayerOverlayView: ARTPassThroughView {
     
     /// 代理对象
     public weak var delegate: ARTVideoPlayerOverlayViewDelegate?
@@ -24,19 +24,18 @@ open class ARTVideoPlayerOverlayView: UIView {
         super.init(frame: .zero)
         self.delegate = delegate
         self.backgroundColor = .clear
-        setupViews()
     }
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Override Super Methods
     
     /// 重写父类方法，设置子视图
     ///
     /// - Note: 由于子类需要自定义视图，所以需要重写该方法
-    open func setupViews() {
-        
+    open override func setupViews() {
+
     }
 }

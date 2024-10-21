@@ -1,0 +1,37 @@
+//
+//  ARTPassThroughView.swift
+//  Pods
+//
+//  Created by mrSir18 on 2024/10/21.
+//
+
+open class ARTPassThroughView: UIView {
+    
+    // MARK: - Initialization
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = .clear
+        setupViews()
+    }
+    
+    required public init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Touch Handling
+    
+    open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? { // 透传事件
+        let hitView = super.hitTest(point, with: event)
+        return (hitView === self) ? nil : hitView
+    }
+    
+    // MARK: - Setup Views
+
+    /// 重写父类方法，设置子视图
+    ///
+    /// - Note: 由于子类需要自定义视图，所以需要重写该方法
+    open func setupViews() {
+        
+    }
+}

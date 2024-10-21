@@ -107,7 +107,7 @@ extension ARTVideoPlayerControlsView {
     }
 }
 
-open class ARTVideoPlayerControlsView: UIView {
+open class ARTVideoPlayerControlsView: ARTPassThroughView {
     
     // MARK: - Private Properties
     
@@ -141,7 +141,6 @@ open class ARTVideoPlayerControlsView: UIView {
         super.init(frame: .zero)
         self.delegate = delegate
         self.backgroundColor = .clear
-        setupViews()
     }
     
     required public init?(coder: NSCoder) {
@@ -153,7 +152,7 @@ open class ARTVideoPlayerControlsView: UIView {
     /// 重写父类方法，设置子视图
     ///
     /// - Note: 由于子类需要自定义视图，所以需要重写该方法
-    open func setupViews() {
+    open override func setupViews() {
         setupToolBars()
     }
     
