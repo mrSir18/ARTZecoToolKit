@@ -25,6 +25,9 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     /// 播放器的状态
     public var playerItem: AVPlayerItem!
     
+    /// 图片生成器
+    public var imageGenerator: AVAssetImageGenerator!
+    
     /// 播放器的播放状态
     public var isPlaying = false
     
@@ -42,6 +45,9 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     
     /// 播放器的时间观察者间隔
     public let interval = CMTime(seconds: 0.2, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+    
+    /// 播放器总时长
+    public var totalDuration: Double = 0.0
     
     // MARK: - 播放器观察者属性
     
@@ -139,7 +145,7 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     /// 处理缓冲进度变化
     private func didLoadedTimeRangesChanged() {
         guard let duration = playerItem?.duration else { return }
-        let totalDuration = CMTimeGetSeconds(duration)
+        totalDuration = CMTimeGetSeconds(duration)
 
         guard let timeRange = playerItem?.loadedTimeRanges.first?.timeRangeValue else { // 如果没有可用的缓冲时间，则返回
             onReceiveLoadedTimeRangesChanged(totalBuffer: 0, bufferProgress: 0)

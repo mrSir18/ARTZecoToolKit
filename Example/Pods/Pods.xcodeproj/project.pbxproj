@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		010A44509434F1B02038EBADF83BF47B /* UIButton+ARTExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213ED33EB4AF8011E1FEDA684ADD32D3 /* UIButton+ARTExtension.swift */; };
 		02C3BE15A3B66F12D0830D3D1795DE61 /* SDImageCodersManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B7E8A44F5773FB7263850F12EA2088B /* SDImageCodersManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		02EF3E092CC6389C00EE2D18 /* ARTVideoPlayerSystemControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EF3E072CC6389C00EE2D18 /* ARTVideoPlayerSystemControls.swift */; };
+		02EF3E0F2CC63EE200EE2D18 /* ARTVideoPlayerDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EF3E0D2CC63EE200EE2D18 /* ARTVideoPlayerDisplayView.swift */; };
 		02F76EFCB88D79D4882EFACDA8B46429 /* SDMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D1C9BFC8A06BE9825967839E5CAFD1 /* SDMemoryCache.m */; };
 		03F76A820417B0ACFE95D5871F98872C /* SDAnimatedImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FF3470E695E20262F843B5F35623E9 /* SDAnimatedImageView+WebCache.m */; };
 		0461AB4ADBFEF96213E251C5441E54A6 /* UIView+WebCacheState.m in Sources */ = {isa = PBXBuildFile; fileRef = 411B17BD11A82685B6DC31D8CFE5A2E2 /* UIView+WebCacheState.m */; };
@@ -456,6 +458,8 @@
 		00EF16BB7103A67DD632D2FC9D5CAEA7 /* SDFileAttributeHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDFileAttributeHelper.h; path = SDWebImage/Private/SDFileAttributeHelper.h; sourceTree = "<group>"; };
 		01F4C9F3781B85D91966A704730E6A5A /* NSData+ImageContentType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSData+ImageContentType.h"; path = "SDWebImage/Core/NSData+ImageContentType.h"; sourceTree = "<group>"; };
 		02C99945442513B0E5751A8131F423F4 /* ARTPhotoBrowserStyleConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTPhotoBrowserStyleConfiguration.swift; sourceTree = "<group>"; };
+		02EF3E072CC6389C00EE2D18 /* ARTVideoPlayerSystemControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerSystemControls.swift; sourceTree = "<group>"; };
+		02EF3E0D2CC63EE200EE2D18 /* ARTVideoPlayerDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerDisplayView.swift; sourceTree = "<group>"; };
 		04CCA4AB386F4ACD432F2FE86C76C3C8 /* UIView+WebCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+WebCache.m"; path = "SDWebImage/Core/UIView+WebCache.m"; sourceTree = "<group>"; };
 		04D8B9BFDBBE33238891206175D88E32 /* ARTQuantityControlView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTQuantityControlView.swift; sourceTree = "<group>"; };
 		0574407740E04B44FFC81E0D342E25F0 /* SDAsyncBlockOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDAsyncBlockOperation.m; path = SDWebImage/Private/SDAsyncBlockOperation.m; sourceTree = "<group>"; };
@@ -940,6 +944,23 @@
 			path = ScrollView;
 			sourceTree = "<group>";
 		};
+		02EF3E082CC6389C00EE2D18 /* PlayerSystemControls */ = {
+			isa = PBXGroup;
+			children = (
+				02EF3E072CC6389C00EE2D18 /* ARTVideoPlayerSystemControls.swift */,
+				02EF3E0E2CC63EE200EE2D18 /* PlayerDisplayView */,
+			);
+			path = PlayerSystemControls;
+			sourceTree = "<group>";
+		};
+		02EF3E0E2CC63EE200EE2D18 /* PlayerDisplayView */ = {
+			isa = PBXGroup;
+			children = (
+				02EF3E0D2CC63EE200EE2D18 /* ARTVideoPlayerDisplayView.swift */,
+			);
+			path = PlayerDisplayView;
+			sourceTree = "<group>";
+		};
 		0BF9CFD53FE10ED18D78F88753E3D9D9 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
@@ -1077,6 +1098,7 @@
 				4C0C0FB24FCF316F61BF38C5FE9192C5 /* ARTBaseVideoPlayerWrapperView.swift */,
 				4AC4B7533B31C529E89C440D36D94F0D /* PlayerWrapperView */,
 				9138EE6E0F1921914765F7CDE8D6C2C1 /* PlayerOverlayView */,
+				02EF3E082CC6389C00EE2D18 /* PlayerSystemControls */,
 				A2ECE5B923BE2010CA9AC4402D995366 /* PlayerControlsView */,
 				C7CFEDCFBE7468A43FF1BDDF4DEF13BE /* Config */,
 			);
@@ -2678,6 +2700,7 @@
 				D6F118461045C6FCA6803A62BDDA36BA /* ARTVideoPlayerPortraitFullscreenTopbar.swift in Sources */,
 				92ADB833A01749305F1137B5A6BD336D /* ARTVideoPlayerSlider.swift in Sources */,
 				7AD55C691058F403385947BB423831D9 /* ARTVideoPlayerTopbar.swift in Sources */,
+				02EF3E092CC6389C00EE2D18 /* ARTVideoPlayerSystemControls.swift in Sources */,
 				CFA87EB0C09EC5609C715111135DDED1 /* ARTVideoPlayerView.swift in Sources */,
 				D213FDD1158E1614D7E20B6F32AD81D4 /* ARTVideoPlayerWindowBottombar.swift in Sources */,
 				363F0D1569D5124536CD2445C624D21B /* ARTVideoPlayerWindowTopbar.swift in Sources */,
@@ -2697,6 +2720,7 @@
 				6EA8E7487E959805C30B678F95674326 /* NSMutableAttributedString+ARTExtension.swift in Sources */,
 				75BDF98C9D8342CE0557016BB146A9A3 /* NSObject+ARTExtension.swift in Sources */,
 				42D93CD032EF742B46A9413920BBEDB5 /* String+ARTExtension.swift in Sources */,
+				02EF3E0F2CC63EE200EE2D18 /* ARTVideoPlayerDisplayView.swift in Sources */,
 				BF98E39D09579189D5BE7D9A4A778874 /* UIApplication+ARTExtension.swift in Sources */,
 				010A44509434F1B02038EBADF83BF47B /* UIButton+ARTExtension.swift in Sources */,
 				E1C2BAD2160A7C85AD97FA1B96C5FB46 /* UICollectionView+ARTExtension.swift in Sources */,

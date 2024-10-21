@@ -102,7 +102,7 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
         fullscreenButton = ARTAlignmentButton(type: .custom)
         fullscreenButton.layoutType         = .freeform
         fullscreenButton.imageAlignment     = .topLeft
-        fullscreenButton.imageEdgeInset     = UIEdgeInsets(top: ARTAdaptedValue(12.0), left: 0, bottom: 0, right: 0) // 图片内边距
+        fullscreenButton.imageEdgeInset     = UIEdgeInsets(top: ARTAdaptedValue(14.0), left: 0, bottom: 0, right: 0) // 图片内边距
         fullscreenButton.imageSize          = ARTAdaptedSize(width: 20.0, height: 20.0)
         fullscreenButton.setImage(UIImage(named: "video_fullscreen"), for: .normal)
         fullscreenButton.addTarget(self, action: #selector(didTapFullscreenButton), for: .touchUpInside)
@@ -117,7 +117,7 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
         containerView.addSubview(progressView)
         progressView.snp.makeConstraints { make in
             make.left.equalTo(currentTimeLabel)
-            make.bottom.equalTo(-ARTAdaptedValue(17.0))
+            make.bottom.equalTo(-ARTAdaptedValue(12.0))
             make.right.equalTo(durationLabel)
             make.height.equalTo(ARTAdaptedValue(3.0))
         }

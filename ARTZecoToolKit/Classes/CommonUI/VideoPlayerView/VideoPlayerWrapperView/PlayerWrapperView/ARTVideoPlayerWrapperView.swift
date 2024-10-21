@@ -60,6 +60,9 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     // MARK: - 播放器组件 AVPlayer（最底层：播放器视图）
     
+    /// 播放器系统控制层（最底层：系统控制）
+    private var systemControlsView: ARTVideoPlayerSystemControls!
+    
     /// 播放器图层（中间层：用于显示弹幕、广告等）
     private var playerOverlayView: ARTVideoPlayerOverlayView!
     
@@ -83,6 +86,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     open override func setupViews() {
         super.setupViews()
         setupFullscreenManager()
+        setupSystemControlsView()
         setupOverlayView()
         setupControlsView()
     }
@@ -181,6 +185,30 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
             completion?()
         }
     }
+    
+    /// 更新预览图像
+    ///
+    /// - Parameter slider: 滑块
+    /// - Note: 子类重写该方法更新预览
+    open func updatePreviewImageForSliderValueChange(_ slider: ARTVideoPlayerSlider) { // 更新预览图像
+        let currentTime = CMTime(seconds: Double(slider.value) * totalDuration, preferredTimescale: 60000)
+        let duration = player.currentItem?.duration ?? interval
+        systemControlsView.updateTimeInSystemControls(with: currentTime, duration: duration) // 更新播放时间
+        
+        imageGenerator.cancelAllCGImageGeneration()
+        imageGenerator.generateCGImagesAsynchronously(forTimes: [NSValue(time: currentTime)]) { _, image, _, _, error in
+            if let error = error {
+                print("Error generating image: \(error.localizedDescription)")
+                return
+            }
+            guard let image = image else { return }
+            
+            let uiImage = UIImage(cgImage: image)
+            DispatchQueue.main.async {
+                self.systemControlsView.updatePreviewImageInSystemControls(previewImage: uiImage)
+            }
+        }
+    }
 }
 
 // MARK: - Setup Initializer
@@ -192,20 +220,39 @@ extension ARTVideoPlayerWrapperView {
     /// - Parameter url: 视频文件或资源的 URL
     /// - Note: 验证 URL 后，配置音频会话并初始化播放器
     /// - Note: 重写父类方法，设置子视图
-    @objc open func setupPreparePlayer(with url: URL) {
-        guard validateURL(url) else { return }
+    @objc open func setupPreparePlayer(with videoUrl: URL) {
+        guard validateURL(videoUrl) else { return }
         
         // 配置音频会话
         configureAudioSession()
         
-        playerItem = AVPlayerItem(asset: AVAsset(url: url))
+        let asset = AVURLAsset(url: videoUrl)
+        playerItem = AVPlayerItem(asset: asset)
         player = AVPlayer(playerItem: playerItem)
         guard let playerLayer = layer as? AVPlayerLayer else {
             print("当前 layer 不是 AVPlayerLayer，无法播放视频。")
             return
         }
-        playerLayer.player = player
         playerLayer.videoGravity = .resizeAspect
+        playerLayer.player = player
+        
+        // 设置视频资源
+        imageGenerator = AVAssetImageGenerator(asset: asset)
+        imageGenerator.appliesPreferredTrackTransform   = true
+        imageGenerator.requestedTimeToleranceBefore     = .zero
+        imageGenerator.requestedTimeToleranceAfter      = .zero
+        imageGenerator.maximumSize                      = ARTAdaptedSize(width: 150.0, height: 84.0)
+    }
+    
+    /// 创建系统控制层（最底层）
+    ///
+    /// - Note: 重写父类方法，设置子视图
+    @objc open func setupSystemControlsView() {
+        systemControlsView = ARTVideoPlayerSystemControls(self)
+        addSubview(systemControlsView)
+        systemControlsView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     /// 创建播放器图层（中间层）
@@ -280,6 +327,12 @@ extension ARTVideoPlayerWrapperView {
     }
 }
 
+// MARK: - ARTVideoPlayerSystemControlsDelegate
+
+extension ARTVideoPlayerWrapperView: ARTVideoPlayerSystemControlsDelegate {
+    
+}
+
 // MARK: - ARTVideoPlayerOverlayViewDelegate
 
 extension ARTVideoPlayerWrapperView: ARTVideoPlayerOverlayViewDelegate {
@@ -332,9 +385,11 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     
     public func controlsViewDidChangeValue(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 快进/快退 (拖动滑块)
         seekToSliderValue(slider)
+        updatePreviewImageForSliderValueChange(slider)
     }
     
     public func controlsViewDidEndTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 恢复播放 (结束拖动滑块)
+        systemControlsView.hideVideoPlayerDisplay()
         isDraggingSlider = false
         player.play()
     }
