@@ -51,7 +51,7 @@ open class ARTVideoPlayerBottombar: UIView {
         let view = UIProgressView()
         view.trackTintColor     = .art_color(withHEXValue: 0xFFFFFF, alpha: 0.2)
         view.progressTintColor  = .art_color(withHEXValue: 0xFE5C01, alpha: 0.25)
-        view.layer.cornerRadius = ARTAdaptedValue(1.0)
+        view.layer.cornerRadius = ARTAdaptedValue(1.5)
         view.clipsToBounds      = true
         return view
     }()
@@ -70,7 +70,7 @@ open class ARTVideoPlayerBottombar: UIView {
         view.addTarget(self, action: #selector(handleSliderTouchBegan(_:)), for: .touchDown)
         view.addTarget(self, action: #selector(handleSliderValueChanged(_:)), for: .valueChanged)
         view.addTarget(self, action: #selector(handleSliderTouchEnded(_:)), for: [.touchUpInside, .touchCancel, .touchUpOutside])
-
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(sliderTapped(_:)))
         view.addGestureRecognizer(tapGesture)
         return view
@@ -109,6 +109,10 @@ extension ARTVideoPlayerBottombar {
     /// - Parameter slider: 被触摸的滑块
     /// - Note: 重写此方法以处理滑块触摸
     @objc open func handleSliderTouchBegan(_ slider: ARTVideoPlayerSlider) {
+        customizeSliderAppearance(trackHeight: ARTAdaptedValue(5.0),
+                                  cornerRadius: ARTAdaptedValue(2.5),
+                                  thumbSize: ARTAdaptedSize(width: 18.0, height: 18.0),
+                                  duration: 0.35)
         delegate?.bottombarDidBeginTouch?(for: self, slider: slider)
     }
     
@@ -125,6 +129,10 @@ extension ARTVideoPlayerBottombar {
     /// - Parameter slider: 被释放的滑块
     /// - Note: 重写此方法以处理滑块触摸结束事件
     @objc open func handleSliderTouchEnded(_ slider: ARTVideoPlayerSlider) {
+        customizeSliderAppearance(trackHeight: ARTAdaptedValue(3.0),
+                                  cornerRadius: ARTAdaptedValue(1.5),
+                                  thumbSize: ARTAdaptedSize(width: 14.0, height: 14.0),
+                                  duration: 0.25)
         delegate?.bottombarDidEndTouch?(for: self, slider: slider)
     }
     
@@ -183,6 +191,17 @@ extension ARTVideoPlayerBottombar {
                 self.progressView.setProgress(bufferProgress, animated: true)
             })
         }
+    }
+    
+    /// 更新滑块和进度条样式
+    ///
+    /// - Parameters:
+    ///   - trackHeight: 滑块的高度
+    ///   - cornerRadius: 进度条的圆角半径
+    ///   - thumbSize: 滑块的大小
+    ///   - duration: 动画持续时间
+    @objc open func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) {
+
     }
 }
 

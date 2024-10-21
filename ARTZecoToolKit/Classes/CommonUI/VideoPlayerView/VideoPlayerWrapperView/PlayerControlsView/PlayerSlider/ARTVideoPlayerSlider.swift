@@ -23,10 +23,9 @@ open class ARTVideoPlayerSlider: UISlider {
     ///  - Returns: 轨道的矩形。
     /// - Note: 返回: 定义轨道框架的 CGRect，已根据指定的轨道高度进行调整。
     open override func trackRect(forBounds bounds: CGRect) -> CGRect {
-        let newTrackRect = super.trackRect(forBounds: bounds)
-        return CGRect(origin: newTrackRect.origin, size: CGSize(width: newTrackRect.width, height: trackHeight))
+        return CGRect(x: bounds.origin.x, y: bounds.midY - trackHeight / 2, width: bounds.width, height: trackHeight)
     }
-
+    
     /// 定义滑块图像区域的矩形，考虑了偏移量。
     ///
     /// - Parameters:

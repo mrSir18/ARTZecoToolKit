@@ -126,8 +126,9 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     private func setupSliderView() { // 创建滑块视图
         containerView.addSubview(sliderView)
         sliderView.snp.makeConstraints { make in
-            make.left.right.equalTo(progressView)
+            make.left.equalTo(progressView.snp.left).offset(ARTAdaptedValue(2.0))
             make.centerY.equalTo(progressView)
+            make.right.equalTo(progressView.snp.right).offset(-ARTAdaptedValue(2.0))
             make.height.equalTo(ARTAdaptedValue(32.0))
         }
         // 将 progressView 移动到最顶层
@@ -145,9 +146,26 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     
     // MARK: - Override Super Methods
 
-    open override func updatePlaybackTime(currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = true) {
+    open override func updatePlaybackTime(currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = true) { // 更新当前播放时间和总时长
         super.updatePlaybackTime(currentTime: currentTime, duration: duration, shouldUpdateSlider: shouldUpdateSlider)
         currentTimeLabel.text = currentTime.art_formattedTime()
         durationLabel.text = duration.art_formattedTime()
+    }
+    
+    open override func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) { // 自定义滑块外观
+        DispatchQueue.main.async {
+            self.sliderView.trackHeight = trackHeight
+            self.progressView.layer.cornerRadius = cornerRadius
+
+            UIView.animate(withDuration: duration) {
+                if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: thumbSize) {
+                    self.sliderView.setThumbImage(thumbImage, for: .normal)
+                }
+                self.progressView.snp.updateConstraints { make in
+                    make.height.equalTo(trackHeight)
+                }
+                self.layoutIfNeeded()
+            }
+        }
     }
 }

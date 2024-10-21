@@ -41,7 +41,7 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     public var timeObserverToken: Any?
     
     /// 播放器的时间观察者间隔
-    public let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+    public let interval = CMTime(seconds: 0.2, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
     
     // MARK: - 播放器观察者属性
     
@@ -75,7 +75,6 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     ///
     /// - Note: 类重写此方法，添加播放器的观察者
     open func addPlayerObservers() {
-        // 确保播放器和播放器项目已初始化
         guard let player = player, let playerItem = playerItem else {
             assert(player != nil, "【请先初始化 player 和 playerItem】")
             return
