@@ -14,30 +14,6 @@ import AVFoundation
     case window                 = 3 // 普通窗口模式
 }
 
-extension ARTBaseVideoPlayerWrapperView {
-    
-    // 定义常量，存储播放器和播放项的 KeyPath
-    struct PlayerObserverKeyPath {
-        /// 监听播放器状态
-        static let status                   = "status"
-        
-        /// 监听缓冲进度
-        static let loadedTimeRanges         = "loadedTimeRanges"
-        
-        /// 监听是否为空缓冲
-        static let playbackBufferEmpty      = "playbackBufferEmpty"
-        
-        /// 监听是否可能保持播放
-        static let playbackLikelyToKeepUp   = "playbackLikelyToKeepUp"
-        
-        /// 监听视频尺寸变化
-        static let presentationSize         = "presentationSize"
-        
-        /// 监听时间控制状态 (是否正在播放、暂停等)
-        static let timeControlStatus        = "timeControlStatus"
-    }
-}
-
 open class ARTBaseVideoPlayerWrapperView: UIView {
     
     /// 视频播放器
@@ -52,12 +28,6 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     /// 播放器的播放状态
     public var isPlaying = false
     
-    /// 播放器的时间观察者
-    public var timeObserverToken: Any?
-    
-    /// 播放器的时间观察者间隔
-    public let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-    
     /// 是否正在拖动音量条
     public var isDraggingVolumeSlider = false
     
@@ -66,6 +36,21 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     
     /// 是否正在拖动进度条
     public var isDraggingSlider = false
+    
+    /// 播放器的时间观察者
+    public var timeObserverToken: Any?
+    
+    /// 播放器的时间观察者间隔
+    public let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+    
+    // MARK: - 播放器观察者属性
+    
+    public var statusObserver: NSKeyValueObservation?
+    public var loadedTimeRangesObserver: NSKeyValueObservation?
+    public var playbackBufferEmptyObserver: NSKeyValueObservation?
+    public var playbackLikelyToKeepUpObserver: NSKeyValueObservation?
+    public var presentationSizeObserver: NSKeyValueObservation?
+    public var timeControlStatusObserver: NSKeyValueObservation?
     
     
     // MARK: - Initialization
@@ -90,83 +75,57 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     ///
     /// - Note: 类重写此方法，添加播放器的观察者
     open func addPlayerObservers() {
+        // 确保播放器和播放器项目已初始化
         guard let player = player, let playerItem = playerItem else {
             assert(player != nil, "【请先初始化 player 和 playerItem】")
             return
         }
+
+        // 观察播放器状态变化（例如，准备播放、播放失败）
+        statusObserver = player.observe(\.status, options: [.new, .initial]) { [weak self] player, change in
+            self?.didPlayerStatusChanged()
+        }
         
-        // 监听播放器状态（播放准备好、播放失败等）
-        player.addObserver(self, forKeyPath: PlayerObserverKeyPath.status, options: [.new, .initial], context: nil)
-        
-        // 监听缓冲进度，确保获取到视频的加载进度
-        playerItem.addObserver(self, forKeyPath: PlayerObserverKeyPath.loadedTimeRanges, options: [.new, .initial], context: nil)
-        
-        // 监听是否处于缓冲状态，适用于判断视频是否可以继续播放
-        playerItem.addObserver(self, forKeyPath: PlayerObserverKeyPath.playbackBufferEmpty, options: [.new, .initial], context: nil)
-        
-        // 监听是否可能保持播放，用于优化播放体验，减少卡顿
-        playerItem.addObserver(self, forKeyPath: PlayerObserverKeyPath.playbackLikelyToKeepUp, options: [.new, .initial], context: nil)
-        
-        // 监听视频的分辨率或尺寸变化
-        playerItem.addObserver(self, forKeyPath: PlayerObserverKeyPath.presentationSize, options: [.new, .initial], context: nil)
-        
-        // 监听时间控制状态（正在播放、暂停、自动暂停）
-        player.addObserver(self, forKeyPath: PlayerObserverKeyPath.timeControlStatus, options: [.new, .initial], context: nil)
-        
-        // 监听播放完成
+        // 观察加载时间范围以跟踪缓冲进度
+        loadedTimeRangesObserver = playerItem.observe(\.loadedTimeRanges, options: [.new, .initial]) { [weak self] playerItem, change in
+            self?.didLoadedTimeRangesChanged()
+        }
+
+        // 观察播放缓冲是否为空
+        playbackBufferEmptyObserver = playerItem.observe(\.isPlaybackBufferEmpty, options: [.new, .initial]) { [weak self] playerItem, change in
+            self?.didPlaybackBufferEmptyChanged()
+        }
+
+        // 观察是否可能保持播放
+        playbackLikelyToKeepUpObserver = playerItem.observe(\.isPlaybackLikelyToKeepUp, options: [.new, .initial]) { [weak self] playerItem, change in
+            self?.didPlaybackLikelyToKeepUpChanged()
+        }
+
+        // 观察视频的展示尺寸（分辨率）变化
+        presentationSizeObserver = playerItem.observe(\.presentationSize, options: [.new, .initial]) { [weak self] playerItem, change in
+            self?.didPresentationSizeChanged()
+        }
+
+        // 观察时间控制状态（例如，播放、暂停）
+        timeControlStatusObserver = player.observe(\.timeControlStatus, options: [.new, .initial]) { [weak self] player, change in
+            self?.didTimeControlStatusChanged()
+        }
+
+        // 监听播放器项目事件的通知
         NotificationCenter.default.addObserver(self, selector: #selector(didPlayerItemDidPlayToEnd(_:)), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
-        
-        // 监听播放失败
         NotificationCenter.default.addObserver(self, selector: #selector(didPlayerItemFailedToPlayToEnd(_:)), name: .AVPlayerItemFailedToPlayToEndTime, object: playerItem)
-        
-        // 监听播放中断（如电话打断）
         NotificationCenter.default.addObserver(self, selector: #selector(didAudioSessionInterrupted(_:)), name: AVAudioSession.interruptionNotification, object: nil)
-        
-        // 添加观察者以跟踪播放器的当前时间
+
+        // 添加定时观察者以跟踪播放进度
         timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
             self?.didPlayerProgressDidChange(time: time)
-        }
-    }
-    
-    // MARK: - Override KVO Methods
-    
-    /// 添加观察者
-    ///
-    /// - Parameters:
-    ///  - keyPath: 观察的属性
-    ///  - object: 观察的对象
-    ///  - change: 属性变化
-    ///  - context: 上下文
-    ///  - Note: 重写此方法，监听播放器的状态
-    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-        switch keyPath {
-        case PlayerObserverKeyPath.status: // 监听播放器状态
-            didPlayerStatusChanged(change: change)
-            
-        case PlayerObserverKeyPath.loadedTimeRanges: // 监听缓冲进度
-            didLoadedTimeRangesChanged(change: change)
-            
-        case PlayerObserverKeyPath.playbackBufferEmpty: // 监听是否为空缓冲
-            didPlaybackBufferEmptyChanged(change: change)
-            
-        case PlayerObserverKeyPath.playbackLikelyToKeepUp: // 监听是否可能保持播放
-            didPlaybackLikelyToKeepUpChanged(change: change)
-            
-        case PlayerObserverKeyPath.presentationSize: // 监听视频尺寸变化
-            didPresentationSizeChanged(change: change)
-            
-        case PlayerObserverKeyPath.timeControlStatus: // 监听时间控制状态
-            didTimeControlStatusChanged(change: change)
-            
-        default:
-            break
         }
     }
     
     // MARK: - Private KVO Methods
     
     /// 处理播放器状态变化
-    private func didPlayerStatusChanged(change: [NSKeyValueChangeKey: Any]?) {
+    private func didPlayerStatusChanged() {
         switch player.status {
         case .readyToPlay:
             onReceivePlayerReadyToPlay()
@@ -179,31 +138,29 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     }
     
     /// 处理缓冲进度变化
-    private func didLoadedTimeRangesChanged(change: [NSKeyValueChangeKey: Any]?) {
-        let timeRanges = playerItem.loadedTimeRanges
-        guard !timeRanges.isEmpty else { // 如果没有加载的时间范围，则缓冲进度为零
+    private func didLoadedTimeRangesChanged() {
+        guard let duration = playerItem?.duration else { return }
+        let totalDuration = CMTimeGetSeconds(duration)
+
+        guard let timeRange = playerItem?.loadedTimeRanges.first?.timeRangeValue else { // 如果没有可用的缓冲时间，则返回
             onReceiveLoadedTimeRangesChanged(totalBuffer: 0, bufferProgress: 0)
             return
         }
-        
-        var totalBuffer: Double = 0.0
-        for timeRange in timeRanges { // 遍历所有加载的时间范围，计算已缓冲的总时间
-            let range = timeRange.timeRangeValue
-            let duration = CMTimeGetSeconds(range.duration) // 获取缓冲段的持续时间
-            totalBuffer += duration // 累加到总缓冲时间
-        }
-        let totalDuration = CMTimeGetSeconds(playerItem.duration)
-        let bufferProgress: Float = totalDuration > 0 ? Float(totalBuffer / totalDuration) : 0.0 // 计算缓冲进度，确保总时长有效，避免除以零
-        onReceiveLoadedTimeRangesChanged(totalBuffer: totalBuffer, bufferProgress: bufferProgress)
+        let startSeconds = CMTimeGetSeconds(timeRange.start)
+        let bufferedDuration = startSeconds + CMTimeGetSeconds(timeRange.duration)
+
+        // 计算缓冲进度，确保总时长有效，避免除以零
+        let bufferProgress: Float = totalDuration > 0 ? Float(bufferedDuration / totalDuration) : 0.0
+        onReceiveLoadedTimeRangesChanged(totalBuffer: bufferedDuration, bufferProgress: bufferProgress)
     }
 
     /// 处理播放缓冲是否为空
-    private func didPlaybackBufferEmptyChanged(change: [NSKeyValueChangeKey: Any]?) {
+    private func didPlaybackBufferEmptyChanged() {
         onReceivePlaybackBufferEmptyChanged()
     }
     
     /// 处理播放可能性变化
-    private func didPlaybackLikelyToKeepUpChanged(change: [NSKeyValueChangeKey: Any]?) {
+    private func didPlaybackLikelyToKeepUpChanged() {
         if playerItem.isPlaybackLikelyToKeepUp {
             onReceivePlaybackLikelyToKeepUp()
         } else {
@@ -212,12 +169,12 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     }
     
     /// 处理视频尺寸变化
-    private func didPresentationSizeChanged(change: [NSKeyValueChangeKey: Any]?) {
+    private func didPresentationSizeChanged() {
         onReceivePresentationSizeChanged(size: playerItem.presentationSize)
     }
     
     /// 处理时间控制状态变化
-    private func didTimeControlStatusChanged(change: [NSKeyValueChangeKey: Any]?) {
+    private func didTimeControlStatusChanged() {
         switch player.timeControlStatus {
         case .playing:
             onReceiveTimeControlStatusPlaying()
@@ -234,7 +191,6 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     
     /// 播放完成的处理
     @objc private func didPlayerItemDidPlayToEnd(_ notification: Notification) {
-        /// 子类重写: 处理播放完成
         onReceivePlayerItemDidPlayToEnd(notification)
     }
     
@@ -401,38 +357,23 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     ///
     /// - Note: 子类重写: 移除时间观察者
     open func onReceiveRemovePeriodicTimeObserver() {
+        statusObserver?.invalidate()
+        loadedTimeRangesObserver?.invalidate()
+        playbackBufferEmptyObserver?.invalidate()
+        playbackLikelyToKeepUpObserver?.invalidate()
+        presentationSizeObserver?.invalidate()
+        timeControlStatusObserver?.invalidate()
         if let timeObserverToken = timeObserverToken {
             player?.removeTimeObserver(timeObserverToken)
             self.timeObserverToken = nil
         }
+        NotificationCenter.default.removeObserver(self)
         print("移除时间观察")
     }
     
     // MARK: - remove Observers
     
-    deinit {
-        // 移除播放器状态监听
-        player.removeObserver(self, forKeyPath: PlayerObserverKeyPath.status)
-        
-        // 移除缓冲进度监听
-        playerItem.removeObserver(self, forKeyPath: PlayerObserverKeyPath.loadedTimeRanges)
-        
-        // 移除缓冲空状态监听
-        playerItem.removeObserver(self, forKeyPath: PlayerObserverKeyPath.playbackBufferEmpty)
-        
-        // 移除可能保持播放状态监听
-        playerItem.removeObserver(self, forKeyPath: PlayerObserverKeyPath.playbackLikelyToKeepUp)
-        
-        // 移除视频尺寸变化监听
-        playerItem.removeObserver(self, forKeyPath: PlayerObserverKeyPath.presentationSize)
-        
-        // 移除时间控制状态监听
-        player.removeObserver(self, forKeyPath: PlayerObserverKeyPath.timeControlStatus)
-        
-        // 移除播放完成监听
+    deinit { // 移除播放完成监听
         didRemovePeriodicTimeObserver()
-        
-        // 移除播放完成通知
-        NotificationCenter.default.removeObserver(self)
     }
 }

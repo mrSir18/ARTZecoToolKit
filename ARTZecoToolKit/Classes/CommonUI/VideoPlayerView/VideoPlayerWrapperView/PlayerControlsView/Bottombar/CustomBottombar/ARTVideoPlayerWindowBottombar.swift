@@ -34,11 +34,7 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     
     /// 全屏按钮
     private var fullscreenButton: ARTAlignmentButton!
-    
-    let updateInterval: TimeInterval = 0.85 // 更新间隔，单位为秒
-    let animationDuration: TimeInterval = 0.75 // 动画持续时间，单位为秒
-    var lastUpdateTime: TimeInterval = 0 // 上次更新的时间戳
-    
+
     
     // MARK: - Initializatio
     

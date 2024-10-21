@@ -63,14 +63,14 @@ open class ARTVideoPlayerBottombar: UIView {
         view.maximumValue = 1.0
         view.minimumTrackTintColor = .art_color(withHEXValue: 0xFE5C01, alpha: 0.66)
         view.trackHeight = ARTAdaptedValue(3.0)
+        view.thumbOffset = ARTAdaptedValue(-1.5)
         if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: ARTAdaptedSize(width: 14.0, height: 14.0)) {
             view.setThumbImage(thumbImage, for: .normal)
         }
         view.addTarget(self, action: #selector(handleSliderTouchBegan(_:)), for: .touchDown)
         view.addTarget(self, action: #selector(handleSliderValueChanged(_:)), for: .valueChanged)
         view.addTarget(self, action: #selector(handleSliderTouchEnded(_:)), for: [.touchUpInside, .touchCancel, .touchUpOutside])
-        
-        // 添加点击手势
+
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(sliderTapped(_:)))
         view.addGestureRecognizer(tapGesture)
         return view
