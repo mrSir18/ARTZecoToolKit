@@ -278,7 +278,7 @@ extension ARTVideoPlayerWrapperView {
             print("当前 layer 不是 AVPlayerLayer，无法播放视频。")
             return
         }
-        playerLayer.videoGravity = .resizeAspect
+        playerLayer.videoGravity = .resizeAspectFill
         playerLayer.player = player
         setupImageGenerator(asset)
     }
@@ -514,13 +514,12 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     }
     
     public func controlsViewDidBeginTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 暂停播放 (开始拖动滑块)
-        isDraggingSlider = true
-        player.pause()
+        pausePlayer()
     }
     
     public func controlsViewDidChangeValue(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 快进/快退 (拖动滑块)
         seekToSliderValue(slider)
-        updatePreviewImageForSliderValueChange(slider)
+        if controlsView.isLandscape { updatePreviewImageForSliderValueChange(slider) } // 横屏模式下更新预览图像
     }
     
     public func controlsViewDidEndTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 恢复播放 (结束拖动滑块)

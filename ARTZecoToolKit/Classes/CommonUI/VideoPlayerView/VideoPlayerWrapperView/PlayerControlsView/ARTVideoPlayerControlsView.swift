@@ -294,7 +294,7 @@ extension ARTVideoPlayerControlsView {
         case .portraitFullScreen:
             return ARTAdaptedValue(88.0) // 竖屏高度
         case .landscapeFullScreen:
-            return ARTAdaptedValue(88.0) // 横屏高度
+            return ARTAdaptedValue(90.0) // 横屏高度
         case .window:
             return art_tabBarHeight() // 普通窗口模式的高度
         }
@@ -360,6 +360,11 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerWindowBottombarDelegate {
         delegate?.transitionToFullscreen?(for: self, orientation: autoVideoScreenOrientation())
     }
 }
+
+extension ARTVideoPlayerControlsView: ARTVideoPlayerLandscapeFullscreenBottombarDelegate {
+    
+}
+
 
 // MARK: - Private Delegate Methods
 

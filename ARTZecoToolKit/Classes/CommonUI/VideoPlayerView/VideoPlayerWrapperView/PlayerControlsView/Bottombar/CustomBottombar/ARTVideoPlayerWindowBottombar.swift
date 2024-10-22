@@ -140,7 +140,7 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     /// 点击全屏按钮
     ///
     /// - Note: 子类实现该方法处理全屏操作
-    @objc private func didTapFullscreenButton() {
+    @objc open func didTapFullscreenButton() {
         subclassDelegate?.videoPlayerBottombarDidTapFullscreen(for: self)
     }
     
