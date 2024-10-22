@@ -89,6 +89,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         setupSystemControlsView()
         setupOverlayView()
         setupControlsView()
+        setupGestureRecognizers()
     }
     
     open override func onReceivePlayerFailed() { // 播放器加载失败
@@ -166,6 +167,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     /// - Parameter url: 新的视频 URL
     /// - Note: 重写父类方法，播放下一集视频
     open func playNextVideo(with url: URL) {
+        thumbnailCache.removeAll() // 清空缓存
         playerItem = AVPlayerItem(asset: AVAsset(url: url))
         player?.replaceCurrentItem(with: playerItem)
         player?.play()
@@ -186,17 +188,39 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         }
     }
     
-    /// 更新预览图像
+    /// 获取视频的第一帧
     ///
-    /// - Parameter slider: 滑块
+    /// - Note: 调用此方法将尝试从视频的开头获取第一帧图像
+    open func fetchFirstFrameFromVideo() {
+        let firstFrameTime = CMTime(seconds: 0, preferredTimescale: 600)
+        fetchThumbnail(for: firstFrameTime)
+    }
+    
+    /// 根据滑动条的值更新预览图像
+    ///
+    /// - Parameter slider: 代表视频播放进度的滑动条
     /// - Note: 子类重写该方法更新预览
-    open func updatePreviewImageForSliderValueChange(_ slider: ARTVideoPlayerSlider) { // 更新预览图像
-        let currentTime = CMTime(seconds: Double(slider.value) * totalDuration, preferredTimescale: 60000)
+    open func updatePreviewImageForSliderValueChange(_ slider: ARTVideoPlayerSlider) {
+        let currentTime = CMTime(seconds: Double(slider.value) * totalDuration, preferredTimescale: 600)
         let duration = player.currentItem?.duration ?? interval
-        systemControlsView.updateTimeInSystemControls(with: currentTime, duration: duration) // 更新播放时间
+        systemControlsView.updateTimeInSystemControls(with: currentTime, duration: duration)
         
-        imageGenerator.cancelAllCGImageGeneration()
-        imageGenerator.generateCGImagesAsynchronously(forTimes: [NSValue(time: currentTime)]) { _, image, _, _, error in
+        // 获取当前时间的缩略图
+        fetchThumbnail(for: currentTime)
+    }
+    
+    /// 根据指定时间获取缩略图
+    ///
+    /// - Parameter time: 需要生成缩略图的时间
+    open func fetchThumbnail(for time: CMTime) {
+        let timeKey = CMTimeHashable(time) // 创建时间键用于缓存
+        if let cachedImage = thumbnailCache[timeKey] { // 如果有缓存，直接更新预览图像
+            systemControlsView.updatePreviewImageInSystemControls(previewImage: cachedImage)
+            return
+        }
+        
+        imageGenerator.cancelAllCGImageGeneration() // 取消所有正在进行的图像生成请求
+        imageGenerator.generateCGImagesAsynchronously(forTimes: [NSValue(time: time)]) { [weak self] _, image, _, _, error in
             if let error = error {
                 print("Error generating image: \(error.localizedDescription)")
                 return
@@ -204,8 +228,9 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
             guard let image = image else { return }
             
             let uiImage = UIImage(cgImage: image)
+            self?.thumbnailCache[timeKey] = uiImage // 缓存图像
             DispatchQueue.main.async {
-                self.systemControlsView.updatePreviewImageInSystemControls(previewImage: uiImage)
+                self?.systemControlsView.updatePreviewImageInSystemControls(previewImage: uiImage)
             }
         }
     }
@@ -235,13 +260,22 @@ extension ARTVideoPlayerWrapperView {
         }
         playerLayer.videoGravity = .resizeAspect
         playerLayer.player = player
-        
-        // 设置视频资源
+        setupImageGenerator(asset)
+    }
+    
+    /// 配置图像生成器
+    ///
+    /// - Parameter asset: 视频资源
+    /// - Note: 配置图像生成器并获取视频的第一帧
+    /// - Note: 重写父类方法，设置子视图
+    @objc open func setupImageGenerator(_ asset: AVURLAsset) {
+        thumbnailCache.removeAll() // 清空缓存
         imageGenerator = AVAssetImageGenerator(asset: asset)
         imageGenerator.appliesPreferredTrackTransform   = true
         imageGenerator.requestedTimeToleranceBefore     = .zero
         imageGenerator.requestedTimeToleranceAfter      = .zero
         imageGenerator.maximumSize                      = ARTAdaptedSize(width: 150.0, height: 84.0)
+        fetchFirstFrameFromVideo() // 获取视频的第一帧
     }
     
     /// 创建系统控制层（最底层）
@@ -282,6 +316,27 @@ extension ARTVideoPlayerWrapperView {
     /// - Note: 重写父类方法，设置全屏管理器
     @objc open func setupFullscreenManager() {
         fullscreenManager = ARTVideoFullscreenManager(videoWrapperView: self)
+    }
+    
+    /// 创建手势识别器
+    ///
+    /// - Note: 重写父类方法，设置手势识别器
+    @objc open func setupGestureRecognizers() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        addGestureRecognizer(panGesture)
+    }
+    
+    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        switch gesture.state {
+        case .began:
+            print("TopView: Pan began")
+        case .changed:
+            print("TopView: Pan changed")
+        case .ended:
+            print("TopView: Pan ended")
+        default:
+            break
+        }
     }
 }
 

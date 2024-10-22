@@ -140,7 +140,6 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     public init(_ delegate: ARTVideoPlayerControlsViewDelegate? = nil) {
         super.init(frame: .zero)
         self.delegate = delegate
-        self.backgroundColor = .clear
     }
     
     required public init?(coder: NSCoder) {
@@ -155,7 +154,7 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     open override func setupViews() {
         setupToolBars()
     }
-    
+
     // MARK: - Public Methods
     
     /// 旋转屏幕（设置屏幕方向并刷新顶部和底部栏）

@@ -28,7 +28,6 @@ open class ARTVideoPlayerSystemControls: ARTPassThroughView {
     public init(_ delegate: ARTVideoPlayerSystemControlsDelegate? = nil) {
         super.init(frame: .zero)
         self.delegate = delegate
-        self.backgroundColor = .clear
     }
     
     required public init?(coder: NSCoder) {
@@ -43,7 +42,7 @@ open class ARTVideoPlayerSystemControls: ARTPassThroughView {
     open override func setupViews() {
         setupVideoPlayerDisplay()
     }
-    
+
     // MARK: - Public Methods
     
     /// 更新预览图片

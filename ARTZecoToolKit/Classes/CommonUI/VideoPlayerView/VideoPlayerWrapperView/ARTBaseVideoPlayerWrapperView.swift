@@ -14,7 +14,7 @@ import AVFoundation
     case window                 = 3 // 普通窗口模式
 }
 
-open class ARTBaseVideoPlayerWrapperView: ARTPassThroughView {
+open class ARTBaseVideoPlayerWrapperView: UIView {
     
     /// 视频播放器
     public var player: AVPlayer!
@@ -27,6 +27,9 @@ open class ARTBaseVideoPlayerWrapperView: ARTPassThroughView {
     
     /// 图片生成器
     public var imageGenerator: AVAssetImageGenerator!
+    
+    /// 视频预览图缓存
+    public var thumbnailCache: [CMTimeHashable: UIImage] = [:]
     
     /// 播放器的播放状态
     public var isPlaying = false
@@ -64,13 +67,14 @@ open class ARTBaseVideoPlayerWrapperView: ARTPassThroughView {
     public init() {
         super.init(frame: .zero)
         self.backgroundColor = .black
+        setupViews()
     }
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    open override func setupViews() {
+    open func setupViews() {
         /// 子类重写: 设置视图
     }
     

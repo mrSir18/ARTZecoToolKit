@@ -25,7 +25,7 @@ open class ARTPassThroughView: UIView {
         let hitView = super.hitTest(point, with: event)
         return (hitView === self) ? nil : hitView
     }
-    
+
     // MARK: - Setup Views
 
     /// 重写父类方法，设置子视图

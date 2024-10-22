@@ -23,7 +23,6 @@ open class ARTVideoPlayerOverlayView: ARTPassThroughView {
     public init(_ delegate: ARTVideoPlayerOverlayViewDelegate? = nil) {
         super.init(frame: .zero)
         self.delegate = delegate
-        self.backgroundColor = .clear
     }
     
     required public init?(coder: NSCoder) {

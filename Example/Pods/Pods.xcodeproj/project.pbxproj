@@ -12,6 +12,7 @@
 		019621429FA873F9168AC51A319E44CA /* SDImageAWebPCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B469325577D5593B831FF80B6FC66F /* SDImageAWebPCoder.m */; };
 		01C4D808349C4668391326A90B4E8FE1 /* ARTAlignmentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F82088E2F83DC4B4625E8142D0FD2E /* ARTAlignmentButton.swift */; };
 		01CB09FBE43AB98BC0ABB704F199C03D /* UIImage+MemoryCacheCost.h in Headers */ = {isa = PBXBuildFile; fileRef = AB5FC11FE5ADAC30E53B708CE6D1C6FA /* UIImage+MemoryCacheCost.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		02D672CB2CC777AF00BE0A15 /* ARTCMTimeHashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D672CA2CC777AC00BE0A15 /* ARTCMTimeHashable.swift */; };
 		03947CCCF6D4F3228D100376F36F7E69 /* SDWebImageDownloaderRequestModifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 484D7C3A4EB6C1B5552E91D7DD800504 /* SDWebImageDownloaderRequestModifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		04E6CE228CF69333FC8BD69BBC1AF098 /* DecodingError+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6594C4DBB124D0C5B925EF0A946F536 /* DecodingError+Extension.swift */; };
 		05151A10227152BCD9A83D3784C5BCB1 /* ConstraintMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EACBDDBACC9E04E906600604BD6B4 /* ConstraintMaker.swift */; };
@@ -460,6 +461,7 @@
 		00EF16BB7103A67DD632D2FC9D5CAEA7 /* SDFileAttributeHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDFileAttributeHelper.h; path = SDWebImage/Private/SDFileAttributeHelper.h; sourceTree = "<group>"; };
 		01F4C9F3781B85D91966A704730E6A5A /* NSData+ImageContentType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSData+ImageContentType.h"; path = "SDWebImage/Core/NSData+ImageContentType.h"; sourceTree = "<group>"; };
 		02C99945442513B0E5751A8131F423F4 /* ARTPhotoBrowserStyleConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTPhotoBrowserStyleConfiguration.swift; sourceTree = "<group>"; };
+		02D672CA2CC777AC00BE0A15 /* ARTCMTimeHashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTCMTimeHashable.swift; sourceTree = "<group>"; };
 		03A4CD5D5740996AECC10F8CF57107CD /* ARTVideoPlayerTopbar.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerTopbar.swift; sourceTree = "<group>"; };
 		04CCA4AB386F4ACD432F2FE86C76C3C8 /* UIView+WebCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+WebCache.m"; path = "SDWebImage/Core/UIView+WebCache.m"; sourceTree = "<group>"; };
 		04D8B9BFDBBE33238891206175D88E32 /* ARTQuantityControlView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTQuantityControlView.swift; sourceTree = "<group>"; };
@@ -1434,6 +1436,7 @@
 			isa = PBXGroup;
 			children = (
 				A0A4632F679F5BAEB3A12968EA6FAD0F /* ARTVideoPlayerDisplayView.swift */,
+				02D672CA2CC777AC00BE0A15 /* ARTCMTimeHashable.swift */,
 			);
 			path = PlayerDisplayView;
 			sourceTree = "<group>";
@@ -2634,6 +2637,7 @@
 				CB530E2E819A13B9FF1BFA2BDE036970 /* UIImage+ARTExtension.swift in Sources */,
 				E06112DBF3A0B0528D29D54A1C2E386E /* UIScreen+ARTExtension.swift in Sources */,
 				C5B03580C6E13D2672BAD74546A2E31C /* UITextField+ARTExtension.swift in Sources */,
+				02D672CB2CC777AF00BE0A15 /* ARTCMTimeHashable.swift in Sources */,
 				3CDFC16AA794453044E9D4F4FF1A67D5 /* UIView+ARTExtension.swift in Sources */,
 				7B5A5F4F90546273438DC639CAB1BDD9 /* WKWebView+ARTCookieHandler.swift in Sources */,
 				8F812237C4D062E5A5AD3A8731B54C4F /* WKWebView+ARTCookieInjection.swift in Sources */,
