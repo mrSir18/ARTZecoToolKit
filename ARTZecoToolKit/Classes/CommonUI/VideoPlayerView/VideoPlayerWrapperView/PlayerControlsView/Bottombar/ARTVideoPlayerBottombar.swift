@@ -203,6 +203,15 @@ extension ARTVideoPlayerBottombar {
     @objc open func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) {
 
     }
+    
+    /// 更新滑块值
+    ///
+    /// - Parameter value: 滑块值
+    /// - Note: 重写此方法以更新底部工具栏的滑块值
+    @objc open func updateSliderValue(value: Float) {
+        sliderView.setValue(min(max(sliderView.value + value, 0), 1), animated: false)
+        delegate?.bottombarDidChangeValue?(for: self, slider: sliderView)
+    }
 }
 
 // MARK: - Private Methods

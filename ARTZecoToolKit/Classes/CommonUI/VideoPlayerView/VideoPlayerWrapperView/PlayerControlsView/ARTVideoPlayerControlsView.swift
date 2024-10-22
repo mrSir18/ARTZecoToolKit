@@ -187,6 +187,15 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     open func updateBufferProgressInControls(totalBuffer: Double, bufferProgress: Float, shouldUpdateSlider: Bool = false) {
         bottomBar.updateBufferProgress(totalBuffer: totalBuffer, bufferProgress: bufferProgress, shouldUpdateSlider: shouldUpdateSlider)
     }
+    
+    
+    /// 更新滑块值
+    ///
+    /// - Parameter sliderValue: 滑块值
+    /// - Note: 重写父类方法，更新播放器滑块值
+    open func updateSliderValueInControls(sliderValue: Float) {
+        bottomBar.updateSliderValue(value: sliderValue)
+    }
 }
 
 // MARK: - Setup Initializer

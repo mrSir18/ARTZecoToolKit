@@ -6,6 +6,7 @@
 //
 
 import AVFoundation
+import MediaPlayer
 
 @objc public protocol ARTVideoPlayerWrapperViewProtocol: AnyObject {
     
@@ -44,6 +45,16 @@ import AVFoundation
     //    @objc optional func refreshStatusBarAppearance(for playerWrapperView: ARTVideoPlayerWrapperView, isStatusBarHidden: Bool)
 }
 
+extension ARTVideoPlayerWrapperView {
+    // 定义枚举，用于区分手势方向
+    public enum SwipeDirection {
+        case horizontal     // 横向滑动
+        case verticalLeft   // 纵向滑动 - 左半边屏幕
+        case verticalRight  // 纵向滑动 - 右半边屏幕
+        case unknown        // 未知手势方向
+    }
+}
+
 open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     // MARK: - Private Properties
@@ -57,6 +68,9 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     /// 播放器配置模型
     public var playerConfig: ARTVideoPlayerConfig!
     
+    /// 手势方向
+    public var swipeDirection: SwipeDirection = .unknown
+    
     
     // MARK: - 播放器组件 AVPlayer（最底层：播放器视图）
     
@@ -68,6 +82,11 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     /// 播放器控制层（最顶层：顶底栏、侧边栏等）
     private var playControlsView: ARTVideoPlayerControlsView!
+    
+    /// 音量滑块
+    private lazy var volumeSlider: UISlider? = {
+        MPVolumeView().subviews.compactMap { $0 as? UISlider }.first
+    }()
     
     
     // MARK: - Initialization
@@ -212,6 +231,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     /// 根据指定时间获取缩略图
     ///
     /// - Parameter time: 需要生成缩略图的时间
+    /// - Note: 生成缩略图并更新预览图像 - 有条件的可以上云，这样缩略图更高效
     open func fetchThumbnail(for time: CMTime) {
         let timeKey = CMTimeHashable(time) // 创建时间键用于缓存
         if let cachedImage = thumbnailCache[timeKey] { // 如果有缓存，直接更新预览图像
@@ -322,18 +342,61 @@ extension ARTVideoPlayerWrapperView {
     ///
     /// - Note: 重写父类方法，设置手势识别器
     @objc open func setupGestureRecognizers() {
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handleSortingPan(_:)))
+        panGesture.maximumNumberOfTouches = 1
+        panGesture.delaysTouchesBegan = true
+        panGesture.delaysTouchesEnded = true
+        panGesture.cancelsTouchesInView = true
         addGestureRecognizer(panGesture)
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSortingTap(_:)))
+        tapRecognizer.numberOfTapsRequired = 1
+        tapRecognizer.numberOfTouchesRequired = 1
+        addGestureRecognizer(tapRecognizer)
+    }
+}
+
+// MARK: - Gesture Recognizer
+
+extension ARTVideoPlayerWrapperView {
+    
+    /// 点击手势
+    ///
+    /// - Parameter gesture: 点击手势
+    /// - Note: 重写父类方法，处理点击手势
+    @objc private func handleSortingTap(_ gesture: UITapGestureRecognizer) {
+        print("TopView: Tap gesture")
     }
     
-    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+    /// 拖动手势
+    ///
+    /// - Parameter gesture: 拖动手势
+    /// - Note: 重写父类方法，处理拖动手势
+    @objc func handleSortingPan(_ gesture: UIPanGestureRecognizer) {
+        let locationPoint = gesture.location(in: self) // 获取当前触摸位置
+        let velocityPoint = gesture.velocity(in: self) // 获取滑动速度信息
+        
         switch gesture.state {
         case .began:
-            print("TopView: Pan began")
+            if abs(velocityPoint.x) > abs(velocityPoint.y) { // 横向滑动
+                swipeDirection = .horizontal
+            } else { // 纵向滑动，判断是左半边还是右半边
+                swipeDirection = locationPoint.x < bounds.width * 0.5 ? .verticalLeft : .verticalRight
+            }
         case .changed:
-            print("TopView: Pan changed")
-        case .ended:
-            print("TopView: Pan ended")
+            switch swipeDirection {
+            case .horizontal: // 更新播放控件中的滑块值
+                pausePlayer()
+                playControlsView.updateSliderValueInControls(sliderValue: Float(velocityPoint.x) / 20000)
+            case .verticalLeft: // 左侧滑动时降低屏幕亮度
+                UIScreen.main.brightness -= velocityPoint.y / 10000
+            case .verticalRight: // 右侧滑动时调整音量
+                volumeSlider?.value -= Float(velocityPoint.y / 10000)
+            default:
+                break
+            }
+        case .ended: // 如果是横向滑动，恢复播放器
+            if swipeDirection == .horizontal { resumePlayer() }
         default:
             break
         }
@@ -379,6 +442,23 @@ extension ARTVideoPlayerWrapperView {
         } catch {
             print("设置音频会话时发生错误: \(error.localizedDescription)")
         }
+    }
+    
+    /// 播放器暂停播放
+    ///
+    /// - Note: 暂停播放器并更新播放状态
+    private func pausePlayer() {
+        isDraggingSlider = true
+        player.pause()
+    }
+    
+    /// 播放器恢复播放
+    ///
+    /// - Note: 恢复播放器并更新播放状态
+    private func resumePlayer() {
+        systemControlsView.hideVideoPlayerDisplay()
+        isDraggingSlider = false
+        player.play()
     }
 }
 
@@ -444,9 +524,7 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     }
     
     public func controlsViewDidEndTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 恢复播放 (结束拖动滑块)
-        systemControlsView.hideVideoPlayerDisplay()
-        isDraggingSlider = false
-        player.play()
+        resumePlayer()
     }
     
     public func controlsViewDidTap(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 指定播放时间 (点击滑块)
