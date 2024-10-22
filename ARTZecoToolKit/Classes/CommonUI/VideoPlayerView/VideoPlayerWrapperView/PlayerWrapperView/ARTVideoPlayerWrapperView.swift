@@ -375,11 +375,13 @@ extension ARTVideoPlayerWrapperView {
     @objc func handleSortingPan(_ gesture: UIPanGestureRecognizer) {
         let locationPoint = gesture.location(in: self) // 获取当前触摸位置
         let velocityPoint = gesture.velocity(in: self) // 获取滑动速度信息
+        let sliderValue   = Float(velocityPoint.x) / 20000 // 滑块值
         
         switch gesture.state {
         case .began:
             if abs(velocityPoint.x) > abs(velocityPoint.y) { // 横向滑动
                 swipeDirection = .horizontal
+                playControlsView.updateSliderTouchBeganInControls(sliderValue: sliderValue)
             } else { // 纵向滑动，判断是左半边还是右半边
                 swipeDirection = locationPoint.x < bounds.width * 0.5 ? .verticalLeft : .verticalRight
             }
@@ -387,7 +389,7 @@ extension ARTVideoPlayerWrapperView {
             switch swipeDirection {
             case .horizontal: // 更新播放控件中的滑块值
                 pausePlayer()
-                playControlsView.updateSliderValueInControls(sliderValue: Float(velocityPoint.x) / 20000)
+                playControlsView.updateSliderValueInControls(sliderValue: sliderValue)
             case .verticalLeft: // 左侧滑动时降低屏幕亮度
                 UIScreen.main.brightness -= velocityPoint.y / 10000
             case .verticalRight: // 右侧滑动时调整音量
@@ -396,7 +398,7 @@ extension ARTVideoPlayerWrapperView {
                 break
             }
         case .ended: // 如果是横向滑动，恢复播放器
-            if swipeDirection == .horizontal { resumePlayer() }
+            if swipeDirection == .horizontal { playControlsView.updateSliderTouchEndedInControls(sliderValue: sliderValue) }
         default:
             break
         }

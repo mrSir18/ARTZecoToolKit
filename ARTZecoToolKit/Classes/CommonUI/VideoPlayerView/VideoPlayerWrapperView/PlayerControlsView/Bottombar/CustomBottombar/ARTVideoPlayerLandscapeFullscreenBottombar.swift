@@ -42,7 +42,10 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
     private var danmakuSettingsButton: ARTAlignmentButton!
     
     /// 弹幕输入框
-    private var danmakuInputField: UITextField!
+    private var danmakuInputLabel: YYLabel!
+    
+    /// 发送弹幕按钮
+    private var danmakuSendButton: UIButton!
     
     /// 倍数按钮
     private var speedButton: UIButton!
@@ -201,13 +204,34 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
     }
     
     private func setupDanmakuInputField() { // 创建弹幕输入框
-        danmakuInputField = UITextField()
-//        danmakuInputField.backgroundColor = .art_randomColor()
-        containerView.addSubview(danmakuInputField)
-        danmakuInputField.snp.makeConstraints { make in
+        let inputView = UIView()
+        inputView.backgroundColor       = .art_color(withHEXValue: 0xD8D8D8, alpha: 0.3)
+        inputView.layer.cornerRadius    = ARTAdaptedValue(14.0)
+        inputView.layer.masksToBounds   = true
+        containerView.addSubview(inputView)
+        inputView.snp.makeConstraints { make in
             make.size.equalTo(ARTAdaptedSize(width: 163.0, height: 28.0))
             make.left.equalTo(danmakuSettingsButton.snp.right).offset(ARTAdaptedValue(24.0))
             make.centerY.equalTo(pauseButton)
+        }
+
+        danmakuInputLabel = YYLabel()
+        danmakuInputLabel.font            = .art_regular(ARTAdaptedValue(12.0))
+        danmakuInputLabel.textColor       = .art_color(withHEXValue: 0xFFFFFF)
+        danmakuInputLabel.text            = "发一条友好的弹幕吧"
+        danmakuInputLabel.textAlignment   = .center
+        containerView.addSubview(danmakuInputLabel)
+        danmakuInputLabel.snp.makeConstraints { make in
+            make.top.bottom.equalTo(inputView)
+            make.left.equalTo(inputView.snp.left).offset(ARTAdaptedValue(12.0))
+            make.right.equalTo(inputView.snp.right).offset(-ARTAdaptedValue(12.0))
+        }
+        
+        danmakuSendButton = UIButton(type: .custom)
+        danmakuSendButton.addTarget(self, action: #selector(didTapDanmakuSendButton), for: .touchUpInside)
+        containerView.addSubview(danmakuSendButton)
+        danmakuSendButton.snp.makeConstraints { make in
+            make.edges.equalTo(inputView)
         }
     }
     
@@ -269,6 +293,13 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
     /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapDanmakuSettingsButton() {
         print("弹幕设置")
+    }
+    
+    /// 点击发送弹幕按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc open func didTapDanmakuSendButton() {
+        print("发送弹幕")
     }
     
     /// 点击倍数按钮
