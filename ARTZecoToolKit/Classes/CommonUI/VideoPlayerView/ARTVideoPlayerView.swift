@@ -5,28 +5,43 @@
 //  Created by mrSir18 on 2024/10/19.
 //
 
-
-import UIKit
 import AVFoundation
 import MobileCoreServices
 
 /// 视频播放器栈视图，管理视频播放器的显示
 open class ARTVideoPlayerView: UIStackView {
-
+    
+    /// 视频播放器包装视图
+    private var videoWrapperView: ARTVideoPlayerWrapperView!
+    
+    
     // MARK: - Initialization
     
     public init() {
         super.init(frame: .zero)
         setupDefaults()
         setupSupportedAVPlayerFileExtensions()
-        setupVideoPlayerView()
+        setupVideoWrapperView()
     }
     
     required public init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Private Methods
+    // MARK: - Override Public Methods
+    
+    /// 开始播放视频
+    ///
+    /// - Parameter config: 视频播放器配置模型
+    /// - Note: 重写父类方法，播放视频
+    open func startVideoPlayback(with config: ARTVideoPlayerConfig?) {
+        videoWrapperView.startVideoPlayback(with: config)
+    }
+}
+
+// MARK: Private Methods
+
+extension ARTVideoPlayerView {
     
     /// 设置默认属性
     private func setupDefaults() {
@@ -39,30 +54,23 @@ open class ARTVideoPlayerView: UIStackView {
     private func setupSupportedAVPlayerFileExtensions() {
         print("\n\n本框架基于 AVPlayer 封装，支持格式：\n\n【\(supportedAVPlayerFileExtensions())】\n")
     }
+}
 
-    // MARK: - Override Methods
+// MARK: - Setup Initializer
+
+extension ARTVideoPlayerView {
     
     /// 初始化播放器视图
     ///
     /// - Parameter playerView: 播放器视图
-    open func setupVideoPlayerView() {
-        let videoWrapperView = ARTVideoPlayerWrapperView(self)
+    @objc open func setupVideoWrapperView() {
+        videoWrapperView = ARTVideoPlayerWrapperView(self)
         addArrangedSubview(videoWrapperView)
-        
-        
-        // MARK: - Test Methods
-        
-        let config = ARTVideoPlayerConfig()
-        config.url = URL(string: "https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4")
-//        config.url = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MOV")!)
-//        https://media.w3.org/2010/05/sintel/trailer.mp4
-//        https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4
-        videoWrapperView.startVideoPlayback(with: config)
     }
 }
 
 extension ARTVideoPlayerView: ARTVideoPlayerWrapperViewProtocol {
-
+    
 }
 
 // MARK: - Supported AVPlayer File Extensions
