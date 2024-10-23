@@ -143,6 +143,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         guard size != .zero else { return }
         playerConfig.isLandscape = size.width > size.height // 根据视频尺寸判断是否横屏/竖屏 (全屏)
         playControlsView.isLandscape = playerConfig.isLandscape
+        systemControlsView.updateContentModeInSystemControls(isLandscape: playerConfig.isLandscape)
     }
     
     open override func onReceiveTimeControlStatusPlaying() { // 播放器正在播放
@@ -278,7 +279,7 @@ extension ARTVideoPlayerWrapperView {
             print("当前 layer 不是 AVPlayerLayer，无法播放视频。")
             return
         }
-        playerLayer.videoGravity = .resizeAspectFill
+        playerLayer.videoGravity = .resizeAspect
         playerLayer.player = player
         setupImageGenerator(asset)
     }
@@ -291,10 +292,9 @@ extension ARTVideoPlayerWrapperView {
     @objc open func setupImageGenerator(_ asset: AVURLAsset) {
         thumbnailCache.removeAll() // 清空缓存
         imageGenerator = AVAssetImageGenerator(asset: asset)
-        imageGenerator.appliesPreferredTrackTransform   = true
-        imageGenerator.requestedTimeToleranceBefore     = .zero
-        imageGenerator.requestedTimeToleranceAfter      = .zero
-        imageGenerator.maximumSize                      = ARTAdaptedSize(width: 150.0, height: 84.0)
+        imageGenerator.appliesPreferredTrackTransform = true
+        imageGenerator.requestedTimeToleranceBefore   = .zero
+        imageGenerator.requestedTimeToleranceAfter    = .zero
         fetchFirstFrameFromVideo() // 获取视频的第一帧
     }
     
@@ -496,6 +496,7 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     
     public func videoPlayerControlsDidTapBack(for playerControlsView: ARTVideoPlayerControlsView) { // 点击返回按钮
         fullscreenManager.dismiss { [weak self] in // 切换窗口模式顶底栏
+            self?.systemControlsView.updateScreenOrientationInSystemControls(screenOrientation: .window)
             self?.playControlsView.transitionToFullscreen(orientation: .window)
         }
     }
@@ -510,6 +511,7 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     
     public func transitionToFullscreen(for playerControlsView: ARTVideoPlayerControlsView, orientation: ScreenOrientation) { // 点击全屏按钮
         fullscreenManager.presentFullscreenWithRotation { [weak self] in // 切换全屏模式顶底栏
+            self?.systemControlsView.updateScreenOrientationInSystemControls(screenOrientation: orientation)
             self?.playControlsView.transitionToFullscreen(orientation: orientation)
         }
     }
@@ -520,7 +522,7 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     
     public func controlsViewDidChangeValue(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 快进/快退 (拖动滑块)
         seekToSliderValue(slider)
-        if controlsView.isLandscape { updatePreviewImageForSliderValueChange(slider) } // 横屏模式下更新预览图像
+        updatePreviewImageForSliderValueChange(slider)
     }
     
     public func controlsViewDidEndTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 恢复播放 (结束拖动滑块)

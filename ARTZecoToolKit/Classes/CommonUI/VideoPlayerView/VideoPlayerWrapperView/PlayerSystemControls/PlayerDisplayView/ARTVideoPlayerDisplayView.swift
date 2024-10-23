@@ -8,7 +8,7 @@
 import AVFoundation
 
 open class ARTVideoPlayerDisplayView: UIView {
-
+    
     /// 容器视图
     private var containerView: ARTCustomView!
     
@@ -69,6 +69,41 @@ open class ARTVideoPlayerDisplayView: UIView {
         currentTimeLabel.text  = currentTime.art_formattedTime()
         durationLabel.text     = "/\(duration.art_formattedTime())"
     }
+    
+    /// 更新屏幕方向
+    ///
+    /// - Parameters:
+    /// - screenOrientation: 屏幕方向
+    /// - Note: 子类重写此方法以更新屏幕方向
+    open func updateScreenOrientation(screenOrientation: ScreenOrientation) {
+        containerView.borderWidth = 1.0
+        switch screenOrientation {
+        case .window: // 窗口模式
+            containerView.snp.updateConstraints { make in
+                make.size.equalTo(ARTAdaptedSize(width: 150.0, height: 84.0))
+                make.bottom.equalTo(-ARTAdaptedValue(74.0))
+            }
+        case .landscapeFullScreen: // 横屏全屏模式
+            containerView.snp.updateConstraints { make in
+                make.size.equalTo(ARTAdaptedSize(width: 180.0, height: 102.0))
+                make.bottom.equalTo(-ARTAdaptedValue(120.0))
+            }
+        case .portraitFullScreen: // 竖屏全屏模式
+            let bottomMargin = ARTAdaptedValue(204.0)+art_safeAreaBottom()
+            containerView.snp.updateConstraints { make in
+                make.size.equalTo(ARTAdaptedSize(width: 108.0, height: 190.0))
+                make.bottom.equalTo(-bottomMargin)
+            }
+        }
+    }
+    
+    /// 更新显示图片视图的内容模式
+    ///
+    /// - Parameter isLandscape: 是否横屏
+    /// - Note: 根据是否横屏更新显示图片视图的内容模式
+    open func updateContentMode(isLandscape: Bool) {
+        displayImageView.contentMode = isLandscape ? .scaleAspectFill : .scaleAspectFit
+    }
 }
 
 // MARK: - Setup Initializer
@@ -77,7 +112,7 @@ extension ARTVideoPlayerDisplayView {
     
     private func setupContainerView() { // 创建容器视图
         containerView = ARTCustomView()
-        containerView.customBackgroundColor = .art_color(withHEXValue: 0xD8D8D8)
+        containerView.customBackgroundColor = .black
         containerView.borderColor           = .art_color(withHEXValue: 0xFFFFFF)
         containerView.borderWidth           = 1.0
         containerView.cornerRadius          = ARTAdaptedValue(6.0)
@@ -85,7 +120,7 @@ extension ARTVideoPlayerDisplayView {
         containerView.snp.makeConstraints { make in
             make.size.equalTo(ARTAdaptedSize(width: 150.0, height: 84.0))
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(-ARTAdaptedValue(12.0))
+            make.bottom.equalTo(-ARTAdaptedValue(74.0))
         }
     }
     
@@ -97,7 +132,7 @@ extension ARTVideoPlayerDisplayView {
         containerView.addSubview(displayImageView)
         displayImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(ARTAdaptedValue(1.0))
-         }
+        }
     }
     
     private func setupCurrentTimeLabel() { // 创建当前播放时间标签

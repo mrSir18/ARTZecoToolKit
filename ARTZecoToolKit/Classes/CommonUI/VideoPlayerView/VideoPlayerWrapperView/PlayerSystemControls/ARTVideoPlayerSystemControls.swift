@@ -45,6 +45,15 @@ open class ARTVideoPlayerSystemControls: ARTPassThroughView {
 
     // MARK: - Public Methods
     
+    /// 更新屏幕方向
+    ///
+    /// - Parameters:
+    ///  - screenOrientation: 屏幕方向
+    ///  - Note: 重写父类方法，更新播放器屏幕方向
+    open func updateScreenOrientationInSystemControls(screenOrientation: ScreenOrientation) {
+        playerDisplayView.updateScreenOrientation(screenOrientation: screenOrientation)
+    }
+    
     /// 更新预览图片
     ///
     /// - Parameters:
@@ -69,6 +78,14 @@ open class ARTVideoPlayerSystemControls: ARTPassThroughView {
     /// - Note: 重写父类方法，隐藏视频帧视图
     open func hideVideoPlayerDisplay() {
         playerDisplayView.isHidden = true
+    }
+    
+    /// 更新显示图片视图的内容模式
+    ///
+    /// - Parameter isLandscape: 是否横屏
+    /// - Note: 根据是否横屏更新显示图片视图的内容模式
+    open func updateContentModeInSystemControls(isLandscape: Bool) {
+        playerDisplayView.updateContentMode(isLandscape: isLandscape)
     }
 }
 

@@ -6,11 +6,9 @@
 //
 
 /// 视频播放器配置模型
-public class ARTVideoPlayerConfig {
-    
-    required public init() {
-        
-    }
+public struct ARTVideoPlayerConfig {
+
+    public init() {}
     
     // MARK: - 基础配置
     public var url: URL?                                // 视频地址

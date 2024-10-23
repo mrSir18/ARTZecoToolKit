@@ -305,11 +305,11 @@ extension ARTVideoPlayerControlsView {
     private func bottomBarHeight(for orientation: ScreenOrientation) -> CGFloat {
         switch orientation {
         case .portraitFullScreen:
-            return ARTAdaptedValue(88.0) // 竖屏高度
+            return ARTAdaptedValue(204.0)+art_safeAreaBottom() // 竖屏高度
         case .landscapeFullScreen:
             return ARTAdaptedValue(90.0) // 横屏高度
         case .window:
-            return art_tabBarHeight() // 普通窗口模式的高度
+            return ARTAdaptedValue(44.0) // 普通窗口模式的高度
         }
     }
 }
@@ -377,7 +377,6 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerWindowBottombarDelegate {
 extension ARTVideoPlayerControlsView: ARTVideoPlayerLandscapeFullscreenBottombarDelegate {
     
 }
-
 
 // MARK: - Private Delegate Methods
 

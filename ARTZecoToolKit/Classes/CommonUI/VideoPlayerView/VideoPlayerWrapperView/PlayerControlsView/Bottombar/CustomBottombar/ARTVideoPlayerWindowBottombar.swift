@@ -79,7 +79,7 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
         containerView.addSubview(currentTimeLabel)
         currentTimeLabel.snp.makeConstraints { make in
             make.left.equalTo(ARTAdaptedValue(12.0))
-            make.bottom.equalTo(-ARTAdaptedValue(24.0))
+            make.bottom.equalTo(-ARTAdaptedValue(30.0))
             make.height.equalTo(ARTAdaptedValue(14.0))
         }
     }
@@ -102,14 +102,14 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
         fullscreenButton = ARTAlignmentButton(type: .custom)
         fullscreenButton.layoutType         = .freeform
         fullscreenButton.imageAlignment     = .topLeft
-        fullscreenButton.imageEdgeInset     = UIEdgeInsets(top: ARTAdaptedValue(14.0), left: 0, bottom: 0, right: 0) // 图片内边距
+        fullscreenButton.imageEdgeInset     = UIEdgeInsets(top: ARTAdaptedValue(10.0), left: ARTAdaptedValue(12.0), bottom: 0, right: 0) // 图片内边距
         fullscreenButton.imageSize          = ARTAdaptedSize(width: 20.0, height: 20.0)
         fullscreenButton.setImage(UIImage(named: "video_fullscreen"), for: .normal)
         fullscreenButton.addTarget(self, action: #selector(didTapFullscreenButton), for: .touchUpInside)
         containerView.addSubview(fullscreenButton)
         fullscreenButton.snp.makeConstraints { make in
-            make.size.equalTo(ARTAdaptedSize(width: 36.0, height: 49.0))
-            make.right.bottom.equalToSuperview()
+            make.top.right.bottom.equalToSuperview()
+            make.width.equalTo(ARTAdaptedValue(48.0))
         }
     }
     
@@ -117,7 +117,7 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
         containerView.addSubview(progressView)
         progressView.snp.makeConstraints { make in
             make.left.equalTo(currentTimeLabel)
-            make.bottom.equalTo(-ARTAdaptedValue(12.0))
+            make.bottom.equalTo(-ARTAdaptedValue(16.0))
             make.right.equalTo(durationLabel)
             make.height.equalTo(ARTAdaptedValue(3.0))
         }
@@ -127,7 +127,7 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
         containerView.addSubview(sliderView)
         sliderView.snp.makeConstraints { make in
             make.left.equalTo(progressView.snp.left).offset(ARTAdaptedValue(2.0))
-            make.centerY.equalTo(progressView)
+            make.centerY.equalTo(progressView.snp.centerY).offset(-0.4)
             make.right.equalTo(progressView.snp.right).offset(-ARTAdaptedValue(2.0))
             make.height.equalTo(ARTAdaptedValue(32.0))
         }
@@ -154,10 +154,9 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     
     open override func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) { // 自定义滑块外观
         DispatchQueue.main.async {
-            self.sliderView.trackHeight = trackHeight
-            self.progressView.layer.cornerRadius = cornerRadius
-
             UIView.animate(withDuration: duration) {
+                self.sliderView.trackHeight = trackHeight
+                self.progressView.layer.cornerRadius = cornerRadius
                 if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: thumbSize) {
                     self.sliderView.setThumbImage(thumbImage, for: .normal)
                 }

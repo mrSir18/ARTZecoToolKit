@@ -104,7 +104,7 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
         containerView.addSubview(currentTimeLabel)
         currentTimeLabel.snp.makeConstraints { make in
             make.left.equalTo(leftInset)
-            make.top.equalTo(ARTAdaptedValue(8.0))
+            make.top.equalTo(ARTAdaptedValue(6.0))
             make.width.greaterThanOrEqualTo(ARTAdaptedValue(26.0))
             make.height.equalTo(ARTAdaptedValue(14.0))
         }
@@ -129,7 +129,7 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
         containerView.addSubview(progressView)
         progressView.snp.makeConstraints { make in
             make.left.equalTo(currentTimeLabel)
-            make.bottom.equalTo(-ARTAdaptedValue(55.0))
+            make.bottom.equalTo(-ARTAdaptedValue(57.0))
             make.right.equalTo(-rightInset)
             make.height.equalTo(ARTAdaptedValue(3.0))
         }
