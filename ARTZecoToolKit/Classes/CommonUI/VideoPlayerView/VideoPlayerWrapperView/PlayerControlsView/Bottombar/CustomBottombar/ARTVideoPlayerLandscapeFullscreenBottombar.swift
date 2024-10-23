@@ -97,7 +97,7 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
     private func setupCurrentTimeLabel() { // 创建当前播放时间标签
         let leftInset = UIScreen.art_currentScreenIsIphoneX ? ARTAdaptedValue(66.0) : ARTAdaptedValue(12.0)
         currentTimeLabel = UILabel()
-        currentTimeLabel.text               = "01:14"
+        currentTimeLabel.text               = "00:00"
         currentTimeLabel.textAlignment      = .left
         currentTimeLabel.font               = .art_medium(ARTAdaptedValue(10.0))
         currentTimeLabel.textColor          = .art_color(withHEXValue: 0xFFFFFF)
@@ -105,13 +105,14 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
         currentTimeLabel.snp.makeConstraints { make in
             make.left.equalTo(leftInset)
             make.top.equalTo(ARTAdaptedValue(8.0))
+            make.width.greaterThanOrEqualTo(ARTAdaptedValue(26.0))
             make.height.equalTo(ARTAdaptedValue(14.0))
         }
     }
     
     private func setupDurationLabel() { // 创建总时长标签
         durationLabel = UILabel()
-        durationLabel.text                  = "/19:08"
+        durationLabel.text                  = "/00:00"
         durationLabel.textAlignment         = .left
         durationLabel.font                  = .art_medium(ARTAdaptedValue(10.0))
         durationLabel.textColor             = .art_color(withHEXValue: 0xFFFFFF)
@@ -138,7 +139,7 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
         containerView.addSubview(sliderView)
         sliderView.snp.makeConstraints { make in
             make.left.equalTo(progressView.snp.left).offset(ARTAdaptedValue(2.0))
-            make.centerY.equalTo(progressView.snp.centerY).offset(-ARTAdaptedValue(0.5))
+            make.centerY.equalTo(progressView.snp.centerY).offset(-0.6)
             make.right.equalTo(progressView.snp.right).offset(-ARTAdaptedValue(2.0))
             make.height.equalTo(ARTAdaptedValue(20.0))
         }
@@ -239,7 +240,7 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
         collectionButton = UIButton(type: .custom)
         collectionButton.titleLabel?.font = .art_medium(ARTAdaptedValue(12.0))
         collectionButton.contentHorizontalAlignment = .right
-        collectionButton.setTitle("选集", for: .normal)
+        collectionButton.setTitle("目录", for: .normal)
         collectionButton.setTitleColor(.art_color(withHEXValue: 0xFFFFFF), for: .normal)
         collectionButton.addTarget(self, action: #selector(didTapCollectionButton), for: .touchUpInside)
         containerView.addSubview(collectionButton)
@@ -326,10 +327,9 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
     
     open override func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) { // 自定义滑块外观
         DispatchQueue.main.async {
-            self.sliderView.trackHeight = trackHeight
-            self.progressView.layer.cornerRadius = cornerRadius
-
             UIView.animate(withDuration: duration) {
+                self.sliderView.trackHeight = trackHeight
+                self.progressView.layer.cornerRadius = cornerRadius
                 if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: thumbSize) {
                     self.sliderView.setThumbImage(thumbImage, for: .normal)
                 }

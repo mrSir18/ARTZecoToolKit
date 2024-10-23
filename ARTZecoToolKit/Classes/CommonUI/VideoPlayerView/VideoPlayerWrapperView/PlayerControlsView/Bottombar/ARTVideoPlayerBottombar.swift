@@ -50,7 +50,7 @@ open class ARTVideoPlayerBottombar: UIView {
     public lazy var progressView: UIProgressView = {
         let view = UIProgressView()
         view.trackTintColor     = .art_color(withHEXValue: 0xFFFFFF, alpha: 0.2)
-        view.progressTintColor  = .art_color(withHEXValue: 0xFE5C01, alpha: 0.25)
+        view.progressTintColor  = .art_color(withHEXValue: 0xFFFFFF, alpha: 0.25)
         view.layer.cornerRadius = ARTAdaptedValue(1.5)
         view.clipsToBounds      = true
         return view
@@ -198,6 +198,13 @@ extension ARTVideoPlayerBottombar {
 
     }
     
+    /// 触摸开始时调用的函数
+    ///
+    /// - Note: 重写此方法以处理滑块触摸
+    @objc open func updateSliderTouchBegan(value: Float) {
+        handleSliderTouchBegan(sliderView)
+    }
+
     /// 更新滑块值
     ///
     /// - Parameter value: 滑块值
@@ -206,20 +213,11 @@ extension ARTVideoPlayerBottombar {
         adjustSliderValue(value: value)
         delegate?.bottombarDidChangeValue?(for: self, slider: sliderView)
     }
-    
-    /// 触摸开始时调用的函数
-    ///
-    /// - Note: 重写此方法以处理滑块触摸
-    @objc open func updateSliderTouchBegan(value: Float) {
-        adjustSliderValue(value: value)
-        handleSliderTouchBegan(sliderView)
-    }
 
     /// 触摸结束时调用的函数
     ///
     /// - Note: 重写此方法以处理滑块触摸结束事件
     @objc open func updateSliderTouchEnded(value: Float) {
-        adjustSliderValue(value: value)
         handleSliderTouchEnded(sliderView)
     }
 }
@@ -257,6 +255,6 @@ extension ARTVideoPlayerBottombar {
     /// - Parameters:
     ///   - value: 滑块值变化
     private func adjustSliderValue(value: Float) {
-        sliderView.setValue(min(max(sliderView.value + value, 0), 1), animated: false)
+        sliderView.setValue(min(max(sliderView.value + value, 0), 1), animated: true)
     }
 }

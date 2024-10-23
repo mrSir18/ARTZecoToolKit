@@ -375,7 +375,7 @@ extension ARTVideoPlayerWrapperView {
     @objc func handleSortingPan(_ gesture: UIPanGestureRecognizer) {
         let locationPoint = gesture.location(in: self) // 获取当前触摸位置
         let velocityPoint = gesture.velocity(in: self) // 获取滑动速度信息
-        let sliderValue   = Float(velocityPoint.x) / 20000 // 滑块值
+        let sliderValue   = Float(velocityPoint.x) / 60000 // 滑块值
         
         switch gesture.state {
         case .began:
@@ -388,7 +388,6 @@ extension ARTVideoPlayerWrapperView {
         case .changed:
             switch swipeDirection {
             case .horizontal: // 更新播放控件中的滑块值
-                pausePlayer()
                 playControlsView.updateSliderValueInControls(sliderValue: sliderValue)
             case .verticalLeft: // 左侧滑动时降低屏幕亮度
                 UIScreen.main.brightness -= velocityPoint.y / 10000

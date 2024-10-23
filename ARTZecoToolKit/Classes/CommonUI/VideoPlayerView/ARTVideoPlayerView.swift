@@ -53,9 +53,9 @@ open class ARTVideoPlayerView: UIStackView {
         // MARK: - Test Methods
         
         let config = ARTVideoPlayerConfig()
-        config.url = URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")
+        config.url = URL(string: "https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4")
 //        config.url = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MOV")!)
-//        https://www.w3school.com.cn/example/html5/mov_bbb.mp4
+//        https://media.w3.org/2010/05/sintel/trailer.mp4
 //        https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4
         videoWrapperView.startVideoPlayback(with: config)
     }

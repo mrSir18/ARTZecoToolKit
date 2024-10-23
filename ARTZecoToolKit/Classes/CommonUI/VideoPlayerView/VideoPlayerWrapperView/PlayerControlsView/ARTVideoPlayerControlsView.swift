@@ -188,6 +188,13 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
         bottomBar.updateBufferProgress(totalBuffer: totalBuffer, bufferProgress: bufferProgress, shouldUpdateSlider: shouldUpdateSlider)
     }
     
+    /// 触摸开始时调用的函数
+    ///
+    /// - Note: 重写此方法以处理滑块触摸
+    @objc open func updateSliderTouchBeganInControls(sliderValue: Float) {
+        bottomBar.updateSliderTouchBegan(value: sliderValue)
+    }
+
     /// 更新滑块值
     ///
     /// - Parameter sliderValue: 滑块值
@@ -196,13 +203,6 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
         bottomBar.updateSliderValue(value: sliderValue)
     }
     
-    /// 触摸开始时调用的函数
-    ///
-    /// - Note: 重写此方法以处理滑块触摸
-    @objc open func updateSliderTouchBeganInControls(sliderValue: Float) {
-        bottomBar.updateSliderTouchBegan(value: sliderValue)
-    }
-
     /// 触摸结束时调用的函数
     ///
     /// - Note: 重写此方法以处理滑块触摸结束事件
