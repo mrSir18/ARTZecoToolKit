@@ -274,14 +274,35 @@ extension ARTVideoPlayerWrapperView {
         
         let asset = AVURLAsset(url: videoUrl)
         playerItem = AVPlayerItem(asset: asset)
+        setPlayerVolume(playerItem: playerItem, volume: 2.0)  // 将音量设置为2倍
         player = AVPlayer(playerItem: playerItem)
         guard let playerLayer = layer as? AVPlayerLayer else {
             print("当前 layer 不是 AVPlayerLayer，无法播放视频。")
             return
         }
-        playerLayer.videoGravity = .resizeAspect
+        playerLayer.videoGravity = .resizeAspectFill
         playerLayer.player = player
         setupImageGenerator(asset)
+    }
+    
+    /// 设置播放器音量
+    ///
+    /// 该方法通过修改 `AVPlayerItem` 的音轨音量来调节播放声音。
+    ///
+    /// - Parameters:
+    ///   - playerItem: 当前播放的 `AVPlayerItem`，其中包含了音频轨道信息。
+    ///   - volume: 要设置的音量大小，范围通常为 `0.0` 到 `1.0`，但可以超过 `1.0` 来增加音量（如 `2.0` 为两倍音量）。
+    ///
+    /// - Note:
+    ///   音量值 `1.0` 表示原始音量，`0.0` 表示静音，超过 `1.0` 可以增大音量。
+    @objc open func setPlayerVolume(playerItem: AVPlayerItem, volume: Float) {
+        let audioMix = AVMutableAudioMix()
+        if let audioTrack = playerItem.asset.tracks(withMediaType: .audio).first {
+            let inputParams = AVMutableAudioMixInputParameters(track: audioTrack)
+            inputParams.setVolume(volume, at: CMTime.zero) // 调整音量
+            audioMix.inputParameters = [inputParams]
+            playerItem.audioMix = audioMix
+        }
     }
     
     /// 配置图像生成器

@@ -378,6 +378,10 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerLandscapeFullscreenBottombar
     
 }
 
+extension ARTVideoPlayerControlsView: ARTVideoPlayerPortraitFullscreenBottombarDelegate {
+    
+}
+
 // MARK: - Private Delegate Methods
 
 extension ARTVideoPlayerControlsView {

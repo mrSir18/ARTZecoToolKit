@@ -44,9 +44,6 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
     /// 弹幕输入框
     private var danmakuInputLabel: YYLabel!
     
-    /// 发送弹幕按钮
-    private var danmakuSendButton: UIButton!
-    
     /// 倍数按钮
     private var speedButton: UIButton!
     
@@ -228,7 +225,7 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
             make.right.equalTo(inputView.snp.right).offset(-ARTAdaptedValue(12.0))
         }
         
-        danmakuSendButton = UIButton(type: .custom)
+        let danmakuSendButton = UIButton(type: .custom)
         danmakuSendButton.addTarget(self, action: #selector(didTapDanmakuSendButton), for: .touchUpInside)
         containerView.addSubview(danmakuSendButton)
         danmakuSendButton.snp.makeConstraints { make in
