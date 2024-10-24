@@ -98,7 +98,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         toolBarView.backgroundColor = .black
         containerView.addSubview(toolBarView)
         toolBarView.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
+            make.left.bottom.right.equalToSuperview()
             make.height.equalTo(ARTAdaptedValue(40.0)+art_safeAreaBottom())
         }
     }
@@ -110,10 +110,8 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         containerView.addSubview(gradientView)
         gradientView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
-            make.bottom.equalTo(toolBarView.snp.top)
+            make.height.equalTo(ARTAdaptedValue(200.0))
         }
-        gradientView.setNeedsLayout()
-        gradientView.layoutIfNeeded()
         let gradient = CAGradientLayer()
         gradient.frame      = CGRect(x: 0.0,
                                      y: 0.0,
@@ -147,7 +145,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
     
     private func setupDescLabel() { // 创建描述
         descLabel = UILabel()
-        descLabel.text                  = "纸质记录表格可以放在家中显眼的地方，方便纸质记录表格可以放在家中显眼的地方，方便所有家庭成员查看和填写…"
+        descLabel.text                  = "纸质记录表格可以放在家中显眼的地方，方便所有家庭成员查看和填写…"
         descLabel.textAlignment         = .left
         descLabel.font                  = .art_regular(ARTAdaptedValue(14.0))
         descLabel.textColor             = .art_color(withHEXValue: 0xFFFFFF)

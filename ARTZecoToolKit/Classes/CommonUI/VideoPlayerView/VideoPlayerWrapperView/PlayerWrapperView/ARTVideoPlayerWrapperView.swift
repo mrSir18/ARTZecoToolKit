@@ -89,7 +89,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     }()
     
     /// 触觉反馈发生器
-    private var feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    public var feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     
     // MARK: - Initialization
@@ -107,6 +107,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     open override func setupViews() {
         super.setupViews()
+        setupFeedbackGenerator()
         setupFullscreenManager()
         setupSystemControlsView()
         setupOverlayView()

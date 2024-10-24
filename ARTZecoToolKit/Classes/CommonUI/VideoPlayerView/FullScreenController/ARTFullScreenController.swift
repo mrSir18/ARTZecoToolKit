@@ -54,7 +54,7 @@ extension ARTFullScreenController {
     
     /// 支持的界面方向
     open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return isLandscape ? .landscape : .portrait
+        return isLandscape ? .landscapeRight : .portrait
     }
     
     /// 状态栏样式
@@ -74,6 +74,6 @@ extension ARTFullScreenController {
     
     /// 呈现方向 - 右侧横屏
     open override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-        return .landscapeRight
+        return isLandscape ? .landscapeRight : .portrait
     }
 }
