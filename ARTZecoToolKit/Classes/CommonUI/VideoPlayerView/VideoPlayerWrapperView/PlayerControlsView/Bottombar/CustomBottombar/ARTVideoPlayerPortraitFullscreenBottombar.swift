@@ -110,7 +110,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         containerView.addSubview(gradientView)
         gradientView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
-            make.bottom.equalTo(toolBarView.snp.bottom)
+            make.bottom.equalTo(toolBarView.snp.top)
         }
         gradientView.setNeedsLayout()
         gradientView.layoutIfNeeded()
@@ -127,6 +127,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         ]
         gradient.locations = [0.0, 1.0]
         gradientView.layer.addSublayer(gradient)
+        containerView.sendSubviewToBack(gradientView)
     }
     
     private func setupTitleLabel() { // 创建标题标签
@@ -138,7 +139,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         containerView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.left.equalTo(ARTAdaptedValue(12.0))
-            make.top.equalTo(ARTAdaptedValue(100.0))
+            make.top.equalTo(ARTAdaptedValue(96.0))
             make.right.equalTo(-ARTAdaptedValue(97.0))
             make.height.equalTo(ARTAdaptedValue(22.0))
         }
@@ -161,7 +162,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
 
     private func setupFavoriteButton() { // 创建收藏按钮
         favoriteButton = ARTAlignmentButton(type: .custom)
-        favoriteButton.isSelected           = false
+        favoriteButton.isSelected           = true
         favoriteButton.titleLabel?.font     = .art_regular(ARTAdaptedValue(10.0))
         favoriteButton.imageAlignment       = .top
         favoriteButton.titleAlignment       = .bottom
@@ -175,7 +176,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         containerView.addSubview(favoriteButton)
         favoriteButton.snp.makeConstraints { make in
             make.size.equalTo(ARTAdaptedSize(width: 50.0, height: 50.0))
-            make.top.equalTo(ARTAdaptedValue(10.0))
+            make.top.equalTo(ARTAdaptedValue(4.0))
             make.right.equalToSuperview()
         }
     }

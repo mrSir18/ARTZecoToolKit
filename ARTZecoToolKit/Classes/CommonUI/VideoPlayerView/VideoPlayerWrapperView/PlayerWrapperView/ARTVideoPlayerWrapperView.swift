@@ -75,18 +75,21 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     // MARK: - 播放器组件 AVPlayer（最底层：播放器视图）
     
     /// 播放器系统控制层（最底层：系统控制）
-    private var systemControlsView: ARTVideoPlayerSystemControls!
+    public var systemControlsView: ARTVideoPlayerSystemControls!
     
     /// 播放器图层（中间层：用于显示弹幕、广告等）
-    private var playerOverlayView: ARTVideoPlayerOverlayView!
+    public var playerOverlayView: ARTVideoPlayerOverlayView!
     
     /// 播放器控制层（最顶层：顶底栏、侧边栏等）
-    private var playControlsView: ARTVideoPlayerControlsView!
+    public var playControlsView: ARTVideoPlayerControlsView!
     
     /// 音量滑块
-    private lazy var volumeSlider: UISlider? = {
+    public lazy var volumeSlider: UISlider? = {
         MPVolumeView().subviews.compactMap { $0 as? UISlider }.first
     }()
+    
+    /// 触觉反馈发生器
+    private var feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     
     // MARK: - Initialization
@@ -359,6 +362,13 @@ extension ARTVideoPlayerWrapperView {
         fullscreenManager = ARTVideoFullscreenManager(videoWrapperView: self)
     }
     
+    /// 创建触觉反馈发生器
+    ///
+    /// - Note: 重写父类方法，设置触觉反馈发生器
+    @objc open func setupFeedbackGenerator() {
+        feedbackGenerator.prepare() // 准备好触觉反馈
+    }
+    
     /// 创建手势识别器
     ///
     /// - Note: 重写父类方法，设置手势识别器
@@ -436,8 +446,15 @@ extension ARTVideoPlayerWrapperView {
     /// - Note: 重写父类方法，处理捏合手势
     @objc open func handlePinchGesture(_ gesture: UIPinchGestureRecognizer) {
         guard let playerLayer = layer as? AVPlayerLayer else { return }
-        if gesture.state == .changed { // 更新视频填充模
+
+        switch gesture.state {
+        case .changed:
             playerLayer.videoGravity = gesture.scale > 1 ? .resizeAspectFill : .resizeAspect
+        case .ended, .cancelled:
+            feedbackGenerator.impactOccurred() // 触发触觉反馈
+            break
+        default:
+            break
         }
     }
 }
