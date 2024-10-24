@@ -24,6 +24,7 @@ class ARTVideoPlayerPortraitFullscreenTopbar: ARTVideoPlayerTopbar {
     
     override func setupViews() {
         super.setupViews()
+        setupGradient()
         setupContainerView()
         setupBackButton()
         setupShareButton()
@@ -31,6 +32,31 @@ class ARTVideoPlayerPortraitFullscreenTopbar: ARTVideoPlayerTopbar {
     }
     
     // MARK: - Setup Methods
+    
+    private func setupGradient() { // 创建渐变色
+        let gradientView = UIView()
+        gradientView.backgroundColor            = .clear
+        gradientView.isUserInteractionEnabled   = false
+        addSubview(gradientView)
+        gradientView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        gradientView.setNeedsLayout()
+        gradientView.layoutIfNeeded()
+        let gradient = CAGradientLayer()
+        gradient.frame      = CGRect(x: 0.0,
+                                     y: 0.0,
+                                     width: UIScreen.art_currentScreenWidth,
+                                     height: art_navigationFullHeight())
+        gradient.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradient.endPoint   = CGPoint(x: 0.5, y: 1.0)
+        gradient.colors     = [
+            UIColor.art_color(withHEXValue: 0x000000, alpha: 1.0).cgColor,
+            UIColor.art_color(withHEXValue: 0x000000, alpha: 0.0).cgColor
+        ]
+        gradient.locations = [0.0, 1.0]
+        gradientView.layer.addSublayer(gradient)
+    }
     
     private func setupContainerView() { // 创建容器视图
         containerView = UIView()

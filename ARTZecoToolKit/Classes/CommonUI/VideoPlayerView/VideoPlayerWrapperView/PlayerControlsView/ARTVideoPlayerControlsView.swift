@@ -305,7 +305,7 @@ extension ARTVideoPlayerControlsView {
     private func bottomBarHeight(for orientation: ScreenOrientation) -> CGFloat {
         switch orientation {
         case .portraitFullScreen:
-            return ARTAdaptedValue(204.0)+art_safeAreaBottom() // 竖屏高度
+            return ARTAdaptedValue(240.0)+art_safeAreaBottom() // 竖屏高度
         case .landscapeFullScreen:
             return ARTAdaptedValue(90.0) // 横屏高度
         case .window:

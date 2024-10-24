@@ -89,7 +89,7 @@ open class ARTVideoPlayerDisplayView: UIView {
                 make.bottom.equalTo(-ARTAdaptedValue(120.0))
             }
         case .portraitFullScreen: // 竖屏全屏模式
-            let bottomMargin = ARTAdaptedValue(204.0)+art_safeAreaBottom()
+            let bottomMargin = ARTAdaptedValue(240.0)+art_safeAreaBottom()
             containerView.snp.updateConstraints { make in
                 make.size.equalTo(ARTAdaptedSize(width: 108.0, height: 190.0))
                 make.bottom.equalTo(-bottomMargin)

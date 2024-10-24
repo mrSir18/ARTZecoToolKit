@@ -23,6 +23,9 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
     /// 容器视图
     private var containerView: UIView!
     
+    /// 工具栏视图
+    private var toolBarView: UIView!
+    
     /// 标题标签
     private var titleLabel: UILabel!
     
@@ -65,6 +68,8 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
     open override func setupViews() {
         super.setupViews()
         setupContainerView()
+        setupToolBarView()
+        setupGradient()
         setupTitleLabel()
         setupDescLabel()
         setupProgressView()
@@ -88,6 +93,42 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         }
     }
     
+    private func setupToolBarView() { // 创建工具栏视图
+        toolBarView = UIView()
+        toolBarView.backgroundColor = .black
+        containerView.addSubview(toolBarView)
+        toolBarView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(ARTAdaptedValue(40.0)+art_safeAreaBottom())
+        }
+    }
+    
+    private func setupGradient() { // 创建渐变色
+        let gradientView = UIView()
+        gradientView.backgroundColor            = .clear
+        gradientView.isUserInteractionEnabled   = false
+        containerView.addSubview(gradientView)
+        gradientView.snp.makeConstraints { make in
+            make.left.top.right.equalToSuperview()
+            make.bottom.equalTo(toolBarView.snp.bottom)
+        }
+        gradientView.setNeedsLayout()
+        gradientView.layoutIfNeeded()
+        let gradient = CAGradientLayer()
+        gradient.frame      = CGRect(x: 0.0,
+                                     y: 0.0,
+                                     width: UIScreen.art_currentScreenWidth,
+                                     height: ARTAdaptedValue(200.0))
+        gradient.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradient.endPoint   = CGPoint(x: 0.5, y: 1.0)
+        gradient.colors     = [
+            UIColor.art_color(withHEXValue: 0x000000, alpha: 0.0).cgColor,
+            UIColor.art_color(withHEXValue: 0x000000, alpha: 1.0).cgColor
+        ]
+        gradient.locations = [0.0, 1.0]
+        gradientView.layer.addSublayer(gradient)
+    }
+    
     private func setupTitleLabel() { // 创建标题标签
         titleLabel = UILabel()
         titleLabel.text                 = "《新生儿科学喂养记录》套件"
@@ -97,7 +138,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         containerView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.left.equalTo(ARTAdaptedValue(12.0))
-            make.top.equalTo(ARTAdaptedValue(76.0))
+            make.top.equalTo(ARTAdaptedValue(100.0))
             make.right.equalTo(-ARTAdaptedValue(97.0))
             make.height.equalTo(ARTAdaptedValue(22.0))
         }
@@ -120,49 +161,60 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
 
     private func setupFavoriteButton() { // 创建收藏按钮
         favoriteButton = ARTAlignmentButton(type: .custom)
-        favoriteButton.isSelected = false
-        favoriteButton.layoutType = .freeform
-        favoriteButton.imageAlignment = .topRight
-        favoriteButton.imageEdgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: ARTAdaptedValue(12.0))
-        favoriteButton.imageSize = ARTAdaptedSize(width: 30.0, height: 30.0)
+        favoriteButton.isSelected           = false
+        favoriteButton.titleLabel?.font     = .art_regular(ARTAdaptedValue(10.0))
+        favoriteButton.imageAlignment       = .top
+        favoriteButton.titleAlignment       = .bottom
+        favoriteButton.imageTitleSpacing    = ARTAdaptedValue(4.0)
+        favoriteButton.imageSize            = ARTAdaptedSize(width: 30.0, height: 30.0)
+        favoriteButton.setTitle("收藏", for: .normal)
+        favoriteButton.setTitleColor(.white, for: .normal)
         favoriteButton.setImage(UIImage(named: "video_favorite"), for: .normal)
         favoriteButton.setImage(UIImage(named: "video_favorited"), for: .selected)
         favoriteButton.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
         containerView.addSubview(favoriteButton)
         favoriteButton.snp.makeConstraints { make in
-            make.size.equalTo(ARTAdaptedSize(width: 54.0, height: 40.0))
-            make.top.right.equalToSuperview()
+            make.size.equalTo(ARTAdaptedSize(width: 50.0, height: 50.0))
+            make.top.equalTo(ARTAdaptedValue(10.0))
+            make.right.equalToSuperview()
         }
     }
     
     private func setupCommentButton() { // 创建评论按钮
         commentButton = ARTAlignmentButton(type: .custom)
-        commentButton.imageAlignment = .right
-        commentButton.contentInset = ARTAdaptedValue(12.0)
-        commentButton.imageSize = ARTAdaptedSize(width: 30.0, height: 30.0)
+        commentButton.titleLabel?.font      = .art_regular(ARTAdaptedValue(10.0))
+        commentButton.imageAlignment        = .top
+        commentButton.titleAlignment        = .bottom
+        commentButton.imageTitleSpacing     = ARTAdaptedValue(4.0)
+        commentButton.imageSize             = ARTAdaptedSize(width: 30.0, height: 30.0)
+        commentButton.setTitle("3999", for: .normal)
+        commentButton.setTitleColor(.white, for: .normal)
         commentButton.setImage(UIImage(named: "video_comment"), for: .normal)
         commentButton.addTarget(self, action: #selector(didTapCommentButton), for: .touchUpInside)
         containerView.addSubview(commentButton)
         commentButton.snp.makeConstraints { make in
+            make.size.equalTo(favoriteButton)
             make.top.equalTo(favoriteButton.snp.bottom).offset(ARTAdaptedValue(8.0))
             make.right.equalToSuperview()
-            make.width.equalTo(favoriteButton)
-            make.height.equalTo(ARTAdaptedValue(50.0))
         }
     }
     
     private func setupShareButton() { // 创建分享按钮
         shareButton = ARTAlignmentButton(type: .custom)
-        shareButton.imageAlignment = .right
-        shareButton.contentInset = ARTAdaptedValue(12.0)
-        shareButton.imageSize = ARTAdaptedSize(width: 30.0, height: 30.0)
+        shareButton.titleLabel?.font        = .art_regular(ARTAdaptedValue(10.0))
+        shareButton.imageAlignment          = .top
+        shareButton.titleAlignment          = .bottom
+        shareButton.imageTitleSpacing       = ARTAdaptedValue(4.0)
+        shareButton.imageSize               = ARTAdaptedSize(width: 30.0, height: 30.0)
+        shareButton.setTitle("399", for: .normal)
+        shareButton.setTitleColor(.white, for: .normal)
         shareButton.setImage(UIImage(named: "video_share"), for: .normal)
         shareButton.addTarget(self, action: #selector(didTapShareButton), for: .touchUpInside)
         containerView.addSubview(shareButton)
         shareButton.snp.makeConstraints { make in
-            make.size.equalTo(commentButton)
-            make.right.equalToSuperview()
+            make.size.equalTo(favoriteButton)
             make.top.equalTo(commentButton.snp.bottom).offset(ARTAdaptedValue(8.0))
+            make.right.equalToSuperview()
         }
     }
     
@@ -170,7 +222,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         containerView.addSubview(progressView)
         progressView.snp.makeConstraints { make in
             make.left.equalTo(titleLabel)
-            make.bottom.equalTo(-ARTAdaptedValue(76.0))
+            make.bottom.equalTo(-ARTAdaptedValue(82.0))
             make.right.equalTo(-ARTAdaptedValue(12.0))
             make.height.equalTo(ARTAdaptedValue(3.0))
         }
@@ -192,11 +244,11 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         moreButton.imageSize = ARTAdaptedSize(width: 30.0, height: 30.0)
         moreButton.setImage(UIImage(named: "video_more"), for: .normal)
         moreButton.addTarget(self, action: #selector(didTapMoreButton), for: .touchUpInside)
-        containerView.addSubview(moreButton)
+        toolBarView.addSubview(moreButton)
         moreButton.snp.makeConstraints { make in
             make.size.equalTo(ARTAdaptedSize(width: 42.0, height: 50.0))
             make.right.equalToSuperview()
-            make.bottom.equalTo(-art_safeAreaBottom())
+            make.top.equalToSuperview()
         }
     }
     
@@ -207,7 +259,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         danmakuSettingsButton.setImage(UIImage(named: "video_danmaku_on_black"), for: .normal)
         danmakuSettingsButton.setImage(UIImage(named: "video_danmaku_off_black"), for: .selected)
         danmakuSettingsButton.addTarget(self, action: #selector(didTapDanmakuSettingsButton), for: .touchUpInside)
-        containerView.addSubview(danmakuSettingsButton)
+        toolBarView.addSubview(danmakuSettingsButton)
         danmakuSettingsButton.snp.makeConstraints { make in
             make.size.equalTo(moreButton)
             make.right.equalTo(moreButton.snp.left)
@@ -220,7 +272,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         inputView.backgroundColor           = .art_color(withHEXValue: 0x141414)
         inputView.layer.cornerRadius        = ARTAdaptedValue(6.0)
         inputView.layer.masksToBounds       = true
-        containerView.addSubview(inputView)
+        toolBarView.addSubview(inputView)
         inputView.snp.makeConstraints { make in
             make.left.equalTo(titleLabel)
             make.centerY.equalTo(moreButton)
@@ -233,7 +285,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         danmakuInputLabel.textColor         = .art_color(withHEXValue: 0x646464)
         danmakuInputLabel.text              = "发一条友好的弹幕吧"
         danmakuInputLabel.textAlignment     = .left
-        containerView.addSubview(danmakuInputLabel)
+        toolBarView.addSubview(danmakuInputLabel)
         danmakuInputLabel.snp.makeConstraints { make in
             make.top.bottom.equalTo(inputView)
             make.left.equalTo(inputView.snp.left).offset(ARTAdaptedValue(12.0))
@@ -242,7 +294,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         
         let danmakuSendButton = UIButton(type: .custom)
         danmakuSendButton.addTarget(self, action: #selector(didTapDanmakuSendButton), for: .touchUpInside)
-        containerView.addSubview(danmakuSendButton)
+        toolBarView.addSubview(danmakuSendButton)
         danmakuSendButton.snp.makeConstraints { make in
             make.edges.equalTo(inputView)
         }
