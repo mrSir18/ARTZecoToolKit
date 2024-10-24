@@ -363,6 +363,7 @@ extension ARTVideoPlayerWrapperView {
     ///
     /// - Note: 重写父类方法，设置手势识别器
     @objc open func setupGestureRecognizers() {
+        // 拖动手势
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handleSortingPan(_:)))
         panGesture.maximumNumberOfTouches = 1
         panGesture.delaysTouchesBegan = true
@@ -370,24 +371,21 @@ extension ARTVideoPlayerWrapperView {
         panGesture.cancelsTouchesInView = true
         addGestureRecognizer(panGesture)
         
+        // 点击手势
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSortingTap(_:)))
         tapRecognizer.numberOfTapsRequired = 1
         tapRecognizer.numberOfTouchesRequired = 1
         addGestureRecognizer(tapRecognizer)
+        
+        // 捏合手势
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
+        addGestureRecognizer(pinchGesture)
     }
 }
 
 // MARK: - Gesture Recognizer
 
 extension ARTVideoPlayerWrapperView {
-    
-    /// 点击手势
-    ///
-    /// - Parameter gesture: 点击手势
-    /// - Note: 重写父类方法，处理点击手势
-    @objc private func handleSortingTap(_ gesture: UITapGestureRecognizer) {
-        print("TopView: Tap gesture")
-    }
     
     /// 拖动手势
     ///
@@ -421,6 +419,25 @@ extension ARTVideoPlayerWrapperView {
             if swipeDirection == .horizontal { playControlsView.updateSliderTouchEndedInControls(sliderValue: sliderValue) }
         default:
             break
+        }
+    }
+    
+    /// 点击手势
+    ///
+    /// - Parameter gesture: 点击手势
+    /// - Note: 重写父类方法，处理点击手势
+    @objc open func handleSortingTap(_ gesture: UITapGestureRecognizer) {
+        print("TopView: Tap gesture")
+    }
+    
+    /// 捏合手势
+    ///
+    /// - Parameter gesture: 捏合手势
+    /// - Note: 重写父类方法，处理捏合手势
+    @objc open func handlePinchGesture(_ gesture: UIPinchGestureRecognizer) {
+        guard let playerLayer = layer as? AVPlayerLayer else { return }
+        if gesture.state == .changed { // 更新视频填充模
+            playerLayer.videoGravity = gesture.scale > 1 ? .resizeAspectFill : .resizeAspect
         }
     }
 }
@@ -523,11 +540,11 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     }
     
     public func videoPlayerControlsDidTapFavorite(for playerControlsView: ARTVideoPlayerControlsView, isFavorited: Bool) { // 点击收藏按钮
-        
+        (layer as? AVPlayerLayer)?.videoGravity = .resizeAspectFill
     }
     
     public func videoPlayerControlsDidTapShare(for playerControlsView: ARTVideoPlayerControlsView) { // 点击分享按钮
-        
+        (layer as? AVPlayerLayer)?.videoGravity = .resizeAspect
     }
     
     public func transitionToFullscreen(for playerControlsView: ARTVideoPlayerControlsView, orientation: ScreenOrientation) { // 点击全屏按钮
