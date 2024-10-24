@@ -12,7 +12,7 @@ import AVFoundation
 /// - NOTE: 可继承该协议方法
 public protocol ARTVideoPlayerPortraitFullscreenBottombarDelegate: ARTVideoPlayerBottombarDelegate {
     
-  
+    
 }
 
 open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
@@ -50,6 +50,12 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
     /// 弹幕输入框
     private var danmakuInputLabel: YYLabel!
     
+    /// 清屏按钮
+    private var clearButton: UIButton!
+    
+    /// 退出清屏按钮
+    private var exitClearButton: ARTAlignmentButton!
+    
     
     // MARK: - Initializatio
     
@@ -80,9 +86,98 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         setupMoreButton()
         setupDanmakuSettingsButton()
         setupDanmakuInputField()
+        setupClearButton()
+        setupExitClearButton()
     }
     
-    // MARK: - Setup Methods
+    // MARK: - Button Actions
+    
+    /// 点击收藏按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc open func didTapFavoriteButton() {
+        print("收藏")
+    }
+    
+    /// 点击评论按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc open func didTapCommentButton() {
+        print("评论")
+    }
+    
+    /// 点击分享按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc open func didTapShareButton() {
+        print("分享")
+    }
+    
+    /// 点击更多按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc open func didTapMoreButton() {
+        print("更多")
+    }
+    
+    /// 点击弹幕设置按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc open func didTapDanmakuSettingsButton() {
+        print("弹幕设置")
+    }
+    
+    /// 点击发送弹幕按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc open func didTapDanmakuSendButton() {
+        print("发送弹幕")
+    }
+    
+    /// 点击清屏按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc open func didTapClearButton() {
+        UIView.animate(withDuration: 0.25) {
+            self.containerView.alpha = 0.0
+            self.exitClearButton.alpha = 1.0
+        }
+        print("清屏")
+    }
+    
+    /// 点击退出清屏按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc open func didTapExitClearButton() {
+        UIView.animate(withDuration: 0.25) {
+            self.exitClearButton.alpha = 0.0
+            self.containerView.alpha = 1.0
+        }
+        print("退出清屏")
+    }
+    
+    // MARK: - Override Super Methods
+    
+    open override func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) { // 自定义滑块外观
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: duration) {
+                self.sliderView.trackHeight = trackHeight
+                self.progressView.layer.cornerRadius = cornerRadius
+                if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: thumbSize) {
+                    self.sliderView.setThumbImage(thumbImage, for: .normal)
+                }
+                self.progressView.snp.updateConstraints { make in
+                    make.height.equalTo(trackHeight)
+                }
+                self.layoutIfNeeded()
+            }
+        }
+    }
+}
+
+// MARK: - Setup Initializer
+
+extension ARTVideoPlayerPortraitFullscreenBottombar {
     
     private func setupContainerView() { // 创建容器视图
         containerView = UIView()
@@ -157,7 +252,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
             make.height.lessThanOrEqualTo(ARTAdaptedValue(40.0))
         }
     }
-
+    
     private func setupFavoriteButton() { // 创建收藏按钮
         favoriteButton = ARTAlignmentButton(type: .custom)
         favoriteButton.isSelected           = true
@@ -278,7 +373,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
             make.right.equalTo(danmakuSettingsButton.snp.left).offset(-ARTAdaptedValue(12.0))
             make.height.equalTo(ARTAdaptedValue(30.0))
         }
-
+        
         danmakuInputLabel = YYLabel()
         danmakuInputLabel.font              = .art_regular(ARTAdaptedValue(12.0))
         danmakuInputLabel.textColor         = .art_color(withHEXValue: 0x646464)
@@ -299,65 +394,39 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         }
     }
     
-    // MARK: - Button Actions
-    
-    /// 点击收藏按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
-    @objc open func didTapFavoriteButton() {
-        print("收藏")
+    private func setupClearButton() { // 创建清屏按钮
+        clearButton = UIButton(type: .custom)
+        clearButton.backgroundColor     = .art_color(withHEXValue: 0x000000, alpha: 0.5)
+        clearButton.titleLabel?.font    = .art_regular(ARTAdaptedValue(10.0))
+        clearButton.layer.cornerRadius  = ARTAdaptedValue(20.0)
+        clearButton.layer.masksToBounds = true
+        clearButton.setTitle("清屏", for: .normal)
+        clearButton.setTitleColor(.white, for: .normal)
+//        clearButton.setImage(UIImage(named: "video_clear"), for: .normal)
+        clearButton.addTarget(self, action: #selector(didTapClearButton), for: .touchUpInside)
+        containerView.addSubview(clearButton)
+        clearButton.snp.makeConstraints { make in
+            make.size.equalTo(ARTAdaptedSize(width: 40.0, height: 40.0))
+            make.left.equalTo(titleLabel)
+            make.bottom.equalTo(titleLabel.snp.top).offset(-ARTAdaptedValue(8.0))
+        }
     }
     
-    /// 点击评论按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
-    @objc open func didTapCommentButton() {
-        print("评论")
-    }
-    
-    /// 点击分享按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
-    @objc open func didTapShareButton() {
-        print("分享")
-    }
-   
-    /// 点击更多按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
-    @objc open func didTapMoreButton() {
-        print("更多")
-    }
-    
-    /// 点击弹幕设置按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
-    @objc open func didTapDanmakuSettingsButton() {
-        print("弹幕设置")
-    }
-    
-    /// 点击发送弹幕按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
-    @objc open func didTapDanmakuSendButton() {
-        print("发送弹幕")
-    }
-    
-    // MARK: - Override Super Methods
-
-    open override func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) { // 自定义滑块外观
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: duration) {
-                self.sliderView.trackHeight = trackHeight
-                self.progressView.layer.cornerRadius = cornerRadius
-                if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: thumbSize) {
-                    self.sliderView.setThumbImage(thumbImage, for: .normal)
-                }
-                self.progressView.snp.updateConstraints { make in
-                    make.height.equalTo(trackHeight)
-                }
-                self.layoutIfNeeded()
-            }
+    private func setupExitClearButton() { // 创建退出清屏按钮
+        exitClearButton = ARTAlignmentButton(type: .custom)
+        exitClearButton.alpha               = 0.0
+        exitClearButton.backgroundColor     = .art_color(withHEXValue: 0x000000, alpha: 0.5)
+        exitClearButton.titleLabel?.font    = .art_regular(ARTAdaptedValue(10.0))
+        exitClearButton.layer.cornerRadius  = ARTAdaptedValue(20.0)
+        exitClearButton.layer.masksToBounds = true
+        exitClearButton.imageSize           = ARTAdaptedSize(width: 22.0, height: 22.0)
+        exitClearButton.setImage(UIImage(named: "video_exit_clear"), for: .normal)
+        exitClearButton.addTarget(self, action: #selector(didTapExitClearButton), for: .touchUpInside)
+        addSubview(exitClearButton)
+        exitClearButton.snp.makeConstraints { make in
+            make.size.equalTo(ARTAdaptedSize(width: 40.0, height: 40.0))
+            make.right.equalTo(-ARTAdaptedValue(12.0))
+            make.bottom.equalTo(-art_safeAreaBottom())
         }
     }
 }
