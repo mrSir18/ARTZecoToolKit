@@ -134,6 +134,9 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     /// 底部工具栏视图
     private var bottomBar: ARTVideoPlayerBottombar!
     
+    /// 播放、重试图片
+    private var playImageView: UIImageView!
+    
     
     // MARK: - Initialization
     
@@ -161,9 +164,10 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     ///
     /// - Parameter orientation: 屏幕方向
     /// - Note: 重写父类方法，旋转屏幕时，切换全屏和窗口模式
-    open func transitionToFullscreen(orientation: ScreenOrientation) {
+    open func transitionToFullscreen(orientation: ScreenOrientation, playerState: PlayerState) {
         self.screenOrientation = orientation
         setupToolBars()
+        updatePlayerStateInControls(playerState: playerState)
     }
     
     /// 更新当前播放时间和总时长
@@ -209,6 +213,15 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     @objc open func updateSliderTouchEndedInControls(sliderValue: Float) {
         bottomBar.updateSliderTouchEnded(value: sliderValue)
     }
+    
+    /// 更新播放按钮状态
+    ///
+    /// - Parameters:
+    ///   - isPlaying: 是否正在播放
+    /// - Note: 重写父类方法，更新播放按钮状态
+    open func updatePlayerStateInControls(playerState: PlayerState) {
+        playImageView.isHidden = (playerState == .playing)
+    }
 }
 
 // MARK: - Setup Initializer
@@ -221,6 +234,7 @@ extension ARTVideoPlayerControlsView {
     @objc open func setupToolBars() {
         setupTopBar()
         setupBottomBar()
+        setupPlayButton()
     }
     
     /// 创建顶部工具栏
@@ -257,6 +271,21 @@ extension ARTVideoPlayerControlsView {
         }
     }
     
+    /// 创建播放、重试按钮
+    ///
+    /// - Note: 重写父类方法，设置子视图
+    @objc open func setupPlayButton() {
+        playImageView = UIImageView()
+        playImageView.isHidden  = true
+        playImageView.alpha     = 0.5
+        playImageView.image     = UIImage(named: "video_play")
+        addSubview(playImageView)
+        playImageView.snp.makeConstraints { make in
+            make.size.equalTo(ARTAdaptedSize(width: 40.0, height: 40.0))
+            make.centerX.centerY.equalToSuperview()
+        }
+    }
+    
     // MARK: Private Methods
     
     /// - Note: 根据屏幕方向返认顶部栏
@@ -287,6 +316,7 @@ extension ARTVideoPlayerControlsView {
     private func removeToolBars() {
         topBar.removeFromSuperview()
         bottomBar.removeFromSuperview()
+        playImageView.removeFromSuperview()
     }
     
     /// - Note: 切换到窗口模式，设置屏幕方向并刷新顶部和底部栏

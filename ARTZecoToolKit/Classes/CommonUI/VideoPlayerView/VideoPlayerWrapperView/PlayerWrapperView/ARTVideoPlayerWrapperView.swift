@@ -164,6 +164,8 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     open override func onReceivePlayerItemDidPlayToEnd(_ notification: Notification) { // 播放完成
         super.onReceivePlayerItemDidPlayToEnd(notification)
+        pausePlayer() // 暂停播放
+        player.seek(to: .zero) // 重新播放
     }
     
     open override func onReceivePlayerItemFailedToPlayToEnd(_ notification: Notification) { // 播放失败
@@ -381,12 +383,21 @@ extension ARTVideoPlayerWrapperView {
         panGesture.delaysTouchesEnded = true
         panGesture.cancelsTouchesInView = true
         addGestureRecognizer(panGesture)
-        
+
         // 点击手势
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSortingTap(_:)))
         tapRecognizer.numberOfTapsRequired = 1
         tapRecognizer.numberOfTouchesRequired = 1
         addGestureRecognizer(tapRecognizer)
+        
+        // 双击手势
+        let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
+        doubleTapRecognizer.numberOfTapsRequired = 2
+        doubleTapRecognizer.numberOfTouchesRequired = 1
+        addGestureRecognizer(doubleTapRecognizer)
+        
+        // 确保单击手势在双击手势失败后触发
+        tapRecognizer.require(toFail: doubleTapRecognizer)
         
         // 捏合手势
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
@@ -438,7 +449,26 @@ extension ARTVideoPlayerWrapperView {
     /// - Parameter gesture: 点击手势
     /// - Note: 重写父类方法，处理点击手势
     @objc open func handleSortingTap(_ gesture: UITapGestureRecognizer) {
-        print("TopView: Tap gesture")
+        if playerConfig.isLandscape { // 如果是横屏模式
+            print("隐藏顶底栏")
+            
+        } else {
+            switch playerState {
+            case .paused:
+                resumePlayer() // 恢复播放
+            case .playing:
+                pausePlayer() // 暂停播放
+            case .ended:
+                player.seek(to: .zero) // 跳转到视频开头
+                resumePlayer() // 重新播放
+            default:
+                break
+            }
+        }
+    }
+    
+    @objc open func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
+        pausePlayer()
     }
     
     /// 捏合手势
@@ -501,21 +531,43 @@ extension ARTVideoPlayerWrapperView {
         }
     }
     
-    /// 播放器暂停播放
+    /// 更新播放器状态
     ///
-    /// - Note: 暂停播放器并更新播放状态
-    private func pausePlayer() {
-        isDraggingSlider = true
-        player.pause()
+    /// - Parameter newState: 新的播放器状态
+    /// - Note: 根据新的状态进行对应的播放或暂停操作，避免重复状态更新
+    private func syncControlsWithPlayerState(to newState: PlayerState) {
+        print("Player State: \(playerState) -> \(newState)")
+        guard playerState != newState else { return }
+        
+        // 更新播放器状态
+        playerState = newState
+        playControlsView.updatePlayerStateInControls(playerState: playerState)
+        
+        // 根据不同的状态处理是否正在拖动滑块
+        isDraggingSlider = (newState == .paused)
+        switch newState {
+        case .playing: // 如果是播放状态，隐藏系统控制视图并开始播放
+            systemControlsView.hideVideoPlayerDisplay()
+            player.play()
+        case .paused: // 如果是暂停状态，暂停播放
+            player.pause()
+        default:
+            break
+        }
     }
-    
-    /// 播放器恢复播放
+
+    /// 暂停播放器
     ///
-    /// - Note: 恢复播放器并更新播放状态
+    /// - Note: 通过调用 `syncControlsWithPlayerState` 切换到暂停状态
+    private func pausePlayer() {
+        syncControlsWithPlayerState(to: .paused)
+    }
+
+    /// 恢复播放
+    ///
+    /// - Note: 通过调用 `syncControlsWithPlayerState` 切换到播放状态
     private func resumePlayer() {
-        systemControlsView.hideVideoPlayerDisplay()
-        isDraggingSlider = false
-        player.play()
+        syncControlsWithPlayerState(to: .playing)
     }
 }
 
@@ -552,8 +604,9 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     
     public func videoPlayerControlsDidTapBack(for playerControlsView: ARTVideoPlayerControlsView) { // 点击返回按钮
         fullscreenManager.dismiss { [weak self] in // 切换窗口模式顶底栏
-            self?.systemControlsView.updateScreenOrientationInSystemControls(screenOrientation: .window)
-            self?.playControlsView.transitionToFullscreen(orientation: .window)
+            guard let self = self else { return }
+            self.systemControlsView.updateScreenOrientationInSystemControls(screenOrientation: .window)
+            self.playControlsView.transitionToFullscreen(orientation: .window, playerState: self.playerState)
         }
     }
     
@@ -567,8 +620,9 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     
     public func transitionToFullscreen(for playerControlsView: ARTVideoPlayerControlsView, orientation: ScreenOrientation) { // 点击全屏按钮
         fullscreenManager.presentFullscreenWithRotation { [weak self] in // 切换全屏模式顶底栏
-            self?.systemControlsView.updateScreenOrientationInSystemControls(screenOrientation: orientation)
-            self?.playControlsView.transitionToFullscreen(orientation: orientation)
+            guard let self = self else { return }
+            self.systemControlsView.updateScreenOrientationInSystemControls(screenOrientation: orientation)
+            self.playControlsView.transitionToFullscreen(orientation: orientation, playerState: self.playerState)
         }
     }
     

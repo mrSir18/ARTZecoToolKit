@@ -50,11 +50,8 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
     /// 弹幕输入框
     private var danmakuInputLabel: YYLabel!
     
-    /// 清屏按钮
-    private var clearButton: UIButton!
-    
-    /// 退出清屏按钮
-    private var exitClearButton: ARTAlignmentButton!
+    /// 退出清屏按钮视图
+    private var exitClearView: UIView!
     
     
     // MARK: - Initializatio
@@ -138,22 +135,24 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
     ///
     /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapClearButton() {
-        UIView.animate(withDuration: 0.25) {
-            self.containerView.alpha = 0.0
-            self.exitClearButton.alpha = 1.0
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.25) {
+                self.containerView.alpha = 0.0
+                self.exitClearView.alpha = 1.0
+            }
         }
-        print("清屏")
     }
     
     /// 点击退出清屏按钮
     ///
     /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapExitClearButton() {
-        UIView.animate(withDuration: 0.25) {
-            self.exitClearButton.alpha = 0.0
-            self.containerView.alpha = 1.0
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.25) {
+                self.exitClearView.alpha = 0.0
+                self.containerView.alpha = 1.0
+            }
         }
-        print("退出清屏")
     }
     
     // MARK: - Override Super Methods
@@ -334,13 +333,14 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
     
     private func setupMoreButton() { // 创建更多按钮
         moreButton = ARTAlignmentButton(type: .custom)
-        moreButton.imageAlignment = .left
-        moreButton.imageSize = ARTAdaptedSize(width: 30.0, height: 30.0)
+        moreButton.layoutType       = .freeform
+        moreButton.imageAlignment   = .bottomLeft
+        moreButton.imageSize        = ARTAdaptedSize(width: 30.0, height: 30.0)
         moreButton.setImage(UIImage(named: "video_more"), for: .normal)
         moreButton.addTarget(self, action: #selector(didTapMoreButton), for: .touchUpInside)
         toolBarView.addSubview(moreButton)
         moreButton.snp.makeConstraints { make in
-            make.size.equalTo(ARTAdaptedSize(width: 42.0, height: 50.0))
+            make.size.equalTo(ARTAdaptedSize(width: 42.0, height: 40.0))
             make.right.equalToSuperview()
             make.top.equalToSuperview()
         }
@@ -348,7 +348,8 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
     
     private func setupDanmakuSettingsButton() { // 创建弹幕设置按钮
         danmakuSettingsButton = ARTAlignmentButton(type: .custom)
-        danmakuSettingsButton.imageAlignment = .left
+        danmakuSettingsButton.layoutType = .freeform
+        danmakuSettingsButton.imageAlignment = .bottomLeft
         danmakuSettingsButton.imageSize = ARTAdaptedSize(width: 30.0, height: 30.0)
         danmakuSettingsButton.setImage(UIImage(named: "video_danmaku_on_black"), for: .normal)
         danmakuSettingsButton.setImage(UIImage(named: "video_danmaku_off_black"), for: .selected)
@@ -369,7 +370,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         toolBarView.addSubview(inputView)
         inputView.snp.makeConstraints { make in
             make.left.equalTo(titleLabel)
-            make.centerY.equalTo(moreButton)
+            make.bottom.equalTo(moreButton)
             make.right.equalTo(danmakuSettingsButton.snp.left).offset(-ARTAdaptedValue(12.0))
             make.height.equalTo(ARTAdaptedValue(30.0))
         }
@@ -395,38 +396,47 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
     }
     
     private func setupClearButton() { // 创建清屏按钮
-        clearButton = UIButton(type: .custom)
-        clearButton.backgroundColor     = .art_color(withHEXValue: 0x000000, alpha: 0.5)
-        clearButton.titleLabel?.font    = .art_regular(ARTAdaptedValue(10.0))
-        clearButton.layer.cornerRadius  = ARTAdaptedValue(20.0)
-        clearButton.layer.masksToBounds = true
-        clearButton.setTitle("清屏", for: .normal)
-        clearButton.setTitleColor(.white, for: .normal)
-//        clearButton.setImage(UIImage(named: "video_clear"), for: .normal)
-        clearButton.addTarget(self, action: #selector(didTapClearButton), for: .touchUpInside)
-        containerView.addSubview(clearButton)
-        clearButton.snp.makeConstraints { make in
-            make.size.equalTo(ARTAdaptedSize(width: 40.0, height: 40.0))
-            make.left.equalTo(titleLabel)
+        let clearContainerView = UIView()
+        clearContainerView.backgroundColor      = .art_color(withHEXValue: 0x000000, alpha: 0.5)
+        clearContainerView.layer.cornerRadius   = ARTAdaptedValue(17.0)
+        clearContainerView.layer.masksToBounds  = true
+        containerView.addSubview(clearContainerView)
+        clearContainerView.snp.makeConstraints { make in
+            make.size.equalTo(ARTAdaptedSize(width: 34.0, height: 34.0))
             make.bottom.equalTo(titleLabel.snp.top).offset(-ARTAdaptedValue(8.0))
+            make.left.equalTo(ARTAdaptedValue(12.0))
+        }
+        
+        let clearButton = ARTAlignmentButton(type: .custom)
+        clearButton.imageSize = ARTAdaptedSize(width: 19.0, height: 19.0)
+        clearButton.setImage(UIImage(named: "video_clear"), for: .normal)
+        clearButton.addTarget(self, action: #selector(didTapClearButton), for: .touchUpInside)
+        clearContainerView.addSubview(clearButton)
+        clearButton.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
     
     private func setupExitClearButton() { // 创建退出清屏按钮
-        exitClearButton = ARTAlignmentButton(type: .custom)
-        exitClearButton.alpha               = 0.0
-        exitClearButton.backgroundColor     = .art_color(withHEXValue: 0x000000, alpha: 0.5)
-        exitClearButton.titleLabel?.font    = .art_regular(ARTAdaptedValue(10.0))
-        exitClearButton.layer.cornerRadius  = ARTAdaptedValue(20.0)
-        exitClearButton.layer.masksToBounds = true
-        exitClearButton.imageSize           = ARTAdaptedSize(width: 22.0, height: 22.0)
+        exitClearView = UIView()
+        exitClearView.alpha                 = 0.0
+        exitClearView.backgroundColor       = .art_color(withHEXValue: 0x000000, alpha: 0.5)
+        exitClearView.layer.cornerRadius    = ARTAdaptedValue(17.0)
+        exitClearView.layer.masksToBounds   = true
+        addSubview(exitClearView)
+        exitClearView.snp.makeConstraints { make in
+            make.size.equalTo(ARTAdaptedSize(width: 34.0, height: 34.0))
+            make.right.equalTo(-ARTAdaptedValue(12.0))
+            make.bottom.equalTo(moreButton)
+        }
+        
+        let exitClearButton = ARTAlignmentButton(type: .custom)
+        exitClearButton.imageSize = ARTAdaptedSize(width: 19.0, height: 19.0)
         exitClearButton.setImage(UIImage(named: "video_exit_clear"), for: .normal)
         exitClearButton.addTarget(self, action: #selector(didTapExitClearButton), for: .touchUpInside)
-        addSubview(exitClearButton)
+        exitClearView.addSubview(exitClearButton)
         exitClearButton.snp.makeConstraints { make in
-            make.size.equalTo(ARTAdaptedSize(width: 40.0, height: 40.0))
-            make.right.equalTo(-ARTAdaptedValue(12.0))
-            make.bottom.equalTo(-art_safeAreaBottom())
+            make.edges.equalToSuperview()
         }
     }
 }
