@@ -21,19 +21,19 @@ public protocol ARTVideoPlayerWindowBottombarDelegate: ARTVideoPlayerBottombarDe
 open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     
     /// 代理对象
-    private weak var subclassDelegate: ARTVideoPlayerWindowBottombarDelegate?
+    public weak var subclassDelegate: ARTVideoPlayerWindowBottombarDelegate?
     
     /// 容器视图
-    private var containerView: UIView!
+    public var containerView: UIView!
     
     /// 当前播放时间标签
-    private var currentTimeLabel: UILabel!
+    public var currentTimeLabel: UILabel!
     
     /// 总时长标签
-    private var durationLabel: UILabel!
+    public var durationLabel: UILabel!
     
     /// 全屏按钮
-    private var fullscreenButton: ARTAlignmentButton!
+    public var fullscreenButton: ARTAlignmentButton!
     
     
     // MARK: - Initializatio
@@ -97,7 +97,7 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
 
 extension ARTVideoPlayerWindowBottombar {
     
-    private func setupContainerView() { // 创建容器视图
+    @objc open func setupContainerView() { // 创建容器视图
         containerView = UIView()
         addSubview(containerView)
         containerView.snp.makeConstraints { make in
@@ -105,7 +105,7 @@ extension ARTVideoPlayerWindowBottombar {
         }
     }
     
-    private func setupCurrentTimeLabel() { // 创建当前播放时间标签
+    @objc open func setupCurrentTimeLabel() { // 创建当前播放时间标签
         currentTimeLabel = UILabel()
         currentTimeLabel.text               = "00:00"
         currentTimeLabel.textAlignment      = .left
@@ -119,7 +119,7 @@ extension ARTVideoPlayerWindowBottombar {
         }
     }
     
-    private func setupDurationLabel() { // 创建总时长标签
+    @objc open func setupDurationLabel() { // 创建总时长标签
         durationLabel = UILabel()
         durationLabel.text                  = "00:00"
         durationLabel.textAlignment         = .right
@@ -133,7 +133,7 @@ extension ARTVideoPlayerWindowBottombar {
         }
     }
     
-    private func setupFullscreenButton() { // 创建全屏按钮
+    @objc open func setupFullscreenButton() { // 创建全屏按钮
         fullscreenButton = ARTAlignmentButton(type: .custom)
         fullscreenButton.layoutType         = .freeform
         fullscreenButton.imageAlignment     = .topLeft
@@ -148,7 +148,7 @@ extension ARTVideoPlayerWindowBottombar {
         }
     }
     
-    private func setupProgressView() { // 创建进度条
+    @objc open func setupProgressView() { // 创建进度条
         containerView.addSubview(progressView)
         progressView.snp.makeConstraints { make in
             make.left.equalTo(currentTimeLabel)
@@ -158,7 +158,7 @@ extension ARTVideoPlayerWindowBottombar {
         }
     }
     
-    private func setupSliderView() { // 创建滑块视图
+    @objc open func setupSliderView() { // 创建滑块视图
         containerView.addSubview(sliderView)
         sliderView.snp.makeConstraints { make in
             make.left.equalTo(progressView.snp.left).offset(ARTAdaptedValue(2.0))

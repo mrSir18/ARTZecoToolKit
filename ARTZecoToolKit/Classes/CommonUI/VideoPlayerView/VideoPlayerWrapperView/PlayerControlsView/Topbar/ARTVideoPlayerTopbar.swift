@@ -35,7 +35,7 @@ open class ARTVideoPlayerTopbar: UIView {
     public weak var delegate: ARTVideoPlayerTopbarDelegate?
     
     /// 当前收藏状态
-    private var isFavorited: Bool = false
+    public var isFavorited: Bool = false
     
     
     // MARK: - Initialization

@@ -18,37 +18,37 @@ public protocol ARTVideoPlayerLandscapeFullscreenBottombarDelegate: ARTVideoPlay
 open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
     
     /// 代理对象
-    private weak var subclassDelegate: ARTVideoPlayerLandscapeFullscreenBottombarDelegate?
+    public weak var subclassDelegate: ARTVideoPlayerLandscapeFullscreenBottombarDelegate?
     
     /// 容器视图
-    private var containerView: UIView!
+    public var containerView: UIView!
     
     /// 当前播放时间标签
-    private var currentTimeLabel: UILabel!
+    public var currentTimeLabel: UILabel!
     
     /// 总时长标签
-    private var durationLabel: UILabel!
+    public var durationLabel: UILabel!
     
     /// 暂停按钮
-    private var pauseButton: ARTAlignmentButton!
+    public var pauseButton: ARTAlignmentButton!
     
     /// 下一集按钮
-    private var nextButton: ARTAlignmentButton!
+    public var nextButton: ARTAlignmentButton!
     
     /// 弹幕按钮
-    private var danmakuButton: ARTAlignmentButton!
+    public var danmakuButton: ARTAlignmentButton!
     
     /// 弹幕设置按钮
-    private var danmakuSettingsButton: ARTAlignmentButton!
+    public var danmakuSettingsButton: ARTAlignmentButton!
     
     /// 弹幕输入框
-    private var danmakuInputLabel: YYLabel!
+    public var danmakuInputLabel: YYLabel!
     
     /// 倍数按钮
-    private var speedButton: UIButton!
+    public var speedButton: UIButton!
     
     /// 合集按钮
-    private var collectionButton: UIButton!
+    public var collectionButton: UIButton!
     
     
     // MARK: - Initializatio
@@ -160,7 +160,7 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
 
 extension ARTVideoPlayerLandscapeFullscreenBottombar {
     
-    private func setupContainerView() { // 创建容器视图
+    @objc open func setupContainerView() { // 创建容器视图
         containerView = UIView()
         addSubview(containerView)
         containerView.snp.makeConstraints { make in
@@ -168,7 +168,7 @@ extension ARTVideoPlayerLandscapeFullscreenBottombar {
         }
     }
     
-    private func setupCurrentTimeLabel() { // 创建当前播放时间标签
+    @objc open func setupCurrentTimeLabel() { // 创建当前播放时间标签
         let leftInset = UIScreen.art_currentScreenIsIphoneX ? ARTAdaptedValue(66.0) : ARTAdaptedValue(12.0)
         currentTimeLabel = UILabel()
         currentTimeLabel.text               = "00:00"
@@ -184,7 +184,7 @@ extension ARTVideoPlayerLandscapeFullscreenBottombar {
         }
     }
     
-    private func setupDurationLabel() { // 创建总时长标签
+    @objc open func setupDurationLabel() { // 创建总时长标签
         durationLabel = UILabel()
         durationLabel.text                  = "/00:00"
         durationLabel.textAlignment         = .left
@@ -198,7 +198,7 @@ extension ARTVideoPlayerLandscapeFullscreenBottombar {
         }
     }
     
-    private func setupProgressView() { // 创建进度条
+    @objc open func setupProgressView() { // 创建进度条
         let rightInset = UIScreen.art_currentScreenIsIphoneX ? ARTAdaptedValue(54.0) : ARTAdaptedValue(12.0)
         containerView.addSubview(progressView)
         progressView.snp.makeConstraints { make in
@@ -209,7 +209,7 @@ extension ARTVideoPlayerLandscapeFullscreenBottombar {
         }
     }
     
-    private func setupSliderView() { // 创建滑块视图
+    @objc open func setupSliderView() { // 创建滑块视图
         containerView.addSubview(sliderView)
         sliderView.snp.makeConstraints { make in
             make.left.equalTo(progressView.snp.left).offset(ARTAdaptedValue(2.0))
@@ -219,7 +219,7 @@ extension ARTVideoPlayerLandscapeFullscreenBottombar {
         }
     }
     
-    private func setupPauseButton() { // 创建暂停按钮
+    @objc open func setupPauseButton() { // 创建暂停按钮
         pauseButton = ARTAlignmentButton(type: .custom)
         pauseButton.imageAlignment = .left
         pauseButton.imageSize = ARTAdaptedSize(width: 20.0, height: 20.0)
@@ -234,7 +234,7 @@ extension ARTVideoPlayerLandscapeFullscreenBottombar {
         }
     }
     
-    private func setupNextButton() { // 创建下一集按钮
+    @objc open func setupNextButton() { // 创建下一集按钮
         nextButton = ARTAlignmentButton(type: .custom)
         nextButton.imageAlignment = .left
         nextButton.imageSize = ARTAdaptedSize(width: 18.0, height: 17.0)
@@ -248,7 +248,7 @@ extension ARTVideoPlayerLandscapeFullscreenBottombar {
         }
     }
     
-    private func setupDanmakuButton() { // 创建弹幕按钮
+    @objc open func setupDanmakuButton() { // 创建弹幕按钮
         danmakuButton = ARTAlignmentButton(type: .custom)
         danmakuButton.isSelected = true
         danmakuButton.imageAlignment = .left
@@ -264,7 +264,7 @@ extension ARTVideoPlayerLandscapeFullscreenBottombar {
         }
     }
     
-    private func setupDanmakuSettingsButton() { // 创建弹幕设置按钮
+    @objc open func setupDanmakuSettingsButton() { // 创建弹幕设置按钮
         danmakuSettingsButton = ARTAlignmentButton(type: .custom)
         danmakuSettingsButton.imageAlignment = .left
         danmakuSettingsButton.imageSize = ARTAdaptedSize(width: 23.0, height: 23.0)
@@ -278,7 +278,7 @@ extension ARTVideoPlayerLandscapeFullscreenBottombar {
         }
     }
     
-    private func setupDanmakuInputField() { // 创建弹幕输入框
+    @objc open func setupDanmakuInputField() { // 创建弹幕输入框
         let inputView = UIView()
         inputView.backgroundColor       = .art_color(withHEXValue: 0xD8D8D8, alpha: 0.3)
         inputView.layer.cornerRadius    = ARTAdaptedValue(14.0)
@@ -310,7 +310,7 @@ extension ARTVideoPlayerLandscapeFullscreenBottombar {
         }
     }
     
-    private func setupCollectionButton() { // 创建合集按钮
+    @objc open func setupCollectionButton() { // 创建合集按钮
         collectionButton = UIButton(type: .custom)
         collectionButton.titleLabel?.font = .art_medium(ARTAdaptedValue(12.0))
         collectionButton.contentHorizontalAlignment = .right
@@ -325,7 +325,7 @@ extension ARTVideoPlayerLandscapeFullscreenBottombar {
         }
     }
     
-    private func setupSpeedButton() { // 创建全屏按钮
+    @objc open func setupSpeedButton() { // 创建全屏按钮
         speedButton = UIButton(type: .custom)
         speedButton.titleLabel?.font = .art_medium(ARTAdaptedValue(12.0))
         speedButton.contentHorizontalAlignment = .right

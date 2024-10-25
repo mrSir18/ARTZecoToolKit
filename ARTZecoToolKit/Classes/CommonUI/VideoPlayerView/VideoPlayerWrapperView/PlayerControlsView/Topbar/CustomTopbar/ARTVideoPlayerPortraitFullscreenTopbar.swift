@@ -8,10 +8,10 @@
 class ARTVideoPlayerPortraitFullscreenTopbar: ARTVideoPlayerTopbar {
     
     /// 容器视图
-    private var containerView: UIView!
+    public var containerView: UIView!
     
     /// 返回按钮
-    private var backButton: ARTAlignmentButton!
+    public var backButton: ARTAlignmentButton!
     
     
     // MARK: - Override Super Methods
@@ -24,7 +24,7 @@ class ARTVideoPlayerPortraitFullscreenTopbar: ARTVideoPlayerTopbar {
     
     // MARK: - Setup Methods
     
-    private func setupContainerView() { // 创建容器视图
+    @objc open func setupContainerView() { // 创建容器视图
         containerView = UIView()
         containerView.alpha = 0.0
         addSubview(containerView)
@@ -34,7 +34,7 @@ class ARTVideoPlayerPortraitFullscreenTopbar: ARTVideoPlayerTopbar {
         }
     }
     
-    private func setupBackButton() { // 创建返回按钮
+    @objc open func setupBackButton() { // 创建返回按钮
         backButton = ARTAlignmentButton(type: .custom)
         backButton.imageAlignment       = .left
         backButton.titleAlignment       = .right
@@ -49,7 +49,7 @@ class ARTVideoPlayerPortraitFullscreenTopbar: ARTVideoPlayerTopbar {
         }
     }
     
-    private func setupAnimation() { // 过度动画流畅
+    @objc open func setupAnimation() { // 过度动画流畅
         UIView.animate(withDuration: 0.25) {
             self.containerView.alpha = 1.0
         }

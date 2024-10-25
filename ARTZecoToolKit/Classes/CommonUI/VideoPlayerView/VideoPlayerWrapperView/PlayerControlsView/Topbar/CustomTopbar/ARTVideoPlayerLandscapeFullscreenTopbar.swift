@@ -8,16 +8,16 @@
 class ARTVideoPlayerLandscapeFullscreenTopbar: ARTVideoPlayerTopbar {
     
     /// 容器视图
-    private var containerView: UIView!
+    public var containerView: UIView!
     
     /// 返回按钮
-    private var backButton: ARTAlignmentButton!
+    public var backButton: ARTAlignmentButton!
     
     /// 收藏按钮
-    private var favoriteButton: ARTAlignmentButton!
+    public var favoriteButton: ARTAlignmentButton!
     
     /// 分享按钮
-    private var shareButton: ARTAlignmentButton!
+    public var shareButton: ARTAlignmentButton!
     
     
     // MARK: - Override Super Methods
@@ -33,7 +33,7 @@ class ARTVideoPlayerLandscapeFullscreenTopbar: ARTVideoPlayerTopbar {
     
     // MARK: - Setup Methods
     
-    private func setupContainerView() { // 创建容器视图
+    @objc open func setupContainerView() { // 创建容器视图
         containerView = UIView()
         containerView.alpha = 0.0
         addSubview(containerView)
@@ -42,7 +42,7 @@ class ARTVideoPlayerLandscapeFullscreenTopbar: ARTVideoPlayerTopbar {
         }
     }
     
-    private func setupBackButton() { // 创建返回按钮
+    @objc open func setupBackButton() { // 创建返回按钮
         let leftInset = UIScreen.art_currentScreenIsIphoneX ? ARTAdaptedValue(54.0) : 0.0
         backButton = ARTAlignmentButton(type: .custom)
         backButton.imageAlignment       = .left
@@ -62,7 +62,7 @@ class ARTVideoPlayerLandscapeFullscreenTopbar: ARTVideoPlayerTopbar {
         }
     }
     
-    private func setupShareButton() { // 创建分享按钮
+    @objc open func setupShareButton() { // 创建分享按钮
         let rightInset = UIScreen.art_currentScreenIsIphoneX ? ARTAdaptedValue(42.0) : 0.0
         shareButton = ARTAlignmentButton(type: .custom)
         shareButton.imageAlignment      = .right
@@ -80,7 +80,7 @@ class ARTVideoPlayerLandscapeFullscreenTopbar: ARTVideoPlayerTopbar {
         }
     }
     
-    private func setupFavoriteButton() { // 创建收藏按钮
+    @objc open func setupFavoriteButton() { // 创建收藏按钮
         favoriteButton = ARTAlignmentButton(type: .custom)
         favoriteButton.isSelected       = true
         favoriteButton.imageAlignment   = .right
@@ -97,7 +97,7 @@ class ARTVideoPlayerLandscapeFullscreenTopbar: ARTVideoPlayerTopbar {
         }
     }
     
-    private func setupAnimation() { // 过度动画流畅
+    @objc open func setupAnimation() { // 过度动画流畅
         UIView.animate(withDuration: 0.3) {
             self.containerView.alpha = 1.0
         }

@@ -10,16 +10,16 @@ import AVFoundation
 open class ARTVideoPlayerDisplayView: UIView {
     
     /// 容器视图
-    private var containerView: ARTCustomView!
+    public var containerView: ARTCustomView!
     
     /// 视频资源
-    private var displayImageView: UIImageView!
+    public var displayImageView: UIImageView!
     
     /// 当前播放时间标签
-    private var currentTimeLabel: UILabel!
+    public var currentTimeLabel: UILabel!
     
     /// 视频总时长标签
-    private var durationLabel: UILabel!
+    public var durationLabel: UILabel!
     
     
     // MARK: - Initialization
@@ -110,7 +110,7 @@ open class ARTVideoPlayerDisplayView: UIView {
 
 extension ARTVideoPlayerDisplayView {
     
-    private func setupContainerView() { // 创建容器视图
+    @objc open func setupContainerView() { // 创建容器视图
         containerView = ARTCustomView()
         containerView.customBackgroundColor = .black
         containerView.borderColor           = .art_color(withHEXValue: 0xFFFFFF)
@@ -124,7 +124,7 @@ extension ARTVideoPlayerDisplayView {
         }
     }
     
-    private func setupDisplayImageView() { // 创建显示图片视图
+    @objc open func setupDisplayImageView() { // 创建显示图片视图
         displayImageView = UIImageView()
         displayImageView.contentMode         = .scaleAspectFill
         displayImageView.layer.cornerRadius  = ARTAdaptedValue(6.0)
@@ -135,7 +135,7 @@ extension ARTVideoPlayerDisplayView {
         }
     }
     
-    private func setupCurrentTimeLabel() { // 创建当前播放时间标签
+    @objc open func setupCurrentTimeLabel() { // 创建当前播放时间标签
         currentTimeLabel = UILabel()
         currentTimeLabel.text               = "00:00"
         currentTimeLabel.textColor          = .art_color(withHEXValue: 0xFFFFFF)
@@ -149,7 +149,7 @@ extension ARTVideoPlayerDisplayView {
         }
     }
     
-    private func setupDurationLabel() { // 创建视频总时长标签
+    @objc open func setupDurationLabel() { // 创建视频总时长标签
         durationLabel = UILabel()
         durationLabel.text                  = "/00:00"
         durationLabel.textColor             = .art_color(withHEXValue: 0xFFFFFF, alpha: 0.6)

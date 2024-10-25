@@ -9,8 +9,8 @@ import AVFoundation
 
 /// 一个可哈希的结构体，用于表示CMTime
 public struct CMTimeHashable: Hashable {
-    var seconds: Double   // 时间的秒数
-    var timescale: Int32  // 时间的尺度
+    public var seconds: Double   // 时间的秒数
+    public var timescale: Int32  // 时间的尺度
 
     /// 初始化方法，从CMTime转换为CMTimeHashable
     public init(_ time: CMTime) {

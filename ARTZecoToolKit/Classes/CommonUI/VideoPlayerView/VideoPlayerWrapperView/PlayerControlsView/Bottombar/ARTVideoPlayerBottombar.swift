@@ -220,6 +220,13 @@ extension ARTVideoPlayerBottombar {
     @objc open func updateSliderTouchEnded(value: Float) {
         handleSliderTouchEnded(sliderView)
     }
+    
+    /// 初始化滑块的值
+    ///
+    /// - Note: 重写此方法以初始化底部工具栏的滑块值
+    @objc open func resetSliderValue() {
+        sliderView.setValue(0.0, animated: false)
+    }
 }
 
 // MARK: - Private Methods

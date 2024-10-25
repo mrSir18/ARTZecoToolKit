@@ -112,30 +112,30 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     // MARK: - Private Properties
     
     /// 代理对象
-    private weak var delegate: ARTVideoPlayerControlsViewDelegate?
+    public weak var delegate: ARTVideoPlayerControlsViewDelegate?
     
     /// 是否横向全屏
     public var isLandscape: Bool = true
     
     /// 播放器当前的屏幕方向
-    private lazy var screenOrientation: ScreenOrientation = {
+    public lazy var screenOrientation: ScreenOrientation = {
         return delegate_customScreenOrientation()
     }()
     
     /// 当前顶底栏显示状态
-    private var toolbarVisibility: ToolbarVisibility = .visible // 默认显示
+    public var toolbarVisibility: ToolbarVisibility = .visible // 默认显示
     
     
     // MARK: - 播放器组件
     
     /// 导航栏视图
-    private var topBar: ARTVideoPlayerTopbar!
+    public var topBar: ARTVideoPlayerTopbar!
     
     /// 底部工具栏视图
-    private var bottomBar: ARTVideoPlayerBottombar!
+    public var bottomBar: ARTVideoPlayerBottombar!
     
     /// 播放、重试图片
-    private var playImageView: UIImageView!
+    public var playImageView: UIImageView!
     
     
     // MARK: - Initialization
@@ -221,6 +221,13 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     /// - Note: 重写父类方法，更新播放按钮状态
     open func updatePlayerStateInControls(playerState: PlayerState) {
         playImageView.isHidden = (playerState == .playing)
+    }
+    
+    /// 初始化滑块值
+    ///
+    ///  - Note: 重写父类方法，初始化滑块值
+    open func resetSliderValueInControls() {
+        bottomBar.resetSliderValue()
     }
 }
 
