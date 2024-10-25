@@ -226,8 +226,17 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     /// 初始化滑块值
     ///
     ///  - Note: 重写父类方法，初始化滑块值
-    open func resetSliderValueInControls() {
-        bottomBar.resetSliderValue()
+    open func resetSliderValueInControls(value: Float = 0.0) {
+        bottomBar.resetSliderValue(value: value)
+    }
+    
+    /// 更新播放、暂停按钮状态
+    ///
+    /// - Parameters:
+    ///  - isPlaying: 是否正在播放
+    /// - Note: 重写父类方法，更新播放、暂停按钮状态
+    open func updatePlayPauseButtonInControls(isPlaying: Bool) {
+        bottomBar.updatePlayPauseButton(isPlaying: isPlaying)
     }
 }
 

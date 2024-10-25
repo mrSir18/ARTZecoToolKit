@@ -30,7 +30,7 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
     public var durationLabel: UILabel!
     
     /// 暂停按钮
-    public var pauseButton: ARTAlignmentButton!
+    open var pauseButton: ARTAlignmentButton!
     
     /// 下一集按钮
     public var nextButton: ARTAlignmentButton!
@@ -153,6 +153,10 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
                 self.layoutIfNeeded()
             }
         }
+    }
+    
+    open override func updatePlayPauseButton(isPlaying: Bool) { // 更新播放暂停按钮
+        pauseButton.isSelected = !isPlaying
     }
 }
 

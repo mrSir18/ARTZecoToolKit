@@ -6,6 +6,8 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
+import AVFoundation
+import MobileCoreServices
 import ARTZecoToolKit
 
 /*
@@ -141,6 +143,7 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPlayerView()
+//        setupSupportedAVPlayerFileExtensions()
     }
     
     // MARK: - Setup Methods
@@ -158,10 +161,29 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
         // MARK: - Test Methods
         
         var config = ARTVideoPlayerConfig()
-        config.url = URL(string: "https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4")
-//        config.url = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MP4")!)
+//        config.url = URL(string: "https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4")
+        config.url = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MP4")!)
 //        https://media.w3.org/2010/05/sintel/trailer.mp4
 //        https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4
         videoPlayerView.startVideoPlayback(with: config)
+    }
+    
+    /// 设置支持的 AVPlayer 文件扩展名
+    private func setupSupportedAVPlayerFileExtensions() {
+        print("\n\n本框架基于 AVPlayer 封装，支持格式：\n\n【\(supportedAVPlayerFileExtensions())】\n")
+    }
+}
+
+// MARK: - Supported AVPlayer File Extensions
+
+extension ARTViewController_VideoPlayer {
+    
+    /// 获取支持的 AVPlayer 文件扩展名
+    ///
+    /// - Returns: 支持的 AVPlayer 文件扩展名
+    private func supportedAVPlayerFileExtensions() -> String {
+        return AVURLAsset.audiovisualTypes().compactMap {
+            UTTypeCopyPreferredTagWithClass($0 as CFString, kUTTagClassFilenameExtension)?.takeRetainedValue() as String?
+        }.joined(separator: ", ")
     }
 }

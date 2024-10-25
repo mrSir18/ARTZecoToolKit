@@ -70,8 +70,12 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     /// 播放器的时间观察者间隔
     public let interval = CMTime(seconds: 0.2, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
     
+    /// 播放器当前时间
+    public var currentTime: CMTime = .zero
+    
     /// 播放器总时长
-    public var totalDuration: Double = 0.0
+    public var totalDuration: CMTime = .zero
+    
     
     // MARK: - 播放器观察者属性
     
@@ -169,7 +173,7 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     /// 处理缓冲进度变化
     private func didLoadedTimeRangesChanged() {
         guard let duration = playerItem?.duration else { return }
-        totalDuration = CMTimeGetSeconds(duration)
+        totalDuration = duration
         
         guard let timeRange = playerItem?.loadedTimeRanges.first?.timeRangeValue else { // 如果没有可用的缓冲时间，则返回
             onReceiveLoadedTimeRangesChanged(totalBuffer: 0, bufferProgress: 0)
@@ -179,7 +183,7 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
         let bufferedDuration = startSeconds + CMTimeGetSeconds(timeRange.duration)
         
         // 计算缓冲进度，确保总时长有效，避免除以零
-        let bufferProgress: Float = totalDuration > 0 ? Float(bufferedDuration / totalDuration) : 0.0
+        let bufferProgress: Float = totalDuration.seconds > 0 ? Float(bufferedDuration / totalDuration.seconds) : 0.0
         onReceiveLoadedTimeRangesChanged(totalBuffer: bufferedDuration, bufferProgress: bufferProgress)
     }
     
@@ -307,7 +311,7 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     /// - Parameter time: 当前播放时间
     /// - Note: 子类重写此方法，更新播放时间
     open func onReceivePlayerProgressDidChange(time: CMTime) {
-        
+        currentTime = time
     }
     
     /// 准备播放

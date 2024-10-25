@@ -223,9 +223,20 @@ extension ARTVideoPlayerBottombar {
     
     /// 初始化滑块的值
     ///
+    /// - Parameter value: 滑块的值
     /// - Note: 重写此方法以初始化底部工具栏的滑块值
-    @objc open func resetSliderValue() {
-        sliderView.setValue(0.0, animated: false)
+    @objc open func resetSliderValue(value: Float = 0.0) {
+        progressView.setProgress(value, animated: false)
+        sliderView.setValue(value, animated: false)
+    }
+    
+    /// 更新暂停、播放按钮状态
+    ///
+    /// - Parameters:
+    ///  - isPlaying: 是否正在播放
+    /// - Note: 重写此方法以更新底部工具栏的播放按钮状态
+    @objc open func updatePlayPauseButton(isPlaying: Bool) {
+        
     }
 }
 

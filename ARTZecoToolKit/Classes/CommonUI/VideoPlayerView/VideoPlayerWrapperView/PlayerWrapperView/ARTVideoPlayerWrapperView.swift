@@ -71,6 +71,9 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     /// 手势方向
     public var swipeDirection: SwipeDirection = .unknown
     
+    /// 进度条值
+    public var sliderValue: Float = 0.0
+    
     
     // MARK: - 播放器组件 AVPlayer（最底层：播放器视图）
     
@@ -167,6 +170,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         player.pause()
         playerState = .ended
         playControlsView.updatePlayerStateInControls(playerState: playerState)
+        playControlsView.updatePlayPauseButtonInControls(isPlaying: false)
     }
     
     open override func onReceivePlayerItemFailedToPlayToEnd(_ notification: Notification) { // 播放失败
@@ -228,8 +232,8 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     /// - Parameter slider: 代表视频播放进度的滑动条
     /// - Note: 子类重写该方法更新预览
     open func updatePreviewImageForSliderValueChange(_ slider: ARTVideoPlayerSlider) {
-        let currentTime = CMTime(seconds: Double(slider.value) * totalDuration, preferredTimescale: 600)
         let duration = player.currentItem?.duration ?? interval
+        let currentTime = CMTime(seconds: Double(slider.value) * duration.seconds, preferredTimescale: 600)
         systemControlsView.updateTimeInSystemControls(with: currentTime, duration: duration)
         
         // 获取当前时间的缩略图
@@ -491,6 +495,7 @@ extension ARTVideoPlayerWrapperView {
             pausePlayer()
         case .ended: // 重新播放
             playControlsView.resetSliderValueInControls()
+            playControlsView.updatePlayPauseButtonInControls(isPlaying: true)
             player.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] _ in
                 self?.resumePlayer()
             }
@@ -554,6 +559,7 @@ extension ARTVideoPlayerWrapperView {
         
         // 根据不同的状态处理是否正在拖动滑块
         isDraggingSlider = (newState == .paused)
+        playControlsView.updatePlayPauseButtonInControls(isPlaying: newState == .playing)
         switch newState {
         case .playing: // 如果是播放状态，隐藏系统控制视图并开始播放
             systemControlsView.hideVideoPlayerDisplay()
@@ -577,6 +583,19 @@ extension ARTVideoPlayerWrapperView {
     /// - Note: 通过调用 `syncControlsWithPlayerState` 切换到播放状态
     private func resumePlayer() {
         syncControlsWithPlayerState(to: .playing)
+    }
+    
+    /// 更新屏幕模式和滑块值的通用方法
+    ///
+    /// - Parameter orientation: 屏幕模式
+    private func updateScreenMode(for orientation: ScreenOrientation) {
+        sliderValue = playControlsView.bottomBar.sliderView.value
+        isDraggingSlider = true
+        systemControlsView.updateScreenOrientationInSystemControls(screenOrientation: orientation)
+        playControlsView.transitionToFullscreen(orientation: orientation, playerState: playerState)
+        playControlsView.resetSliderValueInControls(value: sliderValue)
+        playControlsView.updateTimeInControls(with: currentTime, duration: totalDuration)
+        isDraggingSlider = false
     }
 }
 
@@ -612,10 +631,9 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
      */
     
     public func videoPlayerControlsDidTapBack(for playerControlsView: ARTVideoPlayerControlsView) { // 点击返回按钮
+        
         fullscreenManager.dismiss { [weak self] in // 切换窗口模式顶底栏
-            guard let self = self else { return }
-            self.systemControlsView.updateScreenOrientationInSystemControls(screenOrientation: .window)
-            self.playControlsView.transitionToFullscreen(orientation: .window, playerState: self.playerState)
+            self?.updateScreenMode(for: .window)
         }
     }
     
@@ -629,18 +647,18 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     
     public func transitionToFullscreen(for playerControlsView: ARTVideoPlayerControlsView, orientation: ScreenOrientation) { // 点击全屏按钮
         fullscreenManager.presentFullscreenWithRotation { [weak self] in // 切换全屏模式顶底栏
-            guard let self = self else { return }
-            self.systemControlsView.updateScreenOrientationInSystemControls(screenOrientation: orientation)
-            self.playControlsView.transitionToFullscreen(orientation: orientation, playerState: self.playerState)
+            self?.updateScreenMode(for: orientation)
         }
     }
     
     public func controlsViewDidBeginTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 暂停播放 (开始拖动滑块)
+        playControlsView.updatePlayPauseButtonInControls(isPlaying: true)
         playControlsView.updatePlayerStateInControls(playerState: .playing)
         isDraggingSlider = true
     }
     
     public func controlsViewDidChangeValue(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 快进/快退 (拖动滑块)
+        
         updatePreviewImageForSliderValueChange(slider)
     }
     
