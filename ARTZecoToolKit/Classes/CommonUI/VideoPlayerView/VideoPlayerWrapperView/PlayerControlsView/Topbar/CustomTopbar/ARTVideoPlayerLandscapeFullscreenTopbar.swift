@@ -82,10 +82,12 @@ class ARTVideoPlayerLandscapeFullscreenTopbar: ARTVideoPlayerTopbar {
     
     private func setupFavoriteButton() { // 创建收藏按钮
         favoriteButton = ARTAlignmentButton(type: .custom)
+        favoriteButton.isSelected       = true
         favoriteButton.imageAlignment   = .right
         favoriteButton.titleAlignment   = .left
         favoriteButton.imageSize        = ARTAdaptedSize(width: 19.0, height: 19.0)
         favoriteButton.setImage(UIImage(named: "video_favorite"), for: .normal)
+        favoriteButton.setImage(UIImage(named: "video_favorited"), for: .selected)
         favoriteButton.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
         containerView.addSubview(favoriteButton)
         favoriteButton.snp.makeConstraints { make in

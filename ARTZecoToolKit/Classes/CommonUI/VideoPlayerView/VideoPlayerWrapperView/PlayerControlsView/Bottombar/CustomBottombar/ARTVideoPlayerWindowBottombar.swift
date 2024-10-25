@@ -99,7 +99,6 @@ extension ARTVideoPlayerWindowBottombar {
     
     private func setupContainerView() { // 创建容器视图
         containerView = UIView()
-        containerView.backgroundColor = .clear
         addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()

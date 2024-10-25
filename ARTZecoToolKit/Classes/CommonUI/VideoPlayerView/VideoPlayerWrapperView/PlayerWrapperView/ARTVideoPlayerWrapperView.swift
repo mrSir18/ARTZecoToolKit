@@ -320,8 +320,9 @@ extension ARTVideoPlayerWrapperView {
         thumbnailCache.removeAll() // 清空缓存
         imageGenerator = AVAssetImageGenerator(asset: asset)
         imageGenerator.appliesPreferredTrackTransform = true
-        imageGenerator.requestedTimeToleranceBefore   = .zero
-        imageGenerator.requestedTimeToleranceAfter    = .zero
+        imageGenerator.requestedTimeToleranceBefore   = CMTimeMake(value: 1, timescale: 10) // 0.1秒
+        imageGenerator.requestedTimeToleranceAfter    = CMTimeMake(value: 1, timescale: 10)
+
         fetchFirstFrameFromVideo() // 获取视频的第一帧
     }
     
@@ -468,7 +469,7 @@ extension ARTVideoPlayerWrapperView {
     }
     
     @objc open func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
-        pausePlayer()
+        playerState == .playing ? pausePlayer() : resumePlayer()
     }
     
     /// 捏合手势
@@ -536,7 +537,6 @@ extension ARTVideoPlayerWrapperView {
     /// - Parameter newState: 新的播放器状态
     /// - Note: 根据新的状态进行对应的播放或暂停操作，避免重复状态更新
     private func syncControlsWithPlayerState(to newState: PlayerState) {
-        print("Player State: \(playerState) -> \(newState)")
         guard playerState != newState else { return }
         
         // 更新播放器状态
@@ -627,16 +627,21 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     }
     
     public func controlsViewDidBeginTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 暂停播放 (开始拖动滑块)
-        pausePlayer()
+        playControlsView.updatePlayerStateInControls(playerState: .playing)
+        isDraggingSlider = true
     }
     
     public func controlsViewDidChangeValue(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 快进/快退 (拖动滑块)
-        seekToSliderValue(slider)
         updatePreviewImageForSliderValueChange(slider)
     }
     
     public func controlsViewDidEndTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 恢复播放 (结束拖动滑块)
-        resumePlayer()
+        seekToSliderValue(slider) { [weak self] in
+            guard let self = self else { return }
+            self.systemControlsView.hideVideoPlayerDisplay()
+            self.isDraggingSlider = false
+            self.player.play()
+        }
     }
     
     public func controlsViewDidTap(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 指定播放时间 (点击滑块)
