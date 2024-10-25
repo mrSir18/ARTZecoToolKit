@@ -72,7 +72,7 @@ import AVFoundation
     ///   - slider: 被触摸的滑块
     /// - Note: 重写父类方法，更新播放器当前播放时间
     @objc optional func controlsViewDidBeginTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider)
-
+    
     /// 当滑块值改变时调用
     ///
     /// - Parameters:
@@ -80,7 +80,7 @@ import AVFoundation
     ///   - slider: 值已改变的滑块
     /// - Note: 重写父类方法，更新播放
     @objc optional func controlsViewDidChangeValue(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider)
-
+    
     /// 当滑块触摸结束时调用
     ///
     /// - Parameters:
@@ -88,7 +88,7 @@ import AVFoundation
     ///   - slider: 被释放的滑块
     /// - Note: 重写父类方法，更新播放器当前播放时间
     @objc optional func controlsViewDidEndTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider)
-
+    
     /// 当滑块被点击时调用
     ///
     /// - Parameters:
@@ -113,7 +113,7 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     
     /// 代理对象
     private weak var delegate: ARTVideoPlayerControlsViewDelegate?
- 
+    
     /// 是否横向全屏
     public var isLandscape: Bool = true
     
@@ -124,8 +124,8 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     
     /// 当前顶底栏显示状态
     private var toolbarVisibility: ToolbarVisibility = .visible // 默认显示
-
-
+    
+    
     // MARK: - 播放器组件
     
     /// 导航栏视图
@@ -157,7 +157,7 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     open override func setupViews() {
         setupToolBars()
     }
-
+    
     // MARK: - Public Methods
     
     /// 旋转屏幕（设置屏幕方向并刷新顶部和底部栏）
@@ -198,7 +198,7 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     @objc open func updateSliderTouchBeganInControls(sliderValue: Float) {
         bottomBar.updateSliderTouchBegan(value: sliderValue)
     }
-
+    
     /// 更新滑块值
     ///
     /// - Parameter sliderValue: 滑块值

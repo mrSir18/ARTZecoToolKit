@@ -12,7 +12,7 @@ import AVFoundation
 /// - NOTE: 可继承该协议方法
 public protocol ARTVideoPlayerLandscapeFullscreenBottombarDelegate: ARTVideoPlayerBottombarDelegate {
     
-  
+    
 }
 
 open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
@@ -80,11 +80,88 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
         setupSpeedButton()
     }
     
-    // MARK: - Setup Methods
+    // MARK: - Button Actions
+    
+    /// 点击暂停按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc open func didTapPauseButton() {
+        print("暂停")
+    }
+    
+    /// 点击下一集按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc open func didTapNextButton() {
+        print("下一集")
+    }
+    
+    /// 点击弹幕按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc open func didTapDanmakuButton() {
+        print("弹幕")
+    }
+    
+    /// 点击弹幕设置按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc open func didTapDanmakuSettingsButton() {
+        print("弹幕设置")
+    }
+    
+    /// 点击发送弹幕按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc open func didTapDanmakuSendButton() {
+        print("发送弹幕")
+    }
+    
+    /// 点击倍数按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc open func didTapSpeedButton() {
+        print("倍数")
+    }
+    
+    /// 点击合集按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc open func didTapCollectionButton() {
+        print("合集")
+    }
+    
+    // MARK: - Override Super Methods
+    
+    open override func updatePlaybackTime(currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = true) { // 更新当前播放时间和总时长
+        super.updatePlaybackTime(currentTime: currentTime, duration: duration, shouldUpdateSlider: shouldUpdateSlider)
+        currentTimeLabel.text = currentTime.art_formattedTime()
+        durationLabel.text = "/\(duration.art_formattedTime())"
+    }
+    
+    open override func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) { // 自定义滑块外观
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: duration) {
+                self.sliderView.trackHeight = trackHeight
+                self.progressView.layer.cornerRadius = cornerRadius
+                if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: thumbSize) {
+                    self.sliderView.setThumbImage(thumbImage, for: .normal)
+                }
+                self.progressView.snp.updateConstraints { make in
+                    make.height.equalTo(trackHeight)
+                }
+                self.layoutIfNeeded()
+            }
+        }
+    }
+}
+
+// MARK: - Setup Initializer
+
+extension ARTVideoPlayerLandscapeFullscreenBottombar {
     
     private func setupContainerView() { // 创建容器视图
         containerView = UIView()
-        containerView.backgroundColor = .clear
         addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -141,7 +218,7 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
             make.height.equalTo(ARTAdaptedValue(20.0))
         }
     }
-
+    
     private func setupPauseButton() { // 创建暂停按钮
         pauseButton = ARTAlignmentButton(type: .custom)
         pauseButton.imageAlignment = .left
@@ -212,7 +289,7 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
             make.left.equalTo(danmakuSettingsButton.snp.right).offset(ARTAdaptedValue(24.0))
             make.centerY.equalTo(pauseButton)
         }
-
+        
         danmakuInputLabel = YYLabel()
         danmakuInputLabel.font            = .art_regular(ARTAdaptedValue(12.0))
         danmakuInputLabel.textColor       = .art_color(withHEXValue: 0xFFFFFF)
@@ -260,81 +337,6 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
             make.size.equalTo(collectionButton)
             make.right.equalTo(collectionButton.snp.left)
             make.bottom.equalTo(collectionButton)
-        }
-    }
-    
-    // MARK: - Button Actions
-    
-    /// 点击暂停按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
-    @objc open func didTapPauseButton() {
-        print("暂停")
-    }
-    
-    /// 点击下一集按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
-    @objc open func didTapNextButton() {
-        print("下一集")
-    }
-    
-    /// 点击弹幕按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
-    @objc open func didTapDanmakuButton() {
-        print("弹幕")
-    }
-    
-    /// 点击弹幕设置按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
-    @objc open func didTapDanmakuSettingsButton() {
-        print("弹幕设置")
-    }
-    
-    /// 点击发送弹幕按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
-    @objc open func didTapDanmakuSendButton() {
-        print("发送弹幕")
-    }
-    
-    /// 点击倍数按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
-    @objc open func didTapSpeedButton() {
-        print("倍数")
-    }
-    
-    /// 点击合集按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
-    @objc open func didTapCollectionButton() {
-        print("合集")
-    }
-    
-    // MARK: - Override Super Methods
-
-    open override func updatePlaybackTime(currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = true) { // 更新当前播放时间和总时长
-        super.updatePlaybackTime(currentTime: currentTime, duration: duration, shouldUpdateSlider: shouldUpdateSlider)
-        currentTimeLabel.text = currentTime.art_formattedTime()
-        durationLabel.text = "/\(duration.art_formattedTime())"
-    }
-    
-    open override func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) { // 自定义滑块外观
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: duration) {
-                self.sliderView.trackHeight = trackHeight
-                self.progressView.layer.cornerRadius = cornerRadius
-                if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: thumbSize) {
-                    self.sliderView.setThumbImage(thumbImage, for: .normal)
-                }
-                self.progressView.snp.updateConstraints { make in
-                    make.height.equalTo(trackHeight)
-                }
-                self.layoutIfNeeded()
-            }
         }
     }
 }

@@ -34,7 +34,7 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     
     /// 全屏按钮
     private var fullscreenButton: ARTAlignmentButton!
-
+    
     
     // MARK: - Initializatio
     
@@ -59,7 +59,43 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
         setupSliderView()
     }
     
-    // MARK: - Setup Methods
+    // MARK: - Button Actions
+    
+    /// 点击全屏按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc open func didTapFullscreenButton() {
+        subclassDelegate?.videoPlayerBottombarDidTapFullscreen(for: self)
+    }
+    
+    // MARK: - Override Super Methods
+    
+    open override func updatePlaybackTime(currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = true) { // 更新当前播放时间和总时长
+        super.updatePlaybackTime(currentTime: currentTime, duration: duration, shouldUpdateSlider: shouldUpdateSlider)
+        currentTimeLabel.text = currentTime.art_formattedTime()
+        durationLabel.text = duration.art_formattedTime()
+    }
+    
+    open override func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) { // 自定义滑块外观
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: duration) {
+                self.sliderView.trackHeight = trackHeight
+                self.progressView.layer.cornerRadius = cornerRadius
+                if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: thumbSize) {
+                    self.sliderView.setThumbImage(thumbImage, for: .normal)
+                }
+                self.progressView.snp.updateConstraints { make in
+                    make.height.equalTo(trackHeight)
+                }
+                self.layoutIfNeeded()
+            }
+        }
+    }
+}
+
+// MARK: - Setup Initializer
+
+extension ARTVideoPlayerWindowBottombar {
     
     private func setupContainerView() { // 创建容器视图
         containerView = UIView()
@@ -133,38 +169,5 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
         }
         // 将 progressView 移动到最顶层
         containerView.bringSubviewToFront(fullscreenButton)
-    }
-    
-    // MARK: - Button Actions
-    
-    /// 点击全屏按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
-    @objc open func didTapFullscreenButton() {
-        subclassDelegate?.videoPlayerBottombarDidTapFullscreen(for: self)
-    }
-    
-    // MARK: - Override Super Methods
-
-    open override func updatePlaybackTime(currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = true) { // 更新当前播放时间和总时长
-        super.updatePlaybackTime(currentTime: currentTime, duration: duration, shouldUpdateSlider: shouldUpdateSlider)
-        currentTimeLabel.text = currentTime.art_formattedTime()
-        durationLabel.text = duration.art_formattedTime()
-    }
-    
-    open override func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) { // 自定义滑块外观
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: duration) {
-                self.sliderView.trackHeight = trackHeight
-                self.progressView.layer.cornerRadius = cornerRadius
-                if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: thumbSize) {
-                    self.sliderView.setThumbImage(thumbImage, for: .normal)
-                }
-                self.progressView.snp.updateConstraints { make in
-                    make.height.equalTo(trackHeight)
-                }
-                self.layoutIfNeeded()
-            }
-        }
     }
 }

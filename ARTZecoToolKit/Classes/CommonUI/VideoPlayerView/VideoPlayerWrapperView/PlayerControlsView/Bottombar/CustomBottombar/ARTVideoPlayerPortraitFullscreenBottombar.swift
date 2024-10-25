@@ -85,6 +85,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         setupDanmakuInputField()
         setupClearButton()
         setupExitClearButton()
+        setupAnimation()
     }
     
     // MARK: - Button Actions
@@ -181,6 +182,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
     private func setupContainerView() { // 创建容器视图
         containerView = UIView()
         containerView.backgroundColor = .clear
+        containerView.alpha = 0.0
         addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -437,6 +439,12 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         exitClearView.addSubview(exitClearButton)
         exitClearButton.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+    }
+    
+    private func setupAnimation() { // 过度动画流畅
+        UIView.animate(withDuration: 0.3) {
+            self.containerView.alpha = 1.0
         }
     }
 }

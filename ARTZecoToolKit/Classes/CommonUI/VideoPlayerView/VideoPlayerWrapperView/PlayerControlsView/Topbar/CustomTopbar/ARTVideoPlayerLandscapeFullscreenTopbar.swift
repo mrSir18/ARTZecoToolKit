@@ -28,12 +28,14 @@ class ARTVideoPlayerLandscapeFullscreenTopbar: ARTVideoPlayerTopbar {
         setupBackButton()
         setupShareButton()
         setupFavoriteButton()
+        setupAnimation()
     }
     
     // MARK: - Setup Methods
     
     private func setupContainerView() { // 创建容器视图
         containerView = UIView()
+        containerView.alpha = 0.0
         addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -90,6 +92,12 @@ class ARTVideoPlayerLandscapeFullscreenTopbar: ARTVideoPlayerTopbar {
             make.top.bottom.equalTo(shareButton)
             make.right.equalTo(shareButton.snp.left)
             make.width.equalTo(shareButton)
+        }
+    }
+    
+    private func setupAnimation() { // 过度动画流畅
+        UIView.animate(withDuration: 0.3) {
+            self.containerView.alpha = 1.0
         }
     }
 }

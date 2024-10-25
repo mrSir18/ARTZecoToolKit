@@ -195,7 +195,7 @@ extension ARTVideoPlayerBottombar {
     ///   - thumbSize: 滑块的大小
     ///   - duration: 动画持续时间
     @objc open func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) {
-
+        
     }
     
     /// 触摸开始时调用的函数
@@ -204,7 +204,7 @@ extension ARTVideoPlayerBottombar {
     @objc open func updateSliderTouchBegan(value: Float) {
         handleSliderTouchBegan(sliderView)
     }
-
+    
     /// 更新滑块值
     ///
     /// - Parameter value: 滑块值
@@ -213,7 +213,7 @@ extension ARTVideoPlayerBottombar {
         adjustSliderValue(value: value)
         delegate?.bottombarDidChangeValue?(for: self, slider: sliderView)
     }
-
+    
     /// 触摸结束时调用的函数
     ///
     /// - Note: 重写此方法以处理滑块触摸结束事件
@@ -245,7 +245,7 @@ extension ARTVideoPlayerBottombar {
         let cornerRadius: CGFloat   = isTouching ? ARTAdaptedValue(2.5) : ARTAdaptedValue(1.5)
         let thumbSize: CGSize       = isTouching ? ARTAdaptedSize(width: 18.0, height: 18.0) : ARTAdaptedSize(width: 14.0, height: 14.0)
         let duration: TimeInterval  = isTouching ? 0.35 : 0.25
-
+        
         // 自定义滑块外观
         customizeSliderAppearance(trackHeight: trackHeight, cornerRadius: cornerRadius, thumbSize: thumbSize, duration: duration)
     }
