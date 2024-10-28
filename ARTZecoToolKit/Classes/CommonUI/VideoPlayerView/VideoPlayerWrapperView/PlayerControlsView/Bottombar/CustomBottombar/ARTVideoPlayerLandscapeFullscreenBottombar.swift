@@ -10,9 +10,44 @@ import AVFoundation
 /// 协议方法
 ///
 /// - NOTE: 可继承该协议方法
-public protocol ARTVideoPlayerLandscapeFullscreenBottombarDelegate: ARTVideoPlayerBottombarDelegate {
+@objc public protocol ARTVideoPlayerLandscapeFullscreenBottombarDelegate: ARTVideoPlayerBottombarDelegate {
     
+    /// 暂停按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc optional func videoPlayerBottombarDidTapPause(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
     
+    /// 下一集按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc optional func videoPlayerBottombarDidTapNext(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
+    
+    /// 弹幕开关按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc optional func videoPlayerBottombarDidTapDanmaku(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
+    
+    /// 弹幕设置按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc optional func videoPlayerBottombarDidTapDanmakuSettings(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
+    
+    /// 发送弹幕按钮
+    ///
+    /// - Parameters:
+    /// - text: 弹幕内容
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc optional func videoPlayerBottombarDidTapDanmakuSend(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar, text: String)
+    
+    /// 倍数按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc optional func videoPlayerBottombarDidTapSpeed(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
+    
+    /// 合集按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc optional func videoPlayerBottombarDidTapCollection(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
 }
 
 open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
@@ -86,49 +121,51 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
     ///
     /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapPauseButton() {
-        print("暂停")
+        subclassDelegate?.videoPlayerBottombarDidTapPause?(for: self)
     }
     
     /// 点击下一集按钮
     ///
     /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapNextButton() {
-        print("下一集")
+        subclassDelegate?.videoPlayerBottombarDidTapNext?(for: self)
     }
     
     /// 点击弹幕按钮
     ///
     /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapDanmakuButton() {
-        print("弹幕")
+        danmakuButton.isSelected = !danmakuButton.isSelected
+        subclassDelegate?.videoPlayerBottombarDidTapDanmaku?(for: self)
     }
     
     /// 点击弹幕设置按钮
     ///
     /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapDanmakuSettingsButton() {
-        print("弹幕设置")
+        subclassDelegate?.videoPlayerBottombarDidTapDanmakuSettings?(for: self)
     }
     
     /// 点击发送弹幕按钮
     ///
     /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapDanmakuSendButton() {
-        print("发送弹幕")
+        guard let text = danmakuInputLabel.text else { return }
+        subclassDelegate?.videoPlayerBottombarDidTapDanmakuSend?(for: self, text: text)
     }
     
     /// 点击倍数按钮
     ///
     /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapSpeedButton() {
-        print("倍数")
+        subclassDelegate?.videoPlayerBottombarDidTapSpeed?(for: self)
     }
     
     /// 点击合集按钮
     ///
     /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapCollectionButton() {
-        print("合集")
+        subclassDelegate?.videoPlayerBottombarDidTapCollection?(for: self)
     }
     
     // MARK: - Override Super Methods

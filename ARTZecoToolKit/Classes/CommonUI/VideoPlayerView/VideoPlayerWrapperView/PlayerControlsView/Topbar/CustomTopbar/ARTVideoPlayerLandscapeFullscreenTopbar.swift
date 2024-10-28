@@ -7,19 +7,6 @@
 
 class ARTVideoPlayerLandscapeFullscreenTopbar: ARTVideoPlayerTopbar {
     
-    /// 容器视图
-    public var containerView: UIView!
-    
-    /// 返回按钮
-    public var backButton: ARTAlignmentButton!
-    
-    /// 收藏按钮
-    public var favoriteButton: ARTAlignmentButton!
-    
-    /// 分享按钮
-    public var shareButton: ARTAlignmentButton!
-    
-    
     // MARK: - Override Super Methods
     
     override func setupViews() {
@@ -30,8 +17,11 @@ class ARTVideoPlayerLandscapeFullscreenTopbar: ARTVideoPlayerTopbar {
         setupFavoriteButton()
         setupAnimation()
     }
-    
-    // MARK: - Setup Methods
+}
+
+// MARK: - Setup Initializer
+
+extension ARTVideoPlayerLandscapeFullscreenTopbar {
     
     @objc open func setupContainerView() { // 创建容器视图
         containerView = UIView()

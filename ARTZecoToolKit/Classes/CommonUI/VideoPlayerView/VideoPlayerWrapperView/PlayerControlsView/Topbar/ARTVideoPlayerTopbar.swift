@@ -34,6 +34,18 @@ open class ARTVideoPlayerTopbar: UIView {
     /// 代理对象
     public weak var delegate: ARTVideoPlayerTopbarDelegate?
     
+    /// 容器视图
+    public var containerView: UIView!
+    
+    /// 返回按钮
+    public var backButton: ARTAlignmentButton!
+    
+    /// 收藏按钮
+    public var favoriteButton: ARTAlignmentButton!
+    
+    /// 分享按钮
+    public var shareButton: ARTAlignmentButton!
+    
     /// 当前收藏状态
     public var isFavorited: Bool = false
     

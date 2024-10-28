@@ -456,9 +456,9 @@ extension ARTVideoPlayerWrapperView {
     /// - Note: 重写父类方法，处理点击手势
     @objc open func handleSortingTapGesture(_ gesture: UITapGestureRecognizer) {
         if playerConfig.isLandscape { // 如果是横屏模式
-            print("隐藏顶底栏")
+            playControlsView.toggleControlsVisibility()
             
-        } else {
+        } else { // 如果是竖屏模式
             handlePlayerState()
         }
     }

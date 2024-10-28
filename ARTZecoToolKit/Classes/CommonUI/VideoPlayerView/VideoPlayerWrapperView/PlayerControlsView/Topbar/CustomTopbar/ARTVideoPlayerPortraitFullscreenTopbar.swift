@@ -7,13 +7,6 @@
 
 class ARTVideoPlayerPortraitFullscreenTopbar: ARTVideoPlayerTopbar {
     
-    /// 容器视图
-    public var containerView: UIView!
-    
-    /// 返回按钮
-    public var backButton: ARTAlignmentButton!
-    
-    
     // MARK: - Override Super Methods
     
     override func setupViews() {

@@ -98,15 +98,6 @@ import AVFoundation
     @objc optional func controlsViewDidTap(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider)
 }
 
-extension ARTVideoPlayerControlsView {
-    
-    /// 顶底栏显示状态
-    public enum ToolbarVisibility: Int {
-        case hidden     = 1 // 隐藏
-        case visible    = 2 // 显示
-    }
-}
-
 open class ARTVideoPlayerControlsView: ARTPassThroughView {
     
     // MARK: - Private Properties
@@ -115,15 +106,21 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     public weak var delegate: ARTVideoPlayerControlsViewDelegate?
     
     /// 是否横向全屏
-    public var isLandscape: Bool = true
+    public var isLandscape: Bool = true {
+        didSet {
+            if !isLandscape {
+                stopAutoHideTimer()
+            }
+        }
+    }
     
     /// 播放器当前的屏幕方向
     public lazy var screenOrientation: ScreenOrientation = {
         return delegate_customScreenOrientation()
     }()
     
-    /// 当前顶底栏显示状态
-    public var toolbarVisibility: ToolbarVisibility = .visible // 默认显示
+    /// 隐藏控件定时器
+    public var hideControlsTimer: Timer?
     
     
     // MARK: - 播放器组件
@@ -251,6 +248,7 @@ extension ARTVideoPlayerControlsView {
         setupTopBar()
         setupBottomBar()
         setupPlayButton()
+        startAutoHideTimer()
     }
     
     /// 创建顶部工具栏
@@ -302,7 +300,16 @@ extension ARTVideoPlayerControlsView {
         }
     }
     
-    // MARK: Private Methods
+    /// 切换顶栏和底栏的显示与隐藏状态
+    @objc open func toggleControlsVisibility() {
+        toggleControls(visible: topBar.containerView.alpha == 0)
+        resetAutoHideTimer()
+    }
+}
+
+// MARK: - Private Methods
+
+extension ARTVideoPlayerControlsView {
     
     /// - Note: 根据屏幕方向返认顶部栏
     private func defaultTopBarForOrientation() -> ARTVideoPlayerTopbar {
@@ -358,15 +365,46 @@ extension ARTVideoPlayerControlsView {
             return ARTAdaptedValue(44.0) // 普通窗口模式的高度
         }
     }
-}
-
-// MARK: - Private Methods
-
-extension ARTVideoPlayerControlsView {
     
     /// 自动获取视频屏幕方向
     private func autoVideoScreenOrientation() -> ScreenOrientation {
         return isLandscape ? .landscapeFullScreen : .portraitFullScreen
+    }
+    
+    /// 开启隐藏控件定时器
+    private func startAutoHideTimer() {
+        guard hideControlsTimer == nil, isLandscape else { return }
+        hideControlsTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(autoHideControls), userInfo: nil, repeats: false)
+    }
+    
+    /// 自动隐藏控件
+    @objc private func autoHideControls() {
+        toggleControls(visible: false)
+    }
+    
+    /// 显隐控件
+    ///
+    /// - Parameters:
+    ///  - visibility: 显示状态
+    ///  - animated
+    /// - Note: 显示 or 隐藏控件
+    private func toggleControls(visible: Bool) {
+        UIView.animate(withDuration: 0.25) {
+            self.topBar.containerView.alpha = visible ? 1 : 0
+            self.bottomBar.alpha = visible ? 1 : 0
+        }
+    }
+    
+    /// 重置自动隐藏定时器
+    private func resetAutoHideTimer() {
+        stopAutoHideTimer()
+        startAutoHideTimer()
+    }
+    
+    /// 停止并销毁定时器的方法
+    private func stopAutoHideTimer() {
+        hideControlsTimer?.invalidate()
+        hideControlsTimer = nil
     }
 }
 
@@ -395,6 +433,10 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerTopbarDelegate {
 extension ARTVideoPlayerControlsView: ARTVideoPlayerBottombarDelegate {
     
     public func bottombarDidBeginTouch(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider) { // 滑块开始触摸
+        if isLandscape { // 横屏模式
+            stopAutoHideTimer()
+            toggleControls(visible: true)
+        }
         delegate?.controlsViewDidBeginTouch?(for: self, slider: slider)
     }
     
@@ -403,10 +445,12 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerBottombarDelegate {
     }
     
     public func bottombarDidEndTouch(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider) { // 滑块结束触摸
+        if isLandscape { resetAutoHideTimer() } // 横屏模式
         delegate?.controlsViewDidEndTouch?(for: self, slider: slider)
     }
     
     public func bottombarDidTap(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider) { // 点击滑块
+        if isLandscape { resetAutoHideTimer() } // 横屏模式
         delegate?.controlsViewDidTap?(for: self, slider: slider)
     }
 }
