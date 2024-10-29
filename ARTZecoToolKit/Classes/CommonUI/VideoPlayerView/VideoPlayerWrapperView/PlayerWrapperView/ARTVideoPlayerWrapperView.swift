@@ -630,22 +630,22 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
      }
      */
     
-    public func videoPlayerControlsDidTapBack(for playerControlsView: ARTVideoPlayerControlsView) { // 点击返回按钮
+    public func controlsViewDidTapBack(for playerControlsView: ARTVideoPlayerControlsView) { // 点击返回按钮
         
         fullscreenManager.dismiss { [weak self] in // 切换窗口模式顶底栏
             self?.updateScreenMode(for: .window)
         }
     }
     
-    public func videoPlayerControlsDidTapFavorite(for playerControlsView: ARTVideoPlayerControlsView, isFavorited: Bool) { // 点击收藏按钮
+    public func controlsViewDidTapFavorite(for playerControlsView: ARTVideoPlayerControlsView, isFavorited: Bool) { // 点击收藏按钮
         
     }
     
-    public func videoPlayerControlsDidTapShare(for playerControlsView: ARTVideoPlayerControlsView) { // 点击分享按钮
+    public func controlsViewDidTapShare(for playerControlsView: ARTVideoPlayerControlsView) { // 点击分享按钮
         
     }
     
-    public func transitionToFullscreen(for playerControlsView: ARTVideoPlayerControlsView, orientation: ScreenOrientation) { // 点击全屏按钮
+    public func controlsViewDidTransitionToFullscreen(for playerControlsView: ARTVideoPlayerControlsView, orientation: ScreenOrientation) { // 点击全屏按钮
         fullscreenManager.presentFullscreenWithRotation { [weak self] in // 切换全屏模式顶底栏
             self?.updateScreenMode(for: orientation)
         }

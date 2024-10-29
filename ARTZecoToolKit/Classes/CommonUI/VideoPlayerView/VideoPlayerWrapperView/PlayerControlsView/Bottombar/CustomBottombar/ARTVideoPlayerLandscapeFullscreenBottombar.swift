@@ -11,43 +11,21 @@ import AVFoundation
 ///
 /// - NOTE: 可继承该协议方法
 @objc public protocol ARTVideoPlayerLandscapeFullscreenBottombarDelegate: ARTVideoPlayerBottombarDelegate {
-    
-    /// 暂停按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
-    @objc optional func videoPlayerBottombarDidTapPause(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
-    
+        
     /// 下一集按钮
     ///
     /// - Note: 子类实现该方法处理全屏操作
-    @objc optional func videoPlayerBottombarDidTapNext(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
-    
-    /// 弹幕开关按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
-    @objc optional func videoPlayerBottombarDidTapDanmaku(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
-    
-    /// 弹幕设置按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
-    @objc optional func videoPlayerBottombarDidTapDanmakuSettings(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
-    
-    /// 发送弹幕按钮
-    ///
-    /// - Parameters:
-    /// - text: 弹幕内容
-    /// - Note: 子类实现该方法处理全屏操作
-    @objc optional func videoPlayerBottombarDidTapDanmakuSend(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar, text: String)
+    @objc optional func bottombarDidTapNext(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
     
     /// 倍数按钮
     ///
     /// - Note: 子类实现该方法处理全屏操作
-    @objc optional func videoPlayerBottombarDidTapSpeed(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
+    @objc optional func bottombarDidTapSpeed(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
     
     /// 合集按钮
     ///
     /// - Note: 子类实现该方法处理全屏操作
-    @objc optional func videoPlayerBottombarDidTapCollection(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
+    @objc optional func bottombarDidTapCollection(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
 }
 
 open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
@@ -121,14 +99,14 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
     ///
     /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapPauseButton() {
-        subclassDelegate?.videoPlayerBottombarDidTapPause?(for: self)
+        subclassDelegate?.bottombarDidTapPause?(for: self)
     }
     
     /// 点击下一集按钮
     ///
     /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapNextButton() {
-        subclassDelegate?.videoPlayerBottombarDidTapNext?(for: self)
+        subclassDelegate?.bottombarDidTapNext?(for: self)
     }
     
     /// 点击弹幕按钮
@@ -136,14 +114,14 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
     /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapDanmakuButton() {
         danmakuButton.isSelected = !danmakuButton.isSelected
-        subclassDelegate?.videoPlayerBottombarDidTapDanmaku?(for: self)
+        subclassDelegate?.bottombarDidTapDanmakuToggle?(for: self)
     }
     
     /// 点击弹幕设置按钮
     ///
     /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapDanmakuSettingsButton() {
-        subclassDelegate?.videoPlayerBottombarDidTapDanmakuSettings?(for: self)
+        subclassDelegate?.bottombarDidTapDanmakuSettings?(for: self)
     }
     
     /// 点击发送弹幕按钮
@@ -151,21 +129,21 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
     /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapDanmakuSendButton() {
         guard let text = danmakuInputLabel.text else { return }
-        subclassDelegate?.videoPlayerBottombarDidTapDanmakuSend?(for: self, text: text)
+        subclassDelegate?.bottombarDidTapDanmakuSend?(for: self, text: text)
     }
     
     /// 点击倍数按钮
     ///
     /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapSpeedButton() {
-        subclassDelegate?.videoPlayerBottombarDidTapSpeed?(for: self)
+        subclassDelegate?.bottombarDidTapSpeed?(for: self)
     }
     
     /// 点击合集按钮
     ///
     /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapCollectionButton() {
-        subclassDelegate?.videoPlayerBottombarDidTapCollection?(for: self)
+        subclassDelegate?.bottombarDidTapCollection?(for: self)
     }
     
     // MARK: - Override Super Methods

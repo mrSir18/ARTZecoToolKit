@@ -39,6 +39,28 @@ import AVFoundation
     ///   - bottombar: 当前的底部工具栏
     ///   - slider: 被点击的滑块
     @objc optional func bottombarDidTap(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider)
+    
+    /// 暂停按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc optional func bottombarDidTapPause(for bottombar: ARTVideoPlayerBottombar)
+    
+    /// 弹幕开关按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc optional func bottombarDidTapDanmakuToggle(for bottombar: ARTVideoPlayerBottombar)
+    
+    /// 弹幕设置按钮
+    ///
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc optional func bottombarDidTapDanmakuSettings(for bottombar: ARTVideoPlayerBottombar)
+    
+    /// 发送弹幕按钮
+    ///
+    /// - Parameters:
+    /// - text: 弹幕内容
+    /// - Note: 子类实现该方法处理全屏操作
+    @objc optional func bottombarDidTapDanmakuSend(for bottombar: ARTVideoPlayerBottombar, text: String)
 }
 
 open class ARTVideoPlayerBottombar: UIView {

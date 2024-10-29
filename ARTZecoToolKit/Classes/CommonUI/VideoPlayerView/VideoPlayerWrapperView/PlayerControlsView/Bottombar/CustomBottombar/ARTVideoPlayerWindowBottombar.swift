@@ -15,7 +15,7 @@ public protocol ARTVideoPlayerWindowBottombarDelegate: ARTVideoPlayerBottombarDe
     /// 点击全屏按钮
     ///
     /// - Note: 子类实现该方法处理全屏操作
-    func videoPlayerBottombarDidTapFullscreen(for bottombar: ARTVideoPlayerWindowBottombar)
+    func bottombarDidTapFullscreen(for bottombar: ARTVideoPlayerWindowBottombar)
 }
 
 open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
@@ -65,7 +65,7 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     ///
     /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapFullscreenButton() {
-        subclassDelegate?.videoPlayerBottombarDidTapFullscreen(for: self)
+        subclassDelegate?.bottombarDidTapFullscreen(for: self)
     }
     
     // MARK: - Override Super Methods

@@ -41,7 +41,7 @@ import AVFoundation
     /// 点击返回按钮
     ///
     /// - Note: 子类实现该方法处理返回操作
-    @objc optional func videoPlayerControlsDidTapBack(for playerControlsView: ARTVideoPlayerControlsView)
+    @objc optional func controlsViewDidTapBack(for playerControlsView: ARTVideoPlayerControlsView)
     
     /// 点击收藏按钮
     ///
@@ -49,12 +49,12 @@ import AVFoundation
     ///  - playerControlsView: 控制层视图
     ///  - isFavorited: `true` 表示添加收藏，`false` 表示取消收藏
     /// - Note: 子类实现该方法处理收藏状态的改变
-    @objc optional func videoPlayerControlsDidTapFavorite(for playerControlsView: ARTVideoPlayerControlsView, isFavorited: Bool)
+    @objc optional func controlsViewDidTapFavorite(for playerControlsView: ARTVideoPlayerControlsView, isFavorited: Bool)
     
     /// 点击分享按钮
     ///
     /// - Note: 子类实现该方法处理分享操作
-    @objc optional func videoPlayerControlsDidTapShare(for playerControlsView: ARTVideoPlayerControlsView)
+    @objc optional func controlsViewDidTapShare(for playerControlsView: ARTVideoPlayerControlsView)
     
     /// 全屏切换
     ///
@@ -63,7 +63,7 @@ import AVFoundation
     ///  - orientation: 屏幕方向
     ///  - Note: 切换全屏和窗口模式
     /// - Note: 重写父类方法，切换全屏和窗口模式
-    @objc optional func transitionToFullscreen(for playerControlsView: ARTVideoPlayerControlsView, orientation: ScreenOrientation)
+    @objc optional func controlsViewDidTransitionToFullscreen(for playerControlsView: ARTVideoPlayerControlsView, orientation: ScreenOrientation)
     
     /// 当滑块触摸开始时调用
     ///
@@ -413,17 +413,17 @@ extension ARTVideoPlayerControlsView {
 /// - Note: 通用顶部工具栏代理
 extension ARTVideoPlayerControlsView: ARTVideoPlayerTopbarDelegate {
     
-    public func videoPlayerTopbarDidTapBack(for topbar: ARTVideoPlayerTopbar) { // 点击返回按钮
+    public func topbarDidTapBack(for topbar: ARTVideoPlayerTopbar) { // 点击返回按钮
         removeToolBars() // 移除顶底栏
-        delegate?.videoPlayerControlsDidTapBack?(for: self)
+        delegate?.controlsViewDidTapBack?(for: self)
     }
     
-    public func videoPlayerTopbarDidTapFavorite(for topbar: ARTVideoPlayerTopbar, isFavorited: Bool) { // 点击收藏按钮
-        delegate?.videoPlayerControlsDidTapFavorite?(for: self, isFavorited: isFavorited)
+    public func topbarDidTapFavorite(for topbar: ARTVideoPlayerTopbar, isFavorited: Bool) { // 点击收藏按钮
+        delegate?.controlsViewDidTapFavorite?(for: self, isFavorited: isFavorited)
     }
     
-    public func videoPlayerTopbarDidTapShare(for topbar: ARTVideoPlayerTopbar) { // 点击分享按钮
-        delegate?.videoPlayerControlsDidTapShare?(for: self)
+    public func topbarDidTapShare(for topbar: ARTVideoPlayerTopbar) { // 点击分享按钮
+        delegate?.controlsViewDidTapShare?(for: self)
     }
 }
 
@@ -458,9 +458,9 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerBottombarDelegate {
 /// - Note: 窗口模式底部工具栏代理
 extension ARTVideoPlayerControlsView: ARTVideoPlayerWindowBottombarDelegate {
     
-    public func videoPlayerBottombarDidTapFullscreen(for bottombar: ARTVideoPlayerWindowBottombar) { // 点击全屏按钮
+    public func bottombarDidTapFullscreen(for bottombar: ARTVideoPlayerWindowBottombar) { // 点击全屏按钮
         removeToolBars() // 移除顶底栏
-        delegate?.transitionToFullscreen?(for: self, orientation: autoVideoScreenOrientation())
+        delegate?.controlsViewDidTransitionToFullscreen?(for: self, orientation: autoVideoScreenOrientation())
     }
 }
 
