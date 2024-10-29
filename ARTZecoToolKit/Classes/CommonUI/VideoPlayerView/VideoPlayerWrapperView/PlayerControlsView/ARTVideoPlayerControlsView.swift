@@ -34,55 +34,55 @@ import AVFoundation
     
 // MARK: - 顶部工具栏 - 公共方法
     
-    /// 点击返回按钮
+    /// 当返回按钮被点击时调用
     @objc optional func controlsViewDidTapBack(for playerControlsView: ARTVideoPlayerControlsView)
     
-    /// 点击收藏按钮
+    /// 当收藏按钮被点击时调用
     /// - Parameters:
     ///   - playerControlsView: 控制层视图
     ///   - isFavorited: 是否已收藏
     @objc optional func controlsViewDidTapFavorite(for playerControlsView: ARTVideoPlayerControlsView, isFavorited: Bool)
     
-    /// 点击分享按钮
+    /// 当分享按钮被点击时调用
     @objc optional func controlsViewDidTapShare(for playerControlsView: ARTVideoPlayerControlsView)
     
     
 // MARK: - 底部工具栏 - 公共方法
     
-    /// 滑块触摸开始
+    /// 当滑块触摸开始时调用
     /// - Parameters:
     ///   - controlsView: 控制层视图
     ///   - slider: 被触摸的滑块
     @objc optional func controlsViewDidBeginTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider)
     
-    /// 滑块值改变
+    /// 当滑块值改变时调用
     /// - Parameters:
     ///   - controlsView: 控制层视图
     ///   - slider: 值已改变的滑块
     @objc optional func controlsViewDidChangeValue(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider)
     
-    /// 滑块触摸结束
+    /// 当滑块触摸结束时调用
     /// - Parameters:
     ///   - controlsView: 控制层视图
     ///   - slider: 被释放的滑块
     @objc optional func controlsViewDidEndTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider)
     
-    /// 滑块被点击
+    /// 当滑块被点击时调用
     /// - Parameters:
     ///   - controlsView: 控制层视图
     ///   - slider: 被点击的滑块
     @objc optional func controlsViewDidTap(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider)
     
-    /// 暂停按钮点击
+    /// 当暂停按钮被点击时调用
     @objc optional func bottombarDidTapPause(for bottombar: ARTVideoPlayerBottombar)
     
-    /// 弹幕开关按钮点击
+    /// 当弹幕开关按钮被点击时调用
     @objc optional func bottombarDidTapDanmakuToggle(for bottombar: ARTVideoPlayerBottombar)
     
-    /// 弹幕设置按钮点击
+    /// 当弹幕设置按钮被点击时调用
     @objc optional func bottombarDidTapDanmakuSettings(for bottombar: ARTVideoPlayerBottombar)
     
-    /// 发送弹幕按钮点击
+    /// 当发送弹幕按钮被点击时调用
     /// - Parameter text: 弹幕内容
     @objc optional func bottombarDidTapDanmakuSend(for bottombar: ARTVideoPlayerBottombar, text: String)
     
@@ -221,7 +221,6 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
 extension ARTVideoPlayerControlsView {
     
     /// 创建顶部和底部工具栏
-    /// - Note: 重写父类方法以设置子视图
     @objc open func setupToolBars() {
         setupTopBar()
         setupBottomBar()
@@ -230,7 +229,6 @@ extension ARTVideoPlayerControlsView {
     }
     
     /// 创建顶部工具栏
-    /// - Note: 重写父类方法，默认导航栏需继承 ARTVideoPlayerTopbar
     @objc open func setupTopBar() {
         if let customTopBar = delegate_customTopBar() { // 获取自定义顶部工具栏
             topBar = customTopBar
@@ -245,7 +243,6 @@ extension ARTVideoPlayerControlsView {
     }
     
     /// 创建底部工具栏
-    /// - Note: 重写父类方法，默认底部工具栏需继承 ARTVideoPlayerBottombar
     @objc open func setupBottomBar() {
         if let customBottomBar = delegate_customBottomBar() { // 获取自定义底部工具栏
             bottomBar = customBottomBar
@@ -260,7 +257,6 @@ extension ARTVideoPlayerControlsView {
     }
     
     /// 创建播放和重试按钮
-    /// - Note: 重写父类方法以设置子视图
     @objc open func setupPlayButton() {
         playImageView = UIImageView()
         playImageView.isHidden = true
@@ -284,7 +280,7 @@ extension ARTVideoPlayerControlsView {
 
 extension ARTVideoPlayerControlsView {
     
-    /// - Note: 根据屏幕方向返认顶部栏
+    /// 根据屏幕方向返认顶部栏
     private func defaultTopBarForOrientation() -> ARTVideoPlayerTopbar {
         switch screenOrientation {
         case .portraitFullScreen:
@@ -296,7 +292,7 @@ extension ARTVideoPlayerControlsView {
         }
     }
     
-    /// - Note: 根据屏幕方向返回底部栏
+    /// 根据屏幕方向返回底部栏
     private func defaultBottomBarForOrientation() -> ARTVideoPlayerBottombar {
         switch screenOrientation {
         case .portraitFullScreen:
@@ -308,14 +304,14 @@ extension ARTVideoPlayerControlsView {
         }
     }
     
-    /// - Note: 移除顶部和底部工具栏
+    /// 移除顶部和底部工具栏
     private func removeToolBars() {
         topBar.removeFromSuperview()
         bottomBar.removeFromSuperview()
         playImageView.removeFromSuperview()
     }
     
-    /// - Note: 切换到窗口模式，设置屏幕方向并刷新顶部和底部栏
+    /// 切换到窗口模式，设置屏幕方向并刷新顶部和底部栏
     private func topBarHeight(for orientation: ScreenOrientation) -> CGFloat {
         switch orientation {
         case .portraitFullScreen:
@@ -327,7 +323,7 @@ extension ARTVideoPlayerControlsView {
         }
     }
     
-    /// - Note: 切换到窗口模式，设置屏幕方向并刷新顶部和底部栏
+    /// 切换到窗口模式，设置屏幕方向并刷新顶部和底部栏
     private func bottomBarHeight(for orientation: ScreenOrientation) -> CGFloat {
         switch orientation {
         case .portraitFullScreen:
@@ -360,7 +356,6 @@ extension ARTVideoPlayerControlsView {
     /// - Parameters:
     ///  - visibility: 显示状态
     ///  - animated
-    /// - Note: 显示 or 隐藏控件
     private func toggleControls(visible: Bool) {
         UIView.animate(withDuration: 0.25) {
             self.topBar.containerView.alpha = visible ? 1 : 0
@@ -383,11 +378,11 @@ extension ARTVideoPlayerControlsView {
 
 // MARK: - ARTVideoPlayerTopbarDelegate
 
-/// - Note: 通用顶部工具栏代理
+/// 通用顶部工具栏代理
 extension ARTVideoPlayerControlsView: ARTVideoPlayerTopbarDelegate {
     
     public func topbarDidTapBack(for topbar: ARTVideoPlayerTopbar) { // 点击返回按钮
-        removeToolBars() // 移除顶底栏
+        removeToolBars()
         delegate?.controlsViewDidTapBack?(for: self)
     }
     
@@ -402,7 +397,7 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerTopbarDelegate {
 
 // MARK: - ARTVideoPlayerBottombarDelegate
 
-/// - Note: 通用底部工具栏代理
+/// 通用底部工具栏代理
 extension ARTVideoPlayerControlsView: ARTVideoPlayerBottombarDelegate {
     
     public func bottombarDidBeginTouch(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider) { // 滑块开始触摸
@@ -444,11 +439,11 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerBottombarDelegate {
     }
 }
 
-/// - Note: 窗口模式底部工具栏代理
+/// 窗口模式底部工具栏代理
 extension ARTVideoPlayerControlsView: ARTVideoPlayerWindowBottombarDelegate {
     
     public func bottombarDidTapFullscreen(for bottombar: ARTVideoPlayerWindowBottombar) { // 点击全屏按钮
-        removeToolBars() // 移除顶底栏
+        removeToolBars()
         delegate?.controlsViewDidTransitionToFullscreen?(for: self, orientation: autoVideoScreenOrientation())
     }
 }

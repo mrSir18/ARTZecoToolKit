@@ -10,17 +10,17 @@
 /// - NOTE: 可继承该协议方法
 @objc public protocol ARTVideoPlayerTopbarDelegate: AnyObject {
     
-    /// 当点击返回按钮调用
+    /// 当返回按钮被点击时调用
     @objc optional func topbarDidTapBack(for topbar: ARTVideoPlayerTopbar)
     
-    /// 当点击收藏按钮调用
+    /// 当收藏按钮被点击时调用
     ///
     /// - Parameters:
     ///   - topbar: 当前的 `ARTVideoPlayerTopbar` 实例
     ///   - isFavorited: 是否已收藏
     @objc optional func topbarDidTapFavorite(for topbar: ARTVideoPlayerTopbar, isFavorited: Bool)
     
-    /// 当点击分享按钮调用
+    /// 当分享按钮被点击时调用
     @objc optional func topbarDidTapShare(for topbar: ARTVideoPlayerTopbar)
 }
 

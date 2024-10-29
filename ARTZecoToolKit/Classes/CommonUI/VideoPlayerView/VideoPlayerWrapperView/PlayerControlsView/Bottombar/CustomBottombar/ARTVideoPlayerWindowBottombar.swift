@@ -12,7 +12,7 @@ import AVFoundation
 /// - NOTE: 可继承该协议方法
 public protocol ARTVideoPlayerWindowBottombarDelegate: ARTVideoPlayerBottombarDelegate {
     
-    /// 当点击全屏按钮时调用
+    /// 当全屏按钮被点击时调用
     func bottombarDidTapFullscreen(for bottombar: ARTVideoPlayerWindowBottombar)
 }
 

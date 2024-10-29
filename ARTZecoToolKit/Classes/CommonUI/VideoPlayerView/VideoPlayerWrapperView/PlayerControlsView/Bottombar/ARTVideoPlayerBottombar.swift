@@ -24,16 +24,16 @@ import AVFoundation
     /// 当滑块被点击时调用
     @objc optional func bottombarDidTap(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider)
     
-    /// 当点击暂停按钮时调用
+    /// 当暂停按钮被点击时调用
     @objc optional func bottombarDidTapPause(for bottombar: ARTVideoPlayerBottombar)
     
-    /// 当点击弹幕按钮时调用
+    /// 当弹幕开关按钮被点击时调用
     @objc optional func bottombarDidTapDanmakuToggle(for bottombar: ARTVideoPlayerBottombar)
     
-    /// 当点击弹幕设置按钮时调用
+    /// 当弹幕设置按钮被点击时调用
     @objc optional func bottombarDidTapDanmakuSettings(for bottombar: ARTVideoPlayerBottombar)
     
-    /// 当点击 弹幕发送按钮时调
+    /// 当弹幕发送按钮被点击时调用
     @objc optional func bottombarDidTapDanmakuSend(for bottombar: ARTVideoPlayerBottombar, text: String)
 }
 

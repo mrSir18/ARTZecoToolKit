@@ -12,13 +12,13 @@ import AVFoundation
 /// - NOTE: 可继承该协议方法
 @objc public protocol ARTVideoPlayerLandscapeFullscreenBottombarDelegate: ARTVideoPlayerBottombarDelegate {
         
-    /// 当点击下一集按钮时调用
+    /// 当下一集按钮被点击时调用
     @objc optional func bottombarDidTapNext(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
     
-    /// 当点击倍数按钮时调用
+    /// 当倍数按钮被点击时调用
     @objc optional func bottombarDidTapSpeed(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
     
-    /// 当点击合集按钮时调用
+    /// 当合集按钮被点击时调用
     @objc optional func bottombarDidTapCollection(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
 }
 
