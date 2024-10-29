@@ -13,6 +13,8 @@
 		00B0A313F5E3CDE6538E40D8F6D78925 /* ARTCMTimeHashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B8B48429B5BA663EFFDE7D0486AA4F /* ARTCMTimeHashable.swift */; };
 		02727B54DFF249C4E3B8742E2A463AA9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 970B24A2C961A0A81D3DFDDA1DC22A1B /* Foundation.framework */; };
 		0276BFBA2DDA53ADF8B646942E21580F /* ARTActionSheetStyleConfiguration+Chaining.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC0D5ED6BDAE47604E245D8EA4F3231 /* ARTActionSheetStyleConfiguration+Chaining.swift */; };
+		02A1D99D2CD0C78F00653176 /* ARTVideoPlayerControlsViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A1D99C2CD0C78F00653176 /* ARTVideoPlayerControlsViewDelegate.swift */; };
+		02A1D99F2CD0C8D200653176 /* ARTVideoPlayerControlsView+DelegateImplementations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A1D99E2CD0C8D200653176 /* ARTVideoPlayerControlsView+DelegateImplementations.swift */; };
 		02ED8D245BF0C565F592C7B49D200710 /* UIImage+MemoryCacheCost.m in Sources */ = {isa = PBXBuildFile; fileRef = A21ADDDE995826F8D5E63EA9FFC417C6 /* UIImage+MemoryCacheCost.m */; };
 		034A7A16F20063CC642B4DDC24D7325C /* SDImageFramePool.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6A4FA2503B5A5DDC1C0F02B52450C7 /* SDImageFramePool.m */; };
 		038376B08FD7E49C49E77DCBBFEEF172 /* ARTAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D03F53A62BEE646749862603F049F61 /* ARTAlertController.swift */; };
@@ -534,6 +536,8 @@
 		00CC73FB0ABA3C82C185FB7A0BDD5A93 /* SDAnimatedImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDAnimatedImage.h; path = SDWebImage/Core/SDAnimatedImage.h; sourceTree = "<group>"; };
 		0154FBD458E96AADB83B5E493271604D /* LogCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LogCache.swift; path = SmartCodable/Classes/Log/LogCache.swift; sourceTree = "<group>"; };
 		0206DE139440188F487DEF7AF2043DD2 /* YYTextArchiver.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = YYTextArchiver.m; path = YYText/String/YYTextArchiver.m; sourceTree = "<group>"; };
+		02A1D99C2CD0C78F00653176 /* ARTVideoPlayerControlsViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerControlsViewDelegate.swift; sourceTree = "<group>"; };
+		02A1D99E2CD0C8D200653176 /* ARTVideoPlayerControlsView+DelegateImplementations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTVideoPlayerControlsView+DelegateImplementations.swift"; sourceTree = "<group>"; };
 		02C99945442513B0E5751A8131F423F4 /* ARTPhotoBrowserStyleConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTPhotoBrowserStyleConfiguration.swift; sourceTree = "<group>"; };
 		039CA6FE55FD6EC1C628126B64F1D02B /* SDImageCachesManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageCachesManager.h; path = SDWebImage/Core/SDImageCachesManager.h; sourceTree = "<group>"; };
 		03A4CD5D5740996AECC10F8CF57107CD /* ARTVideoPlayerTopbar.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerTopbar.swift; sourceTree = "<group>"; };
@@ -1562,6 +1566,8 @@
 			isa = PBXGroup;
 			children = (
 				6E0BEE22677044959636342141AC4396 /* ARTVideoPlayerControlsView.swift */,
+				02A1D99C2CD0C78F00653176 /* ARTVideoPlayerControlsViewDelegate.swift */,
+				02A1D99E2CD0C8D200653176 /* ARTVideoPlayerControlsView+DelegateImplementations.swift */,
 				97DBAE84B9375FD373A5CEAE8AFE62FA /* Topbar */,
 				85D91682FFCA1D8972E0490403B1E924 /* Bottombar */,
 				4123783467AC50E6EECA27F90ACFE742 /* PlayerSlider */,
@@ -2821,6 +2827,7 @@
 				DCE4008701E535AAA6CF29E17E6B780D /* ARTCityPickerHotHeader.swift in Sources */,
 				508A1619ECB7C85AA6693940D551879A /* ARTCityPickerView.swift in Sources */,
 				5BC08F453A84A26AFEE2A333BB38DB8E /* ARTCityPickerView+CollectionView.swift in Sources */,
+				02A1D99F2CD0C8D200653176 /* ARTVideoPlayerControlsView+DelegateImplementations.swift in Sources */,
 				9D3DDBF6AF8209BF022769D3BD14BED9 /* ARTCityPickerViewModel.swift in Sources */,
 				663531349667AFF7050A23B30138934C /* ARTCityStyleConfiguration.swift in Sources */,
 				3C50EEE8ACEFA389B888399AF8DC748D /* ARTCityStyleConfiguration+Chaining.swift in Sources */,
@@ -2874,6 +2881,7 @@
 				854D7F06D661C266ABC3C98504950DEB /* ARTVideoPlayerSystemControls.swift in Sources */,
 				480CA872AAAA437AD5BC8B5B4E85F656 /* ARTVideoPlayerTopbar.swift in Sources */,
 				32CB03004C14C57ADC192698497D3D16 /* ARTVideoPlayerView.swift in Sources */,
+				02A1D99D2CD0C78F00653176 /* ARTVideoPlayerControlsViewDelegate.swift in Sources */,
 				31F988776CBA1F238C47DF58209B14AE /* ARTVideoPlayerWindowBottombar.swift in Sources */,
 				1AEF6B64E1419FE8B53052CEE1CFB30F /* ARTVideoPlayerWindowTopbar.swift in Sources */,
 				7D52D11B00629A7E7766CCF9C402106A /* ARTVideoPlayerWrapperView.swift in Sources */,

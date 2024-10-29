@@ -10,9 +10,23 @@ import AVFoundation
 /// 协议方法
 ///
 /// - NOTE: 可继承该协议方法
-public protocol ARTVideoPlayerPortraitFullscreenBottombarDelegate: ARTVideoPlayerBottombarDelegate {
+@objc public protocol ARTVideoPlayerPortraitFullscreenBottombarDelegate: ARTVideoPlayerBottombarDelegate {
     
+    /// 当收藏按钮被点击时调用
+    ///
+    /// - Parameters:
+    ///   - topbar: 当前的 `ARTVideoPlayerTopbar` 实例
+    ///   - isFavorited: 是否已收藏
+    @objc optional func bottombarDidTapFavorite(for bottombar: ARTVideoPlayerPortraitFullscreenBottombar, isFavorited: Bool)
     
+    /// 当评论按钮被点击时调用
+    @objc optional func bottombarDidTapComment(for bottombar: ARTVideoPlayerPortraitFullscreenBottombar)
+    
+    /// 当分享按钮被点击时调用
+    @objc optional func bottombarDidTapShare(for bottombar: ARTVideoPlayerPortraitFullscreenBottombar)
+    
+    /// 当更多按钮被点击时调用
+    @objc optional func bottombarDidTapMore(for bottombar: ARTVideoPlayerPortraitFullscreenBottombar)
 }
 
 open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
@@ -45,13 +59,16 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
     public var moreButton: ARTAlignmentButton!
     
     /// 弹幕设置按钮
-    public var danmakuSettingsButton: ARTAlignmentButton!
+    public var danmakuButton: ARTAlignmentButton!
     
     /// 弹幕输入框
     public var danmakuInputLabel: YYLabel!
     
     /// 退出清屏按钮视图
     public var exitClearView: UIView!
+    
+    /// 当前收藏状态
+    public var isFavorited: Bool = false
     
     
     // MARK: - Initializatio
@@ -81,7 +98,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         setupCommentButton()
         setupShareButton()
         setupMoreButton()
-        setupDanmakuSettingsButton()
+        setupDanmakuButton()
         setupDanmakuInputField()
         setupClearButton()
         setupExitClearButton()
@@ -92,32 +109,36 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
     
     /// 点击收藏按钮
     @objc open func didTapFavoriteButton() {
-        print("收藏")
+        isFavorited.toggle()
+        updateFavoriteState(isFavorited: isFavorited)
+        subclassDelegate?.bottombarDidTapFavorite?(for: self, isFavorited: isFavorited)
     }
     
     /// 点击评论按钮
     @objc open func didTapCommentButton() {
-        print("评论")
+        subclassDelegate?.bottombarDidTapComment?(for: self)
     }
     
     /// 点击分享按钮
     @objc open func didTapShareButton() {
-        print("分享")
+        subclassDelegate?.bottombarDidTapShare?(for: self)
     }
     
     /// 点击更多按钮
     @objc open func didTapMoreButton() {
-        print("更多")
+        subclassDelegate?.bottombarDidTapMore?(for: self)
     }
     
-    /// 点击弹幕设置按钮
-    @objc open func didTapDanmakuSettingsButton() {
-        print("弹幕设置")
+    /// 点击弹幕按钮
+    @objc open func didTapDanmakuButton() {
+        danmakuButton.isSelected = !danmakuButton.isSelected
+        delegate?.bottombarDidTapDanmakuToggle?(for: self)
     }
     
     /// 点击发送弹幕按钮
     @objc open func didTapDanmakuSendButton() {
-        print("发送弹幕")
+        guard let text = danmakuInputLabel.text else { return }
+        delegate?.bottombarDidTapDanmakuSend?(for: self, text: text)
     }
     
     /// 点击清屏按钮
@@ -156,6 +177,15 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
                 self.layoutIfNeeded()
             }
         }
+    }
+    
+    // MARK: - Public Methods
+
+    /// 更新收藏状态
+    ///
+    /// - Parameter isFavorited: 是否已收藏
+    public func updateFavoriteState(isFavorited: Bool) {
+        self.isFavorited = isFavorited
     }
 }
 
@@ -332,16 +362,16 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         }
     }
     
-    @objc open func setupDanmakuSettingsButton() { // 创建弹幕设置按钮
-        danmakuSettingsButton = ARTAlignmentButton(type: .custom)
-        danmakuSettingsButton.layoutType = .freeform
-        danmakuSettingsButton.imageAlignment = .bottomLeft
-        danmakuSettingsButton.imageSize = ARTAdaptedSize(width: 30.0, height: 30.0)
-        danmakuSettingsButton.setImage(UIImage(named: "video_danmaku_on_black"), for: .normal)
-        danmakuSettingsButton.setImage(UIImage(named: "video_danmaku_off_black"), for: .selected)
-        danmakuSettingsButton.addTarget(self, action: #selector(didTapDanmakuSettingsButton), for: .touchUpInside)
-        toolBarView.addSubview(danmakuSettingsButton)
-        danmakuSettingsButton.snp.makeConstraints { make in
+    @objc open func setupDanmakuButton() { // 创建弹幕按钮
+        danmakuButton = ARTAlignmentButton(type: .custom)
+        danmakuButton.layoutType = .freeform
+        danmakuButton.imageAlignment = .bottomLeft
+        danmakuButton.imageSize = ARTAdaptedSize(width: 30.0, height: 30.0)
+        danmakuButton.setImage(UIImage(named: "video_danmaku_on_black"), for: .normal)
+        danmakuButton.setImage(UIImage(named: "video_danmaku_off_black"), for: .selected)
+        danmakuButton.addTarget(self, action: #selector(didTapDanmakuButton), for: .touchUpInside)
+        toolBarView.addSubview(danmakuButton)
+        danmakuButton.snp.makeConstraints { make in
             make.size.equalTo(moreButton)
             make.right.equalTo(moreButton.snp.left)
             make.centerY.equalTo(moreButton)
@@ -357,7 +387,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         inputView.snp.makeConstraints { make in
             make.left.equalTo(titleLabel)
             make.bottom.equalTo(moreButton)
-            make.right.equalTo(danmakuSettingsButton.snp.left).offset(-ARTAdaptedValue(12.0))
+            make.right.equalTo(danmakuButton.snp.left).offset(-ARTAdaptedValue(12.0))
             make.height.equalTo(ARTAdaptedValue(30.0))
         }
         
