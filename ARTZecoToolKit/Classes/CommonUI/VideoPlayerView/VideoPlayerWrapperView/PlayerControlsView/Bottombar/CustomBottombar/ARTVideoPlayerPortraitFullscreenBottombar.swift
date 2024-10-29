@@ -91,50 +91,36 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
     // MARK: - Button Actions
     
     /// 点击收藏按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapFavoriteButton() {
         print("收藏")
     }
     
     /// 点击评论按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapCommentButton() {
         print("评论")
     }
     
     /// 点击分享按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapShareButton() {
         print("分享")
     }
     
     /// 点击更多按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapMoreButton() {
         print("更多")
     }
     
     /// 点击弹幕设置按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapDanmakuSettingsButton() {
         print("弹幕设置")
     }
     
     /// 点击发送弹幕按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapDanmakuSendButton() {
         print("发送弹幕")
     }
     
     /// 点击清屏按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapClearButton() {
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.25) {
@@ -145,8 +131,6 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
     }
     
     /// 点击退出清屏按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapExitClearButton() {
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.25) {

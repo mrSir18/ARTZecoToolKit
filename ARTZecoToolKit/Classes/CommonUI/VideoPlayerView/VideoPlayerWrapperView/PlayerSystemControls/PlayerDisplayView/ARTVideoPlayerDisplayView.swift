@@ -38,8 +38,6 @@ open class ARTVideoPlayerDisplayView: UIView {
     // MARK: - Override Super Methods
     
     /// 重写父类方法，设置子视图
-    ///
-    /// - Note: 由于子类需要自定义视图，所以需要重写该方法
     open func setupViews() {
         setupContainerView()
         setupDisplayImageView()
@@ -50,57 +48,47 @@ open class ARTVideoPlayerDisplayView: UIView {
     // MARK: - Public Methods
     
     /// 更新预览图片
-    ///
-    /// - Parameters:
-    ///  - previewImage: 视频预览图片
-    ///  - Note: 子类重写该方法更新预览图片
+    /// - Parameter previewImage: 视频预览图片
     open func updatePreviewImage(previewImage: UIImage?) {
         displayImageView.image = previewImage
     }
-    
+
     /// 更新当前播放时间和总时长
-    ///
     /// - Parameters:
-    ///  - currentTime: 当前播放时间
-    ///  - duration: 视频总时长
-    ///  - Note: 重写此方法以更新底部工具栏的当前播放时间和总时长
+    ///   - currentTime: 当前播放时间
+    ///   - duration: 视频总时长
     open func updatePlaybackTime(currentTime: CMTime, duration: CMTime) {
         self.isHidden = false
         currentTimeLabel.text  = currentTime.art_formattedTime()
         durationLabel.text     = "/\(duration.art_formattedTime())"
     }
-    
+
     /// 更新屏幕方向
-    ///
-    /// - Parameters:
-    /// - screenOrientation: 屏幕方向
-    /// - Note: 子类重写此方法以更新屏幕方向
+    /// - Parameter screenOrientation: 屏幕方向
     open func updateScreenOrientation(screenOrientation: ScreenOrientation) {
         containerView.borderWidth = 1.0
         switch screenOrientation {
-        case .window: // 窗口模式
+        case .window:
             containerView.snp.updateConstraints { make in
                 make.size.equalTo(ARTAdaptedSize(width: 150.0, height: 84.0))
                 make.bottom.equalTo(-ARTAdaptedValue(74.0))
             }
-        case .landscapeFullScreen: // 横屏全屏模式
+        case .landscapeFullScreen:
             containerView.snp.updateConstraints { make in
                 make.size.equalTo(ARTAdaptedSize(width: 180.0, height: 102.0))
                 make.bottom.equalTo(-ARTAdaptedValue(120.0))
             }
-        case .portraitFullScreen: // 竖屏全屏模式
-            let bottomMargin = ARTAdaptedValue(240.0)+art_safeAreaBottom()
+        case .portraitFullScreen:
+            let bottomMargin = ARTAdaptedValue(240.0) + art_safeAreaBottom()
             containerView.snp.updateConstraints { make in
                 make.size.equalTo(ARTAdaptedSize(width: 108.0, height: 190.0))
                 make.bottom.equalTo(-bottomMargin)
             }
         }
     }
-    
-    /// 更新显示图片视图的内容模式
-    ///
+
+    /// 更新内容模式
     /// - Parameter isLandscape: 是否横屏
-    /// - Note: 根据是否横屏更新显示图片视图的内容模式
     open func updateContentMode(isLandscape: Bool) {
         displayImageView.contentMode = isLandscape ? .scaleAspectFill : .scaleAspectFit
     }

@@ -13,53 +13,27 @@ import AVFoundation
 @objc public protocol ARTVideoPlayerBottombarDelegate: AnyObject {
     
     /// 当滑块触摸开始时调用
-    ///
-    /// - Parameters:
-    ///   - bottombar: 当前的底部工具栏
-    ///   - slider: 被触摸的滑块
     @objc optional func bottombarDidBeginTouch(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider)
     
     /// 当滑块值改变时调用
-    ///
-    /// - Parameters:
-    ///   - bottombar: 当前的底部工具栏
-    ///   - slider: 值已改变的滑块
     @objc optional func bottombarDidChangeValue(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider)
     
     /// 当滑块触摸结束时调用
-    ///
-    /// - Parameters:
-    ///   - bottombar: 当前的底部工具栏
-    ///   - slider: 被释放的滑块
     @objc optional func bottombarDidEndTouch(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider)
     
     /// 当滑块被点击时调用
-    ///
-    /// - Parameters:
-    ///   - bottombar: 当前的底部工具栏
-    ///   - slider: 被点击的滑块
     @objc optional func bottombarDidTap(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider)
     
-    /// 暂停按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
+    /// 当点击暂停按钮时调用
     @objc optional func bottombarDidTapPause(for bottombar: ARTVideoPlayerBottombar)
     
-    /// 弹幕开关按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
+    /// 当点击弹幕按钮时调用
     @objc optional func bottombarDidTapDanmakuToggle(for bottombar: ARTVideoPlayerBottombar)
     
-    /// 弹幕设置按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
+    /// 当点击弹幕设置按钮时调用
     @objc optional func bottombarDidTapDanmakuSettings(for bottombar: ARTVideoPlayerBottombar)
     
-    /// 发送弹幕按钮
-    ///
-    /// - Parameters:
-    /// - text: 弹幕内容
-    /// - Note: 子类实现该方法处理全屏操作
+    /// 当点击 弹幕发送按钮时调
     @objc optional func bottombarDidTapDanmakuSend(for bottombar: ARTVideoPlayerBottombar, text: String)
 }
 
@@ -115,8 +89,6 @@ open class ARTVideoPlayerBottombar: UIView {
     // MARK: - Override Super Methods
     
     /// 重写父类方法，设置子视图
-    ///
-    /// - Note: 由于子类需要自定义视图，所以需要重写该方法
     open func setupViews() {
         
     }
@@ -127,35 +99,23 @@ open class ARTVideoPlayerBottombar: UIView {
 extension ARTVideoPlayerBottombar {
     
     /// 触摸开始时调用的函数
-    ///
-    /// - Parameter slider: 被触摸的滑块
-    /// - Note: 重写此方法以处理滑块触摸
     @objc open func handleSliderTouchBegan(_ slider: ARTVideoPlayerSlider) {
         configureSliderAppearance(for: slider, isTouching: true)
         delegate?.bottombarDidBeginTouch?(for: self, slider: slider)
     }
     
     /// 滑块值改变时调用的函数
-    ///
-    /// - Parameter slider: 值已改变的滑块
-    /// - Note: 重写此方法以处理滑块值改变事件
     @objc open func handleSliderValueChanged(_ slider: ARTVideoPlayerSlider) {
         delegate?.bottombarDidChangeValue?(for: self, slider: slider)
     }
     
     /// 触摸结束时调用的函数
-    ///
-    /// - Parameter slider: 被释放的滑块
-    /// - Note: 重写此方法以处理滑块触摸结束事件
     @objc open func handleSliderTouchEnded(_ slider: ARTVideoPlayerSlider) {
         configureSliderAppearance(for: slider, isTouching: false)
         delegate?.bottombarDidEndTouch?(for: self, slider: slider)
     }
     
     /// 处理滑块被点击的手势
-    ///
-    /// - Parameter gesture: 点击手势识别器
-    /// - Note: 重写此方法以处理滑块点击事件
     @objc open func sliderTapped(_ gesture: UITapGestureRecognizer) {
         guard let sliderView = gesture.view as? ARTVideoPlayerSlider else { return }
         let location = gesture.location(in: sliderView)
@@ -178,15 +138,14 @@ extension ARTVideoPlayerBottombar {
     /// 更新当前播放时间和总时长
     ///
     /// - Parameters:
-    ///   - currentTime: 当前播放时间字符串
-    ///   - duration: 视频总时长字符串
-    ///   - shouldUpdateSlider: 是否正在拖动滑动块
-    /// - Note: 重写此方法以更新底部工具栏的当前播放时间和总时长
+    ///   - currentTime: 当前播放时间
+    ///   - duration: 视频总时长
+    ///   - shouldUpdateSlider: 是否拖动滑块
     @objc open func updatePlaybackTime(currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = false) {
         let currentSeconds = CMTimeGetSeconds(currentTime)
         let totalSeconds = CMTimeGetSeconds(duration)
         
-        guard totalSeconds > 0 else { // 确保总时长有效，避免除以零
+        guard totalSeconds > 0 else {
             sliderView.setValue(0.0, animated: false)
             return
         }
@@ -194,35 +153,32 @@ extension ARTVideoPlayerBottombar {
         if !shouldUpdateSlider { updateProgressBar(progress: Float(progress)) }
     }
     
-    /// 更新缓冲总时间和缓冲进度
+    /// 更新缓冲进度
     ///
     /// - Parameters:
-    ///  - totalBuffer: 缓冲总时间
-    ///  - bufferProgress: 缓冲进度
-    ///  - shouldUpdateSlider: 是否正在拖动滑动块
-    /// - Note: 重写父类方法，更新播放器缓冲总时间和缓冲进度
+    ///   - totalBuffer: 缓冲总时间
+    ///   - bufferProgress: 缓冲进度
+    ///   - shouldUpdateSlider: 是否拖动滑块
     @objc open func updateBufferProgress(totalBuffer: Double, bufferProgress: Float, shouldUpdateSlider: Bool = false) {
         if !shouldUpdateSlider {
-            UIView.animate(withDuration: 1.0, delay: 0, options: [.curveEaseInOut], animations: {
+            UIView.animate(withDuration: 1.0) {
                 self.progressView.setProgress(bufferProgress, animated: true)
-            })
+            }
         }
     }
     
-    /// 更新滑块和进度条样式
+    /// 自定义滑块外观
     ///
     /// - Parameters:
-    ///   - trackHeight: 滑块的高度
-    ///   - cornerRadius: 进度条的圆角半径
-    ///   - thumbSize: 滑块的大小
-    ///   - duration: 动画持续时间
+    ///   - trackHeight: 滑块高度
+    ///   - cornerRadius: 进度条圆角半径
+    ///   - thumbSize: 滑块大小
+    ///   - duration: 动画时间
     @objc open func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) {
         
     }
     
-    /// 触摸开始时调用的函数
-    ///
-    /// - Note: 重写此方法以处理滑块触摸
+    /// 触摸开始时调用
     @objc open func updateSliderTouchBegan(value: Float) {
         handleSliderTouchBegan(sliderView)
     }
@@ -230,33 +186,27 @@ extension ARTVideoPlayerBottombar {
     /// 更新滑块值
     ///
     /// - Parameter value: 滑块值
-    /// - Note: 重写此方法以更新底部工具栏的滑块值
     @objc open func updateSliderValue(value: Float) {
         adjustSliderValue(value: value)
         delegate?.bottombarDidChangeValue?(for: self, slider: sliderView)
     }
     
-    /// 触摸结束时调用的函数
-    ///
-    /// - Note: 重写此方法以处理滑块触摸结束事件
+    /// 触摸结束时调用
     @objc open func updateSliderTouchEnded(value: Float) {
         handleSliderTouchEnded(sliderView)
     }
     
-    /// 初始化滑块的值
+    /// 初始化滑块值
     ///
-    /// - Parameter value: 滑块的值
-    /// - Note: 重写此方法以初始化底部工具栏的滑块值
+    /// - Parameter value: 滑块值
     @objc open func resetSliderValue(value: Float = 0.0) {
         progressView.setProgress(value, animated: false)
         sliderView.setValue(value, animated: false)
     }
     
-    /// 更新暂停、播放按钮状态
+    /// 更新播放按钮状态
     ///
-    /// - Parameters:
-    ///  - isPlaying: 是否正在播放
-    /// - Note: 重写此方法以更新底部工具栏的播放按钮状态
+    /// - Parameter isPlaying: 是否播放中
     @objc open func updatePlayPauseButton(isPlaying: Bool) {
         
     }
@@ -275,11 +225,11 @@ extension ARTVideoPlayerBottombar {
         })
     }
     
-    /// 更新滑块的外观
+    /// 更新滑块外观
     ///
     /// - Parameters:
     ///   - slider: 被更新的滑块
-    ///   - isTouching: 指示滑块是否正在被触摸
+    ///   - isTouching: 指示滑块是否被触摸
     private func configureSliderAppearance(for slider: ARTVideoPlayerSlider, isTouching: Bool) {
         let trackHeight: CGFloat    = isTouching ? ARTAdaptedValue(5.0) : ARTAdaptedValue(3.0)
         let cornerRadius: CGFloat   = isTouching ? ARTAdaptedValue(2.5) : ARTAdaptedValue(1.5)
@@ -290,10 +240,9 @@ extension ARTVideoPlayerBottombar {
         customizeSliderAppearance(trackHeight: trackHeight, cornerRadius: cornerRadius, thumbSize: thumbSize, duration: duration)
     }
     
-    /// 更新滑块值并控制是否通知代理
+    /// 更新滑块值
     ///
-    /// - Parameters:
-    ///   - value: 滑块值变化
+    /// - Parameter value: 滑块值变化
     private func adjustSliderValue(value: Float) {
         sliderView.setValue(min(max(sliderView.value + value, 0), 1), animated: true)
     }

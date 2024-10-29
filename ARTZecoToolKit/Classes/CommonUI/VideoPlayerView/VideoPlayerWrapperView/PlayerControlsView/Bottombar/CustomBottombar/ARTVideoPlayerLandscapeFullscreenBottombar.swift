@@ -12,19 +12,13 @@ import AVFoundation
 /// - NOTE: 可继承该协议方法
 @objc public protocol ARTVideoPlayerLandscapeFullscreenBottombarDelegate: ARTVideoPlayerBottombarDelegate {
         
-    /// 下一集按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
+    /// 当点击下一集按钮时调用
     @objc optional func bottombarDidTapNext(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
     
-    /// 倍数按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
+    /// 当点击倍数按钮时调用
     @objc optional func bottombarDidTapSpeed(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
     
-    /// 合集按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
+    /// 当点击合集按钮时调用
     @objc optional func bottombarDidTapCollection(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
 }
 
@@ -96,52 +90,38 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
     // MARK: - Button Actions
     
     /// 点击暂停按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapPauseButton() {
-        subclassDelegate?.bottombarDidTapPause?(for: self)
+        delegate?.bottombarDidTapPause?(for: self)
     }
     
     /// 点击下一集按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapNextButton() {
         subclassDelegate?.bottombarDidTapNext?(for: self)
     }
     
     /// 点击弹幕按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapDanmakuButton() {
         danmakuButton.isSelected = !danmakuButton.isSelected
-        subclassDelegate?.bottombarDidTapDanmakuToggle?(for: self)
+        delegate?.bottombarDidTapDanmakuToggle?(for: self)
     }
     
     /// 点击弹幕设置按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapDanmakuSettingsButton() {
-        subclassDelegate?.bottombarDidTapDanmakuSettings?(for: self)
+        delegate?.bottombarDidTapDanmakuSettings?(for: self)
     }
     
     /// 点击发送弹幕按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapDanmakuSendButton() {
         guard let text = danmakuInputLabel.text else { return }
-        subclassDelegate?.bottombarDidTapDanmakuSend?(for: self, text: text)
+        delegate?.bottombarDidTapDanmakuSend?(for: self, text: text)
     }
     
     /// 点击倍数按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapSpeedButton() {
         subclassDelegate?.bottombarDidTapSpeed?(for: self)
     }
     
     /// 点击合集按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapCollectionButton() {
         subclassDelegate?.bottombarDidTapCollection?(for: self)
     }

@@ -13,89 +13,87 @@ import AVFoundation
 @objc public protocol ARTVideoPlayerControlsViewDelegate: AnyObject {
     
     /// 自定义播放模式
-    ///
-    /// - Parameters:
-    ///   - playerControlsView: 控制层视图
-    ///   - Returns: 自定义播放模式
-    /// - Note: 自定义播放模式 ARTVideoPlayerWrapperView.VideoPlayerMode
+    /// - Parameter playerControlsView: 控制层视图
+    /// - Returns: 自定义播放模式
     @objc optional func customScreenOrientation(for playerControlsView: ARTVideoPlayerControlsView) -> ScreenOrientation
     
     /// 自定义顶部工具栏视图
-    ///
     /// - Parameters:
     ///   - playerControlsView: 控制层视图
     ///   - screenOrientation: 当前屏幕方向
-    ///   - Returns: 自定义顶部工具栏视图
-    /// - Note: 自定义顶部工具栏视图需继承 ARTVideoPlayerTopbar
+    /// - Returns: 自定义顶部工具栏视图（需继承自 ARTVideoPlayerTopbar）
     @objc optional func customTopBar(for playerControlsView: ARTVideoPlayerControlsView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerTopbar?
     
     /// 自定义底部工具栏视图
-    ///
     /// - Parameters:
     ///   - playerControlsView: 控制层视图
     ///   - screenOrientation: 当前屏幕方向
-    ///   - Returns: 自定义底部工具栏视图
-    /// - Note: 自定义底部工具栏视图需继承 ARTVideoPlayerBottombar
+    /// - Returns: 自定义底部工具栏视图（需继承自 ARTVideoPlayerBottombar）
     @objc optional func customBottomBar(for playerControlsView: ARTVideoPlayerControlsView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerBottombar?
     
+    
+// MARK: - 顶部工具栏 - 公共方法
+    
     /// 点击返回按钮
-    ///
-    /// - Note: 子类实现该方法处理返回操作
     @objc optional func controlsViewDidTapBack(for playerControlsView: ARTVideoPlayerControlsView)
     
     /// 点击收藏按钮
-    ///
     /// - Parameters:
-    ///  - playerControlsView: 控制层视图
-    ///  - isFavorited: `true` 表示添加收藏，`false` 表示取消收藏
-    /// - Note: 子类实现该方法处理收藏状态的改变
+    ///   - playerControlsView: 控制层视图
+    ///   - isFavorited: 是否已收藏
     @objc optional func controlsViewDidTapFavorite(for playerControlsView: ARTVideoPlayerControlsView, isFavorited: Bool)
     
     /// 点击分享按钮
-    ///
-    /// - Note: 子类实现该方法处理分享操作
     @objc optional func controlsViewDidTapShare(for playerControlsView: ARTVideoPlayerControlsView)
     
-    /// 全屏切换
-    ///
-    /// - Parameters:
-    ///  - playerControlsView: 控制层视图
-    ///  - orientation: 屏幕方向
-    ///  - Note: 切换全屏和窗口模式
-    /// - Note: 重写父类方法，切换全屏和窗口模式
-    @objc optional func controlsViewDidTransitionToFullscreen(for playerControlsView: ARTVideoPlayerControlsView, orientation: ScreenOrientation)
     
-    /// 当滑块触摸开始时调用
-    ///
+// MARK: - 底部工具栏 - 公共方法
+    
+    /// 滑块触摸开始
     /// - Parameters:
     ///   - controlsView: 控制层视图
     ///   - slider: 被触摸的滑块
-    /// - Note: 重写父类方法，更新播放器当前播放时间
     @objc optional func controlsViewDidBeginTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider)
     
-    /// 当滑块值改变时调用
-    ///
+    /// 滑块值改变
     /// - Parameters:
     ///   - controlsView: 控制层视图
     ///   - slider: 值已改变的滑块
-    /// - Note: 重写父类方法，更新播放
     @objc optional func controlsViewDidChangeValue(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider)
     
-    /// 当滑块触摸结束时调用
-    ///
+    /// 滑块触摸结束
     /// - Parameters:
     ///   - controlsView: 控制层视图
     ///   - slider: 被释放的滑块
-    /// - Note: 重写父类方法，更新播放器当前播放时间
     @objc optional func controlsViewDidEndTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider)
     
-    /// 当滑块被点击时调用
-    ///
+    /// 滑块被点击
     /// - Parameters:
     ///   - controlsView: 控制层视图
     ///   - slider: 被点击的滑块
-    /// - Note: 重写父类方法，更新播放器当前播放时间
     @objc optional func controlsViewDidTap(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider)
+    
+    /// 暂停按钮点击
+    @objc optional func bottombarDidTapPause(for bottombar: ARTVideoPlayerBottombar)
+    
+    /// 弹幕开关按钮点击
+    @objc optional func bottombarDidTapDanmakuToggle(for bottombar: ARTVideoPlayerBottombar)
+    
+    /// 弹幕设置按钮点击
+    @objc optional func bottombarDidTapDanmakuSettings(for bottombar: ARTVideoPlayerBottombar)
+    
+    /// 发送弹幕按钮点击
+    /// - Parameter text: 弹幕内容
+    @objc optional func bottombarDidTapDanmakuSend(for bottombar: ARTVideoPlayerBottombar, text: String)
+    
+    
+// MARK: - 窗口模式底部工具栏
+    
+    /// 全屏切换
+    /// - Parameters:
+    ///   - playerControlsView: 控制层视图
+    ///   - orientation: 屏幕方向
+    @objc optional func controlsViewDidTransitionToFullscreen(for playerControlsView: ARTVideoPlayerControlsView, orientation: ScreenOrientation)
 }
 
 open class ARTVideoPlayerControlsView: ARTPassThroughView {
@@ -149,89 +147,70 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     // MARK: - Override Super Methods
     
     /// 重写父类方法，设置子视图
-    ///
-    /// - Note: 由于子类需要自定义视图，所以需要重写该方法
     open override func setupViews() {
         setupToolBars()
     }
     
     // MARK: - Public Methods
     
-    /// 旋转屏幕（设置屏幕方向并刷新顶部和底部栏）
-    ///
-    /// - Parameter orientation: 屏幕方向
-    /// - Note: 重写父类方法，旋转屏幕时，切换全屏和窗口模式
+    /// 旋转屏幕并刷新工具栏
+    /// - Parameter orientation: 新的屏幕方向
     open func transitionToFullscreen(orientation: ScreenOrientation, playerState: PlayerState) {
         self.screenOrientation = orientation
         setupToolBars()
         updatePlayerStateInControls(playerState: playerState)
     }
-    
+
     /// 更新当前播放时间和总时长
-    ///
     /// - Parameters:
     ///   - currentTime: 当前播放时间
     ///   - duration: 视频总时长
-    ///   - shouldUpdateSlider: 是否正在拖动滑块
-    /// - Note: 重写父类方法，更新播放器当前播放时间
+    ///   - shouldUpdateSlider: 是否拖动滑块
     open func updateTimeInControls(with currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = false) {
         bottomBar.updatePlaybackTime(currentTime: currentTime, duration: duration, shouldUpdateSlider: shouldUpdateSlider)
     }
-    
-    /// 更新缓冲总时间和缓冲进度
-    ///
+
+    /// 更新缓冲时间和进度
     /// - Parameters:
-    ///  - totalBuffer: 缓冲总时间
-    ///  - bufferProgress: 缓冲进度
-    ///  - shouldUpdateSlider: 是否正在拖动滑块
-    /// - Note: 重写父类方法，更新播放器缓冲总时间和缓冲进度
+    ///   - totalBuffer: 缓冲总时间
+    ///   - bufferProgress: 缓冲进度
+    ///   - shouldUpdateSlider: 是否拖动滑块
     open func updateBufferProgressInControls(totalBuffer: Double, bufferProgress: Float, shouldUpdateSlider: Bool = false) {
         bottomBar.updateBufferProgress(totalBuffer: totalBuffer, bufferProgress: bufferProgress, shouldUpdateSlider: shouldUpdateSlider)
     }
-    
-    /// 触摸开始时调用的函数
-    ///
-    /// - Note: 重写此方法以处理滑块触摸
+
+    /// 触摸开始时调用
+    /// - Parameter sliderValue: 当前滑块值
     @objc open func updateSliderTouchBeganInControls(sliderValue: Float) {
         bottomBar.updateSliderTouchBegan(value: sliderValue)
     }
-    
+
     /// 更新滑块值
-    ///
-    /// - Parameter sliderValue: 滑块值
-    /// - Note: 重写父类方法，更新播放器滑块值
+    /// - Parameter sliderValue: 新滑块值
     open func updateSliderValueInControls(sliderValue: Float) {
         bottomBar.updateSliderValue(value: sliderValue)
     }
-    
-    /// 触摸结束时调用的函数
-    ///
-    /// - Note: 重写此方法以处理滑块触摸结束事件
+
+    /// 触摸结束时调用
+    /// - Parameter sliderValue: 当前滑块值
     @objc open func updateSliderTouchEndedInControls(sliderValue: Float) {
         bottomBar.updateSliderTouchEnded(value: sliderValue)
     }
-    
+
     /// 更新播放按钮状态
-    ///
-    /// - Parameters:
-    ///   - isPlaying: 是否正在播放
-    /// - Note: 重写父类方法，更新播放按钮状态
+    /// - Parameter playerState: 播放状态
     open func updatePlayerStateInControls(playerState: PlayerState) {
         playImageView.isHidden = (playerState == .playing)
     }
-    
+
     /// 初始化滑块值
-    ///
-    ///  - Note: 重写父类方法，初始化滑块值
+    /// - Parameter value: 初始值，默认 0.0
     open func resetSliderValueInControls(value: Float = 0.0) {
         bottomBar.resetSliderValue(value: value)
     }
-    
-    /// 更新播放、暂停按钮状态
-    ///
-    /// - Parameters:
-    ///  - isPlaying: 是否正在播放
-    /// - Note: 重写父类方法，更新播放、暂停按钮状态
+
+    /// 更新播放/暂停按钮状态
+    /// - Parameter isPlaying: 是否正在播放
     open func updatePlayPauseButtonInControls(isPlaying: Bool) {
         bottomBar.updatePlayPauseButton(isPlaying: isPlaying)
     }
@@ -242,8 +221,7 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
 extension ARTVideoPlayerControlsView {
     
     /// 创建顶部和底部工具栏
-    ///
-    /// - Note: 重写父类方法，设置子视图
+    /// - Note: 重写父类方法以设置子视图
     @objc open func setupToolBars() {
         setupTopBar()
         setupBottomBar()
@@ -252,11 +230,9 @@ extension ARTVideoPlayerControlsView {
     }
     
     /// 创建顶部工具栏
-    ///
-    /// 重写父类方法，设置子视图
-    /// - Note: 默认导航栏视图需继承 ARTVideoPlayerTopbar
+    /// - Note: 重写父类方法，默认导航栏需继承 ARTVideoPlayerTopbar
     @objc open func setupTopBar() {
-        if let customTopBar = delegate_customTopBar() { // 获取自定义顶部工具栏视图
+        if let customTopBar = delegate_customTopBar() { // 获取自定义顶部工具栏
             topBar = customTopBar
         } else {
             topBar = defaultTopBarForOrientation()
@@ -269,11 +245,9 @@ extension ARTVideoPlayerControlsView {
     }
     
     /// 创建底部工具栏
-    ///
-    /// 重写父类方法，设置子视图
-    /// - Note: 默认底部工具栏视图需继承 ARTVideoPlayerBottombar
+    /// - Note: 重写父类方法，默认底部工具栏需继承 ARTVideoPlayerBottombar
     @objc open func setupBottomBar() {
-        if let customBottomBar = delegate_customBottomBar() { // 获取自定义底部工具栏视图
+        if let customBottomBar = delegate_customBottomBar() { // 获取自定义底部工具栏
             bottomBar = customBottomBar
         } else {
             bottomBar = defaultBottomBarForOrientation()
@@ -285,14 +259,13 @@ extension ARTVideoPlayerControlsView {
         }
     }
     
-    /// 创建播放、重试按钮
-    ///
-    /// - Note: 重写父类方法，设置子视图
+    /// 创建播放和重试按钮
+    /// - Note: 重写父类方法以设置子视图
     @objc open func setupPlayButton() {
         playImageView = UIImageView()
-        playImageView.isHidden  = true
-        playImageView.alpha     = 0.5
-        playImageView.image     = UIImage(named: "video_play")
+        playImageView.isHidden = true
+        playImageView.alpha = 0.5
+        playImageView.image = UIImage(named: "video_play")
         addSubview(playImageView)
         playImageView.snp.makeConstraints { make in
             make.size.equalTo(ARTAdaptedSize(width: 40.0, height: 40.0))
@@ -300,7 +273,7 @@ extension ARTVideoPlayerControlsView {
         }
     }
     
-    /// 切换顶栏和底栏的显示与隐藏状态
+    /// 切换控制条的显示与隐藏状态
     @objc open func toggleControlsVisibility() {
         toggleControls(visible: topBar.containerView.alpha == 0)
         resetAutoHideTimer()
@@ -453,6 +426,22 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerBottombarDelegate {
         if isLandscape { resetAutoHideTimer() } // 横屏模式
         delegate?.controlsViewDidTap?(for: self, slider: slider)
     }
+    
+    public func bottombarDidTapPause(for bottombar: ARTVideoPlayerBottombar) { // 点击暂停按钮
+//        delegate?.controlsViewDidTapPause?(for: self)
+    }
+    
+    public func bottombarDidTapDanmakuToggle(for bottombar: ARTVideoPlayerBottombar) { // 点击弹幕开关按钮
+//        delegate?.controlsViewDidTapDanmakuToggle?(for: self)
+    }
+    
+    public func bottombarDidTapDanmakuSettings(for bottombar: ARTVideoPlayerBottombar) { // 点击弹幕设置按钮
+//        delegate?.controlsViewDidTapDanmakuSettings?(for: self)
+    }
+    
+    public func bottombarDidTapDanmakuSend(for bottombar: ARTVideoPlayerBottombar, text: String) { // 点击发送弹幕按钮
+//        delegate?.controlsViewDidTapDanmakuSend?(for: self, text: text)
+    }
 }
 
 /// - Note: 窗口模式底部工具栏代理
@@ -477,35 +466,20 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerPortraitFullscreenBottombarD
 extension ARTVideoPlayerControlsView {
     
     /// 获取自定义播放模式
-    ///
-    /// - Returns: 自定义播放模式
-    /// - Note: 优先使用代理返回的自定义播放模式，若代理未实现则使用默认播放模式
+    /// - Returns: 自定义播放模式，如果代理未实现则返回默认模式
     private func delegate_customScreenOrientation() -> ScreenOrientation {
-        guard let screenOrientation = delegate?.customScreenOrientation?(for: self) else {
-            return .window
-        }
-        return screenOrientation
+        return delegate?.customScreenOrientation?(for: self) ?? .window
     }
     
     /// 获取自定义顶部工具栏
-    ///
-    /// - Returns: 自定义顶部工具栏
-    /// - Note: 优先使用代理返回的自定义顶部工具栏，若代理未实现则使用默认
+    /// - Returns: 自定义顶部工具栏，如果代理未实现则返回 nil
     private func delegate_customTopBar() -> ARTVideoPlayerTopbar? {
-        guard let customTopBar = delegate?.customTopBar?(for: self, screenOrientation: screenOrientation) else {
-            return nil
-        }
-        return customTopBar
+        return delegate?.customTopBar?(for: self, screenOrientation: screenOrientation)
     }
     
     /// 获取自定义底部工具栏
-    ///
-    /// - Returns: 自定义底部工具栏
-    /// - Note: 优先使用代理返回的自定义底部工具栏，若代理未实现则使用默认
+    /// - Returns: 自定义底部工具栏，如果代理未实现则返回 nil
     private func delegate_customBottomBar() -> ARTVideoPlayerBottombar? {
-        guard let customBottomBar = delegate?.customBottomBar?(for: self, screenOrientation: screenOrientation) else {
-            return nil
-        }
-        return customBottomBar
+        return delegate?.customBottomBar?(for: self, screenOrientation: screenOrientation)
     }
 }

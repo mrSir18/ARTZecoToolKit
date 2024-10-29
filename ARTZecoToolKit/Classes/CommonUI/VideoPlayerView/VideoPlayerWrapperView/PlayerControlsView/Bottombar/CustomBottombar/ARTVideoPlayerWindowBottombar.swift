@@ -12,9 +12,7 @@ import AVFoundation
 /// - NOTE: 可继承该协议方法
 public protocol ARTVideoPlayerWindowBottombarDelegate: ARTVideoPlayerBottombarDelegate {
     
-    /// 点击全屏按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
+    /// 当点击全屏按钮时调用
     func bottombarDidTapFullscreen(for bottombar: ARTVideoPlayerWindowBottombar)
 }
 
@@ -62,8 +60,6 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     // MARK: - Button Actions
     
     /// 点击全屏按钮
-    ///
-    /// - Note: 子类实现该方法处理全屏操作
     @objc open func didTapFullscreenButton() {
         subclassDelegate?.bottombarDidTapFullscreen(for: self)
     }

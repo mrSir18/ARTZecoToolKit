@@ -8,25 +8,20 @@
 /// 协议方法
 ///
 /// - NOTE: 可继承该协议方法
-public protocol ARTVideoPlayerTopbarDelegate: AnyObject {
+@objc public protocol ARTVideoPlayerTopbarDelegate: AnyObject {
     
-    /// 点击返回按钮
-    ///
-    /// - Note: 子类实现该方法处理返回操作
-    func topbarDidTapBack(for topbar: ARTVideoPlayerTopbar)
+    /// 当点击返回按钮调用
+    @objc optional func topbarDidTapBack(for topbar: ARTVideoPlayerTopbar)
     
-    /// 点击收藏按钮
+    /// 当点击收藏按钮调用
     ///
     /// - Parameters:
     ///   - topbar: 当前的 `ARTVideoPlayerTopbar` 实例
-    ///   - isFavorited: `true` 表示添加收藏，`false` 表示取消收藏
-    /// - Note: 子类实现该方法处理收藏状态的改变
-    func topbarDidTapFavorite(for topbar: ARTVideoPlayerTopbar, isFavorited: Bool)
+    ///   - isFavorited: 是否已收藏
+    @objc optional func topbarDidTapFavorite(for topbar: ARTVideoPlayerTopbar, isFavorited: Bool)
     
-    /// 点击分享按钮
-    ///
-    /// - Note: 子类实现该方法处理分享操作
-    func topbarDidTapShare(for topbar: ARTVideoPlayerTopbar)
+    /// 当点击分享按钮调用
+    @objc optional func topbarDidTapShare(for topbar: ARTVideoPlayerTopbar)
 }
 
 open class ARTVideoPlayerTopbar: UIView {
@@ -66,8 +61,6 @@ open class ARTVideoPlayerTopbar: UIView {
     // MARK: - Override Super Methods
     
     /// 重写父类方法，设置子视图
-    ///
-    /// - Note: 由于子类需要自定义视图，所以需要重写该方法
     open func setupViews() {
         
     }
@@ -75,33 +68,27 @@ open class ARTVideoPlayerTopbar: UIView {
     // MARK: - Button Actions
     
     /// 点击返回按钮
-    ///
-    /// - Note: 子类实现该方法处理返回操作
     @objc public func didTapBackButton() {
-        delegate?.topbarDidTapBack(for: self)
+        delegate?.topbarDidTapBack?(for: self)
     }
-    
+
     /// 点击收藏按钮
-    ///
-    /// - Note: 子类实现该方法处理收藏状态的改变
     @objc public func didTapFavoriteButton() {
         isFavorited.toggle()
         updateFavoriteState(isFavorited: isFavorited)
-        delegate?.topbarDidTapFavorite(for: self, isFavorited: isFavorited)
+        delegate?.topbarDidTapFavorite?(for: self, isFavorited: isFavorited)
     }
-    
+
     /// 点击分享按钮
-    ///
-    /// - Note: 子类实现该方法处理分享
     @objc public func didTapShareButton() {
-        delegate?.topbarDidTapShare(for: self)
+        delegate?.topbarDidTapShare?(for: self)
     }
-    
+
     // MARK: - Public Methods
-    
+
     /// 更新收藏状态
     ///
-    /// - Parameter isFavorited: `true` 表示已收藏，`false` 表示未收藏
+    /// - Parameter isFavorited: 是否已收藏
     public func updateFavoriteState(isFavorited: Bool) {
         self.isFavorited = isFavorited
     }
