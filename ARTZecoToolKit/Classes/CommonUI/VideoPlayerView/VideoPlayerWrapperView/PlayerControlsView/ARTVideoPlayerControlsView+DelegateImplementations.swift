@@ -24,6 +24,7 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerTopbarDelegate {
     }
 }
 
+
 // MARK: - ARTVideoPlayerBottombarDelegate
 
 /// 通用底部工具栏代理

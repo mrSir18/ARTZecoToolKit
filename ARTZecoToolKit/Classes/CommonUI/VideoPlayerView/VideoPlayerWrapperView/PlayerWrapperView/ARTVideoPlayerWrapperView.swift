@@ -8,43 +8,6 @@
 import AVFoundation
 import MediaPlayer
 
-@objc public protocol ARTVideoPlayerWrapperViewProtocol: AnyObject {
-    
-    /// 自定义播放模式
-    ///
-    /// - Parameters:
-    ///   - playerWrapperView: 视频播放器视图
-    ///   - Returns: 自定义播放模式
-    ///   - Note: 自定义播放模式 ARTVideoPlayerWrapperView.VideoPlayerMode
-    //    @objc optional func customScreenOrientation(for playerWrapperView: ARTVideoPlayerWrapperView) -> ARTVideoPlayerWrapperView.ScreenOrientation
-    //
-    //    /// 自定义顶部工具栏视图
-    //    ///
-    //    /// - Parameters:
-    //    ///   - playerWrapperView: 视频播放器视图
-    //    ///   - screenOrientation: 当前屏幕方向
-    //    ///   - Returns: 自定义顶部工具栏视图
-    //    ///   - Note: 自定义顶部工具栏视图需继承 ARTVideoPlayerTopbar
-    //    @objc optional func customTopBar(for playerWrapperView: ARTVideoPlayerWrapperView, screenOrientation: ARTVideoPlayerWrapperView.ScreenOrientation) -> ARTVideoPlayerTopbar?
-    //
-    //    /// 自定义底部工具栏视图
-    //    ///
-    //    /// - Parameters:
-    //    ///   - playerWrapperView: 视频播放器视图
-    //    ///   - screenOrientation: 当前屏幕方向
-    //    ///   - Returns: 自定义底部工具栏视图
-    //    ///   - Note: 自定义底部工具栏视图需继承 ARTVideoPlayerBottombar
-    //    @objc optional func customBottomBar(for playerWrapperView: ARTVideoPlayerWrapperView, screenOrientation: ARTVideoPlayerWrapperView.ScreenOrientation) -> ARTVideoPlayerBottombar?
-    //
-    //    /// 刷新状态栏外观
-    //    ///
-    //    /// - Parameters:
-    //    ///   - playerWrapperView: 视频播放器视图
-    //    ///   - isStatusBarHidden: 是否隐藏状态栏的状态
-    //    ///   - Note: 调用此方法以更新状态栏外观
-    //    @objc optional func refreshStatusBarAppearance(for playerWrapperView: ARTVideoPlayerWrapperView, isStatusBarHidden: Bool)
-}
-
 extension ARTVideoPlayerWrapperView {
     // 定义枚举，用于区分手势方向
     public enum SwipeDirection {
@@ -60,10 +23,10 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     // MARK: - Private Properties
     
     /// 代理对象
-    private weak var delegate: ARTVideoPlayerWrapperViewProtocol?
+    public weak var delegate: ARTVideoPlayerWrapperViewDelegate?
     
     /// 全屏管理器
-    private var fullscreenManager: ARTVideoFullscreenManager!
+    public var fullscreenManager: ARTVideoFullscreenManager!
     
     /// 播放器配置模型
     public var playerConfig: ARTVideoPlayerConfig!
@@ -97,7 +60,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     // MARK: - Initialization
     
-    public init(_ delegate: ARTVideoPlayerWrapperViewProtocol) {
+    public init(_ delegate: ARTVideoPlayerWrapperViewDelegate) {
         self.delegate = delegate
         super.init()
     }
@@ -419,7 +382,7 @@ extension ARTVideoPlayerWrapperView {
     ///
     /// - Parameter gesture: 拖动手势
     /// - Note: 重写父类方法，处理拖动手势
-    @objc func handleSortingPanGesture(_ gesture: UIPanGestureRecognizer) {
+    @objc open func handleSortingPanGesture(_ gesture: UIPanGestureRecognizer) {
         let locationPoint = gesture.location(in: self) // 获取当前触摸位置
         let velocityPoint = gesture.velocity(in: self) // 获取滑动速度信息
         let sliderValue   = Float(velocityPoint.x) / 60000 // 滑块值
@@ -485,24 +448,6 @@ extension ARTVideoPlayerWrapperView {
             break
         }
     }
-    
-    /// 处理播放器状态，根据当前状态进行相应操作
-    private func handlePlayerState() {
-        switch playerState {
-        case .paused: // 恢复播放
-            resumePlayer()
-        case .playing: // 暂停播放
-            pausePlayer()
-        case .ended: // 重新播放
-            playControlsView.resetSliderValueInControls()
-            playControlsView.updatePlayPauseButtonInControls(isPlaying: true)
-            player.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] _ in
-                self?.resumePlayer()
-            }
-        default:
-            break
-        }
-    }
 }
 
 // MARK: - Private Methods
@@ -513,7 +458,7 @@ extension ARTVideoPlayerWrapperView {
     ///
     /// - Parameter url: 需要验证的 URL
     /// - Returns: 如果有效返回 true，否则返回 false
-    private func validateURL(_ url: URL) -> Bool {
+    internal func validateURL(_ url: URL) -> Bool {
         if url.absoluteString.isEmpty { // 检查 URL 是否为空
             print("无效的 URL。")
             return false
@@ -536,7 +481,7 @@ extension ARTVideoPlayerWrapperView {
     /// 配置音频会话
     ///
     /// - Note: 设置音频会话为播放模式并激活
-    private func configureAudioSession() {
+    internal func configureAudioSession() {
         do { // 获取共享音频会话实例并配置
             let session = AVAudioSession.sharedInstance()
             try session.setCategory(.playback, mode: .default)
@@ -550,7 +495,7 @@ extension ARTVideoPlayerWrapperView {
     ///
     /// - Parameter newState: 新的播放器状态
     /// - Note: 根据新的状态进行对应的播放或暂停操作，避免重复状态更新
-    private func syncControlsWithPlayerState(to newState: PlayerState) {
+    internal func syncControlsWithPlayerState(to newState: PlayerState) {
         guard playerState != newState else { return }
         
         // 更新播放器状态
@@ -574,21 +519,21 @@ extension ARTVideoPlayerWrapperView {
     /// 暂停播放器
     ///
     /// - Note: 通过调用 `syncControlsWithPlayerState` 切换到暂停状态
-    private func pausePlayer() {
+    internal func pausePlayer() {
         syncControlsWithPlayerState(to: .paused)
     }
     
     /// 恢复播放
     ///
     /// - Note: 通过调用 `syncControlsWithPlayerState` 切换到播放状态
-    private func resumePlayer() {
+    internal func resumePlayer() {
         syncControlsWithPlayerState(to: .playing)
     }
     
     /// 更新屏幕模式和滑块值的通用方法
     ///
     /// - Parameter orientation: 屏幕模式
-    private func updateScreenMode(for orientation: ScreenOrientation) {
+    internal func updateScreenMode(for orientation: ScreenOrientation) {
         sliderValue = playControlsView.bottomBar.sliderView.value
         isDraggingSlider = true
         systemControlsView.updateScreenOrientationInSystemControls(screenOrientation: orientation)
@@ -597,83 +542,24 @@ extension ARTVideoPlayerWrapperView {
         playControlsView.updateTimeInControls(with: currentTime, duration: totalDuration)
         isDraggingSlider = false
     }
-}
-
-// MARK: - ARTVideoPlayerSystemControlsDelegate
-
-extension ARTVideoPlayerWrapperView: ARTVideoPlayerSystemControlsDelegate {
     
-}
-
-// MARK: - ARTVideoPlayerOverlayViewDelegate
-
-extension ARTVideoPlayerWrapperView: ARTVideoPlayerOverlayViewDelegate {
-    
-}
-
-
-// MARK: - ARTVideoPlayerControlsViewDelegate
-
-extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
-    
-    /*
-     public func customScreenOrientation(for playerControlsView: ARTVideoPlayerControlsView) -> ScreenOrientation { // 自定义播放模式
-     
-     }
-     
-     public func customTopBar(for playerControlsView: ARTVideoPlayerControlsView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerTopbar? { // 自定义顶部工具栏视图
-     
-     }
-     
-     public func customBottomBar(for playerControlsView: ARTVideoPlayerControlsView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerBottombar? { // 自定义底部工具栏视图
-     
-     }
-     */
-    
-    public func controlsViewDidTapBack(for playerControlsView: ARTVideoPlayerControlsView) { // 点击返回按钮
-        
-        fullscreenManager.dismiss { [weak self] in // 切换窗口模式顶底栏
-            self?.updateScreenMode(for: .window)
-        }
-    }
-    
-    public func controlsViewDidTapFavorite(for playerControlsView: ARTVideoPlayerControlsView, isFavorited: Bool) { // 点击收藏按钮
-        
-    }
-    
-    public func controlsViewDidTapShare(for playerControlsView: ARTVideoPlayerControlsView) { // 点击分享按钮
-        
-    }
-    
-    public func controlsViewDidTransitionToFullscreen(for playerControlsView: ARTVideoPlayerControlsView, orientation: ScreenOrientation) { // 点击全屏按钮
-        fullscreenManager.presentFullscreenWithRotation { [weak self] in // 切换全屏模式顶底栏
-            self?.updateScreenMode(for: orientation)
-        }
-    }
-    
-    public func controlsViewDidBeginTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 暂停播放 (开始拖动滑块)
-        playControlsView.updatePlayPauseButtonInControls(isPlaying: true)
-        playControlsView.updatePlayerStateInControls(playerState: .playing)
-        isDraggingSlider = true
-    }
-    
-    public func controlsViewDidChangeValue(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 快进/快退 (拖动滑块)
-        
-        updatePreviewImageForSliderValueChange(slider)
-    }
-    
-    public func controlsViewDidEndTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 恢复播放 (结束拖动滑块)
-        systemControlsView.hideVideoPlayerDisplay()
-        seekToSliderValue(slider) { [weak self] in
-            self?.isDraggingSlider = false
-            self?.player.play()
-        }
-    }
-    
-    public func controlsViewDidTap(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 指定播放时间 (点击滑块)
-        controlsViewDidBeginTouch(for: controlsView, slider: slider)
-        seekToSliderValue(slider) { [weak self] in // 指定播放时间
-            self?.controlsViewDidEndTouch(for: controlsView, slider: slider)
+    /// 处理播放器状态
+    ///
+    /// - Note: 根据当前状态进行相应操作
+    internal func handlePlayerState() {
+        switch playerState {
+        case .paused: // 恢复播放
+            resumePlayer()
+        case .playing: // 暂停播放
+            pausePlayer()
+        case .ended: // 重新播放
+            playControlsView.resetSliderValueInControls()
+            playControlsView.updatePlayPauseButtonInControls(isPlaying: true)
+            player.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] _ in
+                self?.resumePlayer()
+            }
+        default:
+            break
         }
     }
 }

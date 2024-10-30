@@ -60,6 +60,8 @@ extension ARTVideoPlayerView {
     }
 }
 
-extension ARTVideoPlayerView: ARTVideoPlayerWrapperViewProtocol {
+// MARK: - ARTVideoPlayerWrapperViewDelegate
+
+extension ARTVideoPlayerView: ARTVideoPlayerWrapperViewDelegate {
     
 }
