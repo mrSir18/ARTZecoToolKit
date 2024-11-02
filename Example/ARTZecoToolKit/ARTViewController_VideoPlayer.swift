@@ -282,7 +282,7 @@ extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
 // MARK: - 竖屏模式 - 底部工具栏
     
     func playerViewDidTapComment(for playerView: ARTVideoPlayerView) { // 点击评论按钮
-        
+        print("点击评论按钮")
     }
     
     func playerViewDidTapMore(for playerView: ARTVideoPlayerView) { // 点击更多按钮
