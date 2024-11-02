@@ -25,7 +25,7 @@ import AVFoundation
     @objc optional func bottombarDidTap(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider)
     
     /// 当暂停按钮被点击时调用
-    @objc optional func bottombarDidTapPause(for bottombar: ARTVideoPlayerBottombar)
+    @objc optional func bottombarDidTapPause(for bottombar: ARTVideoPlayerBottombar, isPlaying: Bool)
     
     /// 当弹幕开关按钮被点击时调用
     @objc optional func bottombarDidTapDanmakuToggle(for bottombar: ARTVideoPlayerBottombar)

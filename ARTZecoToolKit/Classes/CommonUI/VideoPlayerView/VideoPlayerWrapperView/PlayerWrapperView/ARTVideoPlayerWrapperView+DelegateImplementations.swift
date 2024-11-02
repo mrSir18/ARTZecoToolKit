@@ -85,8 +85,9 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
         }
     }
     
-    public func controlsViewDidTapPause(for controlsView: ARTVideoPlayerControlsView) { // 暂停播放 (点击暂停按钮)
-        delegate?.wrapperViewDidTapPause?(for: self)
+    public func controlsViewDidTapPause(for controlsView: ARTVideoPlayerControlsView, isPlaying: Bool) { // 暂停播放 (点击暂停按钮)
+        handlePlayerState()
+        delegate?.wrapperViewDidTapPause?(for: self, isPlaying: isPlaying)
     }
     
     public func controlsViewDidTapDanmakuToggle(for controlsView: ARTVideoPlayerControlsView) { // 弹幕开关 (点击弹幕开关按钮)

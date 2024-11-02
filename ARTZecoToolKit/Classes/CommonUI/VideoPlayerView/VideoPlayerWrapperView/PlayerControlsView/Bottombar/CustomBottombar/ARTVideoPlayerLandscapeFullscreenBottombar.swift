@@ -91,7 +91,8 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
     
     /// 点击暂停按钮
     @objc open func didTapPauseButton() {
-        delegate?.bottombarDidTapPause?(for: self)
+        pauseButton.isSelected.toggle()
+        delegate?.bottombarDidTapPause?(for: self, isPlaying: pauseButton.isSelected)
     }
     
     /// 点击下一集按钮

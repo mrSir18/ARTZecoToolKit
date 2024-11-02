@@ -285,6 +285,16 @@ extension ARTVideoPlayerControlsView {
         hideControlsTimer?.invalidate()
         hideControlsTimer = nil
     }
+    
+    /// 处理播放器状态
+    internal func handleLandscapeControls(isPlaying: Bool) {
+        if isPlaying {
+            stopAutoHideTimer()
+            toggleControls(visible: true)
+        } else {
+            resetAutoHideTimer()
+        }
+    }
 }
 
 // MARK: - Private Delegate Methods

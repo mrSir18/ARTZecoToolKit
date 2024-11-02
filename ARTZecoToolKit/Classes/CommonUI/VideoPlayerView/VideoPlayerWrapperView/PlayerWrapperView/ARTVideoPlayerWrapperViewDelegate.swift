@@ -72,7 +72,7 @@
     @objc optional func wrapperViewDidTap(for wrapperView: ARTVideoPlayerWrapperView, slider: ARTVideoPlayerSlider)
     
     /// 当暂停按钮被点击时调用
-    @objc optional func wrapperViewDidTapPause(for wrapperView: ARTVideoPlayerWrapperView)
+    @objc optional func wrapperViewDidTapPause(for wrapperView: ARTVideoPlayerWrapperView, isPlaying: Bool)
     
     /// 当弹幕开关按钮被点击时调用
     @objc optional func wrapperViewDidTapDanmakuToggle(for wrapperView: ARTVideoPlayerWrapperView)

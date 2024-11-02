@@ -505,6 +505,10 @@ extension ARTVideoPlayerWrapperView {
         // 根据不同的状态处理是否正在拖动滑块
         isDraggingSlider = (newState == .paused)
         playControlsView.updatePlayPauseButtonInControls(isPlaying: newState == .playing)
+        
+        if playerConfig.isLandscape { // 如果是横屏模式
+            playControlsView.handleLandscapeControls(isPlaying: isDraggingSlider)
+        }
         switch newState {
         case .playing: // 如果是播放状态，隐藏系统控制视图并开始播放
             systemControlsView.hideVideoPlayerDisplay()

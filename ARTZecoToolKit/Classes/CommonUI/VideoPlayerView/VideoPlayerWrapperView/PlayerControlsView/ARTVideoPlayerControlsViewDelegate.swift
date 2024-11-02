@@ -72,7 +72,7 @@
     @objc optional func controlsViewDidTap(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider)
     
     /// 当暂停按钮被点击时调用
-    @objc optional func controlsViewDidTapPause(for controlsView: ARTVideoPlayerControlsView)
+    @objc optional func controlsViewDidTapPause(for controlsView: ARTVideoPlayerControlsView, isPlaying: Bool)
     
     /// 当弹幕开关按钮被点击时调用
     @objc optional func controlsViewDidTapDanmakuToggle(for controlsView: ARTVideoPlayerControlsView)

@@ -240,8 +240,8 @@ extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
         print("指定播放时间")
     }
     
-    func playerViewDidTapPause(for playerView: ARTVideoPlayerView) { // 暂停播放 (点击暂停按钮)
-        print("暂停播放")
+    func playerViewDidTapPause(for playerView: ARTVideoPlayerView, isPlaying: Bool) { // 暂停播放 (点击暂停按钮)
+        print("播放状态 \(isPlaying ? "暂停" : "播放")")
     }
     
     func playerViewDidTapDanmakuToggle(for playerView: ARTVideoPlayerView) { // 弹幕开关 (点击弹幕开关按钮)
