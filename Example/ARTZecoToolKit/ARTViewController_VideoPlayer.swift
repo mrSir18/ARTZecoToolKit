@@ -286,6 +286,6 @@ extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
     }
     
     func playerViewDidTapMore(for playerView: ARTVideoPlayerView) { // 点击更多按钮
-     
+        print("点击更多按钮")
     }
 }
