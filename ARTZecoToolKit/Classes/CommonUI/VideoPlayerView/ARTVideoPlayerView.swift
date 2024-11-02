@@ -8,13 +8,17 @@
 /// 视频播放器栈视图，管理视频播放器的显示
 open class ARTVideoPlayerView: UIStackView {
     
+    /// 代理对象
+    public weak var delegate: ARTVideoPlayerViewDelegate?
+    
     /// 视频播放器包装视图
-    private var videoWrapperView: ARTVideoPlayerWrapperView!
+    private var wrapperView: ARTVideoPlayerWrapperView!
     
     
     // MARK: - Initialization
     
-    public init() {
+    public init(_ delegate: ARTVideoPlayerViewDelegate) {
+        self.delegate = delegate
         super.init(frame: .zero)
         setupDefaults()
         setupVideoWrapperView()
@@ -31,7 +35,7 @@ open class ARTVideoPlayerView: UIStackView {
     /// - Parameter config: 视频播放器配置模型
     /// - Note: 重写父类方法，播放视频
     open func startVideoPlayback(with config: ARTVideoPlayerConfig?) {
-        videoWrapperView.startVideoPlayback(with: config)
+        wrapperView.startVideoPlayback(with: config)
     }
 }
 
@@ -55,13 +59,7 @@ extension ARTVideoPlayerView {
     ///
     /// - Parameter playerView: 播放器视图
     @objc open func setupVideoWrapperView() {
-        videoWrapperView = ARTVideoPlayerWrapperView(self)
-        addArrangedSubview(videoWrapperView)
+        wrapperView = ARTVideoPlayerWrapperView(self)
+        addArrangedSubview(wrapperView)
     }
-}
-
-// MARK: - ARTVideoPlayerWrapperViewDelegate
-
-extension ARTVideoPlayerView: ARTVideoPlayerWrapperViewDelegate {
-    
 }

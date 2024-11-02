@@ -109,7 +109,7 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerPortraitFullscreenBottombarD
         delegate?.controlsViewDidTapSpeed?(for: self)
     }
     
-    public func bottombarDidTapCollection(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar) { // 点击收藏按钮
+    public func bottombarDidTapCollection(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar) { // 点击目录按钮
         delegate?.controlsViewDidTapCollection?(for: self)
     }
 }

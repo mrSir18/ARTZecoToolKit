@@ -143,14 +143,14 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPlayerView()
-//        setupSupportedAVPlayerFileExtensions()
+        setupSupportedAVPlayerFileExtensions()
     }
     
     // MARK: - Setup Methods
 
     private func setupPlayerView() { // 创建播放器视图
         let aspectRatio: CGFloat = 16.0 / 9.0
-        let videoPlayerView = ARTVideoPlayerView()
+        let videoPlayerView = ARTVideoPlayerView(self)
         view.addSubview(videoPlayerView)
         videoPlayerView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
@@ -185,5 +185,107 @@ extension ARTViewController_VideoPlayer {
         return AVURLAsset.audiovisualTypes().compactMap {
             UTTypeCopyPreferredTagWithClass($0 as CFString, kUTTagClassFilenameExtension)?.takeRetainedValue() as String?
         }.joined(separator: ", ")
+    }
+}
+
+// MARK: - ARTVideoPlayerViewDelegate
+
+extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
+    
+    /*
+     func customScreenOrientation(for playerView: ARTVideoPlayerView) -> ScreenOrientation { // 自定义播放模式
+     
+     }
+     
+     func customTopBar(for playerView: ARTVideoPlayerView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerTopbar? { // 自定义顶部工具栏视图
+     
+     }
+     
+     func customBottomBar(for playerView: ARTVideoPlayerView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerBottombar? { // 自定义底部工具
+     
+     }
+     */
+    
+    
+// MARK: - 顶部工具栏 - 公共方法
+    
+    func playerViewDidTapBack(for playerView: ARTVideoPlayerView) { // 点击返回按钮
+        print("点击返回按钮")
+    }
+    
+    func playerViewDidTapFavorite(for playerView: ARTVideoPlayerView, isFavorited: Bool) { // 点击收藏按钮
+        print("点击收藏按钮")
+    }
+    
+    func playerViewDidTapShare(for playerView: ARTVideoPlayerView) { // 点击分享按钮
+        print("点击分享按钮")
+    }
+    
+    
+// MARK: - 底部工具栏 - 公共方法
+    
+    func playerViewDidBeginTouch(for playerView: ARTVideoPlayerView, slider: ARTVideoPlayerSlider) { // 暂停播放 (开始拖动滑块)
+        print("暂停播放")
+    }
+    
+    func playerViewDidChangeValue(for playerView: ARTVideoPlayerView, slider: ARTVideoPlayerSlider) { // 快进/快退 (拖动滑块)
+        print("快进/快退")
+    }
+    
+    func playerViewDidEndTouch(for playerView: ARTVideoPlayerView, slider: ARTVideoPlayerSlider) { // 恢复播放 (结束拖动滑块)
+        print("恢复播放")
+    }
+    
+    func playerViewDidTap(for playerView: ARTVideoPlayerView, slider: ARTVideoPlayerSlider) { // 指定播放时间 (点击滑块)
+        print("指定播放时间")
+    }
+    
+    func playerViewDidTapPause(for playerView: ARTVideoPlayerView) { // 暂停播放 (点击暂停按钮)
+        print("暂停播放")
+    }
+    
+    func playerViewDidTapDanmakuToggle(for playerView: ARTVideoPlayerView) { // 弹幕开关 (点击弹幕开关按钮)
+        print("弹幕开关")
+    }
+    
+    func playerViewDidTapDanmakuSettings(for playerView: ARTVideoPlayerView) { // 弹幕设置 (点击弹幕设置按钮)
+        print("弹幕设置")
+    }
+    
+    func playerViewDidTapDanmakuSend(for playerView: ARTVideoPlayerView, text: String) { // 发送弹幕 (点击发送弹幕按钮)
+        print("发送弹幕")
+    }
+    
+    
+// MARK: - 窗口模式 - 底部工具栏
+    
+    func playerViewDidTransitionToFullscreen(for playerView: ARTVideoPlayerView, orientation: ScreenOrientation) { // 点击全屏按钮
+        print("点击全屏按钮")
+    }
+    
+    
+// MARK: - 横屏模式 - 底部工具栏
+    
+    func playerViewDidTapNext(for playerView: ARTVideoPlayerView) { // 点击下一个按钮
+        print("点击下一个按钮")
+    }
+    
+    func playerViewDidTapSpeed(for playerView: ARTVideoPlayerView) { // 点击倍速按钮
+        print("点击倍速按钮")
+    }
+    
+    func playerViewDidTapCollection(for playerView: ARTVideoPlayerView) { // 点击目录按钮
+        print("点击目录按钮")
+    }
+    
+    
+// MARK: - 竖屏模式 - 底部工具栏
+    
+    func playerViewDidTapComment(for playerView: ARTVideoPlayerView) { // 点击评论按钮
+        print("点击评论按钮")
+    }
+    
+    func playerViewDidTapMore(for playerView: ARTVideoPlayerView) { // 点击更多按钮
+        print("点击更多按钮")
     }
 }

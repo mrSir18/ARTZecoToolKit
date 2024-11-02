@@ -11,38 +11,38 @@
 @objc public protocol ARTVideoPlayerControlsViewDelegate: AnyObject {
     
     /// 自定义播放模式
-    /// - Parameter playerControlsView: 控制层视图
+    /// - Parameter controlsView: 控制层视图
     /// - Returns: 自定义播放模式
-    @objc optional func customScreenOrientation(for playerControlsView: ARTVideoPlayerControlsView) -> ScreenOrientation
+    @objc optional func customScreenOrientation(for controlsView: ARTVideoPlayerControlsView) -> ScreenOrientation
     
     /// 自定义顶部工具栏视图
     /// - Parameters:
-    ///   - playerControlsView: 控制层视图
+    ///   - controlsView: 控制层视图
     ///   - screenOrientation: 当前屏幕方向
     /// - Returns: 自定义顶部工具栏视图（需继承自 ARTVideoPlayerTopbar）
-    @objc optional func customTopBar(for playerControlsView: ARTVideoPlayerControlsView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerTopbar?
+    @objc optional func customTopBar(for controlsView: ARTVideoPlayerControlsView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerTopbar?
     
     /// 自定义底部工具栏视图
     /// - Parameters:
-    ///   - playerControlsView: 控制层视图
+    ///   - controlsView: 控制层视图
     ///   - screenOrientation: 当前屏幕方向
     /// - Returns: 自定义底部工具栏视图（需继承自 ARTVideoPlayerBottombar）
-    @objc optional func customBottomBar(for playerControlsView: ARTVideoPlayerControlsView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerBottombar?
+    @objc optional func customBottomBar(for controlsView: ARTVideoPlayerControlsView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerBottombar?
     
     
 // MARK: - 顶部工具栏 - 公共方法
     
     /// 当返回按钮被点击时调用
-    @objc optional func controlsViewDidTapBack(for playerControlsView: ARTVideoPlayerControlsView)
+    @objc optional func controlsViewDidTapBack(for controlsView: ARTVideoPlayerControlsView)
     
     /// 当收藏按钮被点击时调用
     /// - Parameters:
-    ///   - playerControlsView: 控制层视图
+    ///   - controlsView: 控制层视图
     ///   - isFavorited: 是否已收藏
-    @objc optional func controlsViewDidTapFavorite(for playerControlsView: ARTVideoPlayerControlsView, isFavorited: Bool)
+    @objc optional func controlsViewDidTapFavorite(for controlsView: ARTVideoPlayerControlsView, isFavorited: Bool)
     
     /// 当分享按钮被点击时调用
-    @objc optional func controlsViewDidTapShare(for playerControlsView: ARTVideoPlayerControlsView)
+    @objc optional func controlsViewDidTapShare(for controlsView: ARTVideoPlayerControlsView)
     
     
 // MARK: - 底部工具栏 - 公共方法
@@ -89,28 +89,28 @@
     
     /// 全屏切换
     /// - Parameters:
-    ///   - playerControlsView: 控制层视图
+    ///   - controlsView: 控制层视图
     ///   - orientation: 屏幕方向
-    @objc optional func controlsViewDidTransitionToFullscreen(for playerControlsView: ARTVideoPlayerControlsView, orientation: ScreenOrientation)
+    @objc optional func controlsViewDidTransitionToFullscreen(for controlsView: ARTVideoPlayerControlsView, orientation: ScreenOrientation)
     
     
 // MARK: - 横屏模式 - 底部工具栏
 
     /// 当下一个按钮被点击时调用
-    @objc optional func controlsViewDidTapNext(for playerControlsView: ARTVideoPlayerControlsView)
+    @objc optional func controlsViewDidTapNext(for controlsView: ARTVideoPlayerControlsView)
     
     /// 当倍速按钮被点击时调用
-    @objc optional func controlsViewDidTapSpeed(for playerControlsView: ARTVideoPlayerControlsView)
+    @objc optional func controlsViewDidTapSpeed(for controlsView: ARTVideoPlayerControlsView)
     
-    /// 当收藏按钮被点击时调用
-    @objc optional func controlsViewDidTapCollection(for playerControlsView: ARTVideoPlayerControlsView)
+    /// 当目录按钮被点击时调用
+    @objc optional func controlsViewDidTapCollection(for controlsView: ARTVideoPlayerControlsView)
     
     
 // MARK: - 竖屏模式 - 底部工具栏
     
     /// 当评论按钮被点击时调用
-    @objc optional func controlsViewDidTapComment(for playerControlsView: ARTVideoPlayerControlsView)
+    @objc optional func controlsViewDidTapComment(for controlsView: ARTVideoPlayerControlsView)
     
     /// 当更多按钮被点击时调用
-    @objc optional func controlsViewDidTapMore(for playerControlsView: ARTVideoPlayerControlsView)
+    @objc optional func controlsViewDidTapMore(for controlsView: ARTVideoPlayerControlsView)
 }
