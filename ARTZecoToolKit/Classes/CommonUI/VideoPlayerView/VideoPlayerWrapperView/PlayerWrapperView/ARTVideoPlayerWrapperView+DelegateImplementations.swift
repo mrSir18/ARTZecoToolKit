@@ -120,7 +120,9 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     }
     
     public func controlsViewDidTapSpeed(for controlsView: ARTVideoPlayerControlsView) { // 点击倍速按钮
-        delegate?.wrapperViewDidTapSpeed?(for: self)
+//        delegate?.wrapperViewDidTapSpeed?(for: self)
+        let reteView = ARTVideoPlayerPlaybackRateView(self)
+        reteView.showExtensionsView()
     }
     
     public func controlsViewDidTapCollection(for controlsView: ARTVideoPlayerControlsView) { // 点击目录按钮
@@ -136,5 +138,32 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     
     public func controlsViewDidTapMore(for controlsView: ARTVideoPlayerControlsView) { // 点击更多按钮
         delegate?.wrapperViewDidTapMore?(for: self)
+    }
+}
+
+// MARK: - ARTVideoPlayerPlaybackRateViewDelegate
+
+extension ARTVideoPlayerWrapperView: ARTVideoPlayerPlaybackRateViewDelegate {
+        
+    public func didSelectPlaybackRate(rate: Float) {
+        player.rate = rate
+    }
+}
+
+// MARK: - ARTVideoPlayerEpisodeSelectionViewDelegate
+
+extension ARTVideoPlayerWrapperView: ARTVideoPlayerEpisodeSelectionViewDelegate {
+    
+    public func didSelectEpisode(at index: Int) {
+        print("选择了第 \(index) 集")
+    }
+}
+
+// MARK: - ARTVideoPlayerDanmakuViewDelegate
+
+extension ARTVideoPlayerWrapperView: ARTVideoPlayerDanmakuViewDelegate {
+    
+    public func didReceiveDanmaku(_ danmaku: String) {
+        print("弹幕：\(danmaku)")
     }
 }

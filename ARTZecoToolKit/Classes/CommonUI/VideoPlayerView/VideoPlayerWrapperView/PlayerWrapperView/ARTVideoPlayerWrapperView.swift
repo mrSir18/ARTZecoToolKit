@@ -49,6 +49,15 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     /// 播放器控制层（最顶层：顶底栏、侧边栏等）
     public var playControlsView: ARTVideoPlayerControlsView!
     
+    /// 倍数播放视图
+    public var playbackRateView: ARTVideoPlayerPlaybackRateView!
+    
+    /// 选集视图
+    public var episodeSelectionView: ARTVideoPlayerEpisodeSelectionView!
+    
+    /// 弹幕视图
+    public var danmakuView: ARTVideoPlayerDanmakuView!
+    
     /// 音量滑块
     public lazy var volumeSlider: UISlider? = {
         MPVolumeView().subviews.compactMap { $0 as? UISlider }.first
@@ -596,5 +605,37 @@ extension ARTVideoPlayerWrapperView {
 extension ARTVideoPlayerWrapperView {
     open override class var layerClass: AnyClass { // 重写 layerClass 方法
         return AVPlayerLayer.self
+    }
+}
+
+// MARK: - ExtensionView
+
+extension ARTVideoPlayerWrapperView {
+    
+    /// 创建播放速率视图
+    @objc open func setupPlaybackRateView() {
+        playbackRateView = ARTVideoPlayerPlaybackRateView(self)
+        addSubview(playbackRateView)
+        playbackRateView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    /// 创建选集视图
+    @objc open func setupEpisodeSelectionView() {
+        episodeSelectionView = ARTVideoPlayerEpisodeSelectionView(self)
+        addSubview(episodeSelectionView)
+        episodeSelectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    /// 创建弹幕视图
+    @objc open func setupDanmakuView() {
+        danmakuView = ARTVideoPlayerDanmakuView(self)
+        addSubview(danmakuView)
+        danmakuView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 }
