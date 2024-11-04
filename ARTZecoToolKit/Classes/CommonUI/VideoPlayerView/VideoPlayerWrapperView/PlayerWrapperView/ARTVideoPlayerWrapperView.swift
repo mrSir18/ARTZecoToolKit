@@ -371,6 +371,11 @@ extension ARTVideoPlayerWrapperView {
         // 捏合手势
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
         addGestureRecognizer(pinchGesture)
+        
+        // 长按手势
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        longPressGesture.minimumPressDuration = 0.5 // 设置长按时间
+        addGestureRecognizer(longPressGesture)
     }
 }
 
@@ -444,6 +449,24 @@ extension ARTVideoPlayerWrapperView {
         case .ended, .cancelled:
             feedbackGenerator.impactOccurred() // 触发触觉反馈
             break
+        default:
+            break
+        }
+    }
+    
+    /// 长按手势
+    ///
+    /// - Parameter gesture: 长按手势
+    /// - Note: 重写父类方法，处理长按手势
+    @objc open func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+        guard player.timeControlStatus == .playing else { return }
+        switch gesture.state {
+        case .began: // 设置播放速率为2.0，表示两倍速播放
+            guard let currentPlayer = player else { return }
+            currentPlayer.rate = 3.0
+        case .ended, .cancelled, .failed: // 恢复播放速率为
+            guard let currentPlayer = player else { return }
+            currentPlayer.rate = 1.0
         default:
             break
         }
