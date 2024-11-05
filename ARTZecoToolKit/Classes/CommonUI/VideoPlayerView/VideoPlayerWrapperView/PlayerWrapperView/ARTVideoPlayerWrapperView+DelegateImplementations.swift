@@ -124,7 +124,9 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
         playControlsView.autoHideControls()
         let rateView = ARTVideoPlayerPlaybackRateView(self)
         rateView.rateCallback = { [weak self] rate in
-            self?.player.rate = rate
+            guard let self = self else { return }
+            self.player.rate = rate
+            self.resumePlayer()
         }
         rateView.showExtensionsView()
     }

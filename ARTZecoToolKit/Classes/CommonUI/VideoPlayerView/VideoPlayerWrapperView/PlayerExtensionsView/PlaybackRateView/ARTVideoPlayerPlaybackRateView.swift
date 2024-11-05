@@ -11,7 +11,7 @@ open class ARTVideoPlayerPlaybackRateView: ARTVideoPlayerSlidingOverlayView {
     private var titleLabel: UILabel!
     
     /// 恢复按钮
-    private var restoreButton: UIButton!
+    private var restoreButton: ARTAlignmentButton!
     
     /// 分割线视图
     private var separatorLineView: ARTCustomView!
@@ -88,18 +88,18 @@ extension ARTVideoPlayerPlaybackRateView {
     
     /// 设置副标题标签
     private func setupRestoreButton() {
-        restoreButton = UIButton(type: .custom)
-        restoreButton.titleLabel?.font = .art_regular(ARTAdaptedValue(11.0))
-        restoreButton.contentHorizontalAlignment = .right
+        restoreButton = ARTAlignmentButton(type: .custom)
+        restoreButton.contentInset      = ARTAdaptedValue(32.0)
+        restoreButton.imageAlignment    = .right
+        restoreButton.titleLabel?.font  = .art_regular(ARTAdaptedValue(11.0))
         restoreButton.setTitle("恢复", for: .normal)
         restoreButton.setTitleColor(.art_color(withHEXValue: 0xC8C8CC), for: .normal)
         restoreButton.addTarget(self, action: #selector(didTapRestoreButton), for: .touchUpInside)
         containerView.addSubview(restoreButton)
         restoreButton.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.right.equalTo(separatorLineView.snp.right).offset(-ARTAdaptedValue(16.0))
+            make.top.right.equalToSuperview()
             make.bottom.equalTo(separatorLineView)
-            make.width.equalTo(ARTAdaptedValue(60.0))
+            make.width.equalTo(ARTAdaptedValue(90.0))
         }
     }
     
