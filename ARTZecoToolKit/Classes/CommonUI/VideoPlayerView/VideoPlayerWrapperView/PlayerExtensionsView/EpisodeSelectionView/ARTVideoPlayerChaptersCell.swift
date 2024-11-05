@@ -1,11 +1,11 @@
 //
-//  ARTVideoPlayerEpisodeSelectionCell.swift
+//  ARTVideoPlayerChaptersCell.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/11/5.
 //
 
-class ARTVideoPlayerEpisodeSelectionCell: UICollectionViewCell {
+class ARTVideoPlayerChaptersCell: UICollectionViewCell {
     
     /// 标题标签
     private var titleLabel: UILabel!
@@ -74,7 +74,7 @@ class ARTVideoPlayerEpisodeSelectionCell: UICollectionViewCell {
         }
     }
     
-    func configureWithEpisodeContent(_ episode: String) {
+    func configureWithChapterContent(_ episode: String) {
         titleLabel.text = episode
     }
 }

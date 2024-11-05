@@ -37,6 +37,17 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     /// 进度条值
     public var sliderValue: Float = 0.0
     
+    /// 倍速
+    public var currentRate: Float = 1.0
+    
+    /// 音量滑块
+    public lazy var volumeSlider: UISlider? = {
+        MPVolumeView().subviews.compactMap { $0 as? UISlider }.first
+    }()
+    
+    /// 触觉反馈发生器
+    public var feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    
     
     // MARK: - 播放器组件 AVPlayer（最底层：播放器视图）
     
@@ -49,13 +60,27 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     /// 播放器控制层（最顶层：顶底栏、侧边栏等）
     public var playControlsView: ARTVideoPlayerControlsView!
     
-    /// 音量滑块
-    public lazy var volumeSlider: UISlider? = {
-        MPVolumeView().subviews.compactMap { $0 as? UISlider }.first
+    /// 懒加载倍速视图
+    public lazy var rateView: ARTVideoPlayerSlidingOverlayView = {
+        let rateView = ARTVideoPlayerPlaybackRateView(self)
+        rateView.rateCallback = { [weak self] rate in
+            guard let self = self else { return }
+            self.currentRate = rate
+            self.player.rate = rate
+            self.resumePlayer()
+        }
+        return rateView
     }()
     
-    /// 触觉反馈发生器
-    public var feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    /// 懒加载目录视图
+    public lazy var chaptersView: ARTVideoPlayerSlidingOverlayView = {
+        let chaptersView = ARTVideoPlayerChaptersView(self)
+        chaptersView.chapterCallback = { [weak self] index in
+            guard let self = self else { return }
+            print("选择了第 \(index) 集")
+        }
+        return chaptersView
+    }()
     
     
     // MARK: - Initialization
@@ -176,9 +201,10 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     open func seekToSliderValue(_ slider: ARTVideoPlayerSlider, completion: (() -> Void)? = nil) {
         guard let duration = player.currentItem?.duration else { return }
         let time = CMTimeMake(value: Int64(slider.value * Float(duration.value)), timescale: duration.timescale)
-        player.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero) { completed in
-            guard completed else { return }
+        player.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] completed in
+            guard completed, let currentRate = self?.currentRate else { return }
             completion?()
+            self?.player.rate = currentRate
         }
     }
     
@@ -536,6 +562,7 @@ extension ARTVideoPlayerWrapperView {
         case .playing: // 如果是播放状态，隐藏系统控制视图并开始播放
             systemControlsView.hideVideoPlayerDisplay()
             player.play()
+            player.rate = currentRate
         case .paused: // 如果是暂停状态，暂停播放
             player.pause()
         default:

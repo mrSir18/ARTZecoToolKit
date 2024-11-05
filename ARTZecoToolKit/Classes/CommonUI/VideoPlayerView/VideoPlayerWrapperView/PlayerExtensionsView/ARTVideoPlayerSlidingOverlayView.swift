@@ -20,6 +20,15 @@ open class ARTVideoPlayerSlidingOverlayView: UIView {
     /// 容器视图
     public var containerView: UIView!
     
+    /// 标题标签
+    public var titleLabel: UILabel!
+    
+    /// 恢复按钮
+    public var restoreButton: ARTAlignmentButton!
+    
+    /// 分割线视图
+    public var separatorLineView: ARTCustomView!
+    
     
     // MARK: - Initialization
     
@@ -40,6 +49,9 @@ open class ARTVideoPlayerSlidingOverlayView: UIView {
     open func setupViews() {
         setupContainerView()
         setupGradientView()
+        setupSeparatorLineView()
+        setupTitleLabel()
+        setupRestoreButton()
         setupGestureRecognizer()
     }
     
@@ -51,12 +63,14 @@ open class ARTVideoPlayerSlidingOverlayView: UIView {
     /// - Parameter animated: 是否动画
     /// - Note: 重写父类方法，设置子视图布局
     open func showExtensionsView(_ completion: (() -> Void)? = nil) {
-        art_keyWindow.addSubview(self)
-        snp.makeConstraints { make in
-            make.size.equalTo(CGSizeMake(UIScreen.art_currentScreenWidth,
-                                         UIScreen.art_currentScreenHeight))
-            make.left.top.equalToSuperview()
+        if self.superview == nil { // 判断视图是否已在父视图中
+            art_keyWindow.addSubview(self)
+            snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
         }
+        art_keyWindow.bringSubviewToFront(self)
+        self.isHidden = false
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut]) {
             self.containerView.transform = CGAffineTransformTranslate(self.containerView.transform, -UIScreen.art_currentScreenWidth, 0)
         } completion: { _ in
@@ -72,10 +86,20 @@ open class ARTVideoPlayerSlidingOverlayView: UIView {
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut]) {
             self.containerView.transform = CGAffineTransformTranslate(self.containerView.transform, UIScreen.art_currentScreenWidth, 0)
         } completion: { _ in
-            self.removeFromSuperview()
+            self.isHidden = true
             completion?()
         }
     }
+    
+    
+    // MARK: - Button Actions
+    
+    @objc open func didTapRestoreButton() { // 恢复
+
+    }
+    
+    
+    // MARK: - Gesture Recognizer
     
     /// 点击手势
     ///
@@ -130,6 +154,50 @@ extension ARTVideoPlayerSlidingOverlayView {
         ]
         gradient.locations = [0.0, 0.65, 0.85, 1.0]
         gradientView.layer.addSublayer(gradient)
+    }
+    
+    /// 设置分割线视图
+    @objc open func setupSeparatorLineView() {
+        separatorLineView = ARTCustomView()
+        separatorLineView.customBackgroundColor = .art_color(withHEXValue: 0xD8D8D8, alpha: 0.2)
+        containerView.addSubview(separatorLineView)
+        separatorLineView.snp.makeConstraints { make in
+            make.right.equalTo(-ARTAdaptedValue(16.0))
+            make.top.equalTo(ARTAdaptedValue(44.0))
+            make.width.equalTo(ARTAdaptedValue(246.0))
+            make.height.equalTo(0.5)
+        }
+    }
+    
+    /// 设置标题标签
+    @objc open func setupTitleLabel() {
+        titleLabel = UILabel()
+        titleLabel.textAlignment      = .left
+        titleLabel.font               = .art_medium(ARTAdaptedValue(13.0))
+        titleLabel.textColor          = .art_color(withHEXValue: 0xFFFFFF)
+        containerView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.left.equalTo(separatorLineView.snp.left).offset(ARTAdaptedValue(12.0))
+            make.top.equalTo(ARTAdaptedValue(12.0))
+            make.height.equalTo(ARTAdaptedValue(18.0))
+        }
+    }
+    
+    /// 设置副标题标签
+    @objc open func setupRestoreButton() {
+        restoreButton = ARTAlignmentButton(type: .custom)
+        restoreButton.contentInset      = ARTAdaptedValue(32.0)
+        restoreButton.imageAlignment    = .right
+        restoreButton.titleLabel?.font  = .art_regular(ARTAdaptedValue(11.0))
+        restoreButton.setTitle("恢复", for: .normal)
+        restoreButton.setTitleColor(.art_color(withHEXValue: 0xC8C8CC), for: .normal)
+        restoreButton.addTarget(self, action: #selector(didTapRestoreButton), for: .touchUpInside)
+        containerView.addSubview(restoreButton)
+        restoreButton.snp.makeConstraints { make in
+            make.top.right.equalToSuperview()
+            make.bottom.equalTo(separatorLineView)
+            make.width.equalTo(ARTAdaptedValue(90.0))
+        }
     }
     
     /// 创建手势识别器

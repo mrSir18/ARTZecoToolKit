@@ -122,23 +122,13 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     public func controlsViewDidTapSpeed(for controlsView: ARTVideoPlayerControlsView) { // 点击倍速按钮
 //        delegate?.wrapperViewDidTapSpeed?(for: self)
         playControlsView.autoHideControls()
-        let rateView = ARTVideoPlayerPlaybackRateView(self)
-        rateView.rateCallback = { [weak self] rate in
-            guard let self = self else { return }
-            self.player.rate = rate
-            self.resumePlayer()
-        }
         rateView.showExtensionsView()
     }
     
     public func controlsViewDidTapCollection(for controlsView: ARTVideoPlayerControlsView) { // 点击目录按钮
 //        delegate?.wrapperViewDidTapCollection?(for: self)
         playControlsView.autoHideControls()
-        let episodeSelectionView = ARTVideoPlayerEpisodeSelectionView(self)
-        episodeSelectionView.episodeCallback = { [weak self] index in
-            print("选择了第 \(index) 集")
-        }
-        episodeSelectionView.showExtensionsView()
+        chaptersView.showExtensionsView()
     }
     
     

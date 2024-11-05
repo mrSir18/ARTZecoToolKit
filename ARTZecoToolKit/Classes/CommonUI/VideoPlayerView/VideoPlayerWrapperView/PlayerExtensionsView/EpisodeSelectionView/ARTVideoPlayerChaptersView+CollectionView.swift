@@ -1,5 +1,5 @@
 //
-//  ARTVideoPlayerEpisodeSelectionView+CollectionView.swift
+//  ARTVideoPlayerChaptersView+CollectionView.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/11/5.
@@ -7,16 +7,16 @@
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
-extension ARTVideoPlayerEpisodeSelectionView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ARTVideoPlayerChaptersView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return episodes.count
+        return chapters.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueCell(for: indexPath) as ARTVideoPlayerEpisodeSelectionCell
+        let cell = collectionView.dequeueCell(for: indexPath) as ARTVideoPlayerChaptersCell
         cell.updateCellBorderStyle(indexPath == shouldSelectedIndexPath)
-        cell.configureWithEpisodeContent(episodes[indexPath.item])
+        cell.configureWithChapterContent(chapters[indexPath.item])
         return cell
     }
     
@@ -33,7 +33,7 @@ extension ARTVideoPlayerEpisodeSelectionView: UICollectionViewDelegate, UICollec
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        episodeCallback?(episodes[indexPath.item])
+        chapterCallback?(chapters[indexPath.item])
         hideExtensionsView()
     }
 }

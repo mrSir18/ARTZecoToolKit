@@ -229,7 +229,7 @@ extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
     }
     
     func playerViewDidChangeValue(for playerView: ARTVideoPlayerView, slider: ARTVideoPlayerSlider) { // 快进/快退 (拖动滑块)
-        print("快进/快退")
+        
     }
     
     func playerViewDidEndTouch(for playerView: ARTVideoPlayerView, slider: ARTVideoPlayerSlider) { // 恢复播放 (结束拖动滑块)

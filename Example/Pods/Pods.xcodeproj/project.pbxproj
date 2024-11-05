@@ -17,13 +17,13 @@
 		021EE99DE5317751CBEB135AC871715F /* SDWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AD41423DA8EB4E7696091C9694189D /* SDWeakProxy.m */; };
 		024280C62CDA4C7800D905E9 /* ARTVideoPlayerPlaybackRateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024280C42CDA4C7800D905E9 /* ARTVideoPlayerPlaybackRateCell.swift */; };
 		024280C72CDA4C7800D905E9 /* ARTVideoPlayerPlaybackRateView+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024280C52CDA4C7800D905E9 /* ARTVideoPlayerPlaybackRateView+CollectionView.swift */; };
-		024280C92CDA5DF600D905E9 /* ARTVideoPlayerEpisodeSelectionView+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024280C82CDA5DF600D905E9 /* ARTVideoPlayerEpisodeSelectionView+CollectionView.swift */; };
-		024280CB2CDA5E0900D905E9 /* ARTVideoPlayerEpisodeSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024280CA2CDA5E0900D905E9 /* ARTVideoPlayerEpisodeSelectionCell.swift */; };
+		024280C92CDA5DF600D905E9 /* ARTVideoPlayerChaptersView+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024280C82CDA5DF600D905E9 /* ARTVideoPlayerChaptersView+CollectionView.swift */; };
+		024280CB2CDA5E0900D905E9 /* ARTVideoPlayerChaptersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024280CA2CDA5E0900D905E9 /* ARTVideoPlayerChaptersCell.swift */; };
 		024BA1E2AF4FC7D0A9F5DAEAF7ACBC7C /* SDWebImageTransitionInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = FDD28E1F51C8B7353DD1387AC2F86BB3 /* SDWebImageTransitionInternal.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		027F7F862FA8330B46285F609DC63758 /* SDAssociatedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DE50222B3232F81B1A8CF42AAD64A1A0 /* SDAssociatedObject.m */; };
 		02AFE5F52CD8BF240083A1F4 /* ARTVideoPlayerPlaybackRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AFE5F22CD8BF240083A1F4 /* ARTVideoPlayerPlaybackRateView.swift */; };
 		02AFE5F62CD8BF240083A1F4 /* ARTVideoPlayerDanmakuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AFE5F02CD8BF240083A1F4 /* ARTVideoPlayerDanmakuView.swift */; };
-		02AFE5F72CD8BF240083A1F4 /* ARTVideoPlayerEpisodeSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AFE5EE2CD8BF240083A1F4 /* ARTVideoPlayerEpisodeSelectionView.swift */; };
+		02AFE5F72CD8BF240083A1F4 /* ARTVideoPlayerChaptersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AFE5EE2CD8BF240083A1F4 /* ARTVideoPlayerChaptersView.swift */; };
 		02AFE5F92CD8C1380083A1F4 /* ARTVideoPlayerSlidingOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AFE5F82CD8C1380083A1F4 /* ARTVideoPlayerSlidingOverlayView.swift */; };
 		02E74256691C3F3367B6BB5F99210E0A /* ConstraintDirectionalInsetTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3316AC1568186AA600530014EE902F35 /* ConstraintDirectionalInsetTarget.swift */; };
 		037AD84135AADDD563933F07E09679DC /* UIImage+MemoryCacheCost.h in Headers */ = {isa = PBXBuildFile; fileRef = 04902A9BBF8E407ECC2E100A6701F135 /* UIImage+MemoryCacheCost.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -551,9 +551,9 @@
 		0206DE139440188F487DEF7AF2043DD2 /* YYTextArchiver.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = YYTextArchiver.m; path = YYText/String/YYTextArchiver.m; sourceTree = "<group>"; };
 		024280C42CDA4C7800D905E9 /* ARTVideoPlayerPlaybackRateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerPlaybackRateCell.swift; sourceTree = "<group>"; };
 		024280C52CDA4C7800D905E9 /* ARTVideoPlayerPlaybackRateView+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTVideoPlayerPlaybackRateView+CollectionView.swift"; sourceTree = "<group>"; };
-		024280C82CDA5DF600D905E9 /* ARTVideoPlayerEpisodeSelectionView+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTVideoPlayerEpisodeSelectionView+CollectionView.swift"; sourceTree = "<group>"; };
-		024280CA2CDA5E0900D905E9 /* ARTVideoPlayerEpisodeSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerEpisodeSelectionCell.swift; sourceTree = "<group>"; };
-		02AFE5EE2CD8BF240083A1F4 /* ARTVideoPlayerEpisodeSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerEpisodeSelectionView.swift; sourceTree = "<group>"; };
+		024280C82CDA5DF600D905E9 /* ARTVideoPlayerChaptersView+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTVideoPlayerChaptersView+CollectionView.swift"; sourceTree = "<group>"; };
+		024280CA2CDA5E0900D905E9 /* ARTVideoPlayerChaptersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerChaptersCell.swift; sourceTree = "<group>"; };
+		02AFE5EE2CD8BF240083A1F4 /* ARTVideoPlayerChaptersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerChaptersView.swift; sourceTree = "<group>"; };
 		02AFE5F02CD8BF240083A1F4 /* ARTVideoPlayerDanmakuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerDanmakuView.swift; sourceTree = "<group>"; };
 		02AFE5F22CD8BF240083A1F4 /* ARTVideoPlayerPlaybackRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerPlaybackRateView.swift; sourceTree = "<group>"; };
 		02AFE5F82CD8C1380083A1F4 /* ARTVideoPlayerSlidingOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerSlidingOverlayView.swift; sourceTree = "<group>"; };
@@ -1128,9 +1128,9 @@
 		02AFE5EF2CD8BF240083A1F4 /* EpisodeSelectionView */ = {
 			isa = PBXGroup;
 			children = (
-				02AFE5EE2CD8BF240083A1F4 /* ARTVideoPlayerEpisodeSelectionView.swift */,
-				024280C82CDA5DF600D905E9 /* ARTVideoPlayerEpisodeSelectionView+CollectionView.swift */,
-				024280CA2CDA5E0900D905E9 /* ARTVideoPlayerEpisodeSelectionCell.swift */,
+				02AFE5EE2CD8BF240083A1F4 /* ARTVideoPlayerChaptersView.swift */,
+				024280C82CDA5DF600D905E9 /* ARTVideoPlayerChaptersView+CollectionView.swift */,
+				024280CA2CDA5E0900D905E9 /* ARTVideoPlayerChaptersCell.swift */,
 			);
 			path = EpisodeSelectionView;
 			sourceTree = "<group>";
@@ -2988,7 +2988,7 @@
 				F9F7CCC01654226F516EB55494C051B9 /* ARTCustomView.swift in Sources */,
 				9D7C188460C94BBAD214FF058397FF2E /* ARTDeviceExtension .swift in Sources */,
 				171D8B0890DB7557D05F9BCDE0898A5C /* ARTFadeOutAnimator.swift in Sources */,
-				024280CB2CDA5E0900D905E9 /* ARTVideoPlayerEpisodeSelectionCell.swift in Sources */,
+				024280CB2CDA5E0900D905E9 /* ARTVideoPlayerChaptersCell.swift in Sources */,
 				125674166C07091B58B88B7C9200C2BD /* ARTFullScreenController.swift in Sources */,
 				38DCF09710701B0DE7FE23CC1DAED63F /* ARTJavaScriptBundleLoader.swift in Sources */,
 				6072A80793838482C2B7AA3557BCD6BF /* ARTPageViewController.swift in Sources */,
@@ -3026,7 +3026,7 @@
 				223AD03A610DBCF0E3979E37DF4F0A25 /* ARTVideoPlayerDisplayView.swift in Sources */,
 				33E373BB9D227BBA1047F7581D51D201 /* ARTVideoPlayerLandscapeFullscreenBottombar.swift in Sources */,
 				F2994360B6D786F1A5D8EE9A170D1D4D /* ARTVideoPlayerLandscapeFullscreenTopbar.swift in Sources */,
-				024280C92CDA5DF600D905E9 /* ARTVideoPlayerEpisodeSelectionView+CollectionView.swift in Sources */,
+				024280C92CDA5DF600D905E9 /* ARTVideoPlayerChaptersView+CollectionView.swift in Sources */,
 				6F509F469A0A8FA5A57A6759D45A2F92 /* ARTVideoPlayerOverlayView.swift in Sources */,
 				1BFA87B0142B921A4BA62A6EC84EE9B5 /* ARTVideoPlayerPortraitFullscreenBottombar.swift in Sources */,
 				29610B105E9473B5DF5BCE06FA2C3CB4 /* ARTVideoPlayerPortraitFullscreenTopbar.swift in Sources */,
@@ -3067,7 +3067,7 @@
 				422DA032920466EF53486E359166B346 /* UITextField+ARTExtension.swift in Sources */,
 				02AFE5F52CD8BF240083A1F4 /* ARTVideoPlayerPlaybackRateView.swift in Sources */,
 				02AFE5F62CD8BF240083A1F4 /* ARTVideoPlayerDanmakuView.swift in Sources */,
-				02AFE5F72CD8BF240083A1F4 /* ARTVideoPlayerEpisodeSelectionView.swift in Sources */,
+				02AFE5F72CD8BF240083A1F4 /* ARTVideoPlayerChaptersView.swift in Sources */,
 				2171E4AF3F1BA8C6704371248700842F /* UIView+ARTExtension.swift in Sources */,
 				5CFB001038379925F7178B28EEDD0FA8 /* WKWebView+ARTCookieHandler.swift in Sources */,
 				EAB83A829AC93B934F52126EE7C1CC29 /* WKWebView+ARTCookieInjection.swift in Sources */,

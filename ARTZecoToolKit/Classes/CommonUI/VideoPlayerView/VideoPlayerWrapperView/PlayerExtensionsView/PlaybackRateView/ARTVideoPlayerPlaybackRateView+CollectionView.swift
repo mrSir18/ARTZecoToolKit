@@ -34,6 +34,7 @@ extension ARTVideoPlayerPlaybackRateView: UICollectionViewDelegate, UICollection
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let rate = Float(rates[indexPath.item]) else { return }
+        shouldSelectedIndexPath = indexPath
         rateCallback?(rate)
         hideExtensionsView()
     }
