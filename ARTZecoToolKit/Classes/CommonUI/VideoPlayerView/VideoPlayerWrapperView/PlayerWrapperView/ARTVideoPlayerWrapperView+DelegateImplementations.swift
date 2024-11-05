@@ -121,12 +121,22 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     
     public func controlsViewDidTapSpeed(for controlsView: ARTVideoPlayerControlsView) { // 点击倍速按钮
 //        delegate?.wrapperViewDidTapSpeed?(for: self)
-        let reteView = ARTVideoPlayerPlaybackRateView(self)
-        reteView.showExtensionsView()
+        playControlsView.autoHideControls()
+        let rateView = ARTVideoPlayerPlaybackRateView(self)
+        rateView.rateCallback = { [weak self] rate in
+            self?.player.rate = rate
+        }
+        rateView.showExtensionsView()
     }
     
     public func controlsViewDidTapCollection(for controlsView: ARTVideoPlayerControlsView) { // 点击目录按钮
-        delegate?.wrapperViewDidTapCollection?(for: self)
+//        delegate?.wrapperViewDidTapCollection?(for: self)
+        playControlsView.autoHideControls()
+        let episodeSelectionView = ARTVideoPlayerEpisodeSelectionView(self)
+        episodeSelectionView.episodeCallback = { [weak self] index in
+            print("选择了第 \(index) 集")
+        }
+        episodeSelectionView.showExtensionsView()
     }
     
     
@@ -143,20 +153,8 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
 
 // MARK: - ARTVideoPlayerPlaybackRateViewDelegate
 
-extension ARTVideoPlayerWrapperView: ARTVideoPlayerPlaybackRateViewDelegate {
-        
-    public func didSelectPlaybackRate(rate: Float) {
-        player.rate = rate
-    }
-}
+extension ARTVideoPlayerWrapperView: ARTVideoPlayerSlidingOverlayViewDelegate {
 
-// MARK: - ARTVideoPlayerEpisodeSelectionViewDelegate
-
-extension ARTVideoPlayerWrapperView: ARTVideoPlayerEpisodeSelectionViewDelegate {
-    
-    public func didSelectEpisode(at index: Int) {
-        print("选择了第 \(index) 集")
-    }
 }
 
 // MARK: - ARTVideoPlayerDanmakuViewDelegate

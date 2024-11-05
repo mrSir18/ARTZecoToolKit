@@ -58,7 +58,7 @@ open class ARTVideoPlayerSlidingOverlayView: UIView {
             make.left.top.equalToSuperview()
         }
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut]) {
-            self.containerView.alpha = 1.0
+            self.containerView.transform = CGAffineTransformTranslate(self.containerView.transform, -UIScreen.art_currentScreenWidth, 0)
         } completion: { _ in
             completion?()
         }
@@ -70,7 +70,7 @@ open class ARTVideoPlayerSlidingOverlayView: UIView {
     /// - Note: 重写父类方法，设置子视图布局
     open func hideExtensionsView(_ completion: (() -> Void)? = nil) {
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut]) {
-            self.containerView.alpha = 0.0
+            self.containerView.transform = CGAffineTransformTranslate(self.containerView.transform, UIScreen.art_currentScreenWidth, 0)
         } completion: { _ in
             self.removeFromSuperview()
             completion?()
@@ -94,10 +94,11 @@ extension ARTVideoPlayerSlidingOverlayView {
     @objc open func setupContainerView() {
         containerView = UIView()
         containerView.backgroundColor = .clear
-        containerView.alpha = 0.0
         addSubview(containerView)
         containerView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.left.equalTo(snp.right)
+            make.width.equalTo(UIScreen.art_currentScreenWidth)
         }
     }
     
@@ -136,6 +137,7 @@ extension ARTVideoPlayerSlidingOverlayView {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSortingTapGesture(_:)))
         tapRecognizer.numberOfTapsRequired = 1
         tapRecognizer.numberOfTouchesRequired = 1
-        addGestureRecognizer(tapRecognizer)
+        tapRecognizer.cancelsTouchesInView = false // 允许触摸事件传递到子视图
+        containerView.addGestureRecognizer(tapRecognizer)
     }
 }
