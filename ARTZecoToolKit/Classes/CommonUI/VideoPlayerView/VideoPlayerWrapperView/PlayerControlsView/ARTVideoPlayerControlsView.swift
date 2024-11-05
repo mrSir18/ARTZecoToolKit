@@ -31,6 +31,9 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     /// 隐藏控件定时器
     public var hideControlsTimer: Timer?
     
+    /// 是否隐藏顶底工具栏
+    public var isHiddenControls: Bool = false
+    
     
     // MARK: - 播放器组件
     
@@ -49,6 +52,7 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     public init(_ delegate: ARTVideoPlayerControlsViewDelegate? = nil) {
         super.init(frame: .zero)
         self.delegate = delegate
+        self.clipsToBounds = true
     }
     
     required public init?(coder: NSCoder) {
@@ -141,29 +145,23 @@ extension ARTVideoPlayerControlsView {
     
     /// 创建顶部工具栏
     @objc open func setupTopBar() {
-        if let customTopBar = delegate_customTopBar() { // 获取自定义顶部工具栏
-            topBar = customTopBar
-        } else {
-            topBar = defaultTopBarForOrientation()
-            addSubview(topBar)
-            topBar.snp.makeConstraints { make in
-                make.left.top.right.equalToSuperview()
-                make.height.equalTo(topBarHeight(for: screenOrientation))
-            }
+        let topBarHeight = topBarHeight(for: screenOrientation)
+        topBar = delegate_customTopBar() ?? defaultTopBarForOrientation()
+        addSubview(topBar)
+        topBar.snp.makeConstraints { make in
+            make.left.top.right.equalToSuperview()
+            make.height.equalTo(topBarHeight)
         }
     }
     
     /// 创建底部工具栏
     @objc open func setupBottomBar() {
-        if let customBottomBar = delegate_customBottomBar() { // 获取自定义底部工具栏
-            bottomBar = customBottomBar
-        } else {
-            bottomBar = defaultBottomBarForOrientation()
-            addSubview(bottomBar)
-            bottomBar.snp.makeConstraints { make in
-                make.left.bottom.right.equalToSuperview()
-                make.height.equalTo(bottomBarHeight(for: screenOrientation))
-            }
+        let bottomBarHeight = bottomBarHeight(for: screenOrientation)
+        bottomBar = delegate_customBottomBar() ?? defaultBottomBarForOrientation()
+        addSubview(bottomBar)
+        bottomBar.snp.makeConstraints { make in
+            make.left.bottom.right.equalToSuperview()
+            make.height.equalTo(bottomBarHeight)
         }
     }
     
@@ -182,7 +180,7 @@ extension ARTVideoPlayerControlsView {
     
     /// 切换控制条的显示与隐藏状态
     @objc open func toggleControlsVisibility() {
-        toggleControls(visible: topBar.containerView.alpha == 0)
+        toggleControls(visible: isHiddenControls)
         resetAutoHideTimer()
     }
 }
@@ -268,9 +266,36 @@ extension ARTVideoPlayerControlsView {
     ///  - visibility: 显示状态
     ///  - animated
     internal func toggleControls(visible: Bool) {
-        UIView.animate(withDuration: 0.25) {
-            self.topBar.containerView.alpha = visible ? 1 : 0
-            self.bottomBar.alpha = visible ? 1 : 0
+        isHiddenControls = !visible
+        if screenOrientation == .window { // 窗口模式下调整透明度
+            let targetAlpha: CGFloat = visible ? 1 : 0
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut], animations: {
+                self.topBar.containerView.alpha = targetAlpha
+                self.bottomBar.alpha = targetAlpha
+            })
+        } else { // 横屏全屏模式下调整约束
+            updateBarConstraints(visible: visible)
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut], animations: {
+                self.layoutIfNeeded()
+            })
+        }
+    }
+    
+    /// 更新工具栏约束
+    internal func updateBarConstraints(visible: Bool) {
+        let topBarHeight = topBarHeight(for: screenOrientation)
+        let bottomBarHeight = bottomBarHeight(for: screenOrientation)
+        
+        topBar.snp.remakeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.height.equalTo(topBarHeight)
+            make.top.equalTo(visible ? 0 : -topBarHeight) // 显示时顶部对齐，隐藏时推到上方
+        }
+        
+        bottomBar.snp.remakeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.height.equalTo(bottomBarHeight)
+            make.bottom.equalTo(visible ? 0 : bottomBarHeight) // 显示时底部对齐，隐藏时推到下方
         }
     }
     
