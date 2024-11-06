@@ -1,5 +1,5 @@
 //
-//  ARTVideoPlayerSlidingOverlayView.swift
+//  ARTVideoPlayerLandscapeSlidingView.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/11/4.
@@ -8,14 +8,14 @@
 /// 协议方法
 ///
 /// - NOTE: 可继承该协议方法
-@objc public protocol ARTVideoPlayerSlidingOverlayViewDelegate: AnyObject {
+@objc public protocol ARTVideoPlayerLandscapeSlidingViewDelegate: AnyObject {
     
 }
 
-open class ARTVideoPlayerSlidingOverlayView: UIView {
+open class ARTVideoPlayerLandscapeSlidingView: UIView {
     
     /// 代理对象
-    public weak var delegate: ARTVideoPlayerSlidingOverlayViewDelegate?
+    public weak var delegate: ARTVideoPlayerLandscapeSlidingViewDelegate?
     
     /// 容器视图
     public var containerView: UIView!
@@ -35,7 +35,7 @@ open class ARTVideoPlayerSlidingOverlayView: UIView {
     
     // MARK: - Initialization
     
-    public init(_ delegate: ARTVideoPlayerSlidingOverlayViewDelegate? = nil) {
+    public init(_ delegate: ARTVideoPlayerLandscapeSlidingViewDelegate? = nil) {
         super.init(frame: .zero)
         self.delegate = delegate
         self.backgroundColor = .clear
@@ -115,7 +115,7 @@ open class ARTVideoPlayerSlidingOverlayView: UIView {
 
 // MARK: - Setup Initializer
 
-extension ARTVideoPlayerSlidingOverlayView {
+extension ARTVideoPlayerLandscapeSlidingView {
     
     /// 创建容器视图
     @objc open func setupContainerView() {

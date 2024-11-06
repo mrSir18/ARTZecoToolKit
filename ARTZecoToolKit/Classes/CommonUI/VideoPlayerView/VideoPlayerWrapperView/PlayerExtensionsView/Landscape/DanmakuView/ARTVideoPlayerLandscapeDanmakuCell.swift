@@ -11,7 +11,7 @@ class ARTVideoPlayerLandscapeDanmakuCell: UICollectionViewCell {
     public var feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     /// 滑块选项
-    private var option: ARTVideoPlayerLandscapeDanmakuEntity.SliderOption!
+    private var option: ARTVideoPlayerGeneralDanmakuEntity.SliderOption!
     
     /// 标题标签
     private var titleLabel: UILabel!
@@ -27,7 +27,7 @@ class ARTVideoPlayerLandscapeDanmakuCell: UICollectionViewCell {
         view.minimumTrackTintColor = .art_color(withHEXValue: 0xFE5C01)
         view.maximumTrackTintColor = .art_color(withHEXValue: 0xC8C8CC, alpha: 0.5)
         view.trackHeight = ARTAdaptedValue(2.0)
-        if let thumbImage = UIImage(named: "video_slider_danmaku_thumb")?.art_scaled(to: ARTAdaptedSize(width: 14.0, height: 14.0)) {
+        if let thumbImage = UIImage(named: "video_slider_landscape_danmaku_thumb")?.art_scaled(to: ARTAdaptedSize(width: 14.0, height: 14.0)) {
             view.setThumbImage(thumbImage, for: .normal)
         }
         view.addTarget(self, action: #selector(handleSliderValueChanged(_:)), for: .valueChanged)
@@ -74,14 +74,14 @@ class ARTVideoPlayerLandscapeDanmakuCell: UICollectionViewCell {
         
         // 创建百分比标签
         percentLabel = UILabel()
-        percentLabel.textAlignment      = .right
+        percentLabel.textAlignment      = .center
         percentLabel.font               = .art_medium(ARTAdaptedValue(10.0))
         percentLabel.textColor          = .art_color(withHEXValue: 0xFFFFFF)
         contentView.addSubview(percentLabel)
         percentLabel.snp.makeConstraints { make in
+            make.size.equalTo(ARTAdaptedSize(width: 44.0, height: 14.0))
             make.top.equalTo(titleLabel.snp.bottom).offset(ARTAdaptedValue(6.0))
-            make.right.equalTo(-ARTAdaptedValue(12.0))
-            make.height.equalTo(ARTAdaptedValue(14.0))
+            make.right.equalTo(-ARTAdaptedValue(4.0))
         }
         
         // 创建滑块视图
@@ -133,7 +133,7 @@ class ARTVideoPlayerLandscapeDanmakuCell: UICollectionViewCell {
     
     // MARK: - Public Methods
     
-    func configureWithSliderOption(_ option: ARTVideoPlayerLandscapeDanmakuEntity.SliderOption) {
+    func configureWithSliderOption(_ option: ARTVideoPlayerGeneralDanmakuEntity.SliderOption) {
         self.option = option
         titleLabel.text = option.title
         if option.optionType == .opacity {

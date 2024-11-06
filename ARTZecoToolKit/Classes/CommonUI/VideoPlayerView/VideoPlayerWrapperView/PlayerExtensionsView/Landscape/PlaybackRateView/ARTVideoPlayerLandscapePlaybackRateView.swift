@@ -1,25 +1,27 @@
 //
-//  ARTVideoPlayerLandscapeDanmakuView.swift
+//  ARTVideoPlayerLandscapePlaybackRateView.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/11/4.
 //
 
-open class ARTVideoPlayerLandscapeDanmakuView: ARTVideoPlayerSlidingOverlayView {
+open class ARTVideoPlayerLandscapePlaybackRateView: ARTVideoPlayerLandscapeSlidingView {
     
-    /// 弹幕设置实例
-    public var danmakuEntity = ARTVideoPlayerLandscapeDanmakuEntity()
+    /// 默认选中的索引路径
+    public var shouldSelectedIndexPath: IndexPath = IndexPath(item: 4, section: 0)
     
-    /// 触觉反馈发生器
-    public var feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    /// 倍数数据
+    public var rates: [String] = ["3.0", "2.0", "1.5", "1.25", "1.0", "0.5"]
+    
+    /// 回调事件
+    public var rateCallback: ((_ rate: Float) -> Void)?
     
     
     // MARK: - Override Super Methods
     
     open override func setupViews() {
         super.setupViews()
-        feedbackGenerator.prepare() // 准备好触觉反馈
-        titleLabel.text = "弹幕设置"
+        titleLabel.text = "倍速设置"
         setupCollectionView()
     }
     
@@ -33,9 +35,9 @@ open class ARTVideoPlayerLandscapeDanmakuView: ARTVideoPlayerSlidingOverlayView 
     // MARK: - Button Actions
     
     open override func didTapRestoreButton() { // 恢复按钮
-        feedbackGenerator.impactOccurred()
-        danmakuEntity.restoreDefaults()
-        collectionView.reloadData()
+        shouldSelectedIndexPath = IndexPath(item: 4, section: 0)
+        rateCallback?(1.0)
+        hideExtensionsView()
     }
     
     open override func showExtensionsView(_ completion: (() -> Void)? = nil) {
@@ -46,7 +48,7 @@ open class ARTVideoPlayerLandscapeDanmakuView: ARTVideoPlayerSlidingOverlayView 
 
 // MARK: - Setup Initializer
 
-extension ARTVideoPlayerLandscapeDanmakuView {
+extension ARTVideoPlayerLandscapePlaybackRateView {
     
     /// 设置列表视图
     private func setupCollectionView() {
@@ -59,13 +61,13 @@ extension ARTVideoPlayerLandscapeDanmakuView {
         collectionView.backgroundColor                = .clear
         collectionView.delegate                       = self
         collectionView.dataSource                     = self
-        collectionView.contentInset                   = .zero
-        collectionView.registerCell(ARTVideoPlayerLandscapeDanmakuCell.self)
+        collectionView.contentInset                   = UIEdgeInsets(top: 0, left: ARTAdaptedValue(8.0), bottom: 0, right: ARTAdaptedValue(8.0))
+        collectionView.registerCell(ARTVideoPlayerLandscapePlaybackRateCell.self)
         containerView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(separatorLineView.snp.bottom).offset(ARTAdaptedValue(16.0))
+            make.top.equalTo(separatorLineView.snp.bottom).offset(ARTAdaptedValue(24.0))
             make.left.right.equalTo(separatorLineView)
-            make.bottom.equalTo(-ARTAdaptedValue(16.0))
+            make.bottom.equalTo(-ARTAdaptedValue(24.0))
         }
     }
 }

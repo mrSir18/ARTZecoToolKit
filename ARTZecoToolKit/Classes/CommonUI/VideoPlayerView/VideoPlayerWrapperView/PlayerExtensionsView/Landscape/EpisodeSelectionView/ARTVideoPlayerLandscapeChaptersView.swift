@@ -5,7 +5,7 @@
 //  Created by mrSir18 on 2024/11/4.
 //
 
-open class ARTVideoPlayerLandscapeChaptersView: ARTVideoPlayerSlidingOverlayView {
+open class ARTVideoPlayerLandscapeChaptersView: ARTVideoPlayerLandscapeSlidingView {
     
     /// 默认选中的索引路径
     public var shouldSelectedIndexPath: IndexPath = IndexPath(item: 0, section: 0)

@@ -1,12 +1,12 @@
 //
-//  ARTVideoPlayerLandscapeDanmakuEntity.swift
+//  ARTVideoPlayerGeneralDanmakuEntity.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/11/7.
 //
 
 // MARK: - 弹幕设置相关扩展
-extension ARTVideoPlayerLandscapeDanmakuEntity {
+extension ARTVideoPlayerGeneralDanmakuEntity {
     
     // 滑块选项类型
     public enum SliderOptionType {
@@ -49,7 +49,7 @@ extension ARTVideoPlayerLandscapeDanmakuEntity {
     }
 }
 
-public struct ARTVideoPlayerLandscapeDanmakuEntity {
+public struct ARTVideoPlayerGeneralDanmakuEntity {
     
     // 弹幕设置选项
     public var sliderOptions: [SliderOption]

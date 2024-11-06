@@ -67,7 +67,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     }()
     
     /// 懒加载倍速视图
-    public lazy var rateView: ARTVideoPlayerSlidingOverlayView = {
+    public lazy var rateView: ARTVideoPlayerLandscapeSlidingView = {
         let rateView = ARTVideoPlayerLandscapePlaybackRateView(self)
         rateView.rateCallback = { [weak self] rate in
             guard let self = self else { return }
@@ -79,7 +79,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     }()
     
     /// 懒加载目录视图
-    public lazy var chaptersView: ARTVideoPlayerSlidingOverlayView = {
+    public lazy var chaptersView: ARTVideoPlayerLandscapeSlidingView = {
         let chaptersView = ARTVideoPlayerLandscapeChaptersView(self)
         chaptersView.chapterCallback = { [weak self] index in
             guard let self = self else { return }

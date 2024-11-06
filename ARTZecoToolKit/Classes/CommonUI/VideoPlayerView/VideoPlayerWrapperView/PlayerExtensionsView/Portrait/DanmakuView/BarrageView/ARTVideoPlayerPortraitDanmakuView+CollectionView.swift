@@ -1,21 +1,20 @@
 //
-//  ARTVideoPlayerLandscapeDanmakuView+CollectionView.swift
+//  ARTVideoPlayerPortraitDanmakuView+CollectionView.swift
 //  ARTZecoToolKit
 //
-//  Created by mrSir18 on 2024/11/6.
+//  Created by mrSir18 on 2024/11/7.
 //
-
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
-extension ARTVideoPlayerLandscapeDanmakuView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ARTVideoPlayerPortraitDanmakuView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return danmakuEntity.sliderOptions.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueCell(for: indexPath) as ARTVideoPlayerLandscapeDanmakuCell
+        let cell = collectionView.dequeueCell(for: indexPath) as ARTVideoPlayerPortraitDanmakuCell
         cell.sliderValueChanged = { [weak self] value, shouldSave in
             guard let self = self else { return }
             if shouldSave {
