@@ -11,7 +11,7 @@ class ARTVideoPlayerDanmakuCell: UICollectionViewCell {
     public var feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     /// 滑块选项
-    private var option: ARTVideoPlayerDanmakuView.SliderOption!
+    private var option: ARTVideoPlayerDanmakuEntity.SliderOption!
     
     /// 标题标签
     private var titleLabel: UILabel!
@@ -39,7 +39,11 @@ class ARTVideoPlayerDanmakuCell: UICollectionViewCell {
     }()
     
     /// 滑块值改变回调
-    public var sliderValueChanged: ((Float) -> Void)?
+    ///
+    /// - Parameters:
+    ///  - value: 当前滑块值
+    ///  - shouldSave 是否需要保存
+    public var sliderValueChanged: ((Int, Bool) -> Void)?
     
     
     // MARK: - Life Cycle
@@ -130,7 +134,7 @@ class ARTVideoPlayerDanmakuCell: UICollectionViewCell {
     
     // MARK: - Public Methods
     
-    func configureWithSliderOption(_ option: ARTVideoPlayerDanmakuView.SliderOption) {
+    func configureWithSliderOption(_ option: ARTVideoPlayerDanmakuEntity.SliderOption) {
         self.option = option
         titleLabel.text = option.title
         if option.optionType == .opacity {
@@ -155,22 +159,20 @@ extension ARTVideoPlayerDanmakuCell {
     
     /// 滑块值改变事件
     @objc private func handleSliderValueChanged(_ slider: ARTVideoPlayerSlider) {
-        updateSlider(for: slider.value, animated: false)
+        updateSlider(for: slider.value, shouldSave: false)
     }
     
     /// 滑块触摸结束事件
     @objc private func handleSliderTouchEnded(_ slider: ARTVideoPlayerSlider) {
-        guard option.optionType != .opacity else { return } // 如果是透明度选项，跳过分段调整
-        
         // 调整滑块到最接近的分段值
         let adjustedValue = adjustedSegmentValue(for: slider.value)
         slider.setValue(adjustedValue, animated: true)
         
         // 更新显示标签
-        updateSlider(for: adjustedValue, animated: true)
+        updateSlider(for: adjustedValue, shouldSave: true)
         
         // 触发触觉反馈
-        feedbackGenerator.impactOccurred()
+        if option.optionType != .opacity { feedbackGenerator.impactOccurred() }
     }
     
     @objc private func sliderTapped(_ gesture: UITapGestureRecognizer) {
@@ -185,7 +187,7 @@ extension ARTVideoPlayerDanmakuCell {
         slider.setValue(adjustedValue, animated: true)
         
         // 更新显示标签
-        updateSlider(for: adjustedValue, animated: true)
+        updateSlider(for: adjustedValue, shouldSave: true)
         
         // 触发触觉反馈
         feedbackGenerator.impactOccurred()
@@ -195,13 +197,20 @@ extension ARTVideoPlayerDanmakuCell {
     /// - Parameters:
     ///   - value: 当前滑块值
     ///   - animated: 是否需要动画效果
-    private func updateSlider(for value: Float, animated: Bool) {
-        if option.optionType == .opacity { // 更新为百分比显示
-            percentLabel.text = "\(Int(value * 100.0))%"
-        } else { // 显示对应的分段标签
-            percentLabel.text = option.segments[nearestSegmentIndex(for: value)]
+    private func updateSlider(for value: Float, shouldSave: Bool) {
+        var displayValue: String // 显示值
+        var finalValue: Int // 索引值
+        
+        if option.optionType == .opacity { // 百分比模式
+            finalValue = Int(value * 100.0) // 透明度模式下，直接转换为百分比
+            displayValue = "\(finalValue)%"
+        } else { // 分段模式
+            let segmentIndex = nearestSegmentIndex(for: value)
+            finalValue = segmentIndex // 分段值即为最接近的分段索引
+            displayValue = option.segments[segmentIndex]
         }
-        sliderValueChanged?(value)
+        percentLabel.text = displayValue
+        sliderValueChanged?(finalValue, shouldSave)
     }
     
     /// 计算最接近的分段值，若不适用分段则直接返回当前值

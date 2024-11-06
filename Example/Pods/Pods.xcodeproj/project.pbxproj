@@ -22,6 +22,7 @@
 		024280C92CDA5DF600D905E9 /* ARTVideoPlayerChaptersView+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024280C82CDA5DF600D905E9 /* ARTVideoPlayerChaptersView+CollectionView.swift */; };
 		024280CB2CDA5E0900D905E9 /* ARTVideoPlayerChaptersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024280CA2CDA5E0900D905E9 /* ARTVideoPlayerChaptersCell.swift */; };
 		024BA1E2AF4FC7D0A9F5DAEAF7ACBC7C /* SDWebImageTransitionInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = FDD28E1F51C8B7353DD1387AC2F86BB3 /* SDWebImageTransitionInternal.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		025100FE2CDBCF5A00ADD921 /* ARTVideoPlayerDanmakuEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025100FC2CDBCF5A00ADD921 /* ARTVideoPlayerDanmakuEntity.swift */; };
 		027F7F862FA8330B46285F609DC63758 /* SDAssociatedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DE50222B3232F81B1A8CF42AAD64A1A0 /* SDAssociatedObject.m */; };
 		02AFE5F52CD8BF240083A1F4 /* ARTVideoPlayerPlaybackRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AFE5F22CD8BF240083A1F4 /* ARTVideoPlayerPlaybackRateView.swift */; };
 		02AFE5F62CD8BF240083A1F4 /* ARTVideoPlayerDanmakuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AFE5F02CD8BF240083A1F4 /* ARTVideoPlayerDanmakuView.swift */; };
@@ -557,6 +558,7 @@
 		024280C52CDA4C7800D905E9 /* ARTVideoPlayerPlaybackRateView+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTVideoPlayerPlaybackRateView+CollectionView.swift"; sourceTree = "<group>"; };
 		024280C82CDA5DF600D905E9 /* ARTVideoPlayerChaptersView+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTVideoPlayerChaptersView+CollectionView.swift"; sourceTree = "<group>"; };
 		024280CA2CDA5E0900D905E9 /* ARTVideoPlayerChaptersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerChaptersCell.swift; sourceTree = "<group>"; };
+		025100FC2CDBCF5A00ADD921 /* ARTVideoPlayerDanmakuEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerDanmakuEntity.swift; sourceTree = "<group>"; };
 		02AFE5EE2CD8BF240083A1F4 /* ARTVideoPlayerChaptersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerChaptersView.swift; sourceTree = "<group>"; };
 		02AFE5F02CD8BF240083A1F4 /* ARTVideoPlayerDanmakuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerDanmakuView.swift; sourceTree = "<group>"; };
 		02AFE5F22CD8BF240083A1F4 /* ARTVideoPlayerPlaybackRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerPlaybackRateView.swift; sourceTree = "<group>"; };
@@ -1129,6 +1131,14 @@
 			path = CityCell;
 			sourceTree = "<group>";
 		};
+		025100FD2CDBCF5A00ADD921 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				025100FC2CDBCF5A00ADD921 /* ARTVideoPlayerDanmakuEntity.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
 		02AFE5EF2CD8BF240083A1F4 /* EpisodeSelectionView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1145,6 +1155,7 @@
 				02AFE5F02CD8BF240083A1F4 /* ARTVideoPlayerDanmakuView.swift */,
 				0226207E2CDB6679009FC22C /* ARTVideoPlayerDanmakuView+CollectionView.swift */,
 				0226207C2CDB6660009FC22C /* ARTVideoPlayerDanmakuCell.swift */,
+				025100FD2CDBCF5A00ADD921 /* Entity */,
 			);
 			path = DanmakuView;
 			sourceTree = "<group>";
@@ -2987,6 +2998,7 @@
 				502721B9C80D947CB262498B25694E00 /* ARTCityStyleConfiguration.swift in Sources */,
 				F5ADC7812C3814ACD63006761CCD9EA8 /* ARTCityStyleConfiguration+Chaining.swift in Sources */,
 				60B535722E8FA698F5C995A0985B797C /* ARTCMTimeHashable.swift in Sources */,
+				025100FE2CDBCF5A00ADD921 /* ARTVideoPlayerDanmakuEntity.swift in Sources */,
 				F774144C1E65BD7A4F1A8C61C5A8990F /* ARTCollectionReusableView.swift in Sources */,
 				A176CFD9B0BEAB88E14A4B7256868984 /* ARTCollectionViewConfigModel.swift in Sources */,
 				D0B25B284332F0FDCD65600E0303D7BC /* ARTCollectionViewFlowLayout.swift in Sources */,

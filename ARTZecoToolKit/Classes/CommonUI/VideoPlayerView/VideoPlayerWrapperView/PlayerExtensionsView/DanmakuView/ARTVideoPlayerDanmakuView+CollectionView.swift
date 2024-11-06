@@ -11,15 +11,18 @@
 extension ARTVideoPlayerDanmakuView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sliderOptions.count
+        return danmakuEntity.sliderOptions.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueCell(for: indexPath) as ARTVideoPlayerDanmakuCell
-        cell.sliderValueChanged = { [weak self] value in
-            print("value: \(value)")
+        cell.sliderValueChanged = { [weak self] value, shouldSave in
+            guard let self = self else { return }
+            if shouldSave {
+                self.danmakuEntity.sliderOptions[indexPath.item].defaultValue = value
+            }
         }
-        cell.configureWithSliderOption(sliderOptions[indexPath.item])
+        cell.configureWithSliderOption(danmakuEntity.sliderOptions[indexPath.item])
         return cell
     }
     

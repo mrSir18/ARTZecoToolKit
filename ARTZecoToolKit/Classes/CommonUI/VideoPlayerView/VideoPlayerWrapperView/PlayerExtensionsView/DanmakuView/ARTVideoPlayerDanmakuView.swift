@@ -5,61 +5,20 @@
 //  Created by mrSir18 on 2024/11/4.
 //
 
-/// 协议方法
-///
-/// - NOTE: 可继承该协议方法
-public protocol ARTVideoPlayerDanmakuViewDelegate: ARTVideoPlayerSlidingOverlayViewDelegate {
-
-}
-
-/// 弹幕设置选项
-extension ARTVideoPlayerDanmakuView {
-    public enum SliderOptionType {
-        case opacity        // 不透明度
-        case displayArea    // 显示区域
-        case fontSize       // 字体大小
-        case speed          // 移动速度
-    }
-    
-    public struct SliderOption {
-        let title: String
-        let minValue: Float
-        let maxValue: Int
-        let segments: [String]  // 分段标签（不透明度、字体大小等具体的值）
-        let defaultValue: Float // 默认值属性
-        let optionType: SliderOptionType // 添加一个枚举类型
-    }
-}
-
 open class ARTVideoPlayerDanmakuView: ARTVideoPlayerSlidingOverlayView {
     
-    /// 代理对象
-    public weak var subclassDelegate: ARTVideoPlayerDanmakuViewDelegate?
+    /// 弹幕设置实例
+    public var danmakuEntity = ARTVideoPlayerDanmakuEntity()
     
-    /// 弹幕设置选项
-    public var sliderOptions: [SliderOption] = [
-        SliderOption(title: "不透明度", minValue: 0, maxValue: 100, segments: [], defaultValue: 50, optionType: .opacity), // 默认50%
-        SliderOption(title: "显示区域", minValue: 0, maxValue: 3, segments: ["1/4屏", "2/4屏", "3/4屏", "4/4屏"], defaultValue: 2, optionType: .displayArea), // 默认中间的2/4屏
-        SliderOption(title: "字体大小", minValue: 0, maxValue: 4, segments: ["小", "较小", "适中", "较大", "大"], defaultValue: 2, optionType: .fontSize), // 默认适中
-        SliderOption(title: "移动速度", minValue: 0, maxValue: 4, segments: ["慢", "较慢", "适中", "较快", "快"], defaultValue: 2, optionType: .speed) // 默认适中
-    ]
-    
-    // MARK: - Initializatio
-    
-    public init(_ subclassDelegate: ARTVideoPlayerDanmakuViewDelegate? = nil) {
-        self.subclassDelegate = subclassDelegate
-        super.init(subclassDelegate)
-    }
-    
-    required public init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    /// 触觉反馈发生器
+    public var feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     
     // MARK: - Override Super Methods
     
     open override func setupViews() {
         super.setupViews()
+        feedbackGenerator.prepare() // 准备好触觉反馈
         titleLabel.text = "弹幕设置"
         setupCollectionView()
     }
@@ -74,7 +33,9 @@ open class ARTVideoPlayerDanmakuView: ARTVideoPlayerSlidingOverlayView {
     // MARK: - Button Actions
     
     open override func didTapRestoreButton() { // 恢复按钮
-        hideExtensionsView()
+        feedbackGenerator.impactOccurred()
+        danmakuEntity.restoreDefaults()
+        collectionView.reloadData()
     }
     
     open override func showExtensionsView(_ completion: (() -> Void)? = nil) {

@@ -150,12 +150,3 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
 extension ARTVideoPlayerWrapperView: ARTVideoPlayerSlidingOverlayViewDelegate {
 
 }
-
-// MARK: - ARTVideoPlayerDanmakuViewDelegate
-
-extension ARTVideoPlayerWrapperView: ARTVideoPlayerDanmakuViewDelegate {
-    
-    public func didReceiveDanmaku(_ danmaku: String) {
-        print("弹幕：\(danmaku)")
-    }
-}
