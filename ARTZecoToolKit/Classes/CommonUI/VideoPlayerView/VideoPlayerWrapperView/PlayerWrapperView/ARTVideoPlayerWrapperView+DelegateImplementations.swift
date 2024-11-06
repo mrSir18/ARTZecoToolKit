@@ -50,7 +50,8 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     }
     
     public func controlsViewDidTapShare(for controlsView: ARTVideoPlayerControlsView) { // 点击分享按钮
-        delegate?.wrapperViewDidTapShare?(for: self)
+//        delegate?.wrapperViewDidTapShare?(for: self)
+        portraitDanmakuView.showExtensionsView()
     }
     
     
@@ -149,4 +150,8 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
 
 extension ARTVideoPlayerWrapperView: ARTVideoPlayerLandscapeSlidingViewDelegate {
 
+}
+
+extension ARTVideoPlayerWrapperView: ARTVideoPlayerPortraitSlidingViewDelegate {
+    
 }

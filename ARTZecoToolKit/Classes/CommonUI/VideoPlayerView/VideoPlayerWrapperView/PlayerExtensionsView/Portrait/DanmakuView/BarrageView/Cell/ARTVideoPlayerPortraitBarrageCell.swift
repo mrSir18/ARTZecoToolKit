@@ -1,11 +1,11 @@
 //
-//  ARTVideoPlayerPortraitDanmakuCell.swift
+//  ARTVideoPlayerPortraitBarrageCell.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/11/7.
 //
 
-class ARTVideoPlayerPortraitDanmakuCell: UICollectionViewCell {
+class ARTVideoPlayerPortraitBarrageCell: UICollectionViewCell {
     
     /// 触觉反馈发生器
     public var feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
@@ -25,7 +25,7 @@ class ARTVideoPlayerPortraitDanmakuCell: UICollectionViewCell {
         view.minimumValue = 0.0
         view.maximumValue = 1.0
         view.minimumTrackTintColor = .art_color(withHEXValue: 0xFE5C01)
-        view.maximumTrackTintColor = .art_color(withHEXValue: 0xC8C8CC)
+        view.maximumTrackTintColor = .art_color(withHEXValue: 0xE3E3E5, alpha: 0.6)
         view.trackHeight = ARTAdaptedValue(2.0)
         if let thumbImage = UIImage(named: "video_slider_portrait_danmaku_thumb")?.art_scaled(to: ARTAdaptedSize(width: 14.0, height: 14.0)) {
             view.setThumbImage(thumbImage, for: .normal)
@@ -107,28 +107,38 @@ class ARTVideoPlayerPortraitDanmakuCell: UICollectionViewCell {
         self.removeDotsFromSlider()
         
         // 添加新的圆点
-        (0...maxValue).forEach { i in
-            let dot = CALayer()
-            dot.name = "dotLayer"
-            dot.backgroundColor = UIColor.white.cgColor
-            dot.cornerRadius = dotSize / 2
-            dot.frame = CGRect(
-                x: CGFloat(i) * dotSpacing - dotSize / 2,
+        for i in 0...maxValue {
+            // 计算每个圆点的位置
+            let dotX = CGFloat(i) * dotSpacing // 圆点的位置从轨道的最左侧开始
+            let dotView = UIView()
+            dotView.layer.cornerRadius = dotSize / 2
+            dotView.frame = CGRect(
+                x: dotX - dotSize / 2, // 圆点居中显示，修正X坐标
                 y: (self.slider.bounds.height - dotSize) / 2,
                 width: dotSize,
                 height: dotSize
             )
-            dot.zPosition = 1 // 确保圆点层在其他内容的上面
-            self.slider.layer.addSublayer(dot)
+            // 设置圆点的颜色
+            dotView.backgroundColor = (i <= Int(option.defaultValue)) ? UIColor.art_color(withHEXValue: 0xFE5C01) : UIColor.art_color(withHEXValue: 0xE3E3E5, alpha: 0.6)
+            dotView.tag = 100 + i
+            self.slider.addSubview(dotView)
+        }
+    }
+    
+    private func updateDotsColor(for value: Float) {
+        let activeIndex = nearestSegmentIndex(for: value)
+        self.slider.subviews.forEach { subview in
+            if subview.tag >= 100 { // 只对圆点进行操作
+                let index = subview.tag - 100
+                // 根据滑块的值判断圆点颜色
+                let color: UIColor = index <= activeIndex ? UIColor.art_color(withHEXValue: 0xFE5C01) : UIColor.art_color(withHEXValue: 0xE3E3E5, alpha: 0.6)
+                subview.backgroundColor = color
+            }
         }
     }
     
     private func removeDotsFromSlider() { // 移除圆点
-        self.slider.layer.sublayers?.forEach { sublayer in
-            if sublayer.name == "dotLayer" {
-                sublayer.removeFromSuperlayer()
-            }
-        }
+        self.slider.subviews.filter { $0.tag >= 100 }.forEach { $0.removeFromSuperview() }
     }
     
     // MARK: - Public Methods
@@ -154,11 +164,12 @@ class ARTVideoPlayerPortraitDanmakuCell: UICollectionViewCell {
 
 // MARK: - Slider Events
 
-extension ARTVideoPlayerPortraitDanmakuCell {
+extension ARTVideoPlayerPortraitBarrageCell {
     
     /// 滑块值改变事件
     @objc private func handleSliderValueChanged(_ slider: ARTVideoPlayerSlider) {
         updateSlider(for: slider.value, shouldSave: false)
+        updateDotsColor(for: slider.value)
     }
     
     /// 滑块触摸结束事件
@@ -169,6 +180,7 @@ extension ARTVideoPlayerPortraitDanmakuCell {
         
         // 更新显示标签
         updateSlider(for: adjustedValue, shouldSave: true)
+        updateDotsColor(for: adjustedValue)
         
         // 触发触觉反馈
         if option.optionType != .opacity { feedbackGenerator.impactOccurred() }
@@ -187,6 +199,7 @@ extension ARTVideoPlayerPortraitDanmakuCell {
         
         // 更新显示标签
         updateSlider(for: adjustedValue, shouldSave: true)
+        updateDotsColor(for: adjustedValue)
         
         // 触发触觉反馈
         feedbackGenerator.impactOccurred()

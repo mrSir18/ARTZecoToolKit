@@ -88,6 +88,12 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         return chaptersView
     }()
     
+    /// 懒加载竖屏弹幕视图
+    public lazy var portraitDanmakuView: ARTVideoPlayerPortraitDanmakuView = {
+        let danmakuView = ARTVideoPlayerPortraitDanmakuView(self)
+        return danmakuView
+    }()
+    
     
     // MARK: - Initialization
     

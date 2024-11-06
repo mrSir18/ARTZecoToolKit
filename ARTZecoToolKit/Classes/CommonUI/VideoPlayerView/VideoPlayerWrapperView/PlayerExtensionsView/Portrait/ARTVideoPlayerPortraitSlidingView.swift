@@ -94,39 +94,6 @@ open class ARTVideoPlayerPortraitSlidingView: UIView {
     @objc open func handleSortingTapGesture(_ gesture: UITapGestureRecognizer) {
         hideExtensionsView()
     }
-    
-    /// 拖动手势
-    ///
-    /// - Parameter gesture: 拖动手势
-    /// - Note: 重写父类方法，处理拖动手势
-    @objc open func handleSortingPanGesture(_ gesture: UIPanGestureRecognizer) {
-        let translation = gesture.translation(in: containerView)
-        switch gesture.state {
-        case .began:
-            initialY = containerView.frame.origin.y
-        case .changed:
-            let newY = max(initialY + translation.y, UIScreen.art_currentScreenHeight - containerView.frame.height)
-            containerView.frame.origin.y = newY
-        case .ended, .cancelled:
-            // 根据手势速度确定是否收起containerView
-            let velocity = gesture.velocity(in: containerView).y
-            if velocity > 100.0 {
-                UIView.animate(withDuration: 0.2) {
-                    self.containerView.frame.origin.y = UIScreen.art_currentScreenHeight
-                } completion: { finish in
-                    if finish {
-                        self.hideExtensionsView()
-                    }
-                }
-            } else {
-                UIView.animate(withDuration: 0.3) {
-                    self.containerView.frame.origin.y = self.initialY
-                }
-            }
-        default:
-            break
-        }
-    }
 }
 
 // MARK: - Setup Initializer
@@ -154,7 +121,5 @@ extension ARTVideoPlayerPortraitSlidingView {
             make.left.right.equalToSuperview()
             make.height.equalTo(containerHeight)
         }
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handleSortingPanGesture(_:)))
-        containerView.addGestureRecognizer(panGesture)
     }
 }

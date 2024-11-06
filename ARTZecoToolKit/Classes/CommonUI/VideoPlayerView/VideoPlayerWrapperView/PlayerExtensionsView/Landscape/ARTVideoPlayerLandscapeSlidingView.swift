@@ -94,13 +94,11 @@ open class ARTVideoPlayerLandscapeSlidingView: UIView {
         }
     }
     
-    
     // MARK: - Button Actions
     
     @objc open func didTapRestoreButton() { // 恢复
 
     }
-    
     
     // MARK: - Gesture Recognizer
     
