@@ -95,7 +95,9 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     }
     
     public func controlsViewDidTapDanmakuSettings(for controlsView: ARTVideoPlayerControlsView) { // 弹幕设置 (点击弹幕设置按钮)
-        delegate?.wrapperViewDidTapDanmakuSettings?(for: self)
+//        delegate?.wrapperViewDidTapDanmakuSettings?(for: self)
+        playControlsView.autoHideControls()
+        danmakuView.showExtensionsView()
     }
     
     public func controlsViewDidTapDanmakuSend(for controlsView: ARTVideoPlayerControlsView, text: String) { // 发送弹幕 (点击发送弹幕按钮)

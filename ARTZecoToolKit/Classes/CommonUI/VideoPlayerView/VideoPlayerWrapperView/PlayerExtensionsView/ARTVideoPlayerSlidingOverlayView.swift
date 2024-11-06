@@ -29,6 +29,9 @@ open class ARTVideoPlayerSlidingOverlayView: UIView {
     /// 分割线视图
     public var separatorLineView: ARTCustomView!
     
+    /// 列表视图
+    public var collectionView: UICollectionView!
+    
     
     // MARK: - Initialization
     

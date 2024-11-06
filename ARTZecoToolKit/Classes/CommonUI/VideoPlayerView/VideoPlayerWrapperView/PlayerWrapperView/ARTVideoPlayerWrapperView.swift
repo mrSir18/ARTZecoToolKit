@@ -60,6 +60,12 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     /// 播放器控制层（最顶层：顶底栏、侧边栏等）
     public var playControlsView: ARTVideoPlayerControlsView!
     
+    /// 懒加载弹幕设置视图
+    public lazy var danmakuView: ARTVideoPlayerDanmakuView = {
+        let danmakuView = ARTVideoPlayerDanmakuView(self)
+        return danmakuView
+    }()
+    
     /// 懒加载倍速视图
     public lazy var rateView: ARTVideoPlayerSlidingOverlayView = {
         let rateView = ARTVideoPlayerPlaybackRateView(self)

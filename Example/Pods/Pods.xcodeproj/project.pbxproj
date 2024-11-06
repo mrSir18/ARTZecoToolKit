@@ -15,6 +15,8 @@
 		016119E2F267ADF72363B00F18EB2CAC /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 091934A678D4E6A194994A643F57DCF4 /* UIView+WebCacheOperation.m */; };
 		01FB6765F90FBB821BF4F87D494278CD /* SDImageTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2828AE56B49690D3CFFEF01867EF99E9 /* SDImageTransformer.m */; };
 		021EE99DE5317751CBEB135AC871715F /* SDWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AD41423DA8EB4E7696091C9694189D /* SDWeakProxy.m */; };
+		0226207D2CDB6660009FC22C /* ARTVideoPlayerDanmakuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226207C2CDB6660009FC22C /* ARTVideoPlayerDanmakuCell.swift */; };
+		0226207F2CDB6679009FC22C /* ARTVideoPlayerDanmakuView+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226207E2CDB6679009FC22C /* ARTVideoPlayerDanmakuView+CollectionView.swift */; };
 		024280C62CDA4C7800D905E9 /* ARTVideoPlayerPlaybackRateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024280C42CDA4C7800D905E9 /* ARTVideoPlayerPlaybackRateCell.swift */; };
 		024280C72CDA4C7800D905E9 /* ARTVideoPlayerPlaybackRateView+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024280C52CDA4C7800D905E9 /* ARTVideoPlayerPlaybackRateView+CollectionView.swift */; };
 		024280C92CDA5DF600D905E9 /* ARTVideoPlayerChaptersView+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024280C82CDA5DF600D905E9 /* ARTVideoPlayerChaptersView+CollectionView.swift */; };
@@ -549,6 +551,8 @@
 		0154FBD458E96AADB83B5E493271604D /* LogCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LogCache.swift; path = SmartCodable/Classes/Log/LogCache.swift; sourceTree = "<group>"; };
 		01A8218E64B66F54859EF6DD9CA8C506 /* ARTCityPickerViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTCityPickerViewModel.swift; sourceTree = "<group>"; };
 		0206DE139440188F487DEF7AF2043DD2 /* YYTextArchiver.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = YYTextArchiver.m; path = YYText/String/YYTextArchiver.m; sourceTree = "<group>"; };
+		0226207C2CDB6660009FC22C /* ARTVideoPlayerDanmakuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerDanmakuCell.swift; sourceTree = "<group>"; };
+		0226207E2CDB6679009FC22C /* ARTVideoPlayerDanmakuView+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTVideoPlayerDanmakuView+CollectionView.swift"; sourceTree = "<group>"; };
 		024280C42CDA4C7800D905E9 /* ARTVideoPlayerPlaybackRateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerPlaybackRateCell.swift; sourceTree = "<group>"; };
 		024280C52CDA4C7800D905E9 /* ARTVideoPlayerPlaybackRateView+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTVideoPlayerPlaybackRateView+CollectionView.swift"; sourceTree = "<group>"; };
 		024280C82CDA5DF600D905E9 /* ARTVideoPlayerChaptersView+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTVideoPlayerChaptersView+CollectionView.swift"; sourceTree = "<group>"; };
@@ -1139,6 +1143,8 @@
 			isa = PBXGroup;
 			children = (
 				02AFE5F02CD8BF240083A1F4 /* ARTVideoPlayerDanmakuView.swift */,
+				0226207E2CDB6679009FC22C /* ARTVideoPlayerDanmakuView+CollectionView.swift */,
+				0226207C2CDB6660009FC22C /* ARTVideoPlayerDanmakuCell.swift */,
 			);
 			path = DanmakuView;
 			sourceTree = "<group>";
@@ -3038,6 +3044,7 @@
 				10F498A4F641052F2FD3EAE3957E6FDF /* ARTVideoPlayerViewDelegate.swift in Sources */,
 				8D734AEED0EDD9118DBD8D97C1CF1B34 /* ARTVideoPlayerWindowBottombar.swift in Sources */,
 				1B03BA5D2EA2C28F0D734A9E791FDFB7 /* ARTVideoPlayerWindowTopbar.swift in Sources */,
+				0226207D2CDB6660009FC22C /* ARTVideoPlayerDanmakuCell.swift in Sources */,
 				2680C210AC951FA0DBA175246DA70D40 /* ARTVideoPlayerWrapperView.swift in Sources */,
 				EE7224DC827AA998447E680B859A781F /* ARTVideoPlayerWrapperView+DelegateImplementations.swift in Sources */,
 				02AFE5F92CD8C1380083A1F4 /* ARTVideoPlayerSlidingOverlayView.swift in Sources */,
@@ -3058,6 +3065,7 @@
 				7A56A0F233DDDFB2329EF90992AC5470 /* NSObject+ARTExtension.swift in Sources */,
 				5AD8D88BE8233E2686B0FAEA3116CE54 /* String+ARTExtension.swift in Sources */,
 				9F717D2034497EDC0AE2D8FFFB9B7F8D /* UIApplication+ARTExtension.swift in Sources */,
+				0226207F2CDB6679009FC22C /* ARTVideoPlayerDanmakuView+CollectionView.swift in Sources */,
 				6FA901457FD7ED7DB021D2699A880E71 /* UIButton+ARTExtension.swift in Sources */,
 				3731461D61FBDEE6B880E379A232C2CD /* UICollectionView+ARTExtension.swift in Sources */,
 				AB5A39A30BBA0FA3A37E4BB7975F5C80 /* UIColor+ARTExtension.swift in Sources */,

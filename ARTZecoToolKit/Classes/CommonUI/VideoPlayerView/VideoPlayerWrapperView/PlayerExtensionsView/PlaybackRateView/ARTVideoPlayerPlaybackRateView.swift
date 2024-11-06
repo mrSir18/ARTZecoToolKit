@@ -6,9 +6,6 @@
 //
 
 open class ARTVideoPlayerPlaybackRateView: ARTVideoPlayerSlidingOverlayView {
-
-    /// 列表视图
-    private var collectionView: UICollectionView!
     
     /// 默认选中的索引路径
     public var shouldSelectedIndexPath: IndexPath = IndexPath(item: 4, section: 0)
