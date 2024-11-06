@@ -1,17 +1,17 @@
 //
-//  ARTVideoPlayerDanmakuCell.swift
+//  ARTVideoPlayerLandscapeDanmakuCell.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/11/6.
 //
 
-class ARTVideoPlayerDanmakuCell: UICollectionViewCell {
+class ARTVideoPlayerLandscapeDanmakuCell: UICollectionViewCell {
     
     /// 触觉反馈发生器
     public var feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     /// 滑块选项
-    private var option: ARTVideoPlayerDanmakuEntity.SliderOption!
+    private var option: ARTVideoPlayerLandscapeDanmakuEntity.SliderOption!
     
     /// 标题标签
     private var titleLabel: UILabel!
@@ -74,7 +74,6 @@ class ARTVideoPlayerDanmakuCell: UICollectionViewCell {
         
         // 创建百分比标签
         percentLabel = UILabel()
-        percentLabel.text               = "适中"
         percentLabel.textAlignment      = .right
         percentLabel.font               = .art_medium(ARTAdaptedValue(10.0))
         percentLabel.textColor          = .art_color(withHEXValue: 0xFFFFFF)
@@ -134,7 +133,7 @@ class ARTVideoPlayerDanmakuCell: UICollectionViewCell {
     
     // MARK: - Public Methods
     
-    func configureWithSliderOption(_ option: ARTVideoPlayerDanmakuEntity.SliderOption) {
+    func configureWithSliderOption(_ option: ARTVideoPlayerLandscapeDanmakuEntity.SliderOption) {
         self.option = option
         titleLabel.text = option.title
         if option.optionType == .opacity {
@@ -155,7 +154,7 @@ class ARTVideoPlayerDanmakuCell: UICollectionViewCell {
 
 // MARK: - Slider Events
 
-extension ARTVideoPlayerDanmakuCell {
+extension ARTVideoPlayerLandscapeDanmakuCell {
     
     /// 滑块值改变事件
     @objc private func handleSliderValueChanged(_ slider: ARTVideoPlayerSlider) {

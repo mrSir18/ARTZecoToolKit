@@ -1,11 +1,11 @@
 //
-//  ARTVideoPlayerPlaybackRateCell.swift
+//  ARTVideoPlayerLandscapePlaybackRateCell.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/11/5.
 //
 
-class ARTVideoPlayerPlaybackRateCell: UICollectionViewCell {
+class ARTVideoPlayerLandscapePlaybackRateCell: UICollectionViewCell {
     
     /// 内容容器
     private var containerView: ARTCustomView!

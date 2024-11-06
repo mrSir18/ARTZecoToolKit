@@ -61,14 +61,14 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     public var playControlsView: ARTVideoPlayerControlsView!
     
     /// 懒加载弹幕设置视图
-    public lazy var danmakuView: ARTVideoPlayerDanmakuView = {
-        let danmakuView = ARTVideoPlayerDanmakuView(self)
+    public lazy var danmakuView: ARTVideoPlayerLandscapeDanmakuView = {
+        let danmakuView = ARTVideoPlayerLandscapeDanmakuView(self)
         return danmakuView
     }()
     
     /// 懒加载倍速视图
     public lazy var rateView: ARTVideoPlayerSlidingOverlayView = {
-        let rateView = ARTVideoPlayerPlaybackRateView(self)
+        let rateView = ARTVideoPlayerLandscapePlaybackRateView(self)
         rateView.rateCallback = { [weak self] rate in
             guard let self = self else { return }
             self.currentRate = rate
@@ -80,7 +80,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     /// 懒加载目录视图
     public lazy var chaptersView: ARTVideoPlayerSlidingOverlayView = {
-        let chaptersView = ARTVideoPlayerChaptersView(self)
+        let chaptersView = ARTVideoPlayerLandscapeChaptersView(self)
         chaptersView.chapterCallback = { [weak self] index in
             guard let self = self else { return }
             print("选择了第 \(index) 集")

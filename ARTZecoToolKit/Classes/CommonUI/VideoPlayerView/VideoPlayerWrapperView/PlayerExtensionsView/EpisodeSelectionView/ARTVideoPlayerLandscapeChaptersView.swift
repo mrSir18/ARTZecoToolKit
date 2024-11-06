@@ -1,52 +1,42 @@
 //
-//  ARTVideoPlayerDanmakuView.swift
+//  ARTVideoPlayerLandscapeChaptersView.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/11/4.
 //
 
-open class ARTVideoPlayerDanmakuView: ARTVideoPlayerSlidingOverlayView {
+open class ARTVideoPlayerLandscapeChaptersView: ARTVideoPlayerSlidingOverlayView {
     
-    /// 弹幕设置实例
-    public var danmakuEntity = ARTVideoPlayerDanmakuEntity()
+    /// 默认选中的索引路径
+    public var shouldSelectedIndexPath: IndexPath = IndexPath(item: 0, section: 0)
     
-    /// 触觉反馈发生器
-    public var feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    /// 目录数据
+    public var chapters: [String] = ["第一部分：亲子游戏逻辑", "第二部分：游戏方法", "第三部分：亲子逻辑"]
+    
+    /// 回调事件
+    public var chapterCallback: ((_ index: String) -> Void)?
     
     
     // MARK: - Override Super Methods
     
     open override func setupViews() {
         super.setupViews()
-        feedbackGenerator.prepare() // 准备好触觉反馈
-        titleLabel.text = "弹幕设置"
+        titleLabel.text = "目录"
+        restoreButton.isHidden = true
         setupCollectionView()
     }
     
     open override func handleSortingTapGesture(_ gesture: UITapGestureRecognizer) {
         let location = gesture.location(in: containerView)
-        if !collectionView.frame.contains(location) && !restoreButton.frame.contains(location) {
+        if !collectionView.frame.contains(location) {
             hideExtensionsView()
         }
-    }
-    
-    // MARK: - Button Actions
-    
-    open override func didTapRestoreButton() { // 恢复按钮
-        feedbackGenerator.impactOccurred()
-        danmakuEntity.restoreDefaults()
-        collectionView.reloadData()
-    }
-    
-    open override func showExtensionsView(_ completion: (() -> Void)? = nil) {
-        super.showExtensionsView(completion)
-        collectionView.reloadData()
     }
 }
 
 // MARK: - Setup Initializer
 
-extension ARTVideoPlayerDanmakuView {
+extension ARTVideoPlayerLandscapeChaptersView {
     
     /// 设置列表视图
     private func setupCollectionView() {
@@ -60,12 +50,12 @@ extension ARTVideoPlayerDanmakuView {
         collectionView.delegate                       = self
         collectionView.dataSource                     = self
         collectionView.contentInset                   = .zero
-        collectionView.registerCell(ARTVideoPlayerDanmakuCell.self)
+        collectionView.registerCell(ARTVideoPlayerLandscapeChaptersCell.self)
         containerView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(separatorLineView.snp.bottom).offset(ARTAdaptedValue(16.0))
+            make.top.equalTo(separatorLineView.snp.bottom)
             make.left.right.equalTo(separatorLineView)
-            make.bottom.equalTo(-ARTAdaptedValue(16.0))
+            make.bottom.equalTo(-ARTAdaptedValue(12.0))
         }
     }
 }

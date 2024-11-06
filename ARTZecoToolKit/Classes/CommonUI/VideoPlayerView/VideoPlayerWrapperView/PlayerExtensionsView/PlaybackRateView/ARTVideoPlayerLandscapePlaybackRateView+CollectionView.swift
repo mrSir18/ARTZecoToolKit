@@ -1,5 +1,5 @@
 //
-//  ARTVideoPlayerPlaybackRateView+CollectionView.swift
+//  ARTVideoPlayerLandscapePlaybackRateView+CollectionView.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/11/5.
@@ -7,14 +7,14 @@
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
-extension ARTVideoPlayerPlaybackRateView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ARTVideoPlayerLandscapePlaybackRateView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return rates.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueCell(for: indexPath) as ARTVideoPlayerPlaybackRateCell
+        let cell = collectionView.dequeueCell(for: indexPath) as ARTVideoPlayerLandscapePlaybackRateCell
         cell.updateCellBorderStyle(indexPath == shouldSelectedIndexPath)
         cell.configureWithRateContent(rates[indexPath.item])
         return cell

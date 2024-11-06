@@ -145,7 +145,7 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     }
 }
 
-// MARK: - ARTVideoPlayerPlaybackRateViewDelegate
+// MARK: - ARTVideoPlayerLandscapePlaybackRateViewDelegate
 
 extension ARTVideoPlayerWrapperView: ARTVideoPlayerSlidingOverlayViewDelegate {
 

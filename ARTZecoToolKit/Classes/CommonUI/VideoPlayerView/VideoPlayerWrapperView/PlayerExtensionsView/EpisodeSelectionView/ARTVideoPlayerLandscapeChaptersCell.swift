@@ -1,11 +1,11 @@
 //
-//  ARTVideoPlayerChaptersCell.swift
+//  ARTVideoPlayerLandscapeChaptersCell.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/11/5.
 //
 
-class ARTVideoPlayerChaptersCell: UICollectionViewCell {
+class ARTVideoPlayerLandscapeChaptersCell: UICollectionViewCell {
     
     /// 标题标签
     private var titleLabel: UILabel!
