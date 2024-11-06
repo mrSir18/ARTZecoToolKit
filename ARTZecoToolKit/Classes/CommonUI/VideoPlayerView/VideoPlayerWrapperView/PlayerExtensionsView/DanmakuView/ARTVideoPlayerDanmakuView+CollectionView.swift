@@ -16,12 +16,15 @@ extension ARTVideoPlayerDanmakuView: UICollectionViewDelegate, UICollectionViewD
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueCell(for: indexPath) as ARTVideoPlayerDanmakuCell
+        cell.sliderValueChanged = { [weak self] value in
+            print("value: \(value)")
+        }
         cell.configureWithSliderOption(sliderOptions[indexPath.item])
         return cell
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.size.width, height: ARTAdaptedValue(52.0))
+        return CGSize(width: collectionView.bounds.width, height: ARTAdaptedValue(52.0))
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

@@ -7,13 +7,19 @@
 
 class ARTVideoPlayerDanmakuCell: UICollectionViewCell {
     
+    /// 触觉反馈发生器
+    public var feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    
+    /// 滑块选项
+    private var option: ARTVideoPlayerDanmakuView.SliderOption!
+    
     /// 标题标签
     private var titleLabel: UILabel!
-
+    
     /// 百分比标签
     private var percentLabel: UILabel!
     
-    /// 滑块
+    /// 滑块视图
     public lazy var slider: ARTVideoPlayerSlider = {
         let view = ARTVideoPlayerSlider()
         view.minimumValue = 0.0
@@ -24,7 +30,6 @@ class ARTVideoPlayerDanmakuCell: UICollectionViewCell {
         if let thumbImage = UIImage(named: "video_slider_danmaku_thumb")?.art_scaled(to: ARTAdaptedSize(width: 14.0, height: 14.0)) {
             view.setThumbImage(thumbImage, for: .normal)
         }
-        view.addTarget(self, action: #selector(handleSliderTouchBegan(_:)), for: .touchDown)
         view.addTarget(self, action: #selector(handleSliderValueChanged(_:)), for: .valueChanged)
         view.addTarget(self, action: #selector(handleSliderTouchEnded(_:)), for: [.touchUpInside, .touchCancel, .touchUpOutside])
         
@@ -33,11 +38,15 @@ class ARTVideoPlayerDanmakuCell: UICollectionViewCell {
         return view
     }()
     
+    /// 滑块值改变回调
+    public var sliderValueChanged: ((Float) -> Void)?
+    
     
     // MARK: - Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        feedbackGenerator.prepare() // 准备好触觉反馈
         setupViews()
     }
     
@@ -83,18 +92,17 @@ class ARTVideoPlayerDanmakuCell: UICollectionViewCell {
     }
     
     // MARK: - Private Methods
-
+    
     private func addDotsToSlider(maxValue: Int) { // 添加圆点到滑动轨道
         guard maxValue > 1 else { return }
         self.layoutIfNeeded() // 确保滑块已经布局完成
-        
         let dotSize: CGFloat = ARTAdaptedValue(4.0)
         let trackWidth = self.slider.bounds.width
         let dotSpacing = trackWidth / CGFloat(maxValue)
-
+        
         // 移除已有的圆点
-        self.slider.layer.sublayers?.removeAll { $0.name == "dotLayer" }
-
+        self.removeDotsFromSlider()
+        
         // 添加新的圆点
         (0...maxValue).forEach { i in
             let dot = CALayer()
@@ -105,19 +113,32 @@ class ARTVideoPlayerDanmakuCell: UICollectionViewCell {
                 x: CGFloat(i) * dotSpacing - dotSize / 2,
                 y: (self.slider.bounds.height - dotSize) / 2,
                 width: dotSize,
-                height: dotSize)
+                height: dotSize
+            )
+            dot.zPosition = 1 // 确保圆点层在其他内容的上面
             self.slider.layer.addSublayer(dot)
         }
     }
     
+    private func removeDotsFromSlider() { // 移除圆点
+        self.slider.layer.sublayers?.forEach { sublayer in
+            if sublayer.name == "dotLayer" {
+                sublayer.removeFromSuperlayer()
+            }
+        }
+    }
+    
     // MARK: - Public Methods
-
+    
     func configureWithSliderOption(_ option: ARTVideoPlayerDanmakuView.SliderOption) {
+        self.option = option
         titleLabel.text = option.title
-        if option.segments.isEmpty {
+        if option.optionType == .opacity {
             let percentValue = Int(option.defaultValue)
             percentLabel.text = "\(percentValue)%"
             slider.value = Float(option.defaultValue) / 100.0
+            removeDotsFromSlider() // 移除圆点
+            
         } else {
             let value = option.defaultValue
             let segmentIndex = min(Int(value), option.segments.count - 1)
@@ -132,23 +153,70 @@ class ARTVideoPlayerDanmakuCell: UICollectionViewCell {
 
 extension ARTVideoPlayerDanmakuCell {
     
-    /// 触摸开始时调用的函数
-    @objc private func handleSliderTouchBegan(_ slider: ARTVideoPlayerSlider) {
-        print("开始触摸滑块")
-    }
-    
-    /// 滑块值改变时调用的函数
+    /// 滑块值改变事件
     @objc private func handleSliderValueChanged(_ slider: ARTVideoPlayerSlider) {
-        print("滑块值改变")
+        updateSlider(for: slider.value, animated: false)
     }
     
-    /// 触摸结束时调用的函数
+    /// 滑块触摸结束事件
     @objc private func handleSliderTouchEnded(_ slider: ARTVideoPlayerSlider) {
-        print("结束触摸滑块")
+        guard option.optionType != .opacity else { return } // 如果是透明度选项，跳过分段调整
+        
+        // 调整滑块到最接近的分段值
+        let adjustedValue = adjustedSegmentValue(for: slider.value)
+        slider.setValue(adjustedValue, animated: true)
+        
+        // 更新显示标签
+        updateSlider(for: adjustedValue, animated: true)
+        
+        // 触发触觉反馈
+        feedbackGenerator.impactOccurred()
     }
     
-    /// 处理滑块被点击的手势
     @objc private func sliderTapped(_ gesture: UITapGestureRecognizer) {
-        print("点击滑块")
+        // 计算点击位置的比例
+        let locationRatio = gesture.location(in: slider).x / slider.bounds.width
+        
+        // 根据点击位置计算新的滑块值
+        let tappedValue = Float(locationRatio) * (slider.maximumValue - slider.minimumValue) + slider.minimumValue
+        
+        // 调整滑块值到最接近的分段
+        let adjustedValue = adjustedSegmentValue(for: tappedValue)
+        slider.setValue(adjustedValue, animated: true)
+        
+        // 更新显示标签
+        updateSlider(for: adjustedValue, animated: true)
+        
+        // 触发触觉反馈
+        feedbackGenerator.impactOccurred()
+    }
+    
+    /// 根据滑块值更新标签和回调
+    /// - Parameters:
+    ///   - value: 当前滑块值
+    ///   - animated: 是否需要动画效果
+    private func updateSlider(for value: Float, animated: Bool) {
+        if option.optionType == .opacity { // 更新为百分比显示
+            percentLabel.text = "\(Int(value * 100.0))%"
+        } else { // 显示对应的分段标签
+            percentLabel.text = option.segments[nearestSegmentIndex(for: value)]
+        }
+        sliderValueChanged?(value)
+    }
+    
+    /// 计算最接近的分段值，若不适用分段则直接返回当前值
+    /// - Parameter value: 当前滑块值
+    /// - Returns: 调整后的分段值
+    private func adjustedSegmentValue(for value: Float) -> Float {
+        guard option.optionType != .opacity else { return value } // 如果是透明度设置，直接返回当前值
+        return Float(nearestSegmentIndex(for: value)) * (slider.maximumValue / Float(option.segments.count - 1)) // 否则返回最接近的分段值
+    }
+    
+    /// 获取最接近的分段索引
+    /// - Parameter value: 当前滑块值
+    /// - Returns: 最接近的分段索引
+    private func nearestSegmentIndex(for value: Float) -> Int {
+        let segmentWidth = slider.maximumValue / Float(option.segments.count - 1) // 计算每个分段的宽度
+        return min(Int(round(value / segmentWidth)), option.segments.count - 1) // 返回最接近的分段索引，确保索引不超出范围
     }
 }

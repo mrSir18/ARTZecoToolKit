@@ -14,12 +14,20 @@ public protocol ARTVideoPlayerDanmakuViewDelegate: ARTVideoPlayerSlidingOverlayV
 
 /// 弹幕设置选项
 extension ARTVideoPlayerDanmakuView {
+    public enum SliderOptionType {
+        case opacity        // 不透明度
+        case displayArea    // 显示区域
+        case fontSize       // 字体大小
+        case speed          // 移动速度
+    }
+    
     public struct SliderOption {
         let title: String
         let minValue: Float
         let maxValue: Int
         let segments: [String]  // 分段标签（不透明度、字体大小等具体的值）
         let defaultValue: Float // 默认值属性
+        let optionType: SliderOptionType // 添加一个枚举类型
     }
 }
 
@@ -30,10 +38,10 @@ open class ARTVideoPlayerDanmakuView: ARTVideoPlayerSlidingOverlayView {
     
     /// 弹幕设置选项
     public var sliderOptions: [SliderOption] = [
-        SliderOption(title: "不透明度", minValue: 0, maxValue: 100, segments: [], defaultValue: 50), // 默认50%
-        SliderOption(title: "显示区域", minValue: 0, maxValue: 3, segments: ["1/4屏", "2/4屏", "3/4屏", "4/4屏"], defaultValue: 2), // 默认中间的2/4屏
-        SliderOption(title: "字体大小", minValue: 0, maxValue: 4, segments: ["小", "较小", "适中", "较大", "大"], defaultValue: 2), // 默认适中
-        SliderOption(title: "移动速度", minValue: 0, maxValue: 4, segments: ["慢", "较慢", "适中", "较快", "快"], defaultValue: 2) // 默认适中
+        SliderOption(title: "不透明度", minValue: 0, maxValue: 100, segments: [], defaultValue: 50, optionType: .opacity), // 默认50%
+        SliderOption(title: "显示区域", minValue: 0, maxValue: 3, segments: ["1/4屏", "2/4屏", "3/4屏", "4/4屏"], defaultValue: 2, optionType: .displayArea), // 默认中间的2/4屏
+        SliderOption(title: "字体大小", minValue: 0, maxValue: 4, segments: ["小", "较小", "适中", "较大", "大"], defaultValue: 2, optionType: .fontSize), // 默认适中
+        SliderOption(title: "移动速度", minValue: 0, maxValue: 4, segments: ["慢", "较慢", "适中", "较快", "快"], defaultValue: 2, optionType: .speed) // 默认适中
     ]
     
     // MARK: - Initializatio

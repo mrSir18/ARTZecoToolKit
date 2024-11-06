@@ -21,7 +21,7 @@ extension ARTVideoPlayerChaptersView: UICollectionViewDelegate, UICollectionView
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.size.width, height: ARTAdaptedValue(48.0))
+        return CGSize(width: collectionView.bounds.width, height: ARTAdaptedValue(48.0))
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
