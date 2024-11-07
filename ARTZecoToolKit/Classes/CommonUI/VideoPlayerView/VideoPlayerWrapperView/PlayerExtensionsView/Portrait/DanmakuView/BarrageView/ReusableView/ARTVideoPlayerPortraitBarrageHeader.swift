@@ -13,6 +13,9 @@ open class ARTVideoPlayerPortraitBarrageHeader: ARTSectionHeaderView {
     /// 恢复按钮
     public var restoreButton: ARTAlignmentButton!
     
+    /// 恢复回调
+    public var restoreCallback: (() -> Void)?
+    
     
     // MARK: - Life Cycle
     
@@ -35,7 +38,7 @@ open class ARTVideoPlayerPortraitBarrageHeader: ARTSectionHeaderView {
     // MARK: - Button Actions
     
     @objc private func didTapRestoreButton() { // 恢复按钮
-        print("点击了恢复按钮")
+        restoreCallback?()
     }
 }
 

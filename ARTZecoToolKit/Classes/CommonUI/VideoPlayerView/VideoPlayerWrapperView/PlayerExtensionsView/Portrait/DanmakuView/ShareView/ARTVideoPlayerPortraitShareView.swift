@@ -13,6 +13,9 @@ open class ARTVideoPlayerPortraitShareView: UIView {
     /// 列表视图
     public var collectionView: UICollectionView!
 
+    /// 分享回调
+    public var shareCallback: ((ARTVideoPlayerPortraitShareEntity.ShareOptionType) -> Void)?
+    
     
     // MARK: - Initialization
 
@@ -100,6 +103,6 @@ extension ARTVideoPlayerPortraitShareView: UICollectionViewDelegate, UICollectio
     }
 
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("点击了分享")
+        shareCallback?(shareEntity.shareOptions[indexPath.item].type)
     }
 }

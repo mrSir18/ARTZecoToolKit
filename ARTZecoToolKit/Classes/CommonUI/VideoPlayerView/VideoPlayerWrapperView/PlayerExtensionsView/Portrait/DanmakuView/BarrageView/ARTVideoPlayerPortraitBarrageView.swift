@@ -86,6 +86,13 @@ extension ARTVideoPlayerPortraitBarrageView: UICollectionViewDelegate, UICollect
     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
             let reusableView = ARTVideoPlayerPortraitBarrageHeader.dequeueHeader(from: collectionView, for: indexPath)
+            if let header = reusableView as? ARTVideoPlayerPortraitBarrageHeader {
+                header.restoreCallback = { [weak self] in
+                    guard let self = self else { return }
+                    self.danmakuEntity.restoreDefaults()
+                    self.collectionView.reloadData()
+                }
+            }
             return reusableView
         }
         let reusableView = ARTSectionFooterView.dequeueFooter(from: collectionView, for: indexPath)

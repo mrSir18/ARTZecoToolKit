@@ -30,6 +30,11 @@ extension ARTVideoPlayerPortraitDanmakuView {
     /// 创建分享视图
     private func setupShareView() {
         shareView = ARTVideoPlayerPortraitShareView()
+        shareView.shareCallback = { [weak self] type in
+            self?.hideExtensionsView({
+                print("分享选项类型：\(type)")
+            })
+        }
         containerView.addSubview(shareView)
         shareView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
