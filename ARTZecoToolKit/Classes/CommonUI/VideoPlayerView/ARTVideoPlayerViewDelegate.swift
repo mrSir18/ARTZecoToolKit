@@ -110,7 +110,4 @@
     
     /// 当评论按钮被点击时调用
     @objc optional func playerViewDidTapComment(for playerView: ARTVideoPlayerView)
-    
-    /// 当更多按钮被点击时调用
-    @objc optional func playerViewDidTapMore(for playerView: ARTVideoPlayerView)
 }

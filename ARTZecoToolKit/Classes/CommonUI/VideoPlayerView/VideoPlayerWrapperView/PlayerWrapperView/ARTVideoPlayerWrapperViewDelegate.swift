@@ -110,7 +110,4 @@
     
     /// 当评论按钮被点击时调用
     @objc optional func wrapperViewDidTapComment(for wrapperView: ARTVideoPlayerWrapperView)
-    
-    /// 当更多按钮被点击时调用
-    @objc optional func wrapperViewDidTapMore(for wrapperView: ARTVideoPlayerWrapperView)
 }

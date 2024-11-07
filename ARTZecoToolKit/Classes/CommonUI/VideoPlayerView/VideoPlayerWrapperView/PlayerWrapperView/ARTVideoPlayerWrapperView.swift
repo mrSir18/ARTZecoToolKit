@@ -60,14 +60,17 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     /// 播放器控制层（最顶层：顶底栏、侧边栏等）
     public var playControlsView: ARTVideoPlayerControlsView!
     
+
+    // MARK: - 私有扩展视图（个人项目使用）
+    
     /// 懒加载弹幕设置视图
-    public lazy var danmakuView: ARTVideoPlayerLandscapeDanmakuView = {
+    internal lazy var danmakuView: ARTVideoPlayerLandscapeDanmakuView = {
         let danmakuView = ARTVideoPlayerLandscapeDanmakuView(self)
         return danmakuView
     }()
     
     /// 懒加载倍速视图
-    public lazy var rateView: ARTVideoPlayerLandscapeSlidingView = {
+    internal lazy var rateView: ARTVideoPlayerLandscapeSlidingView = {
         let rateView = ARTVideoPlayerLandscapePlaybackRateView(self)
         rateView.rateCallback = { [weak self] rate in
             guard let self = self else { return }
@@ -79,7 +82,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     }()
     
     /// 懒加载目录视图
-    public lazy var chaptersView: ARTVideoPlayerLandscapeSlidingView = {
+    internal lazy var chaptersView: ARTVideoPlayerLandscapeSlidingView = {
         let chaptersView = ARTVideoPlayerLandscapeChaptersView(self)
         chaptersView.chapterCallback = { [weak self] index in
             guard let self = self else { return }
@@ -89,7 +92,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     }()
     
     /// 懒加载竖屏弹幕视图
-    public lazy var portraitDanmakuView: ARTVideoPlayerPortraitDanmakuView = {
+    internal lazy var portraitDanmakuView: ARTVideoPlayerPortraitDanmakuView = {
         let danmakuView = ARTVideoPlayerPortraitDanmakuView(self)
         return danmakuView
     }()

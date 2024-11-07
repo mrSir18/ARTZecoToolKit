@@ -99,8 +99,4 @@ extension ARTVideoPlayerView: ARTVideoPlayerWrapperViewDelegate {
     public func wrapperViewDidTapComment(for wrapperView: ARTVideoPlayerWrapperView) { // 点击评论按钮
         delegate?.playerViewDidTapComment?(for: self)
     }
-    
-    public func wrapperViewDidTapMore(for wrapperView: ARTVideoPlayerWrapperView) { // 点击更多按钮
-        delegate?.playerViewDidTapMore?(for: self)
-    }
 }

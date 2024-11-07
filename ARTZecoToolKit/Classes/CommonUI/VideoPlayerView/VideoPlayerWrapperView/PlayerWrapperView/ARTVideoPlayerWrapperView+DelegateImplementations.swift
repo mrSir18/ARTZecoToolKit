@@ -142,16 +142,12 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     }
     
     public func controlsViewDidTapMore(for controlsView: ARTVideoPlayerControlsView) { // 点击更多按钮
-        delegate?.wrapperViewDidTapMore?(for: self)
+        portraitDanmakuView.showExtensionsView()
     }
 }
 
-// MARK: - ARTVideoPlayerLandscapePlaybackRateViewDelegate
+// MARK: - ARTVideoPlayerSlidingViewDelegate
 
-extension ARTVideoPlayerWrapperView: ARTVideoPlayerLandscapeSlidingViewDelegate {
+extension ARTVideoPlayerWrapperView: ARTVideoPlayerSlidingViewDelegate {
 
-}
-
-extension ARTVideoPlayerWrapperView: ARTVideoPlayerPortraitSlidingViewDelegate {
-    
 }
