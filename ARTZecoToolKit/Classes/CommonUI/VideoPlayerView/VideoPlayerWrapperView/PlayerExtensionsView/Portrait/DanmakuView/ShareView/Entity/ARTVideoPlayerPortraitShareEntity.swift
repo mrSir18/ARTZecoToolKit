@@ -24,10 +24,10 @@ public struct ARTVideoPlayerPortraitShareEntity {
     
     // 分享选项数组
     public var shareOptions: [ShareOption] = [
-        ShareOption(icon: "wechat_friend_icon", title: "微信好友", type: .wechatFriend),
-        ShareOption(icon: "wechat_moments_icon", title: "微信朋友圈", type: .wechatMoments),
-        ShareOption(icon: "copy_link_icon", title: "复制链接", type: .copyLink),
-        ShareOption(icon: "save_photo_icon", title: "保存照片", type: .savePhoto)
+        ShareOption(icon: "share_session_icon", title: "微信好友", type: .wechatFriend),
+        ShareOption(icon: "share_timeline_icon", title: "微信朋友圈", type: .wechatMoments),
+        ShareOption(icon: "share_copy_icon", title: "复制链接", type: .copyLink),
+        ShareOption(icon: "share_download_icon", title: "保存照片", type: .savePhoto)
     ]
     
     // 初始化

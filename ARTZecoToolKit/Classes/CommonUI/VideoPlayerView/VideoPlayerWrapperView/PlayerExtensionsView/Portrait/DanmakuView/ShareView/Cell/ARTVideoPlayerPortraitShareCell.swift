@@ -29,7 +29,6 @@ class ARTVideoPlayerPortraitShareCell: UICollectionViewCell {
         
         // 创建图片视图
         iconImageView = UIImageView()
-        iconImageView.backgroundColor = .art_randomColor()
         contentView.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { make in
             make.size.equalTo(ARTAdaptedSize(width: 64.0, height: 64.0))
