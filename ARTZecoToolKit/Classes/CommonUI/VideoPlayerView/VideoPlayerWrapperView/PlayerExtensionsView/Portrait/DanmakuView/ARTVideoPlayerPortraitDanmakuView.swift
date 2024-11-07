@@ -40,6 +40,8 @@ extension ARTVideoPlayerPortraitDanmakuView {
             make.left.top.right.equalToSuperview()
             make.height.equalTo(ARTAdaptedValue(148.0))
         }
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handleSortingPanGesture(_:)))
+        shareView.addGestureRecognizer(panGesture)
     }
     
     /// 创建弹幕视图

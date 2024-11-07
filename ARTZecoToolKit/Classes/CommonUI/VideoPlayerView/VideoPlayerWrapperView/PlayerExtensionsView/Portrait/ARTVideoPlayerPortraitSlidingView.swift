@@ -5,6 +5,8 @@
 //  Created by mrSir18 on 2024/11/7.
 //
 
+import SnapKit
+
 /// 协议方法
 ///
 /// - NOTE: 可继承该协议方法
@@ -17,6 +19,9 @@ open class ARTVideoPlayerPortraitSlidingView: UIView {
     /// 代理对象
     public weak var delegate: ARTVideoPlayerPortraitSlidingViewDelegate?
     
+    /// 遮罩视图
+    public var overlayView: UIView!
+    
     /// 容器视图
     public var containerView: UIView!
     
@@ -25,6 +30,9 @@ open class ARTVideoPlayerPortraitSlidingView: UIView {
     
     /// 初始Y坐标
     private var initialY: CGFloat = 0.0
+    
+    /// 容器底部约束
+    private var containerViewBottomConstraint: Constraint?
     
     
     // MARK: - Initialization
@@ -48,7 +56,6 @@ open class ARTVideoPlayerPortraitSlidingView: UIView {
         setupContainerView()
     }
     
-    
     // MARK: - Override Super Method
     
     /// 显示动画视图
@@ -64,8 +71,15 @@ open class ARTVideoPlayerPortraitSlidingView: UIView {
         }
         art_keyWindow.bringSubviewToFront(self)
         self.isHidden = false
+        
+        // 设置初始位置在屏幕底部，并立即布局
+        containerViewBottomConstraint?.update(offset: containerHeight)
+        self.layoutIfNeeded()
+        
+        // 动画展示containerView
+        containerViewBottomConstraint?.update(offset: 0)
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut]) {
-            self.containerView.transform = CGAffineTransformTranslate(self.containerView.transform, 0, -self.containerHeight)
+            self.layoutIfNeeded()
         } completion: { _ in
             completion?()
         }
@@ -76,14 +90,14 @@ open class ARTVideoPlayerPortraitSlidingView: UIView {
     /// - Parameter animated: 是否动画
     /// - Note: 重写父类方法，设置子视图布局
     open func hideExtensionsView(_ completion: (() -> Void)? = nil) {
+        containerViewBottomConstraint?.update(offset: containerHeight)
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut]) {
-            self.containerView.transform = CGAffineTransformTranslate(self.containerView.transform, 0, self.containerHeight)
+            self.layoutIfNeeded()
         } completion: { _ in
             self.isHidden = true
             completion?()
         }
     }
-    
     
     // MARK: - Gesture Recognizer
     
@@ -94,6 +108,34 @@ open class ARTVideoPlayerPortraitSlidingView: UIView {
     @objc open func handleSortingTapGesture(_ gesture: UITapGestureRecognizer) {
         hideExtensionsView()
     }
+    
+    @objc open func handleSortingPanGesture(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: containerView)
+        switch gesture.state {
+        case .began:
+            initialY = containerView.frame.origin.y
+        case .changed:
+            let newY = max(initialY + translation.y, UIScreen.art_currentScreenHeight - containerView.frame.height)
+            containerView.frame.origin.y = newY
+        case .ended, .cancelled:
+            let velocity = gesture.velocity(in: containerView).y
+            if velocity > 100.0 {
+                UIView.animate(withDuration: 0.2) {
+                    self.containerView.frame.origin.y = UIScreen.art_currentScreenHeight
+                } completion: { finish in
+                    if finish {
+                        self.hideExtensionsView()
+                    }
+                }
+            } else {
+                UIView.animate(withDuration: 0.3) {
+                    self.containerView.frame.origin.y = self.initialY
+                }
+            }
+        default:
+            break
+        }
+    }
 }
 
 // MARK: - Setup Initializer
@@ -102,7 +144,7 @@ extension ARTVideoPlayerPortraitSlidingView {
     
     /// 创建遮罩视图
     @objc open func setupOverlayView() {
-        let overlayView = UIView(frame: UIScreen.main.bounds)
+        overlayView = UIView(frame: UIScreen.main.bounds)
         overlayView.backgroundColor = .art_color(withHEXValue: 0x000000, alpha: 0.2)
         addSubview(overlayView)
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSortingTapGesture(_:)))
@@ -117,9 +159,9 @@ extension ARTVideoPlayerPortraitSlidingView {
         containerView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         addSubview(containerView)
         containerView.snp.makeConstraints { make in
-            make.top.equalTo(UIScreen.art_currentScreenHeight)
             make.left.right.equalToSuperview()
             make.height.equalTo(containerHeight)
+            containerViewBottomConstraint = make.bottom.equalToSuperview().offset(containerHeight).constraint
         }
     }
 }

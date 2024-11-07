@@ -90,7 +90,7 @@ class ARTVideoPlayerPortraitBarrageCell: UICollectionViewCell {
             make.left.equalTo(titleLabel)
             make.centerY.equalTo(percentLabel)
             make.right.equalTo(-ARTAdaptedValue(84.0))
-            make.height.equalTo(ARTAdaptedValue(30.0))
+            make.height.equalTo(ARTAdaptedValue(40.0))
         }
     }
     
@@ -98,17 +98,13 @@ class ARTVideoPlayerPortraitBarrageCell: UICollectionViewCell {
     
     private func addDotsToSlider(maxValue: Int) { // 添加圆点到滑动轨道
         guard maxValue > 1 else { return }
-        self.layoutIfNeeded() // 确保滑块已经布局完成
+        self.layoutIfNeeded()
         let dotSize: CGFloat = ARTAdaptedValue(4.0)
         let trackWidth = self.slider.bounds.width
         let dotSpacing = trackWidth / CGFloat(maxValue)
-        
-        // 移除已有的圆点
         self.removeDotsFromSlider()
-        
-        // 添加新的圆点
+    
         for i in 0...maxValue {
-            // 计算每个圆点的位置
             let dotX = CGFloat(i) * dotSpacing // 圆点的位置从轨道的最左侧开始
             let dotView = UIView()
             dotView.layer.cornerRadius = dotSize / 2
@@ -118,7 +114,6 @@ class ARTVideoPlayerPortraitBarrageCell: UICollectionViewCell {
                 width: dotSize,
                 height: dotSize
             )
-            // 设置圆点的颜色
             dotView.backgroundColor = (i <= Int(option.defaultValue)) ? UIColor.art_color(withHEXValue: 0xFE5C01) : UIColor.art_color(withHEXValue: 0xE3E3E5, alpha: 0.6)
             dotView.tag = 100 + i
             self.slider.addSubview(dotView)
@@ -130,7 +125,6 @@ class ARTVideoPlayerPortraitBarrageCell: UICollectionViewCell {
         self.slider.subviews.forEach { subview in
             if subview.tag >= 100 { // 只对圆点进行操作
                 let index = subview.tag - 100
-                // 根据滑块的值判断圆点颜色
                 let color: UIColor = index <= activeIndex ? UIColor.art_color(withHEXValue: 0xFE5C01) : UIColor.art_color(withHEXValue: 0xE3E3E5, alpha: 0.6)
                 subview.backgroundColor = color
             }

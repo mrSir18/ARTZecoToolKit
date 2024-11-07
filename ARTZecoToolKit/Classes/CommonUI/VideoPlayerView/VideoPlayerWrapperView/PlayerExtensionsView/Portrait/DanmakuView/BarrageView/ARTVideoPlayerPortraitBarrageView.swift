@@ -25,7 +25,7 @@ open class ARTVideoPlayerPortraitBarrageView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Override Super Methods
+    // MARK: - Private Methods
     
     private func setupViews() {
         setupCollectionView()
