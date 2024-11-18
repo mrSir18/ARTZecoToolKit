@@ -145,28 +145,29 @@ open class ARTVideoPlayerDanmakuView: UIView {
     ///   - nextDanmakuCell: 待发送的弹幕单元
     /// - Returns: 如果可以发送，返回 true；否则返回 false
     @objc open func canDisplayNextDanmaku(after lastDanmakuCell: ARTVideoPlayerDanmakuCell, with nextDanmakuCell: ARTVideoPlayerDanmakuCell) -> Bool {
-        guard let currentFrame = lastDanmakuCell.layer.presentation()?.frame else { // 获取动画中弹幕的 frame
+        guard let currentFrame = lastDanmakuCell.layer.presentation()?.frame else { return false }
+
+        let screenWidth = self.frame.size.width
+        let lastDanmakuWidth = lastDanmakuCell.frame.size.width
+        let nextDanmakuWidth = nextDanmakuCell.frame.size.width
+        let lastDanmakuSpeed = lastDanmakuCell.danmakuSpeed
+        let nextDanmakuSpeed = nextDanmakuCell.danmakuSpeed
+
+        // 如果当前弹幕未完全显示，或者是刚刚添加的控件（frame 为 0），不允许显示
+        if currentFrame.origin.x > screenWidth - lastDanmakuWidth || currentFrame.size.width == 0 {
             return false
         }
-        
-        if currentFrame.origin.x > self.frame.size.width - lastDanmakuCell.frame.size.width { // 当前弹幕未完全显示在屏幕中，不允许发送
-            return false
-        } else if currentFrame.size.width == 0 { // 刚刚添加的控件，可能 frame 值全为 0，也不允许发送
-            return false
-        } else if lastDanmakuCell.danmakuSpeed == nextDanmakuCell.danmakuSpeed &&
-                    lastDanmakuCell.frame.size.width > nextDanmakuCell.frame.size.width { // 比较弹幕的宽度（速度），新弹幕宽度小则永远追不上，允许发送
+
+        // 如果弹幕速度相同且当前弹幕宽度大于下一个弹幕，允许显示
+        if lastDanmakuSpeed == nextDanmakuSpeed && lastDanmakuWidth > nextDanmakuWidth {
             return true
-        } else { // 计算新弹幕从出现到屏幕左侧的时间
-            let displayTime = self.frame.size.width / (self.frame.size.width + nextDanmakuCell.frame.size.width) * nextDanmakuCell.danmakuSpeed
-            
-            // 计算此时上一条弹幕的最终 x 坐标
-            let lastDanmakuFinalX = currentFrame.origin.x - (displayTime / lastDanmakuCell.danmakuSpeed) * (self.frame.size.width + lastDanmakuCell.frame.size.width)
-            
-            if lastDanmakuFinalX < -lastDanmakuCell.frame.size.width { // 如果上一条弹幕完全从屏幕中消失，允许发送
-                return true
-            }
         }
-        return false
+
+        // 计算新弹幕显示时间，若上一条弹幕完全消失，则允许显示
+        let displayTime = screenWidth / (screenWidth + nextDanmakuWidth) * nextDanmakuSpeed
+        let lastDanmakuFinalX = currentFrame.origin.x - (displayTime / lastDanmakuSpeed) * (screenWidth + lastDanmakuWidth)
+
+        return lastDanmakuFinalX < -lastDanmakuWidth
     }
 }
 
@@ -192,11 +193,10 @@ extension ARTVideoPlayerDanmakuView {
     ///   - danmakuCell: 弹幕单元
     /// - Returns: 计算后的 Y 坐标
     private func calculateDanmakuYPosition(for trackIndex: Int, with danmakuCell: ARTVideoPlayerDanmakuCell) -> CGFloat {
-        if trackIndex == 0 { return 0 } // 如果是第一个轨道，Y 坐标从 0 开始
-        if let previousDanmaku = danmakuCells[trackIndex - 1] { // 当前弹幕的位置是上一条弹幕底部加上间隔
-            return previousDanmaku.frame.maxY + danmakuCell.danmakuTrackSpacing
+        guard trackIndex > 0, let previousDanmaku = danmakuCells[trackIndex - 1] else {
+            return CGFloat(trackIndex) * (danmakuCell.frame.height + danmakuTrackSpacing) // 如果是第一个轨道，Y 坐标从 0 开始
         }
-        return CGFloat(trackIndex) * (danmakuCell.frame.height + danmakuTrackSpacing)
+        return previousDanmaku.frame.maxY + danmakuCell.danmakuTrackSpacing // 上一条弹幕底部加上间隔
     }
     
     /// 动画完成后的处理
@@ -264,7 +264,10 @@ extension ARTVideoPlayerDanmakuView {
     /// - Parameter track: 新的轨道数量
     @objc open func changeDanmakuTrack(_ track: Int) {
         guard track >= 0 else { return }
-        // 调整轨道数组大小：保留现有的有效轨道，补充或截断到目标数量
-        danmakuCells = danmakuCells.prefix(track) + Array(repeating: nil, count: max(0, track - danmakuCells.count))
+        if track > danmakuCells.count { // 如果新的轨道数大于当前轨道数，添加新轨道
+            danmakuCells.append(contentsOf: Array(repeating: nil, count: track - danmakuCells.count))
+        } else if track < danmakuCells.count { // 如果新的轨道数小于当前轨道数，移除多余轨道
+            danmakuCells.removeSubrange(track..<danmakuCells.count)
+        }
     }
 }
