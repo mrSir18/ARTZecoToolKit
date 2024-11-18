@@ -44,7 +44,7 @@ open class ARTVideoPlayerDanmakuView: UIView {
     public var danmakuTrackSpacing: CGFloat = 0.0
     
     /// 弹幕轨道数 默认4
-    public var danmakuTrack: Int = 4
+    public var danmakuTrack: Int = 0
     
     
     // MARK: - Initialization
@@ -67,7 +67,7 @@ open class ARTVideoPlayerDanmakuView: UIView {
     open func setupViews() {
         
     }
-    
+
     /// 创建弹幕
     @objc open func createDanmaku() {
         // 递归调用，确保持续运行，间隔0.25秒
@@ -81,9 +81,11 @@ open class ARTVideoPlayerDanmakuView: UIView {
                                    width: danmakuCell.danmakuSize.width,
                                    height: danmakuCell.danmakuSize.height)
         
-        // 根据弹幕单元动态设置轨道间距和轨道数
-        danmakuTrackSpacing = danmakuCell.danmakuTrackSpacing
-        changeDanmakuTrack(danmakuCell.danmakuTrack)
+        // 轨道数变更判断：如果轨道数不一致，更新轨道数
+        if danmakuTrack != danmakuCell.danmakuTrack {
+            updateDanmakuTrack(danmakuCell.danmakuTrack,
+                               withSpacing: danmakuCell.danmakuTrackSpacing)
+        }
         
         // 获取可用的轨道索引，并判断是否有效
         let trackIndex = findAvailableTrackForNextDanmaku(danmakuCell)
@@ -121,17 +123,19 @@ open class ARTVideoPlayerDanmakuView: UIView {
             self.handleDanmakuAnimationCompletion(for: danmakuCell, in: trackIndex)
         }
     }
-    
-    /// 查找可以发送弹幕的轨道
+
+    /// 查找可以发送弹幕的轨道索引
     ///
-    /// - Parameter newDanmaku: 新的弹幕单元
-    /// - Returns: 可用轨道的索引，如果没有可用轨道返回 -1
+    /// - Parameter newDanmaku: 待发送的弹幕单元
+    /// - Returns: 可用轨道的索引；如果没有可用轨道，返回 -1
     @objc open func findAvailableTrackForNextDanmaku(_ newDanmaku: ARTVideoPlayerDanmakuCell) -> Int {
-        for (index, lastDanmaku) in danmakuCells.enumerated() {
-            if lastDanmaku == nil { return index } // 判断轨道是否为空
-            if let lastDanmaku = lastDanmaku, canDisplayNextDanmaku(after: lastDanmaku, with: newDanmaku) { return index } // 如果轨道有弹幕，判断是否可以显示新的弹幕
-        }
-        return -1 // 如果没有可用轨道
+        return danmakuCells.enumerated().first { index, lastDanmaku in
+            if let lastDanmaku = lastDanmaku { // 如果当前轨道已有弹幕，检查新弹幕是否可以插入
+                return canDisplayNextDanmaku(after: lastDanmaku, with: newDanmaku)
+            }
+            // 如果当前轨道为空，允许插入新弹幕
+            return true
+        }?.offset ?? -1 // 如果没有找到可用轨道，返回 -1
     }
     
     /// 判断新的弹幕是否可以在同一轨道中发送
@@ -169,6 +173,17 @@ open class ARTVideoPlayerDanmakuView: UIView {
 // MARK: - Private Methods
 
 extension ARTVideoPlayerDanmakuView {
+    
+    /// 更新弹幕轨道设置
+    ///
+    /// - Parameters:
+    ///  - track: 轨道数量
+    ///  - spacing: 轨道间距
+    private func updateDanmakuTrack(_ track: Int, withSpacing spacing: CGFloat) {
+        danmakuTrack = track
+        danmakuTrackSpacing = spacing
+        changeDanmakuTrack(track) // 更新轨道数
+    }
     
     /// 计算弹幕的 Y 坐标
     ///
@@ -212,12 +227,15 @@ extension ARTVideoPlayerDanmakuView {
     ///  - danmakuCell: 弹幕单元
     ///  - at: 插入位置
     ///  - completion: 完成回调
-    @objc open func insertDanmaku(_ danmakuCells: [ARTVideoPlayerDanmakuCell], at index: Int, completion: ((Bool) -> Void)?) {
-        guard index >= 0 && index <= danmakuDataSource.count else {
+    @objc open func insertDanmaku(_ danmakuCells: [ARTVideoPlayerDanmakuCell], at index: NSNumber? = nil, completion: ((Bool) -> Void)? = nil) {
+        // 如果没有提供 index，则默认插入到最后
+        let insertIndex = index?.intValue ?? danmakuDataSource.count
+        guard insertIndex >= 0 && insertIndex <= danmakuDataSource.count else { // 检查插入位置是否有效
             completion?(false)
             return
         }
-        danmakuDataSource.insert(contentsOf: danmakuCells, at: index)
+        
+        danmakuDataSource.insert(contentsOf: danmakuCells, at: insertIndex)
         remainingDanmakuCount += danmakuCells.count
         completion?(true)
     }
@@ -241,16 +259,12 @@ extension ARTVideoPlayerDanmakuView {
     @objc open func stopDanmaku() {
         
     }
-    
+
     /// 更改弹幕轨道数量
     /// - Parameter track: 新的轨道数量
     @objc open func changeDanmakuTrack(_ track: Int) {
-        guard track >= 0 else { return } // 防止轨道数为负数
-        danmakuTrack = track
-        if danmakuCells.count < track {
-            danmakuCells = Array(repeating: nil, count: danmakuTrack)
-        } else {
-            danmakuCells.removeLast(danmakuCells.count - track)
-        }
+        guard track >= 0 else { return }
+        // 调整轨道数组大小：保留现有的有效轨道，补充或截断到目标数量
+        danmakuCells = danmakuCells.prefix(track) + Array(repeating: nil, count: max(0, track - danmakuCells.count))
     }
 }

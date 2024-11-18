@@ -63,6 +63,50 @@ class ARTViewController_DanmakuView: ARTBaseViewController {
             make.bottom.equalTo(button)
             make.left.equalTo(ARTAdaptedValue(24))
         }
+        
+        let button3 = UIButton(type: .custom)
+        button3.backgroundColor = .art_randomColor()
+        button3.setTitle("3条弹幕", for: .normal)
+        button3.addTarget(self, action: #selector(danmakuActionTah), for: .touchUpInside)
+        view.addSubview(button3)
+        button3.snp.makeConstraints { make in
+            make.size.equalTo(button)
+            make.bottom.equalTo(-ARTAdaptedValue(200))
+            make.left.equalTo(ARTAdaptedValue(24))
+        }
+        
+        let button4 = UIButton(type: .custom)
+        button4.backgroundColor = .art_randomColor()
+        button4.setTitle("4条弹幕", for: .normal)
+        button4.addTarget(self, action: #selector(danmakuActionTahaa), for: .touchUpInside)
+        view.addSubview(button4)
+        button4.snp.makeConstraints { make in
+            make.size.equalTo(button)
+            make.bottom.equalTo(-ARTAdaptedValue(200))
+            make.centerX.equalToSuperview()
+        }
+        
+        let button5 = UIButton(type: .custom)
+        button5.setTitle("1条弹幕", for: .normal)
+        button5.backgroundColor = .art_randomColor()
+        button5.addTarget(self, action: #selector(danmakuActionTahaaaaa), for: .touchUpInside)
+        view.addSubview(button5)
+        button5.snp.makeConstraints { make in
+            make.size.equalTo(button)
+            make.bottom.equalTo(-ARTAdaptedValue(200))
+            make.right.equalTo(-ARTAdaptedValue(24.0))
+        }
+    }
+    @objc open func danmakuActionTah() {
+        danmakuView.changeDanmakuTrack(3)
+    }
+    
+    @objc open func danmakuActionTahaa() {
+        danmakuView.changeDanmakuTrack(4)
+    }
+    
+    @objc open func danmakuActionTahaaaaa() {
+        danmakuView.changeDanmakuTrack(1)
     }
     
     /// 添加弹幕
@@ -73,6 +117,7 @@ class ARTViewController_DanmakuView: ARTBaseViewController {
     
     @objc open func danmakuStop() {
         print("结束")
+        danmakuView.changeDanmakuTrack(2)
     }
     
     @objc open func danmakuAction() {
@@ -82,9 +127,7 @@ class ARTViewController_DanmakuView: ARTBaseViewController {
         danmakuCell.danmakuTrackSpacing = 10.0
         danmakuCell.danmakuDelayTime = 0.0
         danmakuCell.danmakuDuration = 0.0
-        danmakuView.insertDanmaku([danmakuCell], at: 0) { _ in
-            
-        }
+        danmakuView.insertDanmaku([danmakuCell], at: 0)
     }
 }
 
