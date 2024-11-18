@@ -8,6 +8,6 @@
 /// 协议方法
 ///
 /// - NOTE: 可继承该协议方法
-@objc public protocol ARTVideoPlayerSlidingViewDelegate: AnyObject {
+@objc protocol ARTVideoPlayerSlidingViewDelegate: AnyObject {
     
 }

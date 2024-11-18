@@ -18,6 +18,9 @@
 		0258B7AD2BFA845800AEB349 /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 0258B7AA2BFA845800AEB349 /* 5.png */; };
 		0258B7AF2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0258B7AE2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift */; };
 		0258CA9E2C03995300A486E7 /* ARTViewController_PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0258CA9D2C03995300A486E7 /* ARTViewController_PageViewController.swift */; };
+		025AF79B2CEBE271009643E2 /* ARTViewController+DanmakuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025AF79A2CEBE271009643E2 /* ARTViewController+DanmakuView.swift */; };
+		025AF79E2CEBE3F6009643E2 /* ARTCustomDanmakuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025AF79D2CEBE3F6009643E2 /* ARTCustomDanmakuModel.swift */; };
+		025AF79F2CEBE3F6009643E2 /* ARTCustomDanmakuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025AF79C2CEBE3F6009643E2 /* ARTCustomDanmakuCell.swift */; };
 		025D29982C48459D00F611D6 /* ARTViewController_Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29972C48459D00F611D6 /* ARTViewController_Carousel.swift */; };
 		026A7B6C2C3431AE00D3134E /* ARTViewController_ActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A7B6B2C3431AE00D3134E /* ARTViewController_ActionSheet.swift */; };
 		0282385F2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282385E2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift */; };
@@ -89,6 +92,9 @@
 		0258B7AA2BFA845800AEB349 /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
 		0258B7AE2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_VideoPlayer.swift; sourceTree = "<group>"; };
 		0258CA9D2C03995300A486E7 /* ARTViewController_PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_PageViewController.swift; sourceTree = "<group>"; };
+		025AF79A2CEBE271009643E2 /* ARTViewController+DanmakuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTViewController+DanmakuView.swift"; sourceTree = "<group>"; };
+		025AF79C2CEBE3F6009643E2 /* ARTCustomDanmakuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTCustomDanmakuCell.swift; sourceTree = "<group>"; };
+		025AF79D2CEBE3F6009643E2 /* ARTCustomDanmakuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTCustomDanmakuModel.swift; sourceTree = "<group>"; };
 		025D29972C48459D00F611D6 /* ARTViewController_Carousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_Carousel.swift; sourceTree = "<group>"; };
 		026A7B6B2C3431AE00D3134E /* ARTViewController_ActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_ActionSheet.swift; sourceTree = "<group>"; };
 		0282385E2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_AlignmentButton.swift; sourceTree = "<group>"; };
@@ -185,6 +191,15 @@
 			name = Protocol;
 			sourceTree = "<group>";
 		};
+		025AF7A02CEBE3FB009643E2 /* DanmakuBusiness */ = {
+			isa = PBXGroup;
+			children = (
+				025AF79C2CEBE3F6009643E2 /* ARTCustomDanmakuCell.swift */,
+				025AF79D2CEBE3F6009643E2 /* ARTCustomDanmakuModel.swift */,
+			);
+			path = DanmakuBusiness;
+			sourceTree = "<group>";
+		};
 		0290B4622CC5986700D49079 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -273,6 +288,7 @@
 				0298808C2C46E43000176ED3 /* PhotoBrowserBusiness */,
 				02BB29302C49673F00DE706C /* CarouselBusiness */,
 				0209353F2C73F08700696C0F /* WebViewBusiness */,
+				025AF7A02CEBE3FB009643E2 /* DanmakuBusiness */,
 			);
 			name = Business;
 			sourceTree = "<group>";
@@ -391,6 +407,7 @@
 				024F9A4E2C456D50008DF3AB /* ARTViewController_PhotoBrowser.swift */,
 				025D29972C48459D00F611D6 /* ARTViewController_Carousel.swift */,
 				0292ECA62C733B7A00D08248 /* ARTViewController+WebView.swift */,
+				025AF79A2CEBE271009643E2 /* ARTViewController+DanmakuView.swift */,
 				02C95B3F2C426FEA00200438 /* Business */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
@@ -672,6 +689,8 @@
 				0258B7AF2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift in Sources */,
 				02F8AE4F2BF67E7E00A111F6 /* ARTViewController_SlidePopup.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				025AF79E2CEBE3F6009643E2 /* ARTCustomDanmakuModel.swift in Sources */,
+				025AF79F2CEBE3F6009643E2 /* ARTCustomDanmakuCell.swift in Sources */,
 				0298808B2C46E3EF00176ED3 /* ARTControllerNavigationBar.swift in Sources */,
 				02C95B442C42705D00200438 /* ARTCollectionViewModel.swift in Sources */,
 				02C95B482C42723500200438 /* ARTCollectionCell.swift in Sources */,
@@ -689,6 +708,7 @@
 				025D29982C48459D00F611D6 /* ARTViewController_Carousel.swift in Sources */,
 				0282385F2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift in Sources */,
 				02F8AE312BF66BCE00A111F6 /* ARTBaseViewController.swift in Sources */,
+				025AF79B2CEBE271009643E2 /* ARTViewController+DanmakuView.swift in Sources */,
 				02F8AE532BF67E7E00A111F6 /* ARTViewController_Quantity.swift in Sources */,
 				02BB292F2C49673200DE706C /* ARTSecondCarouselCell.swift in Sources */,
 				02F8AE522BF67E7E00A111F6 /* ARTBaseNavigationController.swift in Sources */,

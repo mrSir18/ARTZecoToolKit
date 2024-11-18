@@ -50,13 +50,13 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     
     // MARK: - 播放器组件 AVPlayer（最底层：播放器视图）
-    
-    /// 播放器系统控制层（最底层：系统控制）
-    public var systemControlsView: ARTVideoPlayerSystemControls!
-    
-    /// 播放器图层（中间层：用于显示弹幕、广告等）
+
+    /// 播放器图层（最底层：位于Video Layer之上，用于显示弹幕、广告等）
     public var playerOverlayView: ARTVideoPlayerOverlayView!
     
+    /// 播放器系统控制层（中间层：系统控制，位于弹幕、广告等之上）
+    public var systemControlsView: ARTVideoPlayerSystemControls!
+
     /// 播放器控制层（最顶层：顶底栏、侧边栏等）
     public var playControlsView: ARTVideoPlayerControlsView!
     
@@ -115,8 +115,8 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         super.setupViews()
         setupFeedbackGenerator()
         setupFullscreenManager()
-        setupSystemControlsView()
         setupOverlayView()
+        setupSystemControlsView()
         setupControlsView()
         setupGestureRecognizers()
     }
@@ -335,24 +335,24 @@ extension ARTVideoPlayerWrapperView {
         fetchFirstFrameFromVideo() // 获取视频的第一帧
     }
     
-    /// 创建系统控制层（最底层）
-    ///
-    /// - Note: 重写父类方法，设置子视图
-    @objc open func setupSystemControlsView() {
-        systemControlsView = ARTVideoPlayerSystemControls(self)
-        addSubview(systemControlsView)
-        systemControlsView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
-    
-    /// 创建播放器图层（中间层）
+    /// 创建播放器图层（最底层）
     ///
     /// - Note: 重写父类方法，设置子视图
     @objc open func setupOverlayView() {
         playerOverlayView = ARTVideoPlayerOverlayView(self)
         addSubview(playerOverlayView)
         playerOverlayView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    /// 创建系统控制层（中间层）
+    ///
+    /// - Note: 重写父类方法，设置子视图
+    @objc open func setupSystemControlsView() {
+        systemControlsView = ARTVideoPlayerSystemControls(self)
+        addSubview(systemControlsView)
+        systemControlsView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
