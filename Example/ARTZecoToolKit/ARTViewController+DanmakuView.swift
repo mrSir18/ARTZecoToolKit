@@ -31,7 +31,6 @@ class ARTViewController_DanmakuView: ARTBaseViewController {
             make.height.equalTo(ARTAdaptedValue(260.0))
         }
         
-        // 按钮标题和动作的配对
         let buttonsInfo: [(title: String, action: Selector)] = [
             ("开始弹幕", #selector(startDanmakuAction)),
             ("添加弹幕", #selector(addDanmakuAction)),
@@ -44,6 +43,7 @@ class ARTViewController_DanmakuView: ARTBaseViewController {
             ("字体大小", #selector(fontSizeAction))
         ]
         
+        let maxButtonsPerRow = Int((UIScreen.main.bounds.width - ARTAdaptedValue(48)) / ARTAdaptedValue(80 + 24))
         var rowStackViews: [UIStackView] = []
         var currentRowStack: UIStackView? = nil
         
@@ -53,30 +53,28 @@ class ARTViewController_DanmakuView: ARTBaseViewController {
             button.backgroundColor = .art_randomColor()
             button.addTarget(self, action: info.action, for: .touchUpInside)
             
-            if index % 3 == 0 {
+            if index % maxButtonsPerRow == 0 {
                 currentRowStack = UIStackView()
                 currentRowStack?.axis = .horizontal
                 currentRowStack?.distribution = .fillEqually
                 currentRowStack?.alignment = .center
-                currentRowStack?.spacing = 24
+                currentRowStack?.spacing = ARTAdaptedValue(24)
                 view.addSubview(currentRowStack!)
                 
                 currentRowStack?.snp.makeConstraints { make in
                     if let lastRowStack = rowStackViews.last {
-                        make.top.equalTo(lastRowStack.snp.bottom).offset(ARTAdaptedValue(24)) // 每行之间有 24 的间距
+                        make.top.equalTo(lastRowStack.snp.bottom).offset(ARTAdaptedValue(24))
                     } else {
                         make.top.equalTo(danmakuView.snp.bottom).offset(ARTAdaptedValue(24))
                     }
-                    make.left.equalTo(ARTAdaptedValue(24))
-                    make.right.equalTo(-ARTAdaptedValue(24))
+                    make.centerX.equalToSuperview()
                 }
                 rowStackViews.append(currentRowStack!)
             }
             
-            // 将按钮添加到当前行的 StackView 中
             currentRowStack?.addArrangedSubview(button)
             button.snp.makeConstraints { make in
-                make.size.equalTo(ARTAdaptedSize(width: 80, height: 80)) // 设置统一的按钮大小
+                make.width.height.equalTo(ARTAdaptedValue(90))
             }
         }
     }
