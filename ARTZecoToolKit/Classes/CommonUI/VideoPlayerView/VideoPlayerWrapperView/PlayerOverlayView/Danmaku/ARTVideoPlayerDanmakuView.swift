@@ -247,17 +247,36 @@ extension ARTVideoPlayerDanmakuView {
     
     /// 暂停弹幕
     @objc open func pauseDanmaku() {
+        displayingDanmakuCells.compactMap { $0 }.forEach { $0.pauseDanmaku() } // 暂停正在显示的弹幕
         
+        // 取消之前的延迟请求
+        guard !danmakuDataSource.isEmpty else { return }
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
     }
     
     /// 恢复弹幕
     @objc open func resumeDanmaku() {
-        
+        displayingDanmakuCells.compactMap { $0 }.forEach { $0.resumeDanmaku() } // 恢复正在显示的弹幕
+        startDanmaku() // 继续创建弹幕
     }
     
     /// 停止弹幕
     @objc open func stopDanmaku() {
-        
+        // 停止并移除所有正在显示的弹幕
+        displayingDanmakuCells.compactMap { $0 }.forEach { danmaku in
+            danmaku.stopDanmaku()
+            danmaku.removeFromSuperview()
+        }
+
+        // 清空所有相关数据
+        displayingDanmakuCells.removeAll()
+        danmakuDataSource.removeAll()
+        danmakuCells.removeAll()
+
+        // 重置状态变量
+        remainingDanmakuCount = 0
+        danmakuTrack = 0
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
     }
 
     /// 更改弹幕轨道数量

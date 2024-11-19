@@ -28,106 +28,106 @@ class ARTViewController_DanmakuView: ARTBaseViewController {
         danmakuView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(ARTAdaptedValue(100.0))
-            make.height.equalTo(ARTAdaptedValue(300.0))
+            make.height.equalTo(ARTAdaptedValue(260.0))
         }
         
-        let button = UIButton(type: .custom)
-        button.setTitle("开始弹幕", for: .normal)
-        button.backgroundColor = .art_randomColor()
-        button.addTarget(self, action: #selector(danmakuStart), for: .touchUpInside)
-        view.addSubview(button)
-        button.snp.makeConstraints { make in
-            make.size.equalTo(ARTAdaptedSize(width: 80, height: 80))
-            make.centerX.equalToSuperview()
-            make.bottom.equalTo(-ARTAdaptedValue(100.0))
-        }
+        // 按钮标题和动作的配对
+        let buttonsInfo: [(title: String, action: Selector)] = [
+            ("开始弹幕", #selector(startDanmakuAction)),
+            ("添加弹幕", #selector(addDanmakuAction)),
+            ("暂停弹幕", #selector(pauseDanmakuAction)),
+            ("继续弹幕", #selector(resumeDanmakuAction)),
+            ("结束弹幕", #selector(stopDanmakuAction)),
+            ("2条弹幕", #selector(twoDanmakuAction)),
+            ("4条弹幕", #selector(fourDanmakuAction)),
+            ("透明度", #selector(opacityDanmakuAction)),
+            ("字体大小", #selector(fontSizeAction))
+        ]
         
-        let button1 = UIButton(type: .custom)
-        button1.setTitle("结束弹幕", for: .normal)
-        button1.backgroundColor = .art_randomColor()
-        button1.addTarget(self, action: #selector(danmakuStop), for: .touchUpInside)
-        view.addSubview(button1)
-        button1.snp.makeConstraints { make in
-            make.size.equalTo(button)
-            make.bottom.equalTo(button)
-            make.right.equalTo(-ARTAdaptedValue(24.0))
-        }
+        var rowStackViews: [UIStackView] = []
+        var currentRowStack: UIStackView? = nil
         
-        let button2 = UIButton(type: .custom)
-        button2.backgroundColor = .art_randomColor()
-        button2.setTitle("添加弹幕", for: .normal)
-        button2.addTarget(self, action: #selector(danmakuAction), for: .touchUpInside)
-        view.addSubview(button2)
-        button2.snp.makeConstraints { make in
-            make.size.equalTo(button)
-            make.bottom.equalTo(button)
-            make.left.equalTo(ARTAdaptedValue(24))
-        }
-        
-        let button3 = UIButton(type: .custom)
-        button3.backgroundColor = .art_randomColor()
-        button3.setTitle("3条弹幕", for: .normal)
-        button3.addTarget(self, action: #selector(danmakuActionTah), for: .touchUpInside)
-        view.addSubview(button3)
-        button3.snp.makeConstraints { make in
-            make.size.equalTo(button)
-            make.bottom.equalTo(-ARTAdaptedValue(200))
-            make.left.equalTo(ARTAdaptedValue(24))
-        }
-        
-        let button4 = UIButton(type: .custom)
-        button4.backgroundColor = .art_randomColor()
-        button4.setTitle("4条弹幕", for: .normal)
-        button4.addTarget(self, action: #selector(danmakuActionTahaa), for: .touchUpInside)
-        view.addSubview(button4)
-        button4.snp.makeConstraints { make in
-            make.size.equalTo(button)
-            make.bottom.equalTo(-ARTAdaptedValue(200))
-            make.centerX.equalToSuperview()
-        }
-        
-        let button5 = UIButton(type: .custom)
-        button5.setTitle("1条弹幕", for: .normal)
-        button5.backgroundColor = .art_randomColor()
-        button5.addTarget(self, action: #selector(danmakuActionTahaaaaa), for: .touchUpInside)
-        view.addSubview(button5)
-        button5.snp.makeConstraints { make in
-            make.size.equalTo(button)
-            make.bottom.equalTo(-ARTAdaptedValue(200))
-            make.right.equalTo(-ARTAdaptedValue(24.0))
+        for (index, info) in buttonsInfo.enumerated() {
+            let button = UIButton(type: .custom)
+            button.setTitle(info.title, for: .normal)
+            button.backgroundColor = .art_randomColor()
+            button.addTarget(self, action: info.action, for: .touchUpInside)
+            
+            if index % 3 == 0 {
+                currentRowStack = UIStackView()
+                currentRowStack?.axis = .horizontal
+                currentRowStack?.distribution = .fillEqually
+                currentRowStack?.alignment = .center
+                currentRowStack?.spacing = 24
+                view.addSubview(currentRowStack!)
+                
+                currentRowStack?.snp.makeConstraints { make in
+                    if let lastRowStack = rowStackViews.last {
+                        make.top.equalTo(lastRowStack.snp.bottom).offset(ARTAdaptedValue(24)) // 每行之间有 24 的间距
+                    } else {
+                        make.top.equalTo(danmakuView.snp.bottom).offset(ARTAdaptedValue(24))
+                    }
+                    make.left.equalTo(ARTAdaptedValue(24))
+                    make.right.equalTo(-ARTAdaptedValue(24))
+                }
+                rowStackViews.append(currentRowStack!)
+            }
+            
+            // 将按钮添加到当前行的 StackView 中
+            currentRowStack?.addArrangedSubview(button)
+            button.snp.makeConstraints { make in
+                make.size.equalTo(ARTAdaptedSize(width: 80, height: 80)) // 设置统一的按钮大小
+            }
         }
     }
-    @objc open func danmakuActionTah() {
-        danmakuView.changeDanmakuTrack(3)
-    }
-    
-    @objc open func danmakuActionTahaa() {
-        danmakuView.changeDanmakuTrack(4)
-    }
-    
-    @objc open func danmakuActionTahaaaaa() {
-        danmakuView.changeDanmakuTrack(1)
-    }
-    
-    /// 添加弹幕
-    @objc open func danmakuStart() {
-        print("开始")
+
+    @objc open func startDanmakuAction() {
+        print("开始弹幕")
         danmakuView.startDanmaku()
     }
     
-    @objc open func danmakuStop() {
-        print("结束")
-        danmakuView.changeDanmakuTrack(2)
-    }
-    
-    @objc open func danmakuAction() {
+    @objc open func addDanmakuAction() {
+        print("添加弹幕")
         let danmakuCell = ARTCustomDanmakuCell()
-        danmakuCell.danmakuSpeed = [3,4,5,6].randomElement() ?? 3
+        danmakuCell.danmakuSpeed = [3, 4, 5, 6].randomElement() ?? 3
         danmakuCell.danmakuTrack = 4
         danmakuCell.danmakuTrackSpacing = 10.0
         danmakuCell.danmakuDelayTime = 0.0
         danmakuCell.danmakuDuration = 0.0
         danmakuView.insertDanmaku([danmakuCell], at: 0)
+    }
+    
+    @objc open func pauseDanmakuAction() {
+        print("暂停弹幕")
+        danmakuView.pauseDanmaku()
+    }
+    
+    @objc open func resumeDanmakuAction() {
+        print("继续弹幕")
+        danmakuView.resumeDanmaku()
+    }
+
+    @objc open func stopDanmakuAction() {
+        print("结束弹幕")
+        danmakuView.stopDanmaku()
+    }
+    
+    @objc open func twoDanmakuAction() {
+        print("2条弹幕")
+        danmakuView.changeDanmakuTrack(2)
+    }
+
+    @objc open func fourDanmakuAction() {
+        print("4条弹幕")
+        danmakuView.changeDanmakuTrack(4)
+    }
+
+    @objc open func opacityDanmakuAction() {
+        print("透明度")
+    }
+    
+    @objc open func fontSizeAction() {
+        print("字体大小")
     }
 }
 
