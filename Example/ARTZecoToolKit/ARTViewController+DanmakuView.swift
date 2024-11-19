@@ -24,6 +24,7 @@ class ARTViewController_DanmakuView: ARTBaseViewController {
     /// 创建弹幕视图
     private func setupDanmakuView() {
         danmakuView = ARTVideoPlayerDanmakuView()
+        danmakuView.backgroundColor = .art_randomColor()
         view.addSubview(danmakuView)
         danmakuView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()

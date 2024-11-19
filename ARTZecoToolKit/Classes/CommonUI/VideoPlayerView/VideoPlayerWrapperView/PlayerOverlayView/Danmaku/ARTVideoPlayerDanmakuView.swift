@@ -23,6 +23,16 @@
     @objc optional func danmakuViewDidEndDisplayAllDanmaku(_ danmakuView: ARTVideoPlayerDanmakuView)
 }
 
+extension ARTVideoPlayerDanmakuView {
+    /// 弹幕状态枚举
+    public enum DanmakuState {
+        case idle      // 未启动
+        case running   // 正在运行
+        case paused    // 暂停中
+        case stopped   // 已停止
+    }
+}
+
 open class ARTVideoPlayerDanmakuView: UIView {
     
     /// 代理对象
@@ -46,12 +56,15 @@ open class ARTVideoPlayerDanmakuView: UIView {
     /// 弹幕轨道数 默认4
     public var danmakuTrack: Int = 0
     
+    /// 当前弹幕状态
+    public var danmakuState: DanmakuState = .idle
+    
     
     // MARK: - Initialization
     
     public init(_ delegate: ARTVideoPlayerDanmakuViewDelegate? = nil) {
         super.init(frame: .zero)
-        self.backgroundColor = .art_randomColor()
+        self.clipsToBounds = true
         self.delegate = delegate
     }
     
@@ -67,12 +80,17 @@ open class ARTVideoPlayerDanmakuView: UIView {
     open func setupViews() {
         
     }
+    
+    override public func willMove(toWindow newWindow: UIWindow?) {
+        super.willMove(toWindow: newWindow)
+        if newWindow == nil { stopDanmaku() } // 离开当前窗口时停止弹幕
+    }
 
     /// 创建弹幕
     @objc open func createDanmaku() {
         // 递归调用，确保持续运行，间隔0.25秒
         defer { perform(#selector(createDanmaku), with: nil, afterDelay: 0.25) }
-        
+  
         // 确保数据源中有弹幕
         guard let danmakuCell = danmakuDataSource.first else { return }
         
@@ -215,6 +233,29 @@ extension ARTVideoPlayerDanmakuView {
             delegate?.danmakuViewDidEndDisplayAllDanmaku?(self)
         }
     }
+    
+    /// 更新状态
+    ///
+    /// - Parameters:
+    ///   - newState: 新状态
+    ///   - allowedCurrentStates: 允许的当前状态
+    /// - Returns: 是否成功更新状态
+    private func attemptStateTransition(to newState: DanmakuState, from allowedCurrentStates: [DanmakuState]) -> Bool {
+        guard allowedCurrentStates.contains(danmakuState) else { return false }
+        danmakuState = newState
+        return true
+    }
+    
+    /// 更新当前显示的弹幕单元
+    /// - Parameter action: 对每个显示中的弹幕执行的操作
+    private func applyActionToDisplayingDanmaku(_ action: (ARTVideoPlayerDanmakuCell) -> Void) {
+        displayingDanmakuCells.compactMap { $0 }.forEach(action)
+    }
+    
+    /// 取消延迟请求
+    private func cancelScheduledTasks() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
+    }
 }
 
 // MARK: - Public Methods
@@ -242,32 +283,31 @@ extension ARTVideoPlayerDanmakuView {
     
     /// 开始弹幕
     @objc open func startDanmaku() {
+        guard attemptStateTransition(to: .running, from: [.idle, .stopped]) else { return } // 仅允许在未启动或停止状态下启动
         createDanmaku()
     }
     
     /// 暂停弹幕
     @objc open func pauseDanmaku() {
-        displayingDanmakuCells.compactMap { $0 }.forEach { $0.pauseDanmaku() } // 暂停正在显示的弹幕
-        
-        // 取消之前的延迟请求
-        guard !danmakuDataSource.isEmpty else { return }
-        NSObject.cancelPreviousPerformRequests(withTarget: self)
+        guard attemptStateTransition(to: .paused, from: [.running]) else { return } // 仅允许在运行状态下暂停
+        applyActionToDisplayingDanmaku { $0.pauseDanmaku() } // 暂停正在显示的弹幕
+        cancelScheduledTasks()
     }
     
     /// 恢复弹幕
     @objc open func resumeDanmaku() {
-        displayingDanmakuCells.compactMap { $0 }.forEach { $0.resumeDanmaku() } // 恢复正在显示的弹幕
-        startDanmaku() // 继续创建弹幕
+        guard attemptStateTransition(to: .running, from: [.paused]) else { return } // 仅允许在暂停状态下恢复
+        applyActionToDisplayingDanmaku { $0.resumeDanmaku() } // 恢复正在显示的弹幕
+        createDanmaku()
     }
     
     /// 停止弹幕
     @objc open func stopDanmaku() {
-        // 停止并移除所有正在显示的弹幕
-        displayingDanmakuCells.compactMap { $0 }.forEach { danmaku in
-            danmaku.stopDanmaku()
-            danmaku.removeFromSuperview()
-        }
-
+        guard attemptStateTransition(to: .stopped, from: [.running, .paused]) else { return } // 仅允许在运行或暂停状态下停止
+        
+        // 停止所有弹幕并清理
+        applyActionToDisplayingDanmaku { $0.stopDanmaku(); $0.removeFromSuperview() }
+        
         // 清空所有相关数据
         displayingDanmakuCells.removeAll()
         danmakuDataSource.removeAll()
@@ -276,7 +316,7 @@ extension ARTVideoPlayerDanmakuView {
         // 重置状态变量
         remainingDanmakuCount = 0
         danmakuTrack = 0
-        NSObject.cancelPreviousPerformRequests(withTarget: self)
+        cancelScheduledTasks()
     }
 
     /// 更改弹幕轨道数量
