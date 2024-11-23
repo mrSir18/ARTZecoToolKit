@@ -8,40 +8,56 @@
 
 import ARTZecoToolKit
 
+enum DanmakuActionType: Int {
+    case start
+    case add
+    case pause
+    case resume
+    case stop
+    case twoTracks
+    case fourTracks
+    case changeOpacity
+    case changeFontSize
+}
+
 class ARTViewController_DanmakuView: ARTBaseViewController {
     
     /// 弹幕视图
     private var danmakuView: ARTVideoPlayerDanmakuView!
-    
     
     // MARK: - Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDanmakuView()
+        setupButtons()
     }
     
     /// 创建弹幕视图
     private func setupDanmakuView() {
-        danmakuView = ARTVideoPlayerDanmakuView()
+        danmakuView = ARTVideoPlayerDanmakuView(self)
         danmakuView.backgroundColor = .art_randomColor()
+        danmakuView.initialInterval = 0.1
         view.addSubview(danmakuView)
         danmakuView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(ARTAdaptedValue(100.0))
             make.height.equalTo(ARTAdaptedValue(260.0))
         }
-        
-        let buttonsInfo: [(title: String, action: Selector)] = [
-            ("开始弹幕", #selector(startDanmakuAction)),
-            ("添加弹幕", #selector(addDanmakuAction)),
-            ("暂停弹幕", #selector(pauseDanmakuAction)),
-            ("继续弹幕", #selector(resumeDanmakuAction)),
-            ("结束弹幕", #selector(stopDanmakuAction)),
-            ("2条弹幕", #selector(twoDanmakuAction)),
-            ("4条弹幕", #selector(fourDanmakuAction)),
-            ("透明度", #selector(opacityDanmakuAction)),
-            ("字体大小", #selector(fontSizeAction))
+    }
+    
+    /// 创建按钮
+    private func setupButtons() {
+        let buttonsInfo: [(title: String, actionType: DanmakuActionType)] = [
+            ("开始弹幕", .start),
+            ("添加弹幕", .add),
+            ("暂停弹幕", .pause),
+            ("继续弹幕", .resume),
+            ("结束弹幕", .stop),
+            ("2条弹幕", .twoTracks),
+            ("4条弹幕", .fourTracks),
+            ("透明度",  .changeOpacity),
+            ("字体大小", .changeFontSize)
         ]
         
         let maxButtonsPerRow = Int((UIScreen.main.bounds.width - ARTAdaptedValue(48)) / ARTAdaptedValue(80 + 24))
@@ -52,7 +68,8 @@ class ARTViewController_DanmakuView: ARTBaseViewController {
             let button = UIButton(type: .custom)
             button.setTitle(info.title, for: .normal)
             button.backgroundColor = .art_randomColor()
-            button.addTarget(self, action: info.action, for: .touchUpInside)
+            button.tag = info.actionType.rawValue
+            button.addTarget(self, action: #selector(handleButtonTap(_:)), for: .touchUpInside)
             
             if index % maxButtonsPerRow == 0 {
                 currentRowStack = UIStackView()
@@ -79,54 +96,52 @@ class ARTViewController_DanmakuView: ARTBaseViewController {
             }
         }
     }
+    
+    @objc private func handleButtonTap(_ sender: UIButton) {
+        guard let actionType = DanmakuActionType(rawValue: sender.tag) else { return }
+        performAction(for: actionType)
+    }
+}
 
-    @objc open func startDanmakuAction() {
-        print("开始弹幕")
-        danmakuView.startDanmaku()
-    }
-    
-    @objc open func addDanmakuAction() {
-        print("添加弹幕")
-        let danmakuCell = ARTCustomDanmakuCell()
-        danmakuCell.danmakuSpeed = [3, 4, 5, 6].randomElement() ?? 3
-        danmakuCell.danmakuTrack = 4
-        danmakuCell.danmakuTrackSpacing = 10.0
-        danmakuCell.danmakuDelayTime = 0.0
-        danmakuCell.danmakuDuration = 0.0
-        danmakuView.insertDanmaku([danmakuCell], at: 0)
-    }
-    
-    @objc open func pauseDanmakuAction() {
-        print("暂停弹幕")
-        danmakuView.pauseDanmaku()
-    }
-    
-    @objc open func resumeDanmakuAction() {
-        print("继续弹幕")
-        danmakuView.resumeDanmaku()
-    }
+// MARK: Test Button
 
-    @objc open func stopDanmakuAction() {
-        print("结束弹幕")
-        danmakuView.stopDanmaku()
-    }
+extension ARTViewController_DanmakuView {
     
-    @objc open func twoDanmakuAction() {
-        print("2条弹幕")
-        danmakuView.changeDanmakuTrack(2)
-    }
-
-    @objc open func fourDanmakuAction() {
-        print("4条弹幕")
-        danmakuView.changeDanmakuTrack(4)
-    }
-
-    @objc open func opacityDanmakuAction() {
-        print("透明度")
-    }
-    
-    @objc open func fontSizeAction() {
-        print("字体大小")
+    private func performAction(for actionType: DanmakuActionType) {
+        switch actionType {
+        case .start:
+            print("开始弹幕")
+            danmakuView.startDanmaku()
+        case .add:
+            print("添加弹幕")
+            let danmakuCell = ARTCustomDanmakuCell()
+            danmakuCell.backgroundColor = .art_randomColor()
+            danmakuCell.danmakuSpeed = TimeInterval.random(in: 3...6)
+            danmakuCell.danmakuTrack = 4
+            danmakuCell.danmakuTrackSpacing = 12.0
+            danmakuCell.danmakuDelayTime = 0.0
+            danmakuCell.danmakuDuration = 0.0
+            danmakuView.insertDanmaku([danmakuCell])
+        case .pause:
+            print("暂停弹幕")
+            danmakuView.pauseDanmaku()
+        case .resume:
+            print("继续弹幕")
+            danmakuView.resumeDanmaku()
+        case .stop:
+            print("结束弹幕")
+            danmakuView.stopDanmaku()
+        case .twoTracks:
+            print("2条弹幕")
+            danmakuView.changeDanmakuTrack(2)
+        case .fourTracks:
+            print("4条弹幕")
+            danmakuView.changeDanmakuTrack(4)
+        case .changeOpacity:
+            print("透明度")
+        case .changeFontSize:
+            print("字体大小")
+        }
     }
 }
 
@@ -134,4 +149,19 @@ class ARTViewController_DanmakuView: ARTBaseViewController {
 
 extension ARTViewController_DanmakuView: ARTVideoPlayerDanmakuViewDelegate {
     
+    func danmakuView(_ danmakuView: ARTVideoPlayerDanmakuView, didClickDanmakuCell danmakuCell: ARTVideoPlayerDanmakuCell) {
+        print("点击弹幕 \(String(describing: danmakuCell.backgroundColor?.description))")
+    }
+    
+    func danmakuView(_ danmakuView: ARTVideoPlayerDanmakuView, willDisplayDanmakuCell danmakuCell: ARTVideoPlayerDanmakuCell) {
+//        print("弹幕即将显示")
+    }
+    
+    func danmakuView(_ danmakuView: ARTVideoPlayerDanmakuView, didEndDisplayDanmakuCell danmakuCell: ARTVideoPlayerDanmakuCell) {
+//        print("弹幕显示完成")
+    }
+    
+    func danmakuViewDidEndDisplayAllDanmaku(_ danmakuView: ARTVideoPlayerDanmakuView) {
+        print("所有弹幕显示完成")
+    }
 }

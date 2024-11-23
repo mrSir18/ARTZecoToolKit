@@ -103,10 +103,10 @@ extension ARTVideoPlayerOverlayView {
     @objc open func danmakuAction() {
         print("添加弹幕")
         let danmakuCell = ARTVideoPlayerDanmakuCell()
-        danmakuCell.danmakuTrack = 4
-        danmakuCell.danmakuTrackSpacing = 10.0
-        danmakuCell.danmakuDelayTime = 0.0
-        danmakuCell.danmakuDuration = 0.0
+//        danmakuCell.danmakuTrack = 4
+//        danmakuCell.danmakuTrackSpacing = 10.0
+//        danmakuCell.danmakuDelayTime = 0.0
+//        danmakuCell.danmakuDuration = 0.0
 //        danmakuView.insertDanmaku([danmakuCell], at: 0) { _ in
 //            print("添加弹幕成功")
 //        }

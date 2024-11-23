@@ -7,17 +7,19 @@
 
 open class ARTVideoPlayerDanmakuCell: UIView {
 
+    // MARK: - Public Properties
+    
     /// 弹幕尺寸
     public var danmakuSize: CGSize = .zero
+    
+    /// 弹幕轨道数 默认4
+    public var danmakuTrack: Int = 4
     
     /// 弹幕速度
     public var danmakuSpeed: CGFloat = 3.0
     
-    /// 弹幕轨道数 默认4
-    public var danmakuTrack: Int = 5
-    
-    /// 弹幕轨道间距
-    public var danmakuTrackSpacing: CGFloat = 0.0
+    /// 弹幕轨道间距 默认12
+    public var danmakuTrackSpacing: CGFloat = 12.0
     
     /// 弹幕延迟启动时间
     public var danmakuDelayTime: TimeInterval = 0.0
@@ -25,11 +27,14 @@ open class ARTVideoPlayerDanmakuCell: UIView {
     /// 弹幕延迟退出时间
     public var danmakuDuration: TimeInterval = 0.0
     
+    
+    // MARK: Private Properties
+    
     /// 弹幕计时器
-    public var danmakuTimer: Timer?
+    private var danmakuTimer: Timer?
     
     /// 弹幕是否延迟退出
-    public var isDelayExit: Bool = false
+    private var isDelayExit: Bool = false
     
     
     // MARK: - Initializer
@@ -89,7 +94,9 @@ extension ARTVideoPlayerDanmakuCell {
     /// 开始弹幕
     @objc open func startDanmaku() {
         guard danmakuDuration > 0, danmakuTimer == nil else { return }
-        danmakuTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(danmakuTimerAction), userInfo: nil, repeats: true)
+        danmakuTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+            self?.danmakuTimerAction()
+        }
         RunLoop.current.add(danmakuTimer!, forMode: .common)
     }
     

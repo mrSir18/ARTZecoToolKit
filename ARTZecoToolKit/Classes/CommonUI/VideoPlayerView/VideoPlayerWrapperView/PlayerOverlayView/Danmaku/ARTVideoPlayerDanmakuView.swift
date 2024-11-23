@@ -33,10 +33,10 @@ extension ARTVideoPlayerDanmakuView {
     }
 }
 
-open class ARTVideoPlayerDanmakuView: UIView {
+public class ARTVideoPlayerDanmakuView: UIView {
     
     /// 代理对象
-    public weak var delegate: ARTVideoPlayerDanmakuViewDelegate?
+    private weak var delegate: ARTVideoPlayerDanmakuViewDelegate?
     
     /// 弹幕数据源
     private var danmakuDataSource: [ARTVideoPlayerDanmakuCell] = []
@@ -50,14 +50,20 @@ open class ARTVideoPlayerDanmakuView: UIView {
     /// 剩余未展示弹幕数量
     private var remainingDanmakuCount: Int = 0
     
-    /// 弹幕轨道间距
-    public var danmakuTrackSpacing: CGFloat = 0.0
-    
-    /// 弹幕轨道数 默认4
-    public var danmakuTrack: Int = 0
+    /// 弹幕上次展示的轨道数
+    private var danmakuTrack: Int = 0
     
     /// 当前弹幕状态
-    public var danmakuState: DanmakuState = .idle
+    private var danmakuState: DanmakuState = .idle
+    
+    /// 弹幕计时器
+    private var danmakuTimer: Timer?
+    
+    /// 弹幕剩余完成时间
+    private var remainingTime: TimeInterval = 0.0
+    
+    /// 弹幕初始间隔时间 默认0.1
+    public var initialInterval: TimeInterval = 0.1
     
     
     // MARK: - Initialization
@@ -68,17 +74,8 @@ open class ARTVideoPlayerDanmakuView: UIView {
         self.delegate = delegate
     }
     
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Setup Views
-    
-    /// 重写父类方法，设置子视图
-    ///
-    /// - Note: 由于子类需要自定义视图，所以需要重写该方法
-    open func setupViews() {
-        
     }
     
     override public func willMove(toWindow newWindow: UIWindow?) {
@@ -87,11 +84,7 @@ open class ARTVideoPlayerDanmakuView: UIView {
     }
 
     /// 创建弹幕
-    @objc open func createDanmaku() {
-        // 递归调用，确保持续运行，间隔0.25秒
-        defer { perform(#selector(createDanmaku), with: nil, afterDelay: 0.25) }
-  
-        // 确保数据源中有弹幕
+    @objc private func createDanmaku() {
         guard let danmakuCell = danmakuDataSource.first else { return }
         
         danmakuCell.frame = CGRect(x: self.frame.size.width,
@@ -146,8 +139,9 @@ open class ARTVideoPlayerDanmakuView: UIView {
     ///
     /// - Parameter newDanmaku: 待发送的弹幕单元
     /// - Returns: 可用轨道的索引；如果没有可用轨道，返回 -1
-    @objc open func findAvailableTrackForNextDanmaku(_ newDanmaku: ARTVideoPlayerDanmakuCell) -> Int {
+    private func findAvailableTrackForNextDanmaku(_ newDanmaku: ARTVideoPlayerDanmakuCell) -> Int {
         return danmakuCells.enumerated().first { index, lastDanmaku in
+            if index >= danmakuTrack { return false } // 避免超范围轨道
             if let lastDanmaku = lastDanmaku { // 如果当前轨道已有弹幕，检查新弹幕是否可以插入
                 return canDisplayNextDanmaku(after: lastDanmaku, with: newDanmaku)
             }
@@ -162,7 +156,7 @@ open class ARTVideoPlayerDanmakuView: UIView {
     ///   - lastDanmakuCell: 当前轨道上最后一条弹幕单元
     ///   - nextDanmakuCell: 待发送的弹幕单元
     /// - Returns: 如果可以发送，返回 true；否则返回 false
-    @objc open func canDisplayNextDanmaku(after lastDanmakuCell: ARTVideoPlayerDanmakuCell, with nextDanmakuCell: ARTVideoPlayerDanmakuCell) -> Bool {
+    private func canDisplayNextDanmaku(after lastDanmakuCell: ARTVideoPlayerDanmakuCell, with nextDanmakuCell: ARTVideoPlayerDanmakuCell) -> Bool {
         guard let currentFrame = lastDanmakuCell.layer.presentation()?.frame else { return false }
 
         let screenWidth = self.frame.size.width
@@ -200,7 +194,6 @@ extension ARTVideoPlayerDanmakuView {
     ///  - spacing: 轨道间距
     private func updateDanmakuTrack(_ track: Int, withSpacing spacing: CGFloat) {
         danmakuTrack = track
-        danmakuTrackSpacing = spacing
         changeDanmakuTrack(track) // 更新轨道数
     }
     
@@ -212,7 +205,7 @@ extension ARTVideoPlayerDanmakuView {
     /// - Returns: 计算后的 Y 坐标
     private func calculateDanmakuYPosition(for trackIndex: Int, with danmakuCell: ARTVideoPlayerDanmakuCell) -> CGFloat {
         guard trackIndex > 0, let previousDanmaku = danmakuCells[trackIndex - 1] else {
-            return CGFloat(trackIndex) * (danmakuCell.frame.height + danmakuTrackSpacing) // 如果是第一个轨道，Y 坐标从 0 开始
+            return CGFloat(trackIndex) * (danmakuCell.frame.height + danmakuCell.danmakuTrackSpacing) // 如果是第一个轨道，Y 坐标从 0 开始
         }
         return previousDanmaku.frame.maxY + danmakuCell.danmakuTrackSpacing // 上一条弹幕底部加上间隔
     }
@@ -252,9 +245,46 @@ extension ARTVideoPlayerDanmakuView {
         displayingDanmakuCells.compactMap { $0 }.forEach(action)
     }
     
-    /// 取消延迟请求
-    private func cancelScheduledTasks() {
-        NSObject.cancelPreviousPerformRequests(withTarget: self)
+    /// 创建定时器
+    private func createDanmakuTimer(withInterval interval: TimeInterval, repeats: Bool) {
+        danmakuTimer?.invalidate() // 如果已有定时器，先取消之前的定时器
+        danmakuTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: repeats) { [weak self] _ in
+            self?.createDanmaku()
+        }
+        RunLoop.current.add(danmakuTimer!, forMode: .common)
+    }
+
+    /// 暂停定时器
+    private func pauseTimer() {
+        guard let timer = danmakuTimer else { return }
+        remainingTime = timer.fireDate.timeIntervalSinceNow // 保存剩余时间
+        timer.invalidate() // 停止定时器
+        danmakuTimer = nil
+    }
+
+    private func resumeTimer() {
+        guard danmakuTimer == nil else { return } // 确保没有重复启动
+        createDanmakuTimer(withInterval: remainingTime, repeats: false) // 延迟恢复一次性定时器
+        createDanmakuTimer(withInterval: initialInterval, repeats: true) // 启动主定时器
+    }
+}
+
+// MARK: - UIResponder
+
+extension ARTVideoPlayerDanmakuView {
+    
+    override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        let touchPoint = touch.location(in: self)
+
+        // 遍历所有正在显示的弹幕单元，检查动态位置
+        for danmakuCell in displayingDanmakuCells.compactMap({ $0 }) {
+            if let presentationLayer = danmakuCell.layer.presentation(),
+               presentationLayer.hitTest(touchPoint) != nil { // 点击到正在滚动的弹幕单元
+                delegate?.danmakuView?(self, didClickDanmakuCell: danmakuCell)
+                break
+            }
+        }
     }
 }
 
@@ -268,7 +298,7 @@ extension ARTVideoPlayerDanmakuView {
     ///  - danmakuCell: 弹幕单元
     ///  - at: 插入位置
     ///  - completion: 完成回调
-    @objc open func insertDanmaku(_ danmakuCells: [ARTVideoPlayerDanmakuCell], at index: NSNumber? = nil, completion: ((Bool) -> Void)? = nil) {
+    public func insertDanmaku(_ danmakuCells: [ARTVideoPlayerDanmakuCell], at index: NSNumber? = nil, completion: ((Bool) -> Void)? = nil) {
         // 如果没有提供 index，则默认插入到最后
         let insertIndex = index?.intValue ?? danmakuDataSource.count
         guard insertIndex >= 0 && insertIndex <= danmakuDataSource.count else { // 检查插入位置是否有效
@@ -282,28 +312,30 @@ extension ARTVideoPlayerDanmakuView {
     }
     
     /// 开始弹幕
-    @objc open func startDanmaku() {
-        guard attemptStateTransition(to: .running, from: [.idle, .stopped]) else { return } // 仅允许在未启动或停止状态下启动
-        createDanmaku()
+    public func startDanmaku() {
+        guard attemptStateTransition(to: .running, from: [.idle, .stopped]), danmakuTimer == nil else { return }
+        createDanmakuTimer(withInterval: initialInterval, repeats: true) // 启动主定时
     }
-    
+
     /// 暂停弹幕
-    @objc open func pauseDanmaku() {
+    public func pauseDanmaku() {
         guard attemptStateTransition(to: .paused, from: [.running]) else { return } // 仅允许在运行状态下暂停
         applyActionToDisplayingDanmaku { $0.pauseDanmaku() } // 暂停正在显示的弹幕
-        cancelScheduledTasks()
+        pauseTimer()
     }
     
     /// 恢复弹幕
-    @objc open func resumeDanmaku() {
+    public func resumeDanmaku() {
         guard attemptStateTransition(to: .running, from: [.paused]) else { return } // 仅允许在暂停状态下恢复
         applyActionToDisplayingDanmaku { $0.resumeDanmaku() } // 恢复正在显示的弹幕
-        createDanmaku()
+        resumeTimer()
     }
     
     /// 停止弹幕
-    @objc open func stopDanmaku() {
+    public func stopDanmaku() {
         guard attemptStateTransition(to: .stopped, from: [.running, .paused]) else { return } // 仅允许在运行或暂停状态下停止
+        danmakuTimer?.invalidate()
+        danmakuTimer = nil
         
         // 停止所有弹幕并清理
         applyActionToDisplayingDanmaku { $0.stopDanmaku(); $0.removeFromSuperview() }
@@ -315,13 +347,13 @@ extension ARTVideoPlayerDanmakuView {
 
         // 重置状态变量
         remainingDanmakuCount = 0
+        remainingTime = 0.0
         danmakuTrack = 0
-        cancelScheduledTasks()
     }
 
     /// 更改弹幕轨道数量
     /// - Parameter track: 新的轨道数量
-    @objc open func changeDanmakuTrack(_ track: Int) {
+    public func changeDanmakuTrack(_ track: Int) {
         guard track >= 0 else { return }
         if track > danmakuCells.count { // 如果新的轨道数大于当前轨道数，添加新轨道
             danmakuCells.append(contentsOf: Array(repeating: nil, count: track - danmakuCells.count))
