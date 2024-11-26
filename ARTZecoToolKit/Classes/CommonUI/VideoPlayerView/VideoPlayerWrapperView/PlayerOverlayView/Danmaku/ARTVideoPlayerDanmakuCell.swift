@@ -6,14 +6,14 @@
 //
 
 open class ARTVideoPlayerDanmakuCell: UIView {
-
+    
     // MARK: - Public Properties
     
     /// 弹幕尺寸
     public var danmakuSize: CGSize = .zero
     
     /// 弹幕轨道数 默认4
-    public var danmakuTrack: Int = 4
+    public var danmakuTrackCount: Int = 4
     
     /// 弹幕速度
     public var danmakuSpeed: CGFloat = 3.0

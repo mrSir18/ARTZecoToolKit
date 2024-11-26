@@ -51,7 +51,7 @@ public class ARTVideoPlayerDanmakuView: UIView {
     private var remainingDanmakuCount: Int = 0
     
     /// 弹幕上次展示的轨道数
-    private var danmakuTrack: Int = 0
+    private var danmakuTrackCount: Int = 0
     
     /// 当前弹幕状态
     private var danmakuState: DanmakuState = .idle
@@ -93,9 +93,9 @@ public class ARTVideoPlayerDanmakuView: UIView {
                                    height: danmakuCell.danmakuSize.height)
         
         // 轨道数变更判断：如果轨道数不一致，更新轨道数
-        if danmakuTrack != danmakuCell.danmakuTrack {
-            updateDanmakuTrack(danmakuCell.danmakuTrack,
-                               withSpacing: danmakuCell.danmakuTrackSpacing)
+        if danmakuTrackCount != danmakuCell.danmakuTrackCount {
+            updateDanmakuTrackCount(danmakuCell.danmakuTrackCount,
+                                    withSpacing: danmakuCell.danmakuTrackSpacing)
         }
         
         // 获取可用的轨道索引，并判断是否有效
@@ -141,7 +141,7 @@ public class ARTVideoPlayerDanmakuView: UIView {
     /// - Returns: 可用轨道的索引；如果没有可用轨道，返回 -1
     private func findAvailableTrackForNextDanmaku(_ newDanmaku: ARTVideoPlayerDanmakuCell) -> Int {
         return danmakuCells.enumerated().first { index, lastDanmaku in
-            if index >= danmakuTrack { return false } // 避免超范围轨道
+            if index >= danmakuTrackCount { return false } // 避免超范围轨道
             if let lastDanmaku = lastDanmaku { // 如果当前轨道已有弹幕，检查新弹幕是否可以插入
                 return canDisplayNextDanmaku(after: lastDanmaku, with: newDanmaku)
             }
@@ -190,11 +190,11 @@ extension ARTVideoPlayerDanmakuView {
     /// 更新弹幕轨道设置
     ///
     /// - Parameters:
-    ///  - track: 轨道数量
+    ///  - count: 轨道数量
     ///  - spacing: 轨道间距
-    private func updateDanmakuTrack(_ track: Int, withSpacing spacing: CGFloat) {
-        danmakuTrack = track
-        changeDanmakuTrack(track) // 更新轨道数
+    private func updateDanmakuTrackCount(_ count: Int, withSpacing spacing: CGFloat) {
+        danmakuTrackCount = count
+        changeTrackCount(to: count) // 更新轨道数
     }
     
     /// 计算弹幕的 Y 坐标
@@ -347,18 +347,30 @@ extension ARTVideoPlayerDanmakuView {
 
         // 重置状态变量
         remainingDanmakuCount = 0
+        danmakuTrackCount = 0
         remainingTime = 0.0
-        danmakuTrack = 0
     }
 
     /// 更改弹幕轨道数量
-    /// - Parameter track: 新的轨道数量
-    public func changeDanmakuTrack(_ track: Int) {
-        guard track >= 0 else { return }
-        if track > danmakuCells.count { // 如果新的轨道数大于当前轨道数，添加新轨道
-            danmakuCells.append(contentsOf: Array(repeating: nil, count: track - danmakuCells.count))
-        } else if track < danmakuCells.count { // 如果新的轨道数小于当前轨道数，移除多余轨道
-            danmakuCells.removeSubrange(track..<danmakuCells.count)
+    /// - Parameter count: 新的轨道数量
+    public func changeTrackCount(to count: Int) {
+        guard count >= 0 else { return }
+        if count > danmakuCells.count { // 如果新的轨道数大于当前轨道数，添加新轨道
+            danmakuCells.append(contentsOf: Array(repeating: nil, count: count - danmakuCells.count))
+        } else if count < danmakuCells.count { // 如果新的轨道数小于当前轨道数，移除多余轨道
+            danmakuCells.removeSubrange(count..<danmakuCells.count)
         }
+    }
+    
+    /// 调整正在展示的弹幕的透明度
+    /// - Parameter alpha: 透明度
+    public func changeDanmakuOpacity(to alpha: CGFloat) {
+        applyActionToDisplayingDanmaku { $0.alpha = alpha }
+    }
+    
+    /// 调整正在展示的弹幕的速度
+    /// - Parameter speed: 速度
+    public func changeDanmakuSpeed(to speed: TimeInterval) {
+        applyActionToDisplayingDanmaku { $0.danmakuSpeed = speed }
     }
 }
