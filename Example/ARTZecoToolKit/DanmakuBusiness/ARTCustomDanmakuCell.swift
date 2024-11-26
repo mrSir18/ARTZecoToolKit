@@ -7,16 +7,30 @@
 
 import ARTZecoToolKit
 
-class ARTCustomDanmakuCell: ARTVideoPlayerDanmakuCell {
+class ARTCustomDanmakuCell: ARTDanmakuCell {
+    
+    public var bulletLabel: UILabel!
     
     // MARK: - Override Super Methods
     
     override func setupViews() {
         
-        self.backgroundColor = .art_randomColor()
-        self.layer.cornerRadius = ARTAdaptedValue(20.0)
-        self.layer.masksToBounds = true
-        
-        self.danmakuSize = CGSize(width: ARTAdaptedValue(200.0), height: ARTAdaptedValue(40.0))
+        let contents: [String] = [
+            "这款产品非常好，使用！",
+            "质量很不错。",
+            "非常满意的一次购。",
+            "非常亮。",
+            "收到商品比很高。",
+            "给朋友买的，他很喜欢，赞一个！",
+            "弹幕 😄 \(arc4random())"
+        ]
+        bulletLabel = UILabel()
+        bulletLabel.text = contents.randomElement()
+        bulletLabel.textColor = .white
+        bulletLabel.font = UIFont.systemFont(ofSize: 16)
+        bulletLabel.backgroundColor = .art_randomColor()
+        bulletLabel.sizeToFit()
+        addSubview(bulletLabel)
+        danmakuSize = bulletLabel.bounds.size
     }
 }

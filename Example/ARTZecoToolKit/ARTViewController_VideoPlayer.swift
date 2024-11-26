@@ -138,7 +138,7 @@ import ARTZecoToolKit
 class ARTViewController_VideoPlayer: ARTBaseViewController {
     
     /// 弹幕视图
-    private var danmakuView: ARTVideoPlayerDanmakuView!
+    private var danmakuView: ARTDanmakuView!
     
     
     // MARK: - Initialization

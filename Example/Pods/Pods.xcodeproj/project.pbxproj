@@ -372,12 +372,10 @@
 		C8473266500803DB4A94F69607E26055 /* YYTextMagnifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F306EAE112119D3E6B939EB7A32970 /* YYTextMagnifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C91FE5762558088D00FC4FED805844D1 /* ARTVideoPlayerWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F37767169776EB8D6C80F61F81770D /* ARTVideoPlayerWrapperView.swift */; };
 		CA0413222CA60717C35AE30810169CA6 /* ARTVideoPlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3966966A5D116C47740D8DB107A24159 /* ARTVideoPlayerControlsView.swift */; };
-		CD7F8F23B64909606B3D66BDDF3FCC1C /* ARTVideoPlayerDanmakuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C419E90BA58E865CB531475334A5D0 /* ARTVideoPlayerDanmakuView.swift */; };
 		CDA3DB591568BF7A428DE967D447360D /* UIButton+WebCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 8652B565637492C68D56B12A39F525D1 /* UIButton+WebCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE0A241EDFFF551FE2567D3E37C66784 /* ARTVideoPlayerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9D6C87740074BB15DC17E36E32519D /* ARTVideoPlayerConfig.swift */; };
 		CE0FC7855C5D240AFECE1C6311FE1D16 /* SDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAF48307C8E23BEAA56ED0CB08365B7 /* SDWebImageManager.m */; };
 		CE2BD4D283CF288B6CE1A8B9E94D4533 /* DateTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D5AB6BA4C1F7D26BFBC8E106ACBC5B /* DateTransformer.swift */; };
-		CE50D20C77C2A014C951C47978E31DE9 /* ARTVideoPlayerDanmakuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED4E8931429287796D5BDA292CF7DDE /* ARTVideoPlayerDanmakuCell.swift */; };
 		CF2A8623A9B4B4437F8E8C47F92ACF1B /* ConstraintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3011AA12CC6B8F2A67D6B4C30AC2F1 /* ConstraintView.swift */; };
 		D05C72B37A4604AFA0C5C98124C43907 /* UIImage+MultiFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = F7D188FD12D0AE5CDD079AF191440E48 /* UIImage+MultiFormat.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1F2F660BCDB4D05E1F9050A8D4327AC /* UIImage+MultiFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 94AF5499458BEAA079412BDE759C5079 /* UIImage+MultiFormat.m */; };
@@ -886,7 +884,6 @@
 		9BF7F482F456C8180CB6E6B4208B3991 /* UIButton+ARTExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIButton+ARTExtension.swift"; sourceTree = "<group>"; };
 		9C34DC2DA705C89C8EA6B48A9EDEE178 /* ARTZecoToolKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ARTZecoToolKit.modulemap; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9ED4E8931429287796D5BDA292CF7DDE /* ARTVideoPlayerDanmakuCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerDanmakuCell.swift; sourceTree = "<group>"; };
 		9EDC9676F5C8494972CE1FF3D6B75841 /* NSData+ImageContentType.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSData+ImageContentType.m"; path = "SDWebImage/Core/NSData+ImageContentType.m"; sourceTree = "<group>"; };
 		9F55859640DADFEFA7C789599D01675B /* YYTextTransaction.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = YYTextTransaction.h; path = YYText/Utility/YYTextTransaction.h; sourceTree = "<group>"; };
 		A018C390CFB9C4EC62941BA40D1B3A4B /* YYTextRunDelegate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = YYTextRunDelegate.m; path = YYText/String/YYTextRunDelegate.m; sourceTree = "<group>"; };
@@ -931,7 +928,6 @@
 		B4F0E2454C287426C9B811F71C58186B /* ConstraintLayoutSupportDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupportDSL.swift; path = Sources/ConstraintLayoutSupportDSL.swift; sourceTree = "<group>"; };
 		B69867971692B182E3AEFEF747C55AA5 /* NSButton+WebCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSButton+WebCache.h"; path = "SDWebImage/Core/NSButton+WebCache.h"; sourceTree = "<group>"; };
 		B6AA4680F9BF206CF138881FF8C51838 /* WKWebView+ARTExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "WKWebView+ARTExtension.swift"; sourceTree = "<group>"; };
-		B6C419E90BA58E865CB531475334A5D0 /* ARTVideoPlayerDanmakuView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerDanmakuView.swift; sourceTree = "<group>"; };
 		B766FA68B27373DB6A910CAC1F20E833 /* SnapKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SnapKit.release.xcconfig; sourceTree = "<group>"; };
 		B7A53DB4F8B65530CAAFED0BD536810D /* ConstraintDirectionalInsets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDirectionalInsets.swift; path = Sources/ConstraintDirectionalInsets.swift; sourceTree = "<group>"; };
 		B8AC649A168D9E1540F93489155DA786 /* SDAssociatedObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDAssociatedObject.h; path = SDWebImage/Private/SDAssociatedObject.h; sourceTree = "<group>"; };
@@ -2112,7 +2108,6 @@
 			isa = PBXGroup;
 			children = (
 				F06FF03835248C1C40CEAB688217E830 /* ARTVideoPlayerOverlayView.swift */,
-				DB983F849C50F9BA0DB973A492C553EB /* Danmaku */,
 			);
 			path = PlayerOverlayView;
 			sourceTree = "<group>";
@@ -2285,15 +2280,6 @@
 				B6CB85A2FBD48A122244F999D8525F8F /* ReusableView */,
 			);
 			path = ShareView;
-			sourceTree = "<group>";
-		};
-		DB983F849C50F9BA0DB973A492C553EB /* Danmaku */ = {
-			isa = PBXGroup;
-			children = (
-				9ED4E8931429287796D5BDA292CF7DDE /* ARTVideoPlayerDanmakuCell.swift */,
-				B6C419E90BA58E865CB531475334A5D0 /* ARTVideoPlayerDanmakuView.swift */,
-			);
-			path = Danmaku;
 			sourceTree = "<group>";
 		};
 		DC0F034B2D16D8369465D1BC0979A34E /* PlayerDisplayView */ = {
@@ -3114,8 +3100,6 @@
 				CA0413222CA60717C35AE30810169CA6 /* ARTVideoPlayerControlsView.swift in Sources */,
 				F772BC3C00DBE7A7991145F977F086BD /* ARTVideoPlayerControlsView+DelegateImplementations.swift in Sources */,
 				666955BCE62A92B4395655D0E7081820 /* ARTVideoPlayerControlsViewDelegate.swift in Sources */,
-				CE50D20C77C2A014C951C47978E31DE9 /* ARTVideoPlayerDanmakuCell.swift in Sources */,
-				CD7F8F23B64909606B3D66BDDF3FCC1C /* ARTVideoPlayerDanmakuView.swift in Sources */,
 				48958BC474CD1DF52F5947DCAA06F541 /* ARTVideoPlayerDisplayView.swift in Sources */,
 				B5E4B5992EF94CA4ED62E734A1255639 /* ARTVideoPlayerGeneralDanmakuEntity.swift in Sources */,
 				6312C4241869AB193B9CD824055CA731 /* ARTVideoPlayerLandscapeChaptersCell.swift in Sources */,

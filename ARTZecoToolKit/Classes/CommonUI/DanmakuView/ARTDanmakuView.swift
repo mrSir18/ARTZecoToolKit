@@ -143,7 +143,7 @@ public class ARTDanmakuView: UIView {
     }
     
     open func setupViews() {
-        configureDanmakuTracks() // 配置弹幕轨道
+
     }
 }
 
@@ -303,12 +303,22 @@ extension ARTDanmakuView {
     ///
     /// 该方法会移除所有超出当前轨道数量的弹幕，并停止它们的动画。
     private func clearOutdatedDanmaku() {
+        clearDanmaku { $0.tag >= self.danmakuTrackCount } // 过滤出不再有效的弹幕
+    }
+    
+    /// 清理所有弹幕单元
+    private func clearAllDanmaku() {
+        clearDanmaku()
+    }
+    
+    /// 清理指定条件的弹幕单元
+    private func clearDanmaku(where condition: ((ARTDanmakuCell) -> Bool)? = nil) {
         subviews
             .compactMap { $0 as? ARTDanmakuCell }
-            .filter { $0.tag >= danmakuTrackCount } // 过滤出不再有效的弹幕
-            .forEach { cell in
-                cell.layer.removeAllAnimations()
-                cell.removeFromSuperview()
+            .filter { condition?($0) ?? true } // 若无条件，则清理所有
+            .forEach {
+                $0.layer.removeAllAnimations()
+                $0.removeFromSuperview()
             }
     }
 }
@@ -320,6 +330,7 @@ extension ARTDanmakuView {
     /// 开始弹幕
     @objc open func startDanmaku() {
         guard attemptStateTransition(to: .running, from: [.idle, .stopped]), danmakuTimer == nil else { return } // 仅允许在空闲或停止状态下启动
+        configureDanmakuTracks() // 配置弹幕轨道
         danmakuDelayTimer = Timer.scheduledTimer(withTimeInterval: danmakuDelayTime, repeats: false) { [weak self] _ in // 延迟启动
             self?.startMainDanmakuTimer()
         }
@@ -348,17 +359,79 @@ extension ARTDanmakuView {
         danmakuDelayTimer = nil
         danmakuTimer?.invalidate()
         danmakuTimer = nil
+        danmakuState = .idle // 更新状态
+        clearAllDanmaku() // 清理所有弹幕
+        danmakuTrackYs = [] // 清空轨道坐标
+        danmakuLastTimes = [] // 清空最近使用时间
     }
     
     /// 更新弹幕轨道数量
     /// - Parameter count: 弹幕轨道的数量
+    /// - NOTE: 轨道数量必须大于等于 0
     public func updateDanmakuTrackCount(_ count: Int) {
         danmakuTrackCount = max(0, count) // 确保轨道数量非负
         configureDanmakuTracks() // 重新配置轨道
         clearOutdatedDanmaku() // 清理多余的弹幕
     }
+    
+    /// 更新弹幕透明度
+    /// - Parameter alpha: 弹幕透明度
+    /// - NOTE: 透明度限制在 0 到 1 之间
+    public func updateDanmakuAlpha(_ alpha: CGFloat) {
+        danmakuAlpha = max(0.0, min(1.0, alpha)) // 限制在 0 到 1 之间
+        for case let cell as ARTDanmakuCell in subviews { cell.alpha = alpha } // 更新当前显示的弹幕透明度
+    }
+    
+    /// 更新弹幕速度
+    /// - Parameter speed: 弹幕速度等级
+    /// - NOTE: 速度等级越小，速度越快
+    public func updateDanmakuSpeed(_ level: SpeedLevel) {
+        danmakuSpeed = level
+    }
+    
+    /// 更新弹幕大小
+    /// - Parameter size: 弹幕大小比例
+    /// - NOTE: 1.0 为原始大小
+    public func updateDanmakuSize(_ size: CGFloat) {
+        for case let cell as ARTDanmakuCell in subviews {
+            cell.danmakuSize = cell.danmakuSize.applying(CGAffineTransform(scaleX: size, y: size))
+        }
+    }
 }
+
+// MARK: - CAAnimationDelegate
 
 extension ARTDanmakuView: CAAnimationDelegate {
     
+    /// 动画开始回调
+    public func animationDidStart(_ anim: CAAnimation) {
+        guard let cell = anim.value(forKey: kAssociatedDanmakuCellKey) as? ARTDanmakuCell else { return }
+        delegate?.danmakuView?(self, willDisplayDanmakuCell: cell)
+    }
+    
+    /// 动画结束回调
+    public func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        guard flag else { return }
+        guard let cell = anim.value(forKey: kAssociatedDanmakuCellKey) as? ARTDanmakuCell else { return }
+        delegate?.danmakuView?(self, didEndDisplayDanmakuCell: cell)
+        cell.layer.removeAllAnimations()
+        cell.removeFromSuperview()
+    }
+}
+
+// MARK: - Touch Events
+
+extension ARTDanmakuView {
+    
+    /// 触摸结束事件
+    public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touchPoint = touches.first?.location(in: self) else { return } // 确保获取到触摸点
+        for case let cell as ARTDanmakuCell in subviews { // 遍历所有子视图，找到触碰到的弹幕单元
+            let cellFrame = cell.layer.presentation()?.frame ?? cell.frame
+            if cellFrame.contains(touchPoint) {
+                delegate?.danmakuView?(self, didClickDanmakuCell: cell)
+                return // 触发事件后直接退出，避免重复处理
+            }
+        }
+    }
 }

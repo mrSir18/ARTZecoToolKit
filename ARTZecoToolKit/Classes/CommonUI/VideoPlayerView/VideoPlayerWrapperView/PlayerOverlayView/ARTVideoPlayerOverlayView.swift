@@ -18,7 +18,7 @@ open class ARTVideoPlayerOverlayView: ARTPassThroughView {
     public weak var delegate: ARTVideoPlayerOverlayViewDelegate?
     
     /// 弹幕视图
-    private var danmakuView: ARTVideoPlayerDanmakuView!
+    private var danmakuView: ARTDanmakuView!
     
     
     // MARK: - Initialization
@@ -42,7 +42,7 @@ open class ARTVideoPlayerOverlayView: ARTPassThroughView {
 
 // MARK: - Setup Initializer
 
-extension ARTVideoPlayerOverlayView: ARTVideoPlayerDanmakuViewDelegate {
+extension ARTVideoPlayerOverlayView: ARTDanmakuViewDelegate {
     
 }
 
@@ -50,7 +50,7 @@ extension ARTVideoPlayerOverlayView {
 
     /// 创建弹幕视图
     @objc open func setupDanmakuView() {
-//        danmakuView = ARTVideoPlayerDanmakuView(self)
+//        danmakuView = ARTDanmakuView(self)
 //        addSubview(danmakuView)
 //        danmakuView.snp.makeConstraints { make in
 //            make.edges.equalToSuperview()
@@ -102,7 +102,7 @@ extension ARTVideoPlayerOverlayView {
     
     @objc open func danmakuAction() {
         print("添加弹幕")
-        let danmakuCell = ARTVideoPlayerDanmakuCell()
+//        let danmakuCell = ARTVideoPlayerDanmakuCell()
 //        danmakuCell.danmakuTrack = 4
 //        danmakuCell.danmakuTrackSpacing = 10.0
 //        danmakuCell.danmakuDelayTime = 0.0

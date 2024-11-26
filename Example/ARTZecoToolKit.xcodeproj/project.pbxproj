@@ -19,7 +19,6 @@
 		0258B7AF2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0258B7AE2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift */; };
 		0258CA9E2C03995300A486E7 /* ARTViewController_PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0258CA9D2C03995300A486E7 /* ARTViewController_PageViewController.swift */; };
 		025AF79B2CEBE271009643E2 /* ARTViewController+DanmakuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025AF79A2CEBE271009643E2 /* ARTViewController+DanmakuView.swift */; };
-		025AF79E2CEBE3F6009643E2 /* ARTCustomDanmakuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025AF79D2CEBE3F6009643E2 /* ARTCustomDanmakuModel.swift */; };
 		025AF79F2CEBE3F6009643E2 /* ARTCustomDanmakuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025AF79C2CEBE3F6009643E2 /* ARTCustomDanmakuCell.swift */; };
 		025D29982C48459D00F611D6 /* ARTViewController_Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29972C48459D00F611D6 /* ARTViewController_Carousel.swift */; };
 		026A7B6C2C3431AE00D3134E /* ARTViewController_ActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A7B6B2C3431AE00D3134E /* ARTViewController_ActionSheet.swift */; };
@@ -95,7 +94,6 @@
 		0258CA9D2C03995300A486E7 /* ARTViewController_PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_PageViewController.swift; sourceTree = "<group>"; };
 		025AF79A2CEBE271009643E2 /* ARTViewController+DanmakuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTViewController+DanmakuView.swift"; sourceTree = "<group>"; };
 		025AF79C2CEBE3F6009643E2 /* ARTCustomDanmakuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTCustomDanmakuCell.swift; sourceTree = "<group>"; };
-		025AF79D2CEBE3F6009643E2 /* ARTCustomDanmakuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTCustomDanmakuModel.swift; sourceTree = "<group>"; };
 		025D29972C48459D00F611D6 /* ARTViewController_Carousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_Carousel.swift; sourceTree = "<group>"; };
 		026A7B6B2C3431AE00D3134E /* ARTViewController_ActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_ActionSheet.swift; sourceTree = "<group>"; };
 		0282385E2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_AlignmentButton.swift; sourceTree = "<group>"; };
@@ -197,7 +195,6 @@
 			isa = PBXGroup;
 			children = (
 				025AF79C2CEBE3F6009643E2 /* ARTCustomDanmakuCell.swift */,
-				025AF79D2CEBE3F6009643E2 /* ARTCustomDanmakuModel.swift */,
 			);
 			path = DanmakuBusiness;
 			sourceTree = "<group>";
@@ -693,7 +690,6 @@
 				0258B7AF2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift in Sources */,
 				02F8AE4F2BF67E7E00A111F6 /* ARTViewController_SlidePopup.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
-				025AF79E2CEBE3F6009643E2 /* ARTCustomDanmakuModel.swift in Sources */,
 				025AF79F2CEBE3F6009643E2 /* ARTCustomDanmakuCell.swift in Sources */,
 				0298808B2C46E3EF00176ED3 /* ARTControllerNavigationBar.swift in Sources */,
 				02C95B442C42705D00200438 /* ARTCollectionViewModel.swift in Sources */,
