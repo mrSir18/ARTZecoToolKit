@@ -19,13 +19,14 @@ open class ARTDanmakuCell: UIView {
     
     /// 弹幕尺寸（必须设定）
     public var danmakuSize: CGSize = .zero
+
     
+    // MARK: - Initialization
     
-    // MARK: - Initializer
-    
-    public init() {
+    public init(_ delegate: ARTDanmakuCellDelegate? = nil) {
         super.init(frame: .zero)
-        isUserInteractionEnabled = true
+        self.isUserInteractionEnabled = true
+        self.delegate = delegate
         setupViews()
     }
     

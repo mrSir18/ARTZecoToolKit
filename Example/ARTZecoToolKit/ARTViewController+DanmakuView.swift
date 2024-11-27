@@ -35,8 +35,8 @@ class ARTViewController_DanmakuView: ARTBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .art_randomColor()
-
+        
+        // 创建弹幕视图
         danmakuView = ARTDanmakuView(self)
         danmakuView.backgroundColor = .art_randomColor()
         view.addSubview(danmakuView)

@@ -100,7 +100,7 @@ public class ARTDanmakuView: UIView {
     /// 生成弹幕间隔时间
     public var danmakuTimer: Timer?
     
-    /// 弹幕是否延迟退出
+    /// 弹幕延迟启动定时器
     public var danmakuDelayTimer: Timer?
     
     /// 弹幕延迟启动时间 默认0.0
@@ -143,7 +143,7 @@ public class ARTDanmakuView: UIView {
     }
     
     open func setupViews() {
-
+        /// 子类重写: 设置视图
     }
 }
 
@@ -321,6 +321,13 @@ extension ARTDanmakuView {
                 $0.removeFromSuperview()
             }
     }
+
+    /// 重置CACurrentMediaTime
+    private func resetAnimationLayer(beginTime: TimeInterval = 0.0)  {
+        layer.beginTime = beginTime
+        layer.timeOffset = 0.0
+        layer.speed = 1.0
+    }
 }
 
 // MARK: - Public Methods
@@ -347,9 +354,7 @@ extension ARTDanmakuView {
     /// 恢复弹幕
     @objc open func resumeDanmaku() {
         guard attemptStateTransition(to: .running, from: [.paused]), layer.speed == 0 else { return } // 仅允许在暂停状态下恢复
-        layer.beginTime = CACurrentMediaTime() - layer.timeOffset
-        layer.speed = 1.0
-        layer.timeOffset = 0.0
+        resetAnimationLayer(beginTime: CACurrentMediaTime() - layer.timeOffset)
     }
     
     /// 停止弹幕
@@ -359,7 +364,7 @@ extension ARTDanmakuView {
         danmakuDelayTimer = nil
         danmakuTimer?.invalidate()
         danmakuTimer = nil
-        danmakuState = .idle // 更新状态
+        resetAnimationLayer() // 重置动画
         clearAllDanmaku() // 清理所有弹幕
         danmakuTrackYs = [] // 清空轨道坐标
         danmakuLastTimes = [] // 清空最近使用时间

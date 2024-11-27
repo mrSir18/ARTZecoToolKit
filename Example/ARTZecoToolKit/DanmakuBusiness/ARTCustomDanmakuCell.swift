@@ -11,6 +11,7 @@ class ARTCustomDanmakuCell: ARTDanmakuCell {
     
     public var bulletLabel: UILabel!
     
+    
     // MARK: - Override Super Methods
     
     override func setupViews() {
