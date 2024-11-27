@@ -86,12 +86,12 @@ extension SmartDecodable {
     public static func deserialize(from dict: [String: Any]?, designatedPath: String? = nil,  options: Set<SmartDecodingOption>? = nil) -> Self? {
         
         guard let _dict = dict else {
-            SmartLog.logVerbose("Expected to decode Dictionary but found nil instead.", in: "\(self)")
+            logNilValue(for: "Dictionary", on: Self.self)
             return nil
         }
         
         guard let _data = getInnerData(inside: _dict, by: designatedPath) else {
-            SmartLog.logVerbose("Expected to decode Dictionary but is cannot be data.", in: "\(self)")
+            logDataExtractionFailure(forPath: designatedPath, type: Self.self)
             return nil
         }
         
@@ -106,12 +106,12 @@ extension SmartDecodable {
     /// - Returns: Model
     public static func deserialize(from json: String?, designatedPath: String? = nil, options: Set<SmartDecodingOption>? = nil) -> Self? {
         guard let _json = json else {
-            SmartLog.logVerbose("Expected to decode Dictionary but found nil instead.", in: "\(self)")
+            logNilValue(for: "JSON String", on: Self.self)
             return nil
         }
         
         guard let _data = getInnerData(inside: _json, by: designatedPath) else {
-            SmartLog.logVerbose("Expected to decode Dictionary but is cannot be data.", in: "\(self)")
+            logDataExtractionFailure(forPath: designatedPath, type: Self.self)
             return nil
         }
         
@@ -127,12 +127,12 @@ extension SmartDecodable {
     /// - Returns: Model
     public static func deserialize(from data: Data?, designatedPath: String? = nil, options: Set<SmartDecodingOption>? = nil) -> Self? {
         guard let data = data else {
-            SmartLog.logVerbose("Expected to decode Dictionary but found nil instead.", in: "\(self)")
+            logNilValue(for: "Data", on: Self.self)
             return nil
         }
         
         guard let _data = getInnerData(inside: data, by: designatedPath) else {
-            SmartLog.logVerbose("Expected to decode Dictionary but is cannot be data.", in: "\(self)")
+            logDataExtractionFailure(forPath: designatedPath, type: Self.self)
             return nil
         }
         
@@ -149,21 +149,22 @@ extension SmartDecodable {
     public static func deserializePlist(from data: Data?, designatedPath: String? = nil, options: Set<SmartDecodingOption>? = nil) -> Self? {
         
         guard let data = data else {
-            SmartLog.logVerbose("Expected to decode Dictionary but found nil instead.", in: "\(self)")
+            logNilValue(for: "Data", on: Self.self)
             return nil
         }
         
-        guard let _tranData = data.tranformToJSONData() else {
+        guard let _tranData = data.tranformToJSONData(type: Self.self) else {
             return nil
         }
         
         guard let _data = getInnerData(inside: _tranData, by: designatedPath) else {
-            SmartLog.logVerbose("Expected to decode Dictionary but is cannot be data.", in: "\(self)")
+            logDataExtractionFailure(forPath: designatedPath, type: Self.self)
             return nil
         }
         
         return try? _data._deserializeDict(type: Self.self, options: options)
     }
+
 }
 
 
@@ -175,15 +176,15 @@ extension Array where Element: SmartDecodable {
     /// - Parameter options: Decoding strategy
     ///   Duplicate enumeration items are not allowed, e.g., multiple keyStrategies cannot be passed in [only the first one is effective].
     /// - Returns: Array of models
-    public static func deserialize(from array: [Any]?, options: Set<SmartDecodingOption>? = nil) -> [Element]? {
+    public static func deserialize(from array: [Any]?, designatedPath: String? = nil, options: Set<SmartDecodingOption>? = nil) -> [Element]? {
         
         guard let _arr = array else {
-            SmartLog.logVerbose("Expected to decode Array but found nil instead.", in: "\(self)")
+            logNilValue(for: "Array", on: Self.self)
             return nil
         }
         
         guard let _data = getInnerData(inside: _arr, by: nil) else {
-            SmartLog.logVerbose("Expected to decode Array but is cannot be data.", in: "\(self)")
+            logDataExtractionFailure(forPath: designatedPath, type: Self.self)
             return nil
         }
         
@@ -199,12 +200,12 @@ extension Array where Element: SmartDecodable {
     /// - Returns: Array of models
     public static func deserialize(from json: String?, designatedPath: String? = nil, options: Set<SmartDecodingOption>? = nil) -> [Element]? {
         guard let _json = json else {
-            SmartLog.logVerbose("Expected to decode Array but found nil instead.", in: "\(self)")
+            logNilValue(for: "JSON String", on: Self.self)
             return nil
         }
         
         guard let _data = getInnerData(inside: _json, by: designatedPath) else {
-            SmartLog.logVerbose("Expected to decode Array but is cannot be data.", in: "\(self)")
+            logDataExtractionFailure(forPath: designatedPath, type: Self.self)
             return nil
         }
         
@@ -219,12 +220,12 @@ extension Array where Element: SmartDecodable {
     /// - Returns: Array of models
     public static func deserialize(from data: Data?, designatedPath: String? = nil, options: Set<SmartDecodingOption>? = nil) -> [Element]? {
         guard let data = data else {
-            SmartLog.logVerbose("Expected to decode Array but found nil instead.", in: "\(self)")
+            logNilValue(for: "Data", on: Self.self)
             return nil
         }
         
         guard let _data = getInnerData(inside: data, by: designatedPath) else {
-            SmartLog.logVerbose("Expected to decode Array but is cannot be data.", in: "\(self)")
+            logDataExtractionFailure(forPath: designatedPath, type: Self.self)
             return nil
         }
         
@@ -241,16 +242,16 @@ extension Array where Element: SmartDecodable {
         
         
         guard let data = data else {
-            SmartLog.logVerbose("Expected to decode Array but found nil instead.", in: "\(self)")
+            logNilValue(for: "Data", on: Self.self)
             return nil
         }
         
-        guard let _tranData = data.tranformToJSONData() else {
+        guard let _tranData = data.tranformToJSONData(type: Self.self) else {
             return nil
         }
         
         guard let _data = getInnerData(inside: _tranData, by: designatedPath) else {
-            SmartLog.logVerbose("Expected to decode Array but is cannot be data.", in: "\(self)")
+            logDataExtractionFailure(forPath: designatedPath, type: Self.self)
             return nil
         }
         
@@ -315,14 +316,14 @@ extension Data {
     
     
     /// 将Plist Data 转成 JSON Data
-    fileprivate func tranformToJSONData() -> Data? {
+    fileprivate func tranformToJSONData(type: Any.Type) -> Data? {
         guard let jsonObject = try? PropertyListSerialization.propertyList(from: self, options: [], format: nil) else {
-            SmartLog.logVerbose("Failed to convert PropertyList Data to JSON Data.", in: "\(self)")
+            SmartSentinel.monitorAndPrint(debugDescription: "Failed to convert PropertyList Data to JSON Data.", in: type)
             return nil
         }
         
         guard JSONSerialization.isValidJSONObject(jsonObject) else {
-            SmartLog.logVerbose("Failed to convert PropertyList Data to JSON Data.", in: "\(self)")
+            SmartSentinel.monitorAndPrint(debugDescription: "Failed to convert PropertyList Data to JSON Data.", in: type)
             return nil
         }
         
@@ -330,7 +331,7 @@ extension Data {
             let jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: [])
             return jsonData
         } catch {
-            SmartLog.logVerbose("Failed to convert PropertyList Data to JSON Data. \(error)", in: "\(self)")
+            SmartSentinel.monitorAndPrint(debugDescription: "Failed to convert PropertyList Data to JSON Data. ", error: error, in: type)
             return nil
         }
     }
@@ -454,3 +455,12 @@ fileprivate func getInnerData(inside value: Any?, by designatedPath: String?) ->
     }
 }
 
+
+fileprivate func logNilValue(for valueType: String, on modelType: Any.Type) {
+    SmartSentinel.monitorAndPrint(debugDescription: "Decoding \(modelType) failed because input \(valueType) is nil.", in: modelType)
+}
+
+fileprivate func logDataExtractionFailure(forPath path: String?, type: Any.Type) {
+    
+    SmartSentinel.monitorAndPrint(debugDescription: "Decoding \(type) failed because it was unable to extract valid data from path '\(path ?? "nil")'.", in: type)
+}
