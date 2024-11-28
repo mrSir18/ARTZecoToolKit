@@ -115,6 +115,9 @@ public class ARTDanmakuView: UIView {
     /// 弹幕安全间隔 默认12.0
     public var danmakuSafeSpacing: CGFloat = 24.0
     
+    /// 弹幕缩放比例 默认1.0
+    public var danmakuScale: CGFloat = 1.0
+    
     /// 当前弹幕状态
     public var danmakuState: DanmakuState = .idle
     
@@ -175,9 +178,10 @@ extension ARTDanmakuView {
     ///  - trackIndex: 弹幕轨道编号
     ///  - duration: 弹幕持续时间
     private func configureDanmakuCell(_ cell: ARTDanmakuCell, at y: CGFloat, on trackIndex: Int, duration: CGFloat) {
-        cell.frame = CGRect(x: bounds.width, y: y, width: cell.danmakuSize.width, height: cell.danmakuSize.height)
-        cell.alpha = danmakuAlpha // 设置透明度
-        cell.tag   = trackIndex // 标记轨道编号
+        cell.frame      = CGRect(x: bounds.width, y: y, width: cell.danmakuSize.width, height: cell.danmakuSize.height)
+        cell.alpha      = danmakuAlpha // 设置透明度
+        cell.tag        = trackIndex // 标记轨道编号
+        cell.transform  = CGAffineTransform(scaleX: danmakuScale, y: danmakuScale)
         addSubview(cell)
         danmakuLastTimes[trackIndex] = Date().timeIntervalSince1970
     }
@@ -330,6 +334,46 @@ extension ARTDanmakuView {
         layer.timeOffset = 0.0
         layer.speed = 1.0
     }
+    
+    /// 通用方法：更新弹幕的动画
+    /// - Parameter speedCalculator: 用于计算新的速度
+    private func updateDanmakuAnimations(speedCalculator: (ARTDanmakuCell, CABasicAnimation) -> CGFloat) {
+        for case let cell as ARTDanmakuCell in subviews {
+            guard let animation = cell.layer.animation(forKey: kDanmakuAnimationKey) as? CABasicAnimation else { continue }
+            guard let fromValue = animation.fromValue as? CGFloat else {
+                print("Error: animation.fromValue is not a CGFloat.")
+                continue
+            }
+            
+            // 当前弹幕的位置
+            let currentPosition = cell.layer.presentation()?.position.x ?? fromValue
+            
+            // 剩余距离计算
+            let toValue = -cell.danmakuSize.width
+            let remainingDistance = currentPosition - toValue
+            
+            // 使用 speedCalculator 计算新的速度
+            let newSpeed = speedCalculator(cell, animation)
+            let newAnimationDuration = remainingDistance / newSpeed
+            
+            // 更新轨道的最后使用时间
+            let trackIndex = cell.tag
+            danmakuLastTimes[trackIndex] = CACurrentMediaTime() + newAnimationDuration
+            
+            // 配置弹幕单元
+            let newAnimation = CABasicAnimation(keyPath: "position.x")
+            newAnimation.delegate               = self
+            newAnimation.fromValue              = currentPosition
+            newAnimation.toValue                = toValue
+            newAnimation.duration               = newAnimationDuration
+            newAnimation.timingFunction         = CAMediaTimingFunction(name: .linear)
+            newAnimation.fillMode               = .forwards
+            newAnimation.isRemovedOnCompletion  = true
+            newAnimation.setValue(cell, forKey: kAssociatedDanmakuCellKey)
+            cell.layer.removeAnimation(forKey: kDanmakuAnimationKey)
+            cell.layer.add(newAnimation, forKey: kDanmakuAnimationKey)
+        }
+    }
 }
 
 // MARK: - Public Methods
@@ -394,52 +438,29 @@ extension ARTDanmakuView {
     /// - NOTE: 速度等级越小，速度越快
     public func updateDanmakuSpeed(_ level: SpeedLevel) {
         danmakuSpeed = level
-        for case let cell as ARTDanmakuCell in subviews {
-            if let animation = cell.layer.animation(forKey: kDanmakuAnimationKey) as? CABasicAnimation {
-                guard let fromValue = animation.fromValue as? CGFloat else {
-                    print("Error: animation.fromValue is not a CGFloat.")
-                    continue
-                }
-                
-                // 当前弹幕的位置
-                let currentPosition = cell.layer.presentation()?.position.x ?? fromValue
-                
-                // 剩余距离计算
-                let toValue = -cell.danmakuSize.width
-                let remainingDistance = currentPosition - toValue
-                
-                // 使用新的速度计算新的动画时间
-                let totalDistance = bounds.width + cell.danmakuSize.width
-                let newDuration = danmakuSpeed.randomDuration()
-                let newSpeed = totalDistance / newDuration
-                let newAnimationDuration = remainingDistance / newSpeed
-                
-                // 更新轨道的最后使用时间
-                let trackIndex = cell.tag
-                danmakuLastTimes[trackIndex] = CACurrentMediaTime() + newAnimationDuration
-                
-                // 配置弹幕单元
-                let newAnimation = CABasicAnimation(keyPath: "position.x")
-                newAnimation.delegate               = self
-                newAnimation.fromValue              = currentPosition
-                newAnimation.toValue                = -cell.danmakuSize.width
-                newAnimation.duration               = newAnimationDuration
-                newAnimation.timingFunction         = CAMediaTimingFunction(name: .linear)
-                newAnimation.fillMode               = .forwards
-                newAnimation.isRemovedOnCompletion  = true
-                newAnimation.setValue(cell, forKey: kAssociatedDanmakuCellKey)
-                cell.layer.removeAnimation(forKey: kDanmakuAnimationKey)
-                cell.layer.add(newAnimation, forKey: kDanmakuAnimationKey)
-            }
+        updateDanmakuAnimations { cell, animation in
+            let totalDistance = bounds.width + cell.danmakuSize.width
+            let newDuration = danmakuSpeed.randomDuration()
+            let newSpeed = totalDistance / newDuration
+            return newSpeed
         }
     }
     
-    /// 更新弹幕大小
-    /// - Parameter size: 弹幕大小比例
-    /// - NOTE: 1.0 为原始大小
-    public func updateDanmakuSize(_ size: CGFloat) {
+    /// 动态调整弹幕的缩放比例
+    /// - Parameter scale: 缩放比例（0.1 ~ 1.0之间的值，表示10%到100%大小）
+    public func updateDanmakuScale(to scale: CGFloat) {
+        guard scale > 0 else { return }
+        
+        danmakuScale = scale
+        
+        // 遍历所有弹幕单元并应用缩放
         for case let cell as ARTDanmakuCell in subviews {
-            cell.danmakuSize = cell.danmakuSize.applying(CGAffineTransform(scaleX: size, y: size))
+            cell.transform = CGAffineTransform(scaleX: scale, y: scale)
+        }
+        
+        updateDanmakuAnimations { cell, animation in
+            let totalDistance = bounds.width + cell.danmakuSize.width * scale
+            return totalDistance / animation.duration
         }
     }
 }
