@@ -27,7 +27,7 @@ enum DanmakuActionType: Int {
 }
 
 class ARTViewController_DanmakuView: ARTBaseViewController {
-
+    
     /// 弹幕视图
     private var danmakuView: ARTDanmakuView!
     
@@ -65,13 +65,13 @@ extension ARTViewController_DanmakuView: ARTDanmakuViewDelegate {
     }
     
     func danmakuView(_ danmakuView: ARTDanmakuView, willDisplayDanmakuCell danmakuCell: ARTDanmakuCell) { // 弹幕开始显示
-//        guard let danmakuCell = danmakuCell as? ARTCustomDanmakuCell else { return }
-//        print("弹幕开始显示：\(danmakuCell.bulletLabel.text ?? "")")
+        //        guard let danmakuCell = danmakuCell as? ARTCustomDanmakuCell else { return }
+        //        print("弹幕开始显示：\(danmakuCell.bulletLabel.text ?? "")")
     }
     
     func danmakuView(_ danmakuView: ARTDanmakuView, didEndDisplayDanmakuCell danmakuCell: ARTDanmakuCell) { // 弹幕结束显示
-//        guard let danmakuCell = danmakuCell as? ARTCustomDanmakuCell else { return }
-//        print("弹幕结束显示：\(danmakuCell.bulletLabel.text ?? "")")
+        //        guard let danmakuCell = danmakuCell as? ARTCustomDanmakuCell else { return }
+        //        print("弹幕结束显示：\(danmakuCell.bulletLabel.text ?? "")")
     }
     
     func danmakuViewDidEndDisplayAllDanmaku(_ danmakuView: ARTDanmakuView) { // 所有弹幕显示完
@@ -79,11 +79,10 @@ extension ARTViewController_DanmakuView: ARTDanmakuViewDelegate {
     }
 }
 
-
 // MARK: Test Button
 
 extension ARTViewController_DanmakuView {
-
+    
     private func setupButtons() { /// 创建按钮
         let buttonsInfo: [(title: String, actionType: DanmakuActionType)] = [
             ("开始弹幕", .start),

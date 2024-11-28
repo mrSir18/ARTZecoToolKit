@@ -49,15 +49,15 @@ extension ARTDanmakuView {
         func randomDuration() -> CGFloat {
             switch self {
             case .extremelyFast:
-                return CGFloat.random(in: 4...6)
+                return CGFloat.random(in: 3...5)
             case .fast:
                 return CGFloat.random(in: 6...8)
             case .moderate:
-                return CGFloat.random(in: 8...10)
+                return CGFloat.random(in: 9...10)
             case .slow:
-                return CGFloat.random(in: 10...12)
+                return CGFloat.random(in: 11...13)
             case .extremelySlow:
-                return CGFloat.random(in: 12...15)
+                return CGFloat.random(in: 14...16)
             }
         }
     }
@@ -113,7 +113,7 @@ public class ARTDanmakuView: UIView {
     public var danmakuMinimumInterval: TimeInterval = 0.1
     
     /// 弹幕安全间隔 默认12.0
-    public var danmakuSafeSpacing: CGFloat = 12.0
+    public var danmakuSafeSpacing: CGFloat = 24.0
     
     /// 当前弹幕状态
     public var danmakuState: DanmakuState = .idle
@@ -190,8 +190,10 @@ extension ARTDanmakuView {
         animation.toValue               = -cell.danmakuSize.width // 移动到左侧屏幕外
         animation.duration              = duration // 使用随机持续时间
         animation.timingFunction        = CAMediaTimingFunction(name: .linear) // 线性动画
+        animation.fillMode              = .forwards // 保持动画结束状态
         animation.isRemovedOnCompletion = true // 动画完成后移除
         animation.setValue(cell, forKey: kAssociatedDanmakuCellKey) // 绑定弹幕单元
+        cell.layer.removeAnimation(forKey: kDanmakuAnimationKey) // 移除之前的动画
         cell.layer.add(animation, forKey: kDanmakuAnimationKey) // 添加动画到弹幕单元的 layer
     }
     
@@ -268,7 +270,7 @@ extension ARTDanmakuView {
 
 extension ARTDanmakuView {
     
-    /// 配置弹幕轨道
+    /// 配置弹 幕轨道
     private func configureDanmakuTracks() {
         danmakuTrackYs = (0..<danmakuTrackCount).map { // 重新生成轨道起始位置
             CGFloat($0) * (danmakuTrackHeight + danmakuTrackSpacing)
@@ -281,7 +283,7 @@ extension ARTDanmakuView {
     
     /// 开启主弹幕定时器
     private func startMainDanmakuTimer() {
-        danmakuTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { [weak self] _ in
+        danmakuTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
             self?.createDanmaku()
         }
         if let danmakuTimer = danmakuTimer { RunLoop.current.add(danmakuTimer, forMode: .common) }
@@ -321,7 +323,7 @@ extension ARTDanmakuView {
                 $0.removeFromSuperview()
             }
     }
-
+    
     /// 重置CACurrentMediaTime
     private func resetAnimationLayer(beginTime: TimeInterval = 0.0)  {
         layer.beginTime = beginTime
@@ -392,6 +394,44 @@ extension ARTDanmakuView {
     /// - NOTE: 速度等级越小，速度越快
     public func updateDanmakuSpeed(_ level: SpeedLevel) {
         danmakuSpeed = level
+        for case let cell as ARTDanmakuCell in subviews {
+            if let animation = cell.layer.animation(forKey: kDanmakuAnimationKey) as? CABasicAnimation {
+                guard let fromValue = animation.fromValue as? CGFloat else {
+                    print("Error: animation.fromValue is not a CGFloat.")
+                    continue
+                }
+                
+                // 当前弹幕的位置
+                let currentPosition = cell.layer.presentation()?.position.x ?? fromValue
+                
+                // 剩余距离计算
+                let toValue = -cell.danmakuSize.width
+                let remainingDistance = currentPosition - toValue
+                
+                // 使用新的速度计算新的动画时间
+                let totalDistance = bounds.width + cell.danmakuSize.width
+                let newDuration = danmakuSpeed.randomDuration()
+                let newSpeed = totalDistance / newDuration
+                let newAnimationDuration = remainingDistance / newSpeed
+                
+                // 更新轨道的最后使用时间
+                let trackIndex = cell.tag
+                danmakuLastTimes[trackIndex] = CACurrentMediaTime() + newAnimationDuration
+                
+                // 配置弹幕单元
+                let newAnimation = CABasicAnimation(keyPath: "position.x")
+                newAnimation.delegate               = self
+                newAnimation.fromValue              = currentPosition
+                newAnimation.toValue                = -cell.danmakuSize.width
+                newAnimation.duration               = newAnimationDuration
+                newAnimation.timingFunction         = CAMediaTimingFunction(name: .linear)
+                newAnimation.fillMode               = .forwards
+                newAnimation.isRemovedOnCompletion  = true
+                newAnimation.setValue(cell, forKey: kAssociatedDanmakuCellKey)
+                cell.layer.removeAnimation(forKey: kDanmakuAnimationKey)
+                cell.layer.add(newAnimation, forKey: kDanmakuAnimationKey)
+            }
+        }
     }
     
     /// 更新弹幕大小
