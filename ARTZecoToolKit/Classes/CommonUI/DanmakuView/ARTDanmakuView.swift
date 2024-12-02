@@ -118,6 +118,18 @@ public class ARTDanmakuView: UIView {
     /// 弹幕缩放比例 默认1.0
     public var danmakuScale: CGFloat = 1.0
     
+    /// 点击弹幕事件是否暂停 默认true
+    public var shouldPauseOnDanmakuClick: Bool = true
+    
+    /// 点击弹幕事件是否暂停后恢复 默认true
+    public var shouldResumeAfterDanmakuClick: Bool = true
+    
+    /// 点击弹幕事件后是高亮显示 默认true
+    public var shouldHighlightOnDanmakuClick: Bool = true
+    
+    /// 点击弹幕事件是否暂停 默认true
+    public var resumeTimers: [ARTDanmakuCell: Timer] = [:]
+    
     /// 当前弹幕状态
     public var danmakuState: DanmakuState = .idle
     
@@ -410,6 +422,10 @@ extension ARTDanmakuView {
         danmakuDelayTimer = nil
         danmakuTimer?.invalidate()
         danmakuTimer = nil
+        shouldPauseOnDanmakuClick = true
+        shouldResumeAfterDanmakuClick = true
+        shouldHighlightOnDanmakuClick = true
+        cancelAllResumeTimers() // 取消所有恢复定时器
         resetAnimationLayer() // 重置动画
         clearAllDanmaku() // 清理所有弹幕
         danmakuTrackYs = [] // 清空轨道坐标
@@ -495,9 +511,72 @@ extension ARTDanmakuView {
         for case let cell as ARTDanmakuCell in subviews { // 遍历所有子视图，找到触碰到的弹幕单元
             let cellFrame = cell.layer.presentation()?.frame ?? cell.frame
             if cellFrame.contains(touchPoint) {
-                delegate?.danmakuView?(self, didClickDanmakuCell: cell)
-                return // 触发事件后直接退出，避免重复处理
+                handleDanmakuClick(for: cell) // 处理弹幕点击逻辑
+                return
             }
         }
+    }
+
+    /// 处理弹幕点击逻辑
+    private func handleDanmakuClick(for cell: ARTDanmakuCell) {
+        if shouldPauseOnDanmakuClick {
+            pauseDanmakuCell(cell) // 暂停弹幕
+            if shouldResumeAfterDanmakuClick { scheduleDanmakuResume(for: cell, delay: 3.0) } // 安排恢复操作
+        }
+        delegate?.danmakuView?(self, didClickDanmakuCell: cell) // 通知代理点击事件
+    }
+    
+    /// 安排弹幕恢复操作
+    private func scheduleDanmakuResume(for cell: ARTDanmakuCell, delay: TimeInterval) {
+        cancelResumeTimer(for: cell) // 如果已有定时器，先取消
+        let timer = Timer.scheduledTimer(withTimeInterval: delay, repeats: false) { [weak self] _ in
+            self?.resumeDanmakuCell(cell)
+            self?.resumeTimers[cell] = nil // 定时器完成后移除引用
+        }
+        resumeTimers[cell] = timer
+    }
+    
+    /// 取消单个弹幕的恢复定时器
+    private func cancelResumeTimer(for cell: ARTDanmakuCell) {
+        resumeTimers[cell]?.invalidate()
+        resumeTimers[cell] = nil
+    }
+
+    /// 停止所有弹幕时取消所有恢复任务
+    private func cancelAllResumeTimers() {
+        for timer in resumeTimers.values {
+            timer.invalidate()
+        }
+        resumeTimers.removeAll()
+    }
+    
+    /// 暂停弹幕单元动画
+    /// - Parameter cell: 需要暂停的弹幕单元
+    private func pauseDanmakuCell(_ cell: ARTDanmakuCell) {
+        guard cell.layer.animation(forKey: kDanmakuAnimationKey) != nil else { return }
+        let pausedTime = cell.layer.convertTime(CACurrentMediaTime(), from: nil)
+        cell.layer.timeOffset = pausedTime
+        cell.layer.speed = 0 // 暂停动画速度
+        updateDanmakuCellAlpha(cell, isHighlighted: shouldHighlightOnDanmakuClick)
+    }
+
+    /// 恢复弹幕单元动画
+    /// - Parameter cell: 需要恢复的弹幕单元
+    private func resumeDanmakuCell(_ cell: ARTDanmakuCell) {
+        let pausedTime = cell.layer.timeOffset
+        cell.layer.speed = 1
+        cell.layer.timeOffset = 0
+        cell.layer.beginTime = 0
+        let timeSincePause = cell.layer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
+        cell.layer.beginTime = timeSincePause
+        updateDanmakuCellAlpha(cell, isHighlighted: false)
+    }
+
+    /// 更新弹幕单元的透明度
+    /// - Parameters:
+    ///   - cell: 需要更新透明度的弹幕单元
+    ///   - isHighlighted: 是否设置为高亮模式
+    private func updateDanmakuCellAlpha(_ cell: ARTDanmakuCell, isHighlighted: Bool) {
+        cell.alpha = isHighlighted ? 1.0 : danmakuAlpha
     }
 }

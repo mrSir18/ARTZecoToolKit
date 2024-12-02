@@ -19,7 +19,7 @@ open class ARTDanmakuCell: UIView {
     
     /// 弹幕尺寸（必须设定）
     public var danmakuSize: CGSize = .zero
-
+    
     
     // MARK: - Initialization
     
