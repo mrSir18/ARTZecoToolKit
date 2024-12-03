@@ -39,11 +39,12 @@ class ARTViewController_DanmakuView: ARTBaseViewController {
         // 创建弹幕视图
         danmakuView = ARTDanmakuView(self)
         danmakuView.backgroundColor = .art_randomColor()
+        danmakuView.danmakuTrackHeight = ARTAdaptedValue(42.0) // 弹幕轨道高度
         view.addSubview(danmakuView)
         danmakuView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(art_navigationFullHeight())
-            make.height.equalTo(ARTAdaptedValue(180.0))
+            make.height.equalTo(ARTAdaptedValue(220.0))
         }
         setupButtons()
     }
@@ -55,13 +56,12 @@ extension ARTViewController_DanmakuView: ARTDanmakuViewDelegate {
     
     func danmakuViewCreateCell(_ danmakuView: ARTDanmakuView) -> ARTDanmakuCell { // 创建弹幕
         let cell = ARTCustomDanmakuCell()
-        cell.backgroundColor = .art_randomColor()
         return cell
     }
     
     func danmakuView(_ danmakuView: ARTDanmakuView, didClickDanmakuCell danmakuCell: ARTDanmakuCell) { // 点击弹幕
         guard let danmakuCell = danmakuCell as? ARTCustomDanmakuCell else { return }
-        print("点击了弹幕：\(danmakuCell.bulletLabel.text ?? "")")
+        print("点击了弹幕：\(danmakuCell.danmakuLabel.text ?? "")")
     }
     
     func danmakuView(_ danmakuView: ARTDanmakuView, willDisplayDanmakuCell danmakuCell: ARTDanmakuCell) { // 弹幕开始显示
@@ -124,9 +124,9 @@ extension ARTViewController_DanmakuView {
                 
                 currentRowStack?.snp.makeConstraints { make in
                     if let lastRowStack = rowStackViews.last {
-                        make.top.equalTo(lastRowStack.snp.bottom).offset(ARTAdaptedValue(24))
+                        make.top.equalTo(lastRowStack.snp.bottom).offset(ARTAdaptedValue(12))
                     } else {
-                        make.top.equalTo(ARTAdaptedValue(284.0))
+                        make.top.equalTo(ARTAdaptedValue(324.0))
                     }
                     make.centerX.equalToSuperview()
                 }

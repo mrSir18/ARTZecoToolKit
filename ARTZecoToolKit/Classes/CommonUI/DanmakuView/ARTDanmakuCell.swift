@@ -17,7 +17,7 @@ open class ARTDanmakuCell: UIView {
     /// 代理对象
     public weak var delegate: ARTDanmakuCellDelegate?
     
-    /// 弹幕尺寸（必须设定）
+    /// 弹幕尺寸（宽度 - 必须设定）
     public var danmakuSize: CGSize = .zero
     
     

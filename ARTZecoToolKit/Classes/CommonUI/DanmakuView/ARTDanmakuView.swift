@@ -159,6 +159,37 @@ public class ARTDanmakuView: UIView {
     
     open func setupViews() {
         /// 子类重写: 设置视图
+        registerApplicationNotifications()
+    }
+}
+
+// MARK: - Register & Unregister
+
+extension ARTDanmakuView {
+    /// 注册前后台通知
+    public func registerApplicationNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleAppDidEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleAppWillEnterForeground),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
+    }
+    
+    /// 处理App进入后台
+    @objc public func handleAppDidEnterBackground() {
+        pauseDanmaku()
+    }
+
+    /// 处理App即将进入前台
+    @objc public func handleAppWillEnterForeground() {
+        resumeDanmaku()
     }
 }
 
@@ -190,7 +221,7 @@ extension ARTDanmakuView {
     ///  - trackIndex: 弹幕轨道编号
     ///  - duration: 弹幕持续时间
     private func configureDanmakuCell(_ cell: ARTDanmakuCell, at y: CGFloat, on trackIndex: Int, duration: CGFloat) {
-        cell.frame      = CGRect(x: bounds.width, y: y, width: cell.danmakuSize.width, height: cell.danmakuSize.height)
+        cell.frame      = CGRect(x: bounds.width, y: y, width: cell.danmakuSize.width, height: danmakuTrackHeight)
         cell.alpha      = danmakuAlpha // 设置透明度
         cell.tag        = trackIndex // 标记轨道编号
         cell.transform  = CGAffineTransform(scaleX: danmakuScale, y: danmakuScale)
@@ -207,7 +238,7 @@ extension ARTDanmakuView {
         animation.duration              = duration // 使用随机持续时间
         animation.timingFunction        = CAMediaTimingFunction(name: .linear) // 线性动画
         animation.fillMode              = .forwards // 保持动画结束状态
-        animation.isRemovedOnCompletion = true // 动画完成后移除
+        animation.isRemovedOnCompletion = false // 动画完成后移除
         animation.setValue(cell, forKey: kAssociatedDanmakuCellKey) // 绑定弹幕单元
         cell.layer.removeAnimation(forKey: kDanmakuAnimationKey) // 移除之前的动画
         cell.layer.add(animation, forKey: kDanmakuAnimationKey) // 添加动画到弹幕单元的 layer
@@ -380,7 +411,7 @@ extension ARTDanmakuView {
             newAnimation.duration               = newAnimationDuration
             newAnimation.timingFunction         = CAMediaTimingFunction(name: .linear)
             newAnimation.fillMode               = .forwards
-            newAnimation.isRemovedOnCompletion  = true
+            newAnimation.isRemovedOnCompletion  = false
             newAnimation.setValue(cell, forKey: kAssociatedDanmakuCellKey)
             cell.layer.removeAnimation(forKey: kDanmakuAnimationKey)
             cell.layer.add(newAnimation, forKey: kDanmakuAnimationKey)
@@ -407,12 +438,15 @@ extension ARTDanmakuView {
         guard attemptStateTransition(to: .paused, from: [.running]), layer.speed != 0 else { return } // 仅允许在运行状态下暂停
         layer.timeOffset = layer.convertTime(CACurrentMediaTime(), from: nil)
         layer.speed = 0.0
+        danmakuTimer?.invalidate()
+        danmakuTimer = nil
     }
     
     /// 恢复弹幕
     @objc open func resumeDanmaku() {
         guard attemptStateTransition(to: .running, from: [.paused]), layer.speed == 0 else { return } // 仅允许在暂停状态下恢复
         resetAnimationLayer(beginTime: CACurrentMediaTime() - layer.timeOffset)
+        startMainDanmakuTimer()
     }
     
     /// 停止弹幕
