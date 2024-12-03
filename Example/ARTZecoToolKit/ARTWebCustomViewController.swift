@@ -13,15 +13,13 @@ class ARTWebCustomViewController: ARTWebViewController {
         super.viewDidLoad()
 //        createButtons()
         
-        // 全屏显示
-//        showFullScreen()
-        
         // 自定义 Cookie
         customCookies = [
             "name": "mrSir18",
             "bundleName": "zecoart"
         ]
-        jsMethodNames = ["testMethod", "customJumpToH5"] // 自定义 JS 方法名数组
+        // 自定义 JS 方法名数组, webViewContentHeight 为获取 WebView 内容高度的方法，testMethod、customJumpToH5 为测试方法
+        jsMethodNames = ["webViewContentHeight", "testMethod", "customJumpToH5"]
         loadURL("https://www.zecoart.com/privacy-policy.html") // 加载网页
         
         /// 设置脚本消息处理代理

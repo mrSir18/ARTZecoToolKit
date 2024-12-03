@@ -15,17 +15,30 @@ public class ARTWebView: WKWebView {
         WKWebView.loadSwizzling()
         
         /// 配置 WKWebView
-        let configuration = WKWebViewConfiguration()
-        configuration.userContentController = WKUserContentController()
-        
-        let preferences = WKPreferences()
-        preferences.javaScriptCanOpenWindowsAutomatically = true
-        configuration.preferences = preferences
+        let configuration = ARTWebView.createWebViewConfiguration()
         
         /// 调用父类的指定初始化方法
         self.init(frame: .zero, configuration: configuration)
         
         /// 设置视图属性和代理
+        setupWebViewProperties(delegate: delegate)
+        
+        /// 开启自定义 Cookie
+        setupCustomCookies()
+    }
+    
+    override init(frame: CGRect, configuration: WKWebViewConfiguration) {
+        super.init(frame: frame, configuration: configuration)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    // MARK: - Private Methods
+    
+    /// 配置 WebView 的属性
+    private func setupWebViewProperties(delegate: ARTWebViewDelegate) {
         self.translatesAutoresizingMaskIntoConstraints  = false
         self.scrollView.showsHorizontalScrollIndicator  = false
         self.scrollView.showsVerticalScrollIndicator    = false
@@ -39,17 +52,56 @@ public class ARTWebView: WKWebView {
         self.cookieDelegate          = delegate
         self.scrollView.delegate     = delegate
         self.backgroundColor         = .white
+    }
+    
+    /// 创建 WebView 的配置
+    private static func createWebViewConfiguration() -> WKWebViewConfiguration {
+        let configuration = WKWebViewConfiguration()
+        configuration.userContentController = WKUserContentController()
         
-        /// 开启自定义 Cookie
-        self.setupCustomCookies()
+        // 配置基础获取高度的 JavaScript 脚本
+        let userScript = createHeightObserverScript()
+        configuration.userContentController.addUserScript(userScript)
+        
+        // 设置偏好配置
+        let preferences = WKPreferences()
+        preferences.javaScriptCanOpenWindowsAutomatically = true
+        configuration.preferences = preferences
+        
+        return configuration
     }
     
-    override init(frame: CGRect, configuration: WKWebViewConfiguration) {
-        super.init(frame: frame, configuration: configuration)
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
+    /// 创建 JavaScript 脚本
+    private static func createHeightObserverScript() -> WKUserScript {
+        let scriptSource = """
+        // 定义通知高度的函数
+        function notifyHeight() {
+            const height = Math.max(
+                document.body.scrollHeight,
+                document.documentElement.scrollHeight,
+                document.body.offsetHeight,
+                document.documentElement.offsetHeight,
+                document.documentElement.clientHeight
+            );
+            window.webkit.messageHandlers.webViewContentHeight.postMessage(height);
+        }
+        
+        // 页面加载完成后获取高度
+        window.onload = function() {
+            notifyHeight();
+        };
+        
+        // 监听 DOM 内容变化（动态支持）
+        const observer = new MutationObserver(function() {
+            notifyHeight();
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+        """
+        return WKUserScript(
+            source: scriptSource,
+            injectionTime: .atDocumentEnd,
+            forMainFrameOnly: true
+        )
     }
 }
 

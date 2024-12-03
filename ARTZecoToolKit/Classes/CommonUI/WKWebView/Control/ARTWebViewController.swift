@@ -5,6 +5,8 @@
 //  Created by mrSir18 on 2024/8/20.
 //
 
+// TODO: 若想获取网页内容高度，外部自行注册 jsMethodNames = [webViewContentHeight] 即可。
+
 @preconcurrency import WebKit
 
 open class ARTWebViewController: UIViewController {

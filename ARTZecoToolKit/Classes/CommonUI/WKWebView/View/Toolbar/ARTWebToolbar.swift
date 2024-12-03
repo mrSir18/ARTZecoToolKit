@@ -21,7 +21,6 @@
     func toolbar(_ toolbar: ARTWebToolbar, didTapGoForwardButton button: UIButton)
 }
 
-
 open class ARTWebToolbar: UIView {
     
     /// 代理对象
