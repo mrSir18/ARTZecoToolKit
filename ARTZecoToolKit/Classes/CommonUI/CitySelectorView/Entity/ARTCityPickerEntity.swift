@@ -26,13 +26,6 @@ public class ARTCityPickerEntity: SmartCodable {
     public func didFinishMapping() {
         pinyin_prefix = pinyin_prefix.uppercased()
     }
-    
-    public static func mappingForKey() -> [SmartKeyTransformer]? {[
-        CodingKeys.id                   <--- ["provinceId",         "cityId",       "countryId",        "streetId"],
-        CodingKeys.pinyin               <--- ["provincePinYin",     "cityPinYin",   "countryPinYin",    "streetPinYin"],
-        CodingKeys.pinyin_prefix        <--- ["provincePrefix",     "cityPrefix",   "countryPrefix",    "streetPrefix"],
-        CodingKeys.ext_name             <--- ["provinceName",       "cityName",     "countryName",      "streetName"]
-    ]}
 }
 
 

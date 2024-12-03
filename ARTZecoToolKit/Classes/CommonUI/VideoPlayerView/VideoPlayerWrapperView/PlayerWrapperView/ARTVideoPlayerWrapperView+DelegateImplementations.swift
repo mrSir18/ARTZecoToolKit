@@ -50,7 +50,8 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     }
     
     public func controlsViewDidTapShare(for controlsView: ARTVideoPlayerControlsView) { // 点击分享按钮
-        delegate?.wrapperViewDidTapShare?(for: self)
+//        delegate?.wrapperViewDidTapShare?(for: self)
+        portraitDanmakuView.showExtensionsView()
     }
     
     
@@ -85,8 +86,9 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
         }
     }
     
-    public func controlsViewDidTapPause(for controlsView: ARTVideoPlayerControlsView) { // 暂停播放 (点击暂停按钮)
-        delegate?.wrapperViewDidTapPause?(for: self)
+    public func controlsViewDidTapPause(for controlsView: ARTVideoPlayerControlsView, isPlaying: Bool) { // 暂停播放 (点击暂停按钮)
+        handlePlayerState()
+        delegate?.wrapperViewDidTapPause?(for: self, isPlaying: isPlaying)
     }
     
     public func controlsViewDidTapDanmakuToggle(for controlsView: ARTVideoPlayerControlsView) { // 弹幕开关 (点击弹幕开关按钮)
@@ -94,7 +96,9 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     }
     
     public func controlsViewDidTapDanmakuSettings(for controlsView: ARTVideoPlayerControlsView) { // 弹幕设置 (点击弹幕设置按钮)
-        delegate?.wrapperViewDidTapDanmakuSettings?(for: self)
+//        delegate?.wrapperViewDidTapDanmakuSettings?(for: self)
+        playControlsView.autoHideControls()
+        danmakuView.showExtensionsView()
     }
     
     public func controlsViewDidTapDanmakuSend(for controlsView: ARTVideoPlayerControlsView, text: String) { // 发送弹幕 (点击发送弹幕按钮)
@@ -119,11 +123,15 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     }
     
     public func controlsViewDidTapSpeed(for controlsView: ARTVideoPlayerControlsView) { // 点击倍速按钮
-        delegate?.wrapperViewDidTapSpeed?(for: self)
+//        delegate?.wrapperViewDidTapSpeed?(for: self)
+        playControlsView.autoHideControls()
+        rateView.showExtensionsView()
     }
     
     public func controlsViewDidTapCollection(for controlsView: ARTVideoPlayerControlsView) { // 点击目录按钮
-        delegate?.wrapperViewDidTapCollection?(for: self)
+//        delegate?.wrapperViewDidTapCollection?(for: self)
+        playControlsView.autoHideControls()
+        chaptersView.showExtensionsView()
     }
     
     
@@ -134,6 +142,12 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     }
     
     public func controlsViewDidTapMore(for controlsView: ARTVideoPlayerControlsView) { // 点击更多按钮
-        delegate?.wrapperViewDidTapMore?(for: self)
+        portraitDanmakuView.showExtensionsView()
     }
+}
+
+// MARK: - ARTVideoPlayerSlidingViewDelegate
+
+extension ARTVideoPlayerWrapperView: ARTVideoPlayerSlidingViewDelegate {
+
 }

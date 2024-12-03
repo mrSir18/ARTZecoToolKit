@@ -26,25 +26,29 @@ class DecodingCache {
     
     /// Cache the initial state of a Decodable object.
     func cacheInitialState<T: Decodable>(for type: T.Type) {
-        
-        
         if let object = type as? SmartDecodable.Type {
-        
             decodedType = object
-            
             var snapshot = Snapshot()
             
             let instance = object.init()
-            let mirror = Mirror(reflecting: instance)
-            mirror.children.forEach { child in
-                if let key = child.label {
-                    snapshot.initialValues[key] = child.value
+            // 递归处理所有的 superclassMirror
+            func captureInitialValues(from mirror: Mirror) {
+                mirror.children.forEach { child in
+                    if let key = child.label {
+                        snapshot.initialValues[key] = child.value
+                    }
+                }
+                if let superclassMirror = mirror.superclassMirror {
+                    captureInitialValues(from: superclassMirror)
                 }
             }
-            snapshot.typeName = "\(type)"
-
-            snapshot.transformers = object.mappingForValue() ?? []
+            // 获取当前类和所有父类的属性值
+            let mirror = Mirror(reflecting: instance)
+            captureInitialValues(from: mirror)
             
+
+            snapshot.typeName = "\(type)"
+            snapshot.transformers = object.mappingForValue() ?? []
             snapshots.append(snapshot)
         }
     }
@@ -84,9 +88,21 @@ class DecodingCache {
                 } else if let value = cached as? T { // 当key缺失的时候，会进入
                     return value
                 }
+            } else {
+                // SmartAny 修饰一个可选的Model会走这里
+                for item in snapshots.reversed() {
+                    if let cached = item.initialValues["_" + key.stringValue] {
+                        if let value = cached as? IgnoredKey<T> {
+                            return value.wrappedValue
+                        } else if let value = cached as? SmartAny<T> {
+                            return value.wrappedValue
+                        } else if let value = cached as? T { 
+                            return value
+                        }
+                    }
+                }
             }
         }
-
         return nil
     }
     

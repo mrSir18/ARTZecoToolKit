@@ -80,17 +80,17 @@ extension JSONValue {
     var debugDataTypeDescription: String {
         switch self {
         case .array:
-            return "an array"
+            return "’Array‘"
         case .bool:
-            return "bool"
+            return "’Bool‘"
         case .number:
-            return "a number"
+            return "’Number‘"
         case .string:
-            return "a string"
+            return "‘String’"
         case .object:
-            return "a dictionary"
+            return "’Dictionary‘"
         case .null:
-            return "null"
+            return "’null‘"
         }
     }
 }

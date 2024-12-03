@@ -37,17 +37,8 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     /// 进度条值
     public var sliderValue: Float = 0.0
     
-    
-    // MARK: - 播放器组件 AVPlayer（最底层：播放器视图）
-    
-    /// 播放器系统控制层（最底层：系统控制）
-    public var systemControlsView: ARTVideoPlayerSystemControls!
-    
-    /// 播放器图层（中间层：用于显示弹幕、广告等）
-    public var playerOverlayView: ARTVideoPlayerOverlayView!
-    
-    /// 播放器控制层（最顶层：顶底栏、侧边栏等）
-    public var playControlsView: ARTVideoPlayerControlsView!
+    /// 倍速
+    public var currentRate: Float = 1.0
     
     /// 音量滑块
     public lazy var volumeSlider: UISlider? = {
@@ -56,6 +47,55 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     /// 触觉反馈发生器
     public var feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    
+    
+    // MARK: - 播放器组件 AVPlayer（最底层：播放器视图）
+
+    /// 播放器图层（最底层：位于Video Layer之上，用于显示弹幕、广告等）
+    public var playerOverlayView: ARTVideoPlayerOverlayView!
+    
+    /// 播放器系统控制层（中间层：系统控制，位于弹幕、广告等之上）
+    public var systemControlsView: ARTVideoPlayerSystemControls!
+
+    /// 播放器控制层（最顶层：顶底栏、侧边栏等）
+    public var playControlsView: ARTVideoPlayerControlsView!
+    
+
+    // MARK: - 私有扩展视图（个人项目使用）
+    
+    /// 懒加载弹幕设置视图
+    internal lazy var danmakuView: ARTVideoPlayerLandscapeDanmakuView = {
+        let danmakuView = ARTVideoPlayerLandscapeDanmakuView(self)
+        return danmakuView
+    }()
+    
+    /// 懒加载倍速视图
+    internal lazy var rateView: ARTVideoPlayerLandscapeSlidingView = {
+        let rateView = ARTVideoPlayerLandscapePlaybackRateView(self)
+        rateView.rateCallback = { [weak self] rate in
+            guard let self = self else { return }
+            self.currentRate = rate
+            self.player.rate = rate
+            self.resumePlayer()
+        }
+        return rateView
+    }()
+    
+    /// 懒加载目录视图
+    internal lazy var chaptersView: ARTVideoPlayerLandscapeSlidingView = {
+        let chaptersView = ARTVideoPlayerLandscapeChaptersView(self)
+        chaptersView.chapterCallback = { [weak self] index in
+            guard let self = self else { return }
+            print("选择了第 \(index) 集")
+        }
+        return chaptersView
+    }()
+    
+    /// 懒加载竖屏弹幕视图
+    internal lazy var portraitDanmakuView: ARTVideoPlayerPortraitDanmakuView = {
+        let danmakuView = ARTVideoPlayerPortraitDanmakuView(self)
+        return danmakuView
+    }()
     
     
     // MARK: - Initialization
@@ -75,8 +115,8 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         super.setupViews()
         setupFeedbackGenerator()
         setupFullscreenManager()
-        setupSystemControlsView()
         setupOverlayView()
+        setupSystemControlsView()
         setupControlsView()
         setupGestureRecognizers()
     }
@@ -176,9 +216,10 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     open func seekToSliderValue(_ slider: ARTVideoPlayerSlider, completion: (() -> Void)? = nil) {
         guard let duration = player.currentItem?.duration else { return }
         let time = CMTimeMake(value: Int64(slider.value * Float(duration.value)), timescale: duration.timescale)
-        player.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero) { completed in
-            guard completed else { return }
+        player.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] completed in
+            guard completed, let currentRate = self?.currentRate else { return }
             completion?()
+            self?.player.rate = currentRate
         }
     }
     
@@ -294,24 +335,24 @@ extension ARTVideoPlayerWrapperView {
         fetchFirstFrameFromVideo() // 获取视频的第一帧
     }
     
-    /// 创建系统控制层（最底层）
-    ///
-    /// - Note: 重写父类方法，设置子视图
-    @objc open func setupSystemControlsView() {
-        systemControlsView = ARTVideoPlayerSystemControls(self)
-        addSubview(systemControlsView)
-        systemControlsView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
-    
-    /// 创建播放器图层（中间层）
+    /// 创建播放器图层（最底层）
     ///
     /// - Note: 重写父类方法，设置子视图
     @objc open func setupOverlayView() {
         playerOverlayView = ARTVideoPlayerOverlayView(self)
         addSubview(playerOverlayView)
         playerOverlayView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    /// 创建系统控制层（中间层）
+    ///
+    /// - Note: 重写父类方法，设置子视图
+    @objc open func setupSystemControlsView() {
+        systemControlsView = ARTVideoPlayerSystemControls(self)
+        addSubview(systemControlsView)
+        systemControlsView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
@@ -371,6 +412,11 @@ extension ARTVideoPlayerWrapperView {
         // 捏合手势
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
         addGestureRecognizer(pinchGesture)
+        
+        // 长按手势
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        longPressGesture.minimumPressDuration = 0.5 // 设置长按时间
+        addGestureRecognizer(longPressGesture)
     }
 }
 
@@ -448,6 +494,24 @@ extension ARTVideoPlayerWrapperView {
             break
         }
     }
+    
+    /// 长按手势
+    ///
+    /// - Parameter gesture: 长按手势
+    /// - Note: 重写父类方法，处理长按手势
+    @objc open func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+        guard player.timeControlStatus == .playing else { return }
+        switch gesture.state {
+        case .began: // 设置播放速率为2.0，表示两倍速播放
+            guard let currentPlayer = player else { return }
+            currentPlayer.rate = 3.0
+        case .ended, .cancelled, .failed: // 恢复播放速率为
+            guard let currentPlayer = player else { return }
+            currentPlayer.rate = 1.0
+        default:
+            break
+        }
+    }
 }
 
 // MARK: - Private Methods
@@ -505,10 +569,15 @@ extension ARTVideoPlayerWrapperView {
         // 根据不同的状态处理是否正在拖动滑块
         isDraggingSlider = (newState == .paused)
         playControlsView.updatePlayPauseButtonInControls(isPlaying: newState == .playing)
+        
+        if playerConfig.isLandscape { // 如果是横屏模式
+            playControlsView.handleLandscapeControls(isPlaying: isDraggingSlider)
+        }
         switch newState {
         case .playing: // 如果是播放状态，隐藏系统控制视图并开始播放
             systemControlsView.hideVideoPlayerDisplay()
             player.play()
+            player.rate = currentRate
         case .paused: // 如果是暂停状态，暂停播放
             player.pause()
         default:

@@ -52,8 +52,8 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerBottombarDelegate {
         delegate?.controlsViewDidTap?(for: self, slider: slider)
     }
     
-    public func bottombarDidTapPause(for bottombar: ARTVideoPlayerBottombar) { // 点击暂停按钮
-        delegate?.controlsViewDidTapPause?(for: self)
+    public func bottombarDidTapPause(for bottombar: ARTVideoPlayerBottombar, isPlaying: Bool) { // 点击暂停按钮
+        delegate?.controlsViewDidTapPause?(for: self, isPlaying: isPlaying)
     }
     
     public func bottombarDidTapDanmakuToggle(for bottombar: ARTVideoPlayerBottombar) { // 点击弹幕开关按钮

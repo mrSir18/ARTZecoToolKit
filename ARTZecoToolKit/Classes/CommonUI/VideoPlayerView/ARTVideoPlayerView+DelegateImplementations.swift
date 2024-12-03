@@ -55,8 +55,8 @@ extension ARTVideoPlayerView: ARTVideoPlayerWrapperViewDelegate {
         delegate?.playerViewDidTap?(for: self, slider: slider)
     }
     
-    public func wrapperViewDidTapPause(for wrapperView: ARTVideoPlayerWrapperView) { // 暂停播放 (点击暂停按钮)
-        delegate?.playerViewDidTapPause?(for: self)
+    public func wrapperViewDidTapPause(for wrapperView: ARTVideoPlayerWrapperView, isPlaying: Bool) { // 暂停播放 (点击暂停按钮)
+        delegate?.playerViewDidTapPause?(for: self, isPlaying: isPlaying)
     }
     
     public func wrapperViewDidTapDanmakuToggle(for wrapperView: ARTVideoPlayerWrapperView) { // 弹幕开关 (点击弹幕开关按钮)
@@ -98,9 +98,5 @@ extension ARTVideoPlayerView: ARTVideoPlayerWrapperViewDelegate {
     
     public func wrapperViewDidTapComment(for wrapperView: ARTVideoPlayerWrapperView) { // 点击评论按钮
         delegate?.playerViewDidTapComment?(for: self)
-    }
-    
-    public func wrapperViewDidTapMore(for wrapperView: ARTVideoPlayerWrapperView) { // 点击更多按钮
-        delegate?.playerViewDidTapMore?(for: self)
     }
 }

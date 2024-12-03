@@ -18,6 +18,8 @@
 		0258B7AD2BFA845800AEB349 /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 0258B7AA2BFA845800AEB349 /* 5.png */; };
 		0258B7AF2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0258B7AE2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift */; };
 		0258CA9E2C03995300A486E7 /* ARTViewController_PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0258CA9D2C03995300A486E7 /* ARTViewController_PageViewController.swift */; };
+		025AF79B2CEBE271009643E2 /* ARTViewController+DanmakuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025AF79A2CEBE271009643E2 /* ARTViewController+DanmakuView.swift */; };
+		025AF79F2CEBE3F6009643E2 /* ARTCustomDanmakuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025AF79C2CEBE3F6009643E2 /* ARTCustomDanmakuCell.swift */; };
 		025D29982C48459D00F611D6 /* ARTViewController_Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29972C48459D00F611D6 /* ARTViewController_Carousel.swift */; };
 		026A7B6C2C3431AE00D3134E /* ARTViewController_ActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A7B6B2C3431AE00D3134E /* ARTViewController_ActionSheet.swift */; };
 		0282385F2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282385E2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift */; };
@@ -59,6 +61,7 @@
 		02F8AE532BF67E7E00A111F6 /* ARTViewController_Quantity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8AE492BF67E7E00A111F6 /* ARTViewController_Quantity.swift */; };
 		02F8AE542BF67E7E00A111F6 /* ARTViewController_Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8AE4A2BF67E7E00A111F6 /* ARTViewController_Debug.swift */; };
 		02F8AE552BF67E7E00A111F6 /* ARTViewController_SlideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8AE4B2BF67E7E00A111F6 /* ARTViewController_SlideBar.swift */; };
+		02FC53422CF1B25E009794A4 /* privacy-policy.html in Resources */ = {isa = PBXBuildFile; fileRef = 02FC53412CF1B25E009794A4 /* privacy-policy.html */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
@@ -89,6 +92,8 @@
 		0258B7AA2BFA845800AEB349 /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
 		0258B7AE2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_VideoPlayer.swift; sourceTree = "<group>"; };
 		0258CA9D2C03995300A486E7 /* ARTViewController_PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_PageViewController.swift; sourceTree = "<group>"; };
+		025AF79A2CEBE271009643E2 /* ARTViewController+DanmakuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTViewController+DanmakuView.swift"; sourceTree = "<group>"; };
+		025AF79C2CEBE3F6009643E2 /* ARTCustomDanmakuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTCustomDanmakuCell.swift; sourceTree = "<group>"; };
 		025D29972C48459D00F611D6 /* ARTViewController_Carousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_Carousel.swift; sourceTree = "<group>"; };
 		026A7B6B2C3431AE00D3134E /* ARTViewController_ActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_ActionSheet.swift; sourceTree = "<group>"; };
 		0282385E2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_AlignmentButton.swift; sourceTree = "<group>"; };
@@ -130,6 +135,7 @@
 		02F8AE492BF67E7E00A111F6 /* ARTViewController_Quantity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARTViewController_Quantity.swift; sourceTree = "<group>"; };
 		02F8AE4A2BF67E7E00A111F6 /* ARTViewController_Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARTViewController_Debug.swift; sourceTree = "<group>"; };
 		02F8AE4B2BF67E7E00A111F6 /* ARTViewController_SlideBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARTViewController_SlideBar.swift; sourceTree = "<group>"; };
+		02FC53412CF1B25E009794A4 /* privacy-policy.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "privacy-policy.html"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* ARTZecoToolKit_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARTZecoToolKit_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -185,9 +191,18 @@
 			name = Protocol;
 			sourceTree = "<group>";
 		};
+		025AF7A02CEBE3FB009643E2 /* DanmakuBusiness */ = {
+			isa = PBXGroup;
+			children = (
+				025AF79C2CEBE3F6009643E2 /* ARTCustomDanmakuCell.swift */,
+			);
+			path = DanmakuBusiness;
+			sourceTree = "<group>";
+		};
 		0290B4622CC5986700D49079 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				02FC53412CF1B25E009794A4 /* privacy-policy.html */,
 				02F8AE262BF66B3D00A111F6 /* 0.png */,
 				02F8AE282BF66B3D00A111F6 /* 1.png */,
 				02F8AE272BF66B3D00A111F6 /* 2.png */,
@@ -273,6 +288,7 @@
 				0298808C2C46E43000176ED3 /* PhotoBrowserBusiness */,
 				02BB29302C49673F00DE706C /* CarouselBusiness */,
 				0209353F2C73F08700696C0F /* WebViewBusiness */,
+				025AF7A02CEBE3FB009643E2 /* DanmakuBusiness */,
 			);
 			name = Business;
 			sourceTree = "<group>";
@@ -391,6 +407,7 @@
 				024F9A4E2C456D50008DF3AB /* ARTViewController_PhotoBrowser.swift */,
 				025D29972C48459D00F611D6 /* ARTViewController_Carousel.swift */,
 				0292ECA62C733B7A00D08248 /* ARTViewController+WebView.swift */,
+				025AF79A2CEBE271009643E2 /* ARTViewController+DanmakuView.swift */,
 				02C95B3F2C426FEA00200438 /* Business */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
@@ -562,6 +579,7 @@
 				02A375A92CC5588800248BBC /* DINPro-Regular.otf in Resources */,
 				02F8AE2F2BF66B3E00A111F6 /* hot_area_format_user.json in Resources */,
 				02B4908C2C8AEA4C007F379A /* city.json in Resources */,
+				02FC53422CF1B25E009794A4 /* privacy-policy.html in Resources */,
 				02F8AE2C2BF66B3E00A111F6 /* 2.png in Resources */,
 				0258B7AB2BFA845800AEB349 /* 3.png in Resources */,
 				02F8AE2D2BF66B3E00A111F6 /* 1.png in Resources */,
@@ -672,6 +690,7 @@
 				0258B7AF2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift in Sources */,
 				02F8AE4F2BF67E7E00A111F6 /* ARTViewController_SlidePopup.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				025AF79F2CEBE3F6009643E2 /* ARTCustomDanmakuCell.swift in Sources */,
 				0298808B2C46E3EF00176ED3 /* ARTControllerNavigationBar.swift in Sources */,
 				02C95B442C42705D00200438 /* ARTCollectionViewModel.swift in Sources */,
 				02C95B482C42723500200438 /* ARTCollectionCell.swift in Sources */,
@@ -689,6 +708,7 @@
 				025D29982C48459D00F611D6 /* ARTViewController_Carousel.swift in Sources */,
 				0282385F2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift in Sources */,
 				02F8AE312BF66BCE00A111F6 /* ARTBaseViewController.swift in Sources */,
+				025AF79B2CEBE271009643E2 /* ARTViewController+DanmakuView.swift in Sources */,
 				02F8AE532BF67E7E00A111F6 /* ARTViewController_Quantity.swift in Sources */,
 				02BB292F2C49673200DE706C /* ARTSecondCarouselCell.swift in Sources */,
 				02F8AE522BF67E7E00A111F6 /* ARTBaseNavigationController.swift in Sources */,

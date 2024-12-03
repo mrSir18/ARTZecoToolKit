@@ -137,13 +137,16 @@ import ARTZecoToolKit
 
 class ARTViewController_VideoPlayer: ARTBaseViewController {
     
+    /// 弹幕视图
+    private var danmakuView: ARTDanmakuView!
+    
     
     // MARK: - Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPlayerView()
-        setupSupportedAVPlayerFileExtensions()
+//        setupSupportedAVPlayerFileExtensions()
     }
     
     // MARK: - Setup Methods
@@ -229,7 +232,7 @@ extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
     }
     
     func playerViewDidChangeValue(for playerView: ARTVideoPlayerView, slider: ARTVideoPlayerSlider) { // 快进/快退 (拖动滑块)
-        print("快进/快退")
+        
     }
     
     func playerViewDidEndTouch(for playerView: ARTVideoPlayerView, slider: ARTVideoPlayerSlider) { // 恢复播放 (结束拖动滑块)
@@ -240,8 +243,8 @@ extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
         print("指定播放时间")
     }
     
-    func playerViewDidTapPause(for playerView: ARTVideoPlayerView) { // 暂停播放 (点击暂停按钮)
-        print("暂停播放")
+    func playerViewDidTapPause(for playerView: ARTVideoPlayerView, isPlaying: Bool) { // 暂停播放 (点击暂停按钮)
+        print("播放状态 \(isPlaying ? "暂停" : "播放")")
     }
     
     func playerViewDidTapDanmakuToggle(for playerView: ARTVideoPlayerView) { // 弹幕开关 (点击弹幕开关按钮)
@@ -283,9 +286,5 @@ extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
     
     func playerViewDidTapComment(for playerView: ARTVideoPlayerView) { // 点击评论按钮
         print("点击评论按钮")
-    }
-    
-    func playerViewDidTapMore(for playerView: ARTVideoPlayerView) { // 点击更多按钮
-        print("点击更多按钮")
     }
 }

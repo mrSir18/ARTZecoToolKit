@@ -5,7 +5,7 @@
 //  Created by mrSir18 on 2024/8/20.
 //
 
-import WebKit
+@preconcurrency import WebKit
 
 open class ARTWebViewController: UIViewController {
     
