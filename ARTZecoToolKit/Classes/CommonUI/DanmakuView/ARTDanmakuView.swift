@@ -166,6 +166,7 @@ public class ARTDanmakuView: UIView {
 // MARK: - Register & Unregister
 
 extension ARTDanmakuView {
+    
     /// 注册前后台通知
     public func registerApplicationNotifications() {
         NotificationCenter.default.addObserver(
