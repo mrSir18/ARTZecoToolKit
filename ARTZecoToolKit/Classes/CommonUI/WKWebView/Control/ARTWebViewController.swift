@@ -51,7 +51,7 @@ open class ARTWebViewController: UIViewController {
     public var dynamicScripts: [String] = []
     
     /// 接收到脚本消息的回调
-    public var didReceiveScriptMessage: ((WKScriptMessage) -> Void)?
+    public var didReceiveScriptMessage: ((ARTScriptMessage) -> Void)?
     
     /// 脚本消息处理代理
     public lazy var scriptMessageDelegate: ARTScriptMessageHandlerDelegate = {
@@ -69,6 +69,9 @@ open class ARTWebViewController: UIViewController {
     
     /// 上次滚动位置
     private var lastContentOffset: CGFloat = 0.0
+    
+    /// WebView 内容高度
+    private let webViewContentHeight = "webViewContentHeight"
     
     
     // MARK: - Initialization
@@ -105,7 +108,7 @@ open class ARTWebViewController: UIViewController {
     open func setupWebView() {
         /// 子类重写: 此方法以自定义 WebView
         webView = ARTWebView(self)
-        webView.addJavaScripts(dynamicScripts)
+        webView.executeJavaScripts(dynamicScripts)
         view.addSubview(webView)
         view.sendSubviewToBack(webView)
         webView.snp.makeConstraints { make in
@@ -258,10 +261,34 @@ extension ARTWebViewController {
     }
 }
 
+// MARK: - Private Methods
+
+extension ARTWebViewController {
+    
+    /// 获取 WebView 内容高度
+    private func createHeightObserverScript(_ webView: WKWebView, completion: @escaping (CGFloat) -> Void) {
+        if jsMethodNames.contains(webViewContentHeight) { /// 如果注册了获取 WebView 内容高度的方法，则执行该方法
+            let js = """
+                Math.max(
+                    document.body.scrollHeight,
+                    document.documentElement.scrollHeight,
+                    document.body.offsetHeight,
+                    document.documentElement.offsetHeight,
+                    document.documentElement.clientHeight
+                )
+            """
+            webView.evaluateJavaScript(js) { result, error in
+                completion((result as? CGFloat) ?? 0)
+            }
+        }
+    }
+}
+
 extension ARTWebViewController: WKScriptMessageHandler {
     
     open func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) { /// 接收到脚本消息
-        didReceiveScriptMessage?(message)
+        let scriptMessage = convertToCustomScriptMessage(from: message)
+        didReceiveScriptMessage?(scriptMessage)
     }
     
     public func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
@@ -271,7 +298,7 @@ extension ARTWebViewController: WKScriptMessageHandler {
                                                buttonTitles: ["确定", "取消"],
                                                buttonStyles: [.default, .cancel], in: self) { mode in
             switch mode {
-            case .first:
+            case .first, .second:
                 completionHandler()
             default:
                 break
@@ -303,8 +330,14 @@ extension ARTWebViewController: ARTWebViewDelegate {
         }
     }
     
-    open func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) { /// 网页加载完成
+    open func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) { /// 网页加载完成
         print("网页加载完成: \(webView.title ?? "")")
+        createHeightObserverScript(webView) { [weak self] height in // 获取 WebView 内容高度
+            let scriptMessage = ARTScriptMessage(body: height,
+                                                 webView: self?.webView,
+                                                 name: "webViewContentHeight")
+            self?.didReceiveScriptMessage?(scriptMessage)
+        }
     }
     
     open func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) { /// 网页加载失败

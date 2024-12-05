@@ -9,9 +9,14 @@ import ARTZecoToolKit
 
 class ARTWebCustomViewController: ARTWebViewController {
     
+    /// 设置网页链接
+    open var testURLString = ""
+    
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        createButtons()
+        createButtons()
         
         // 自定义 Cookie
         customCookies = [
@@ -20,7 +25,6 @@ class ARTWebCustomViewController: ARTWebViewController {
         ]
         // 自定义 JS 方法名数组, webViewContentHeight 为获取 WebView 内容高度的方法，testMethod、customJumpToH5 为测试方法
         jsMethodNames = ["webViewContentHeight", "testMethod", "customJumpToH5"]
-        loadURL("https://www.zecoart.com/privacy-policy.html") // 加载网页
         
         /// 设置脚本消息处理代理
         didReceiveScriptMessage = { message in

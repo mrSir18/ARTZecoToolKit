@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Test HTML</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        padding: 20px;
+                    }
+                    button {
+                        padding: 10px 20px;
+                        font-size: 16px;
+                        cursor: pointer;
+                        background-color: #4CAF50;
+                        color: white;
+                        border: none;
+                        border-radius: 5px;
+                    }
+                    button:hover {
+                        background-color: #45a049;
+                    }
+                </style>
+            </head>
+    <body>
+        <h1>Test HTML with Button</h1>
+        <button id="testButton">Click Me</button>
+        
+        <script type="text/javascript">
+            // 页面加载完毕时，给按钮添加点击事件监听
+            window.onload = function() {
+                console.log("Page Loaded");  // 确认页面是否加载
+                document.getElementById('testButton').addEventListener('click', function() {
+                    console.log("Button Clicked");  // 确认按钮是否被点击
+                    window.webkit.messageHandlers.testMethod.postMessage('成长智库：测试数据!');
+                    alert('成长智库：测试数据!');
+                });
+            }
+        </script>
+    </body>
+</html>

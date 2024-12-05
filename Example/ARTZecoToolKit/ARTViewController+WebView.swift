@@ -6,6 +6,62 @@
 //  Copyright © 2024 CocoaPods. All rights reserved.
 //
 
+//import UIKit
+//import WebKit
+//import ARTZecoToolKit
+//
+//class ARTViewController_WebView: ARTBaseViewController, WKUIDelegate, WKScriptMessageHandler {
+//
+//    var webView: WKWebView!
+//
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//
+//        let webConfiguration = WKWebViewConfiguration()
+//        webConfiguration.preferences.javaScriptEnabled = true  // 确保 JavaScript 被启用
+//        // 注册消息处理器
+////        webConfiguration.userContentController.add(self, name: "testMethod")
+//
+//        // 初始化WKWebView
+//        webView = WKWebView(frame: self.view.frame, configuration: webConfiguration)
+//        webView.uiDelegate = self  // 设置 WKUIDelegate 代理
+//        webView.backgroundColor = .art_randomColor()
+//        self.view.addSubview(webView)
+//
+//        // 加载本地HTML文件
+//        if let filePath = Bundle.main.path(forResource: "test", ofType: "html") {
+//            let url = URL(fileURLWithPath: filePath)
+//            let request = URLRequest(url: url)
+//            webView.load(request)
+//        }
+//    }
+//
+//    // MARK: - Life Cycle
+//
+//    open override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        webView.configuration.userContentController.add(self, name: "testMethod")
+//    }
+//
+//    open override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        webView.configuration.userContentController.removeScriptMessageHandler(forName: "testMethod")
+//    }
+//
+//    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+//        print("接收到脚本消息：\(message.name) - \(message.body)")
+//    }
+//
+//    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+//        // 在这里可以调用 UIAlertController 来显示 alert
+//        let alert = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+//            completionHandler()
+//        }))
+//        self.present(alert, animated: true, completion: nil)
+//    }
+//}
+
 import ARTZecoToolKit
 
 class ARTViewController_WebView: ARTBaseViewController {
@@ -18,35 +74,56 @@ class ARTViewController_WebView: ARTBaseViewController {
         createButtons()
     }
     
-    private func createButtons() { // 创建测试按钮方法
-        let defaultButton = ARTAlignmentButton(type: .custom)
-        defaultButton.titleLabel?.font = .art_regular(16.0)
-        defaultButton.backgroundColor  = .art_randomColor()
-        defaultButton.setTitle("默认WebView", for: .normal)
-        defaultButton.setTitleColor(.black, for: .normal)
-        defaultButton.addTarget(self, action: #selector(defaultButtonAction), for: .touchUpInside)
-        view.addSubview(defaultButton)
-        defaultButton.snp.makeConstraints { make in
-            make.size.equalTo(ARTAdaptedSize(width: 150.0, height: 100.0))
-            make.bottom.equalTo(-art_safeAreaBottom())
-            make.left.equalToSuperview()
-        }
+    private func createButtons() {
+        let buttonData: [(title: String, color: UIColor)] = [
+            ("默认WebView", .art_randomColor()),
+            ("自定义WebView", .art_randomColor()),
+            ("WebViewJS", .art_randomColor())
+        ]
         
-        let customButton = ARTAlignmentButton(type: .custom)
-        customButton.titleLabel?.font = .art_regular(16.0)
-        customButton.backgroundColor  = .art_randomColor()
-        customButton.setTitle("自定义WebView", for: .normal)
-        customButton.setTitleColor(.black, for: .normal)
-        customButton.addTarget(self, action: #selector(customButtonAction), for: .touchUpInside)
-        view.addSubview(customButton)
-        customButton.snp.makeConstraints { make in
-            make.size.equalTo(ARTAdaptedSize(width: 150.0, height: 100.0))
-            make.bottom.equalTo(-art_safeAreaBottom())
-            make.right.equalToSuperview()
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 24
+        stackView.alignment = .center
+        stackView.distribution = .equalSpacing
+        
+        for (index, data) in buttonData.enumerated() {
+            let button = ARTAlignmentButton(type: .custom)
+            button.tag = index
+            button.titleLabel?.font = .art_regular(16.0)
+            button.backgroundColor = data.color
+            button.setTitle(data.title, for: .normal)
+            button.setTitleColor(.black, for: .normal)
+            button.snp.makeConstraints { make in
+                make.size.equalTo(ARTAdaptedSize(width: 150.0, height: 100.0))
+            }
+            button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+            stackView.addArrangedSubview(button)
+        }
+        view.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.left.equalToSuperview().offset(24)
+            make.right.equalToSuperview().offset(-24)
         }
     }
     
-    @objc func defaultButtonAction () {
+    @objc private func buttonAction(sender: UIButton) {
+        print("点击了按钮：\(sender.currentTitle ?? "")")
+        switch sender.tag {
+        case 0:
+            defaultWebViewMethod()
+        case 1:
+            customWebViewMethod()
+        case 2:
+            webViewJSMethod()
+        default:
+            break
+        }
+    }
+    
+    /// 默认WebView
+    func defaultWebViewMethod () {
         let webViewController = ARTWebViewController()
         webViewController.jsMethodNames = ["webViewContentHeight", "testMethod", "customJumpToH5"] // 自定义 JS 方法名数组, webViewContentHeight 为获取 WebView 内容高度的方法，testMethod、customJumpToH5 为测试方法
         webViewController.shouldAutoFetchTitle = false
@@ -63,15 +140,27 @@ class ARTViewController_WebView: ARTBaseViewController {
             print("退出完成")
         }
         present(webViewController, animated: true, completion: nil)
-
     }
     
-    @objc func customButtonAction () {
+    /// 自定义WebView
+    func customWebViewMethod () {
         let webViewController = ARTWebCustomViewController()
+        webViewController.url = "https://www.zecoart.com/privacy-policy.html"
+        webViewController.dismissCompletion = {
+            print("退出完成")
+        }
+        navigationController?.pushViewController(webViewController, animated: true)
+    }
+    
+    /// 注册JS脚本
+    func webViewJSMethod() {
+        let webViewController = ARTWebCustomViewController()
+        webViewController.url = "zeco-test"
         webViewController.shouldHideNavigationBar = false // 隐藏导航栏
         webViewController.dynamicScripts = [ // 设置动态脚本示例
-            "console.log('Script 1 executed');",
-            "console.log('Script 2 executed');"
+"""
+    window.alert("Hello from injected JavaScript!");
+"""
         ]
         webViewController.dismissCompletion = {
             print("退出完成")

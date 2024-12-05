@@ -58,10 +58,7 @@ public class ARTWebView: WKWebView {
     private static func createWebViewConfiguration() -> WKWebViewConfiguration {
         let configuration = WKWebViewConfiguration()
         configuration.userContentController = WKUserContentController()
-        
-        // 配置基础获取高度的 JavaScript 脚本
-        let userScript = createHeightObserverScript()
-        configuration.userContentController.addUserScript(userScript)
+        configuration.preferences.javaScriptEnabled = true // 启用 JavaScript
         
         // 设置偏好配置
         let preferences = WKPreferences()
@@ -70,68 +67,24 @@ public class ARTWebView: WKWebView {
         
         return configuration
     }
-    
-    /// 创建 JavaScript 脚本
-    private static func createHeightObserverScript() -> WKUserScript {
-        let scriptSource = """
-        // 定义通知高度的函数
-        function notifyHeight() {
-            const height = Math.max(
-                document.body.scrollHeight,
-                document.documentElement.scrollHeight,
-                document.body.offsetHeight,
-                document.documentElement.offsetHeight,
-                document.documentElement.clientHeight
-            );
-            window.webkit.messageHandlers.webViewContentHeight.postMessage(height);
-        }
-        
-        // 页面加载完成后获取高度
-        window.onload = function() {
-            notifyHeight();
-        };
-        
-        // 监听 DOM 内容变化（动态支持）
-        const observer = new MutationObserver(function() {
-            notifyHeight();
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-        """
-        return WKUserScript(
-            source: scriptSource,
-            injectionTime: .atDocumentEnd,
-            forMainFrameOnly: true
-        )
-    }
 }
 
 extension ARTWebView {
     
     // MARK: - Dynamic JavaScript Injection
     
-    /// 动态添加 JavaScript 脚本。
+    /// 动态执行 JavaScript 脚本。
     ///
     /// - Parameters:
     ///   - script: JavaScript 脚本内容。
-    ///   - injectionTime: 注入时间，默认为 `.atDocumentEnd`。
-    ///   - forMainFrameOnly: 是否仅针对主框架，默认为 `true`。
-    public func addJavaScript(_ script: String, injectionTime: WKUserScriptInjectionTime = .atDocumentEnd, forMainFrameOnly: Bool = true) {
-        let userScript = WKUserScript(source: script, injectionTime: injectionTime, forMainFrameOnly: forMainFrameOnly)
-        configuration.userContentController.addUserScript(userScript)
+    ///   - completion: 执行完 JavaScript 后的回调。
+    public func executeJavaScript(_ script: String, completion: ((Any?, Error?) -> Void)? = nil) {
+        evaluateJavaScript(script, completionHandler: completion)
     }
     
-    /// 移除所有动态添加的 JavaScript 脚本。
-    public func removeAllJavaScript() {
-        configuration.userContentController.removeAllUserScripts()
-        
-        // 重新添加默认的脚本
-        let defaultScript = ARTWebView.createHeightObserverScript()
-        configuration.userContentController.addUserScript(defaultScript)
-    }
-    
-    /// 添加多个 JavaScript 脚本
-    public func addJavaScripts(_ scripts: [String]) {
-        scripts.forEach { addJavaScript($0) }
+    /// 执行多个 JavaScript 脚本
+    public func executeJavaScripts(_ scripts: [String]) {
+        scripts.forEach { executeJavaScript($0) }
     }
 }
 
