@@ -27,7 +27,7 @@ class ARTWebCustomViewController: ARTWebViewController {
             print("接收到脚本消息：\(message.name) - \(message.body)")
         }
     }
-    
+
     private func createButtons() { // 创建测试按钮方法
         let deleteCookieButton = ARTAlignmentButton(type: .custom)
         deleteCookieButton.titleLabel?.font = .art_regular(16.0)

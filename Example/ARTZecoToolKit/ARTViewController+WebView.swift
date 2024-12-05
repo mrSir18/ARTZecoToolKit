@@ -68,7 +68,7 @@ class ARTViewController_WebView: ARTBaseViewController {
     
     @objc func customButtonAction () {
         let webViewController = ARTWebCustomViewController()
-        webViewController.shouldHideNavigationBar = true // 隐藏导航栏
+//        webViewController.shouldHideNavigationBar = true // 隐藏导航栏
         webViewController.dynamicScripts = [ // 设置动态脚本示例
             "console.log('Script 1 executed');",
             "console.log('Script 2 executed');"

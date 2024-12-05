@@ -110,9 +110,8 @@ open class ARTWebViewController: UIViewController {
         view.sendSubviewToBack(webView)
         webView.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
-            make.top.equalTo(navigationBarView.snp.bottom)
+            make.top.equalTo(navigationBarView?.snp.bottom ?? view.snp.top)
         }
-
     }
     
     open func setupToolBarView() {
@@ -176,7 +175,7 @@ open class ARTWebViewController: UIViewController {
         case #keyPath(WKWebView.title): /// 监听 WebView 的 title 属性
             DispatchQueue.main.async {
                 if self.shouldAutoFetchTitle { /// 自动获取标题
-                    self.navigationBarView.updateTitleContent(webView.title ?? "")
+                    self.navigationBarView?.updateTitleContent(webView.title ?? "")
                 }
             }
         case #keyPath(WKWebView.canGoBack), #keyPath(WKWebView.canGoForward): /// 监听 WebView 的 canGoBack 和 canGoForward 属性
@@ -342,7 +341,7 @@ extension ARTWebViewController {
         let currentOffset = scrollView.contentOffset.y
         /// 根据滚动位置调整顶底栏透明度
         let navigationAlpha = min(max(currentOffset / 100.0, 0), 1.0)
-        navigationBarView.updateNavigationBarAlpha(navigationAlpha)
+        navigationBarView?.updateNavigationBarAlpha(navigationAlpha)
         
         /// 如果用户点击了链接，则不调整工具栏透明度
         if isLinkActivated { return }
