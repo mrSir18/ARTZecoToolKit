@@ -107,6 +107,36 @@ public class ARTWebView: WKWebView {
 
 extension ARTWebView {
     
+    // MARK: - Dynamic JavaScript Injection
+    
+    /// 动态添加 JavaScript 脚本。
+    ///
+    /// - Parameters:
+    ///   - script: JavaScript 脚本内容。
+    ///   - injectionTime: 注入时间，默认为 `.atDocumentEnd`。
+    ///   - forMainFrameOnly: 是否仅针对主框架，默认为 `true`。
+    public func addJavaScript(_ script: String, injectionTime: WKUserScriptInjectionTime = .atDocumentEnd, forMainFrameOnly: Bool = true) {
+        let userScript = WKUserScript(source: script, injectionTime: injectionTime, forMainFrameOnly: forMainFrameOnly)
+        configuration.userContentController.addUserScript(userScript)
+    }
+    
+    /// 移除所有动态添加的 JavaScript 脚本。
+    public func removeAllJavaScript() {
+        configuration.userContentController.removeAllUserScripts()
+        
+        // 重新添加默认的脚本
+        let defaultScript = ARTWebView.createHeightObserverScript()
+        configuration.userContentController.addUserScript(defaultScript)
+    }
+    
+    /// 添加多个 JavaScript 脚本
+    public func addJavaScripts(_ scripts: [String]) {
+        scripts.forEach { addJavaScript($0) }
+    }
+}
+
+extension ARTWebView {
+    
     // MARK: - Public Methods
     
     /// 加载本地 HTML 文件。

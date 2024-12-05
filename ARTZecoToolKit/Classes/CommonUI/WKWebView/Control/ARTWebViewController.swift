@@ -38,11 +38,17 @@ open class ARTWebViewController: UIViewController {
     /// 返回按钮图片
     public var backButtonImageName: String = "back_black_left"
     
+    /// 是否隐藏导航栏  默认为 `false`
+    public var shouldHideNavigationBar: Bool = false
+    
     /// 是否隐藏工具栏  默认为 `false`
     public var shouldHideToolbar: Bool = false
     
     /// 自定义 JS 方法名数组
     public var jsMethodNames: [String] = []
+    
+    /// 动态注入的 JS 脚本数组
+    public var dynamicScripts: [String] = []
     
     /// 接收到脚本消息的回调
     public var didReceiveScriptMessage: ((WKScriptMessage) -> Void)?
@@ -86,23 +92,27 @@ open class ARTWebViewController: UIViewController {
     
     open func setupNavigationBarView() {
         /// 子类重写: 此方法以自定义导航栏视图
+        let height = shouldHideNavigationBar ? 0 : art_navigationFullHeight()
         navigationBarView = ARTWebNavigationBar(self)
+        navigationBarView.isHidden = shouldHideNavigationBar
         view.addSubview(navigationBarView)
         navigationBarView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
-            make.height.equalTo(art_navigationFullHeight())
+            make.height.equalTo(height)
         }
     }
     
     open func setupWebView() {
         /// 子类重写: 此方法以自定义 WebView
         webView = ARTWebView(self)
+        webView.addJavaScripts(dynamicScripts)
         view.addSubview(webView)
         view.sendSubviewToBack(webView)
         webView.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
             make.top.equalTo(navigationBarView.snp.bottom)
         }
+
     }
     
     open func setupToolBarView() {

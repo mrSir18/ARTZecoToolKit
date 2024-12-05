@@ -66,7 +66,12 @@ class ARTWebCustomViewController: ARTWebViewController {
         customCookies.removeValue(forKey: "age")
         reloadWebView()
     }
+}
 
+// MARK: - ARTWebNavigationBarDelegate
+
+extension ARTWebCustomViewController {
+    
     override func backButtonImageName(for navigationBar: ARTWebNavigationBar) -> String? {
         return "navigation_back_black"
     }
