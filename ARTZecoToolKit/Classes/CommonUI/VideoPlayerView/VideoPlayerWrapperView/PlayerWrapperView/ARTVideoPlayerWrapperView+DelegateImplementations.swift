@@ -16,6 +16,25 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerSystemControlsDelegate {
 
 extension ARTVideoPlayerWrapperView: ARTVideoPlayerOverlayViewDelegate {
     
+    public func overlayViewDidCreateDanmakuCell(for overlayView: ARTVideoPlayerOverlayView) -> ARTDanmakuCell { // 创建弹幕
+        return delegate?.wrapperViewDidCreateDanmakuCell?(for: self) ?? ARTDanmakuCell()
+    }
+    
+    public func overlayViewDidTapDanmakuCell(for overlayView: ARTVideoPlayerOverlayView, danmakuCell: ARTDanmakuCell) { // 点击弹幕
+        delegate?.wrapperViewDidTapDanmakuCell?(for: self, danmakuCell: danmakuCell)
+    }
+    
+    public func overlayViewWillDisplayDanmakuCell(for overlayView: ARTVideoPlayerOverlayView, danmakuCell: ARTDanmakuCell) { // 弹幕开始显示
+        delegate?.wrapperViewWillDisplayDanmakuCell?(for: self, danmakuCell: danmakuCell)
+    }
+    
+    public func overlayViewDidEndDisplayDanmakuCell(for overlayView: ARTVideoPlayerOverlayView, danmakuCell: ARTDanmakuCell) { // 弹幕结束显示
+        delegate?.wrapperViewDidEndDisplayDanmakuCell?(for: self, danmakuCell: danmakuCell)
+    }
+    
+    public func overlayViewDidEndDisplayAllDanmaku(for overlayView: ARTVideoPlayerOverlayView) { // 所有弹幕显示完
+        delegate?.wrapperViewDidEndDisplayAllDanmaku?(for: self)
+    }
 }
 
 

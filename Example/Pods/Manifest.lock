@@ -7,7 +7,7 @@ PODS:
   - SDWebImage (5.20.0):
     - SDWebImage/Core (= 5.20.0)
   - SDWebImage/Core (5.20.0)
-  - SmartCodable (4.3.0)
+  - SmartCodable (4.3.2)
   - SnapKit (5.7.1)
   - YYText (1.0.7)
 
@@ -28,7 +28,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   ARTZecoToolKit: 5a6fdc0b4c0c0b0b99401565d63f60142f3e4267
   SDWebImage: 73c6079366fea25fa4bb9640d5fb58f0893facd8
-  SmartCodable: e1ad00634eb72d34e76e8a96cd5382bf4127cee9
+  SmartCodable: 88fbf3d65207c2376fdbce4b080a3d578cb51be8
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 

@@ -13,7 +13,7 @@ extension ARTWebViewController {
     // MARK:  枚举：脚本注入类型
     public enum ScriptInjectionType {
         case nonoe  // 无脚本注入
-        case userScript  // 使用 WKUserScript 注入脚本
+        case userScript  // 使用 WKUserScript 注入脚本，适用于 postMessage
         case evaluateJavaScript  // 使用 evaluateJavaScript 执行脚本
     }
     
@@ -45,7 +45,6 @@ extension ARTWebViewController {
     ///  - forMainFrameOnly: 【仅针对主框架 = `true`】、【主框架和子框架（包括所有 iframe），默认为 `false`】。
     ///  - completion: 脚本执行完成后的回调，返回执行结果或错误
     public func injectScripts(completion: (([Any]?, [Error]?) -> Void)? = nil) {
-        
         switch injectionType {
         case .userScript: // 适合全局和持久化脚本注入，注入的脚本会对后续加载的页面（主框架或子框架）自动生效，无需每次手动注入
             dynamicScripts.forEach {

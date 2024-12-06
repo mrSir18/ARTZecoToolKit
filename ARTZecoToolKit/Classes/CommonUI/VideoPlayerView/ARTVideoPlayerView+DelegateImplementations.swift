@@ -22,6 +22,29 @@ extension ARTVideoPlayerView: ARTVideoPlayerWrapperViewDelegate {
     }
     
     
+// MARK: - 弹幕视图 - 公共方法
+    
+    public func wrapperViewDidCreateDanmakuCell(for wrapperView: ARTVideoPlayerWrapperView) -> ARTDanmakuCell { // 创建弹幕
+        return delegate?.playerViewDidCreateDanmakuCell?(for: self) ?? ARTDanmakuCell()
+    }
+    
+    public func wrapperViewDidTapDanmakuCell(for wrapperView: ARTVideoPlayerWrapperView, danmakuCell: ARTDanmakuCell) { // 点击弹幕
+        delegate?.playerViewDidTapDanmakuCell?(for: self, danmakuCell: danmakuCell)
+    }
+    
+    public func wrapperViewWillDisplayDanmakuCell(for wrapperView: ARTVideoPlayerWrapperView, danmakuCell: ARTDanmakuCell) { // 弹幕开始显示
+        delegate?.playerViewWillDisplayDanmakuCell?(for: self, danmakuCell: danmakuCell)
+    }
+    
+    public func wrapperViewDidEndDisplayDanmakuCell(for wrapperView: ARTVideoPlayerWrapperView, danmakuCell: ARTDanmakuCell) { // 弹幕结束显示
+        delegate?.playerViewDidEndDisplayDanmakuCell?(for: self, danmakuCell: danmakuCell)
+    }
+    
+    public func wrapperViewDidEndDisplayAllDanmaku(for wrapperView: ARTVideoPlayerWrapperView) { // 所有弹幕显示完
+        delegate?.playerViewDidEndDisplayAllDanmaku?(for: self)
+    }
+    
+    
 // MARK: - 顶部工具栏 - 公共方法
     
     public func wrapperViewDidTapBack(for wrapperView: ARTVideoPlayerWrapperView) { // 点击返回按钮

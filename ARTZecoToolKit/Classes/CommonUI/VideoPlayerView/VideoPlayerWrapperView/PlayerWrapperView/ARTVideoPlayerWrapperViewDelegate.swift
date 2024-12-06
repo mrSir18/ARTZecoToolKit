@@ -30,6 +30,25 @@
     @objc optional func customBottomBar(for wrapperView: ARTVideoPlayerWrapperView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerBottombar?
     
     
+// MARK: - 弹幕视图 - 公共方法
+    
+    /// 创建弹幕回调
+    /// - Returns: 新创建的弹幕单元
+    @objc optional func wrapperViewDidCreateDanmakuCell(for wrapperView: ARTVideoPlayerWrapperView) -> ARTDanmakuCell
+    
+    /// 点击弹幕事件回调
+    @objc optional func wrapperViewDidTapDanmakuCell(for wrapperView: ARTVideoPlayerWrapperView, danmakuCell: ARTDanmakuCell)
+    
+    /// 弹幕即将显示回调
+    @objc optional func wrapperViewWillDisplayDanmakuCell(for wrapperView: ARTVideoPlayerWrapperView, danmakuCell: ARTDanmakuCell)
+    
+    /// 弹幕显示完成回调
+    @objc optional func wrapperViewDidEndDisplayDanmakuCell(for wrapperView: ARTVideoPlayerWrapperView, danmakuCell: ARTDanmakuCell)
+    
+    /// 所有弹幕显示完成回调
+    @objc optional func wrapperViewDidEndDisplayAllDanmaku(for wrapperView: ARTVideoPlayerWrapperView)
+    
+    
 // MARK: - 顶部工具栏 - 公共方法
     
     /// 当返回按钮被点击时调用

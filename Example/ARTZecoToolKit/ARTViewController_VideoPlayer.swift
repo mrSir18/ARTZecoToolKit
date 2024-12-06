@@ -210,6 +210,30 @@ extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
      */
     
     
+// MARK: - 弹幕视图 - 公共方法
+    
+    func playerViewDidCreateDanmakuCell(for playerView: ARTVideoPlayerView) -> ARTDanmakuCell { // 创建弹幕
+        let cell = ARTCustomDanmakuCell()
+        return cell
+    }
+    
+    func playerViewDidTapDanmakuCell(for playerView: ARTVideoPlayerView, danmakuCell: ARTDanmakuCell) { // 点击弹幕
+        guard let danmakuCell = danmakuCell as? ARTCustomDanmakuCell else { return }
+        print("点击了弹幕：\(danmakuCell.danmakuLabel.text ?? "")")
+    }
+    
+    func playerViewWillDisplayDanmakuCell(for playerView: ARTVideoPlayerView, danmakuCell: ARTDanmakuCell) { // 弹幕开始显示
+//        print("弹幕开始显示")
+    }
+    
+    func playerViewDidEndDisplayDanmakuCell(for playerView: ARTVideoPlayerView, danmakuCell: ARTDanmakuCell) { // 弹幕结束显示
+//        print("弹幕结束显示")
+    }
+    
+    func playerViewDidEndDisplayAllDanmaku(for playerView: ARTVideoPlayerView) {
+        print("所有弹幕显示完毕")
+    }
+    
 // MARK: - 顶部工具栏 - 公共方法
     
     func playerViewDidTapBack(for playerView: ARTVideoPlayerView) { // 点击返回按钮
