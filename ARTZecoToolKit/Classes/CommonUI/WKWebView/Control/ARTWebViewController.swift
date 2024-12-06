@@ -50,6 +50,15 @@ open class ARTWebViewController: UIViewController {
     /// 动态注入的 JS 脚本数组
     public var dynamicScripts: [String] = []
     
+    /// 脚本注入类型
+    public var injectionType: ScriptInjectionType = .nonoe
+    
+    /// 脚本注入时机
+    public var injectionTime: WKUserScriptInjectionTime = .atDocumentEnd
+    
+    /// 是否仅针对主框架  默认为 `false`
+    public var forMainFrameOnly: Bool = false
+    
     /// 接收到脚本消息的回调
     public var didReceiveScriptMessage: ((ARTScriptMessage) -> Void)?
     
@@ -108,7 +117,6 @@ open class ARTWebViewController: UIViewController {
     open func setupWebView() {
         /// 子类重写: 此方法以自定义 WebView
         webView = ARTWebView(self)
-        webView.executeJavaScripts(dynamicScripts)
         view.addSubview(webView)
         view.sendSubviewToBack(webView)
         webView.snp.makeConstraints { make in
@@ -224,8 +232,9 @@ open class ARTWebViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: true)
         navigationController?.interactivePopGestureRecognizer?.delegate  = self as? UIGestureRecognizerDelegate
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        registerWebViewObservers()
-        registerScriptMessageHandlers(jsMethodNames)
+        registerWebViewObservers() /// 注册观察者
+        registerScriptMessageHandlers(jsMethodNames) /// 注册 JS 方法
+        if injectionType == .userScript { injectScripts() } /// 注入动态脚本
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
@@ -338,6 +347,7 @@ extension ARTWebViewController: ARTWebViewDelegate {
                                                  name: "webViewContentHeight")
             self?.didReceiveScriptMessage?(scriptMessage)
         }
+        if injectionType == .evaluateJavaScript { injectScripts() } /// 注入动态脚本
     }
     
     open func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) { /// 网页加载失败

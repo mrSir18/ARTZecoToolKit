@@ -144,8 +144,13 @@ class ARTViewController_WebView: ARTBaseViewController {
     
     /// 自定义WebView
     func customWebViewMethod () {
+        let script = """
+        document.documentElement.style.webkitTouchCallout = 'none';
+        document.documentElement.style.webkitUserSelect = 'none';
+        """
         let webViewController = ARTWebCustomViewController()
         webViewController.url = "https://www.zecoart.com/privacy-policy.html"
+        webViewController.configurationInjectScripts(scripts: [script], injectionType: .userScript) // 设置脚本注入 - 注入类型为 `.userScript` 时，脚本会对后续加载的页面（主框架或子框架）自动生效，无需每次手动注入
         webViewController.dismissCompletion = {
             print("退出完成")
         }
@@ -154,14 +159,14 @@ class ARTViewController_WebView: ARTBaseViewController {
     
     /// 注册JS脚本
     func webViewJSMethod() {
+        let script = """
+        document.documentElement.style.webkitTouchCallout = 'none';
+        document.documentElement.style.webkitUserSelect = 'none';
+        """
         let webViewController = ARTWebCustomViewController()
         webViewController.url = "zeco-test"
         webViewController.shouldHideNavigationBar = false // 隐藏导航栏
-        webViewController.dynamicScripts = [ // 设置动态脚本示例
-"""
-    window.alert("Hello from injected JavaScript!");
-"""
-        ]
+        webViewController.configurationInjectScripts(scripts: [script], injectionType: .evaluateJavaScript) // 设置脚本注入 - 注入类型为 `.evaluateJavaScript` 时，脚本的作用是一次 性的，不需要对后续加载
         webViewController.dismissCompletion = {
             print("退出完成")
         }

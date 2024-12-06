@@ -41,7 +41,7 @@ class ARTWebCustomViewController: ARTWebViewController {
         deleteCookieButton.addTarget(self, action: #selector(deleteCookieButtonAction), for: .touchUpInside)
         view.addSubview(deleteCookieButton)
         deleteCookieButton.snp.makeConstraints { make in
-            make.size.equalTo(ARTAdaptedSize(width: 150.0, height: 100.0))
+            make.size.equalTo(ARTAdaptedSize(width: 100.0, height: 100.0))
             make.bottom.equalTo(-art_safeAreaBottom())
             make.left.equalToSuperview()
         }
@@ -49,12 +49,12 @@ class ARTWebCustomViewController: ARTWebViewController {
         let addCookieButton = ARTAlignmentButton(type: .custom)
         addCookieButton.titleLabel?.font = .art_regular(16.0)
         addCookieButton.backgroundColor  = .art_randomColor()
-        addCookieButton.setTitle("随机添加Cookie", for: .normal)
+        addCookieButton.setTitle("添加Cookie", for: .normal)
         addCookieButton.setTitleColor(.black, for: .normal)
         addCookieButton.addTarget(self, action: #selector(addCookieButtonAction), for: .touchUpInside)
         view.addSubview(addCookieButton)
         addCookieButton.snp.makeConstraints { make in
-            make.size.equalTo(ARTAdaptedSize(width: 150.0, height: 100.0))
+            make.size.equalTo(ARTAdaptedSize(width: 100.0, height: 100.0))
             make.bottom.equalTo(-art_safeAreaBottom())
             make.right.equalToSuperview()
         }

@@ -71,25 +71,6 @@ public class ARTWebView: WKWebView {
 
 extension ARTWebView {
     
-    // MARK: - Dynamic JavaScript Injection
-    
-    /// 动态执行 JavaScript 脚本。
-    ///
-    /// - Parameters:
-    ///   - script: JavaScript 脚本内容。
-    ///   - completion: 执行完 JavaScript 后的回调。
-    public func executeJavaScript(_ script: String, completion: ((Any?, Error?) -> Void)? = nil) {
-        evaluateJavaScript(script, completionHandler: completion)
-    }
-    
-    /// 执行多个 JavaScript 脚本
-    public func executeJavaScripts(_ scripts: [String]) {
-        scripts.forEach { executeJavaScript($0) }
-    }
-}
-
-extension ARTWebView {
-    
     // MARK: - Public Methods
     
     /// 加载本地 HTML 文件。

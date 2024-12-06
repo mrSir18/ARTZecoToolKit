@@ -1,5 +1,5 @@
 //
-//  ARTWebViewController+ARTScriptMessage.swift
+//  ARTWebViewController+ScriptMessage.swift
 //  ARTZecoToolKit
 //
 //  Created by mrSir18 on 2024/12/5.
