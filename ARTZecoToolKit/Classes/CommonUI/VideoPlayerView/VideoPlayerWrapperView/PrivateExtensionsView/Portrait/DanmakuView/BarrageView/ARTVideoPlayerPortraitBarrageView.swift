@@ -16,6 +16,9 @@ class ARTVideoPlayerPortraitBarrageView: UIView {
     /// 弹幕设置选项回调
     public var sliderValueChangedCallback: ((ARTVideoPlayerGeneralDanmakuEntity.SliderOption) -> Void)?
     
+    /// 弹幕初始化状态回调
+    public var restoreDanmakuCallback: ((ARTVideoPlayerGeneralDanmakuEntity) -> Void)?
+    
     
     // MARK: - Initialization
 
@@ -95,6 +98,7 @@ extension ARTVideoPlayerPortraitBarrageView: UICollectionViewDelegate, UICollect
                     guard let self = self else { return }
                     self.danmakuEntity.restoreDefaults()
                     self.collectionView.reloadData()
+                    self.restoreDanmakuCallback?(self.danmakuEntity) // 恢复弹幕设置事件回调
                 }
             }
             return reusableView

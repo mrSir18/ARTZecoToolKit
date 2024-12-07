@@ -117,7 +117,7 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     }
     
     public func controlsViewDidTapDanmakuSettings(for controlsView: ARTVideoPlayerControlsView) { // 弹幕设置 (点击弹幕设置按钮)
-//        delegate?.wrapperViewDidTapDanmakuSettings?(for: self)
+        delegate?.wrapperViewDidTapDanmakuSettings?(for: self)
         playControlsView.autoHideControls()
         danmakuView.showExtensionsView()
     }
@@ -171,9 +171,10 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
 
 extension ARTVideoPlayerWrapperView: ARTVideoPlayerSlidingViewDelegate {
     
-    public func slidingViewDidTapRestoreButton(for danmakuEntity: ARTVideoPlayerGeneralDanmakuEntity) { // 恢复按钮点击事件回调
-//        danmakuEntity.restoreDefaults()
-//        danmakuView.collectionView.reloadData()
+    public func slidingViewDidTapRestoreButton(for danmakuEntity: ARTVideoPlayerGeneralDanmakuEntity) { // 恢复弹幕初始化
+        danmakuEntity.sliderOptions.forEach { [weak self] option in
+            self?.playerOverlayView.updateDanmakuSliderValueChanged(for: option)
+        }
     }
     
     public func slidingViewDidSliderValueChanged(for sliderOption: ARTVideoPlayerGeneralDanmakuEntity.SliderOption) { // 滑块值改变事件回调

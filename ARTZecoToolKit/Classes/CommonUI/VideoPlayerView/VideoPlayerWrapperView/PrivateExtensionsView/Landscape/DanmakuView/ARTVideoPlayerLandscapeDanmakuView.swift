@@ -36,6 +36,7 @@ class ARTVideoPlayerLandscapeDanmakuView: ARTVideoPlayerLandscapeSlidingView {
         feedbackGenerator.impactOccurred()
         danmakuEntity.restoreDefaults()
         collectionView.reloadData()
+        delegate?.slidingViewDidTapRestoreButton(for: danmakuEntity)
     }
     
     override func showExtensionsView(_ completion: (() -> Void)? = nil) {

@@ -65,7 +65,7 @@ public struct ARTVideoPlayerGeneralDanmakuEntity {
     }
     
     // 恢复默认值
-    mutating func restoreDefaults() {
+    public mutating func restoreDefaults() {
         sliderOptions = sliderOptions.map { option in
             var modifiedOption = option
             modifiedOption.defaultValue = DefaultValues.defaultValue(for: option.optionType)

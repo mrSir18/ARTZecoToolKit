@@ -90,7 +90,7 @@ public class ARTVideoPlayerLandscapeSlidingView: UIView {
     // MARK: - Button Actions
     
     @objc func didTapRestoreButton() { // 恢复
-
+   
     }
     
     // MARK: - Gesture Recognizer
