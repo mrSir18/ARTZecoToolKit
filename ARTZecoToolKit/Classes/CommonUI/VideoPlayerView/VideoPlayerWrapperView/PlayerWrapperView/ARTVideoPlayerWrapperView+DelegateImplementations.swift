@@ -58,6 +58,7 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
 // MARK: - 顶部工具栏 - 公共方法
     
     public func controlsViewDidTapBack(for controlsView: ARTVideoPlayerControlsView) { // 点击返回按钮
+        playerOverlayView.stopDanmaku() // 停止弹幕
         delegate?.wrapperViewDidTapBack?(for: self)
         fullscreenManager.dismiss { [weak self] in // 切换窗口模式顶底栏
             self?.updateScreenMode(for: .window)

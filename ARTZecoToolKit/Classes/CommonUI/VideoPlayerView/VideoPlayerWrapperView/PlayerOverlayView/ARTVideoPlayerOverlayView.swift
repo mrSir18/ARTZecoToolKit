@@ -80,9 +80,31 @@ open class ARTVideoPlayerOverlayView: ARTPassThroughView {
 
 extension ARTVideoPlayerOverlayView {
     
+    /// 弹幕cell初始化位置
+    /// - Parameter isLandscape: 是否为横屏模式
+    @objc open func resizeDanmakuCellPosition(for orientation: ScreenOrientation) {
+        guard let danmakuView = danmakuView else { return }
+        let topPosition: CGFloat = {
+            switch orientation {
+            case .window, .landscapeFullScreen: // 横屏模式时，将弹幕视图设置为全屏
+                return ARTAdaptedValue(12.0)
+            case .portraitFullScreen: // 竖屏模式时，调整弹幕视图的位置和高度
+                return art_navigationFullHeight() + ARTAdaptedValue(12.0)
+            default:
+                return danmakuView.danmakuCellPositionY
+            }
+        }()
+        danmakuView.danmakuCellPositionY = topPosition
+    }
+    
     /// 处理点击事件并委托给弹幕视图
     @objc open func handleTapOnOverlay(at location: CGPoint) -> Bool {
         guard let danmakuView = danmakuView else { return false }
         return danmakuView.processDanmakuTap(at: location)
+    }
+    
+    /// 停止弹幕
+    @objc open func stopDanmaku() {
+        danmakuView.stopDanmaku()
     }
 }

@@ -631,6 +631,7 @@ extension ARTVideoPlayerWrapperView {
     internal func updateScreenMode(for orientation: ScreenOrientation) {
         sliderValue = playControlsView.bottomBar.sliderView.value
         isDraggingSlider = true
+        playerOverlayView.resizeDanmakuCellPosition(for: orientation)
         systemControlsView.updateScreenOrientationInSystemControls(screenOrientation: orientation)
         playControlsView.transitionToFullscreen(orientation: orientation, playerState: playerState)
         playControlsView.resetSliderValueInControls(value: sliderValue)

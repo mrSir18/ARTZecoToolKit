@@ -39,6 +39,9 @@ public class ARTDanmakuView: UIView {
     /// 代理对象
     public weak var delegate: ARTDanmakuViewDelegate?
     
+    /// 弹幕单元起始位置Y 默认0.0
+    public var danmakuCellPositionY: CGFloat = 0.0
+    
     /// 弹幕轨道数量 默认4
     public var danmakuTrackCount: Int = 4
     
@@ -173,7 +176,7 @@ extension ARTDanmakuView {
         guard let (startY, trackIndex) = findAvailableTrack(for: danmakuCell, duration: randomDuration) else { return } // 查找可用轨道
         
         // 配置弹幕单元
-        configureDanmakuCell(danmakuCell, at: startY, on: trackIndex, duration: randomDuration)
+        configureDanmakuCell(danmakuCell, at: danmakuCellPositionY+startY, on: trackIndex, duration: randomDuration)
         animateDanmaku(danmakuCell, duration: randomDuration)
     }
     
