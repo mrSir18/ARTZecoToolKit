@@ -40,4 +40,10 @@ extension Array {
             return nil
         }
     }
+    
+    /// 安全获取数组元素.
+    /// - Parameter index: 索引.
+    subscript(safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
 }

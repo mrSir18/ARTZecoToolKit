@@ -364,11 +364,12 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
     
     @objc open func setupDanmakuButton() { // 创建弹幕按钮
         danmakuButton = ARTAlignmentButton(type: .custom)
+        danmakuButton.isSelected = true
         danmakuButton.layoutType = .freeform
         danmakuButton.imageAlignment = .bottomLeft
         danmakuButton.imageSize = ARTAdaptedSize(width: 30.0, height: 30.0)
-        danmakuButton.setImage(UIImage(named: "video_danmaku_on_black"), for: .normal)
-        danmakuButton.setImage(UIImage(named: "video_danmaku_off_black"), for: .selected)
+        danmakuButton.setImage(UIImage(named: "video_danmaku_off_black"), for: .normal)
+        danmakuButton.setImage(UIImage(named: "video_danmaku_on_black"), for: .selected)
         danmakuButton.addTarget(self, action: #selector(didTapDanmakuButton), for: .touchUpInside)
         toolBarView.addSubview(danmakuButton)
         danmakuButton.snp.makeConstraints { make in

@@ -436,7 +436,7 @@ extension ARTDanmakuView {
     /// 更新弹幕轨道数量
     /// - Parameter count: 弹幕轨道的数量
     /// - NOTE: 轨道数量必须大于等于 0
-    @objc open func updateDanmakuTrackCount(_ count: Int) {
+    @objc open func updateDanmakuDisplayArea(to count: Int) {
         danmakuTrackCount = max(0, count) // 确保轨道数量非负
         configureDanmakuTracks() // 重新配置轨道
         clearOutdatedDanmaku() // 清理多余的弹幕
@@ -445,7 +445,7 @@ extension ARTDanmakuView {
     /// 更新弹幕透明度
     /// - Parameter alpha: 弹幕透明度
     /// - NOTE: 透明度限制在 0 到 1 之间
-    @objc open func updateDanmakuAlpha(_ alpha: CGFloat) {
+    @objc open func updateDanmakuAlpha(to alpha: CGFloat) {
         danmakuAlpha = max(0.0, min(1.0, alpha)) // 限制在 0 到 1 之间
         for case let cell as ARTDanmakuCell in subviews { cell.alpha = alpha } // 更新当前显示的弹幕透明度
     }
@@ -453,7 +453,7 @@ extension ARTDanmakuView {
     /// 更新弹幕速度
     /// - Parameter speed: 弹幕速度等级
     /// - NOTE: 速度等级越小，速度越快
-    public func updateDanmakuSpeed(_ level: SpeedLevel) {
+    public func updateDanmakuSpeed(to level: SpeedLevel) {
         danmakuSpeed = level
         updateDanmakuAnimations { cell, animation in
             let totalDistance = bounds.width + cell.danmakuSize.width

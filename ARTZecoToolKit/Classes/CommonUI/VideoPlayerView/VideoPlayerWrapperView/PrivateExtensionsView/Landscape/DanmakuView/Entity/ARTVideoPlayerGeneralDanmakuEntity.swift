@@ -9,15 +9,15 @@
 extension ARTVideoPlayerGeneralDanmakuEntity {
     
     // 滑块选项类型
-    enum SliderOptionType {
+    public enum SliderOptionType {
         case opacity        // 不透明度
         case displayArea    // 显示区域
-        case fontSize       // 字体大小
+        case scale          // 缩放比例
         case speed          // 移动速度
     }
     
     // 滑块选项
-    struct SliderOption {
+    public struct SliderOption {
         let title: String       // 标题
         let minValue: Float     // 最小值
         let maxValue: Int       // 最大值
@@ -27,10 +27,10 @@ extension ARTVideoPlayerGeneralDanmakuEntity {
     }
     
     // 默认值结构体
-    struct DefaultValues {
+    public struct DefaultValues {
         static let opacity: Int     = 88
         static let displayArea: Int = 2
-        static let fontSize: Int    = 2
+        static let scale: Int       = 2
         static let speed: Int       = 2
         
         // 通过类型获取对应的默认值
@@ -40,8 +40,8 @@ extension ARTVideoPlayerGeneralDanmakuEntity {
                 return opacity
             case .displayArea:
                 return displayArea
-            case .fontSize:
-                return fontSize
+            case .scale:
+                return scale
             case .speed:
                 return speed
             }
@@ -49,17 +49,17 @@ extension ARTVideoPlayerGeneralDanmakuEntity {
     }
 }
 
-struct ARTVideoPlayerGeneralDanmakuEntity {
+public struct ARTVideoPlayerGeneralDanmakuEntity {
     
     // 弹幕设置选项
     public var sliderOptions: [SliderOption]
     
     // MARK: - Initialization
-    init() {
+    public init() {
         self.sliderOptions = [
             SliderOption(title: "不透明度", minValue: 0, maxValue: 100, segments: [], defaultValue: DefaultValues.opacity, optionType: .opacity),
             SliderOption(title: "显示区域", minValue: 0, maxValue: 3, segments: ["1/4屏", "2/4屏", "3/4屏", "4/4屏"], defaultValue: DefaultValues.displayArea, optionType: .displayArea),
-            SliderOption(title: "字体大小", minValue: 0, maxValue: 4, segments: ["小", "较小", "适中", "较大", "大"], defaultValue: DefaultValues.fontSize, optionType: .fontSize),
+            SliderOption(title: "字体大小", minValue: 0, maxValue: 4, segments: ["小", "较小", "适中", "较大", "大"], defaultValue: DefaultValues.scale, optionType: .scale),
             SliderOption(title: "移动速度", minValue: 0, maxValue: 4, segments: ["慢", "较慢", "适中", "较快", "快"], defaultValue: DefaultValues.speed, optionType: .speed)
         ]
     }

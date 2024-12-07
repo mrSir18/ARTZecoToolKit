@@ -161,34 +161,34 @@ extension ARTViewController_DanmakuView {
             danmakuView.stopDanmaku()
             
         case .oneTrack: // 1条弹幕
-            danmakuView.updateDanmakuTrackCount(1)
+            danmakuView.updateDanmakuDisplayArea(to: 1)
             
         case .twoTracks: // 2条弹幕
-            danmakuView.updateDanmakuTrackCount(2)
+            danmakuView.updateDanmakuDisplayArea(to: 2)
             
         case .threeTracks: // 4条弹幕
-            danmakuView.updateDanmakuTrackCount(4)
+            danmakuView.updateDanmakuDisplayArea(to: 4)
             
         case .oneOpacity: // 25%透明度
-            danmakuView.updateDanmakuAlpha(0.25)
+            danmakuView.updateDanmakuAlpha(to: 0.25)
             
         case .twoOpacity: // 75%透明度
-            danmakuView.updateDanmakuAlpha(0.75)
+            danmakuView.updateDanmakuAlpha(to: 0.75)
             
         case .threeOpacity: // 100%透明度
-            danmakuView.updateDanmakuAlpha(1.0)
+            danmakuView.updateDanmakuAlpha(to: 1.0)
             
         case .oneSpeed: // 极慢
-            danmakuView.updateDanmakuSpeed(.extremelySlow)
+            danmakuView.updateDanmakuSpeed(to: .extremelySlow)
             
         case .twoSpeed: // 适中
-            danmakuView.updateDanmakuSpeed(.moderate)
+            danmakuView.updateDanmakuSpeed(to: .moderate)
             
         case .threeSpeed: // 极快
-            danmakuView.updateDanmakuSpeed(.extremelyFast)
+            danmakuView.updateDanmakuSpeed(to: .extremelyFast)
             
-        case .oneSize: // 50%大小
-            danmakuView.updateDanmakuScale(to: 0.8)
+        case .oneSize: // 60%大小
+            danmakuView.updateDanmakuScale(to: 0.6)
             
         case .twoSize: // 100%大小
             danmakuView.updateDanmakuScale(to: 1.0)

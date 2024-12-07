@@ -19,11 +19,11 @@ extension ARTDanmakuView {
     
     /// 弹幕速度等级枚举
     public enum SpeedLevel: Int, CaseIterable {
-        case extremelyFast      = 1 // 极快
-        case fast               = 2 // 快速
+        case extremelySlow      = 1 // 极慢
+        case slow               = 2 // 慢速
         case moderate           = 3 // 适中
-        case slow               = 4 // 慢速
-        case extremelySlow      = 5 // 极慢
+        case fast               = 4 // 快速
+        case extremelyFast      = 5 // 极快
         
         func randomDuration() -> CGFloat {
             switch self {

@@ -5,7 +5,7 @@
 //  Created by mrSir18 on 2024/11/4.
 //
 
-class ARTVideoPlayerLandscapeSlidingView: UIView {
+public class ARTVideoPlayerLandscapeSlidingView: UIView {
     
     /// 代理对象
     public weak var delegate: ARTVideoPlayerSlidingViewDelegate?
@@ -28,7 +28,7 @@ class ARTVideoPlayerLandscapeSlidingView: UIView {
     
     // MARK: - Initialization
     
-    init(_ delegate: ARTVideoPlayerSlidingViewDelegate? = nil) {
+    public init(_ delegate: ARTVideoPlayerSlidingViewDelegate? = nil) {
         super.init(frame: .zero)
         self.delegate = delegate
         self.backgroundColor = .clear

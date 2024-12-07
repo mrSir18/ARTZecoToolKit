@@ -85,4 +85,30 @@ extension ARTVideoPlayerOverlayView {
     @objc open func stopDanmaku() {
         danmakuView.stopDanmaku()
     }
+    
+    /// 更新弹幕滑块值改变事件
+    /// - Parameter sliderOption: 滑块选项
+    public func updateDanmakuSliderValueChanged(for sliderOption: ARTVideoPlayerGeneralDanmakuEntity.SliderOption) {
+        switch sliderOption.optionType {
+        case .opacity: // 不透明度
+            let danmakuOpacity = CGFloat(sliderOption.defaultValue) / 100.0
+            danmakuView.updateDanmakuAlpha(to: danmakuOpacity)
+
+        case .displayArea: // 显示区域
+            let displayArea = sliderOption.defaultValue + 1 // 计算显示区域，注意 sliderOption.defaultValue 的值从 0 开始，所以下标+1
+            danmakuView.updateDanmakuDisplayArea(to: displayArea)
+            
+        case .scale: // 缩放比例
+            let scaleLevel = sliderOption.defaultValue + 1 // 缩放级别（从 1 开始）
+            let scaleValues: [CGFloat] = [0.6, 0.8, 1.0, 1.2, 1.4]
+            let danmakuScale = scaleValues[safe: scaleLevel - 1] ?? 1.0  // 使用 safe 下标来防止越界
+            danmakuView.updateDanmakuScale(to: danmakuScale)
+            print("缩放比例: \(danmakuScale)")
+            
+        case .speed: // 移动速度
+            let speedIndex = sliderOption.defaultValue + 1 // 移动速度（从 1 开始）
+            let speedLevel = ARTDanmakuView.SpeedLevel(rawValue: speedIndex) ?? .moderate
+            danmakuView.updateDanmakuSpeed(to: speedLevel)
+        }
+    }
 }
