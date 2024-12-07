@@ -28,8 +28,8 @@ extension ARTVideoPlayerGeneralDanmakuEntity {
     
     // 默认值结构体
     public struct DefaultValues {
-        static let opacity: Int     = 88
-        static let displayArea: Int = 2
+        static let opacity: Int     = 100
+        static let displayArea: Int = 3
         static let scale: Int       = 2
         static let speed: Int       = 2
         

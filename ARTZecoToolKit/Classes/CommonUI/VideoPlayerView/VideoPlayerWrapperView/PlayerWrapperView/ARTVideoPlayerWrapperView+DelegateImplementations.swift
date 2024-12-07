@@ -171,12 +171,12 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
 
 extension ARTVideoPlayerWrapperView: ARTVideoPlayerSlidingViewDelegate {
     
-    public func slidingViewDidTapRestoreButton(for slidingView: ARTVideoPlayerLandscapeSlidingView, danmakuEntity: ARTVideoPlayerGeneralDanmakuEntity) { // 恢复按钮点击事件回调
+    public func slidingViewDidTapRestoreButton(for danmakuEntity: ARTVideoPlayerGeneralDanmakuEntity) { // 恢复按钮点击事件回调
 //        danmakuEntity.restoreDefaults()
 //        danmakuView.collectionView.reloadData()
     }
     
-    public func slidingViewDidSliderValueChanged(for slidingView: ARTVideoPlayerLandscapeSlidingView, sliderOption: ARTVideoPlayerGeneralDanmakuEntity.SliderOption) { // 滑块值改变事件回调
+    public func slidingViewDidSliderValueChanged(for sliderOption: ARTVideoPlayerGeneralDanmakuEntity.SliderOption) { // 滑块值改变事件回调
         playerOverlayView.updateDanmakuSliderValueChanged(for: sliderOption)
     }
 }

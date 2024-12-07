@@ -283,17 +283,21 @@ extension ARTVideoPlayerControlsView {
     
     /// 更新工具栏约束
     internal func updateBarConstraints(visible: Bool) {
+        guard let topBarSuperview = topBar.superview, let bottomBarSuperview = bottomBar.superview else {
+            return // 如果没有父视图，直接返回，避免崩溃
+        }
+        
         let topBarHeight = topBarHeight(for: screenOrientation)
         let bottomBarHeight = bottomBarHeight(for: screenOrientation)
         
         topBar.snp.remakeConstraints { make in
-            make.left.right.equalToSuperview()
+            make.left.right.equalTo(topBarSuperview)
             make.height.equalTo(topBarHeight)
             make.top.equalTo(visible ? 0 : -topBarHeight) // 显示时顶部对齐，隐藏时推到上方
         }
         
         bottomBar.snp.remakeConstraints { make in
-            make.left.right.equalToSuperview()
+            make.left.right.equalTo(bottomBarSuperview)
             make.height.equalTo(bottomBarHeight)
             make.bottom.equalTo(visible ? 0 : bottomBarHeight) // 显示时底部对齐，隐藏时推到下方
         }

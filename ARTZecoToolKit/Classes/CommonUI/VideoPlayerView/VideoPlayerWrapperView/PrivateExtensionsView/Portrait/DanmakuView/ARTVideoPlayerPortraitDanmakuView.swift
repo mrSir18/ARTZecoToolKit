@@ -47,6 +47,10 @@ extension ARTVideoPlayerPortraitDanmakuView {
     /// 创建弹幕视图
     private func setupDanmakuView() {
         danmakuView = ARTVideoPlayerPortraitBarrageView()
+        danmakuView.sliderValueChangedCallback = { [weak self] option in
+            guard let self = self else { return }
+            self.delegate?.slidingViewDidSliderValueChanged(for: option) // 滑块值改变事件回调
+        }
         containerView.addSubview(danmakuView)
         danmakuView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()

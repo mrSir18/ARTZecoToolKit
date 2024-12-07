@@ -79,7 +79,7 @@ public class ARTDanmakuView: UIView {
     public var danmakuMinimumInterval: TimeInterval = 0.1
     
     /// 弹幕安全间隔 默认12.0
-    public var danmakuSafeSpacing: CGFloat = 24.0
+    public var danmakuSafeSpacing: CGFloat = 12.0
     
     /// 弹幕缩放比例 默认1.0
     public var danmakuScale: CGFloat = 1.0

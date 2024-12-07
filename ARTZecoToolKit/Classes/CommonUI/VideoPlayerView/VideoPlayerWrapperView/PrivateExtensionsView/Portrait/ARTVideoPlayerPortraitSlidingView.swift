@@ -10,7 +10,7 @@ import SnapKit
 class ARTVideoPlayerPortraitSlidingView: UIView {
     
     /// 代理对象
-    private weak var delegate: ARTVideoPlayerSlidingViewDelegate?
+    public weak var delegate: ARTVideoPlayerSlidingViewDelegate?
     
     /// 容器视图
     public var containerView: UIView!

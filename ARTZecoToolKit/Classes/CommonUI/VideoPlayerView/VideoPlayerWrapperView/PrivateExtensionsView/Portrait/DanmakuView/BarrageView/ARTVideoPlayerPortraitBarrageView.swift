@@ -8,10 +8,13 @@
 class ARTVideoPlayerPortraitBarrageView: UIView {
     
     /// 弹幕设置实例
-    public var danmakuEntity = ARTVideoPlayerGeneralDanmakuEntity()
+    private var danmakuEntity = ARTVideoPlayerGeneralDanmakuEntity()
     
     /// 列表视图
     private var collectionView: UICollectionView!
+    
+    /// 弹幕设置选项回调
+    public var sliderValueChangedCallback: ((ARTVideoPlayerGeneralDanmakuEntity.SliderOption) -> Void)?
     
     
     // MARK: - Initialization
@@ -72,7 +75,8 @@ extension ARTVideoPlayerPortraitBarrageView: UICollectionViewDelegate, UICollect
         cell.sliderValueChanged = { [weak self] value, shouldSave in
             guard let self = self else { return }
             if shouldSave {
-                self.danmakuEntity.sliderOptions[indexPath.item].defaultValue = value
+                self.danmakuEntity.sliderOptions[indexPath.item].defaultValue = value // 保存滑块值
+                self.sliderValueChangedCallback?(self.danmakuEntity.sliderOptions[indexPath.item]) // 滑块值改变事件回调
             }
         }
         cell.configureWithSliderOption(danmakuEntity.sliderOptions[indexPath.item])

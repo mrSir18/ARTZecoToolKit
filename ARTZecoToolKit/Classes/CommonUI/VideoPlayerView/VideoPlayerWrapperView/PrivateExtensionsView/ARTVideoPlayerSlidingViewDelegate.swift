@@ -14,9 +14,9 @@ public protocol ARTVideoPlayerSlidingViewDelegate: AnyObject {
     
     /// 恢复按钮点击事件回调
     /// - Parameters: danmakuEntity: 弹幕实体
-    func slidingViewDidTapRestoreButton(for slidingView: ARTVideoPlayerLandscapeSlidingView, danmakuEntity: ARTVideoPlayerGeneralDanmakuEntity)
+    func slidingViewDidTapRestoreButton(for danmakuEntity: ARTVideoPlayerGeneralDanmakuEntity)
     
     /// 滑块值改变事件回调
     /// - Parameters: sliderOption: 滑块选项
-    func slidingViewDidSliderValueChanged(for slidingView: ARTVideoPlayerLandscapeSlidingView, sliderOption: ARTVideoPlayerGeneralDanmakuEntity.SliderOption)
+    func slidingViewDidSliderValueChanged(for sliderOption: ARTVideoPlayerGeneralDanmakuEntity.SliderOption)
 }
