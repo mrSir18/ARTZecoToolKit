@@ -87,7 +87,48 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
         setupSpeedButton()
     }
     
-    // MARK: - Button Actions
+    // MARK: - Override Super Methods
+    
+    open override func updatePlaybackTime(currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = true) { // 更新当前播放时间和总时长
+        super.updatePlaybackTime(currentTime: currentTime, duration: duration, shouldUpdateSlider: shouldUpdateSlider)
+        currentTimeLabel.text = currentTime.art_formattedTime()
+        durationLabel.text = "/\(duration.art_formattedTime())"
+    }
+    
+    open override func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) { // 自定义滑块外观
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: duration) {
+                self.sliderView.trackHeight = trackHeight
+                self.progressView.layer.cornerRadius = cornerRadius
+                if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: thumbSize) {
+                    self.sliderView.setThumbImage(thumbImage, for: .normal)
+                }
+                self.progressView.snp.updateConstraints { make in
+                    make.height.equalTo(trackHeight)
+                }
+                self.layoutIfNeeded()
+            }
+        }
+    }
+    
+    open override func updatePlayPauseButton(isPlaying: Bool) { // 更新播放暂停按钮
+        pauseButton.isSelected = !isPlaying
+    }
+}
+
+// MARK: - Public Methods
+
+extension ARTVideoPlayerLandscapeFullscreenBottombar {
+    
+    /// 更新倍速按钮标题
+    @objc open func updateRateButtonTitle(rate: Float) {
+        speedButton.setTitle(rate == 1.0 ? "倍数" : String(format: "%.1fX", rate), for: .normal)
+    }
+}
+
+// MARK: - Button Actions
+
+extension ARTVideoPlayerLandscapeFullscreenBottombar {
     
     /// 点击暂停按钮
     @objc open func didTapPauseButton() {
@@ -125,34 +166,6 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
     /// 点击合集按钮
     @objc open func didTapCollectionButton() {
         subclassDelegate?.bottombarDidTapCollection?(for: self)
-    }
-    
-    // MARK: - Override Super Methods
-    
-    open override func updatePlaybackTime(currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = true) { // 更新当前播放时间和总时长
-        super.updatePlaybackTime(currentTime: currentTime, duration: duration, shouldUpdateSlider: shouldUpdateSlider)
-        currentTimeLabel.text = currentTime.art_formattedTime()
-        durationLabel.text = "/\(duration.art_formattedTime())"
-    }
-    
-    open override func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) { // 自定义滑块外观
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: duration) {
-                self.sliderView.trackHeight = trackHeight
-                self.progressView.layer.cornerRadius = cornerRadius
-                if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: thumbSize) {
-                    self.sliderView.setThumbImage(thumbImage, for: .normal)
-                }
-                self.progressView.snp.updateConstraints { make in
-                    make.height.equalTo(trackHeight)
-                }
-                self.layoutIfNeeded()
-            }
-        }
-    }
-    
-    open override func updatePlayPauseButton(isPlaying: Bool) { // 更新播放暂停按钮
-        pauseButton.isSelected = !isPlaying
     }
 }
 

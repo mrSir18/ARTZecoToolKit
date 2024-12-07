@@ -74,6 +74,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         let rateView = ARTVideoPlayerLandscapePlaybackRateView(self)
         rateView.rateCallback = { [weak self] rate in
             guard let self = self else { return }
+            self.playControlsView.updateRateButtonInControls(rate: rate)
             self.currentRate = rate
             self.player.rate = rate
             self.resumePlayer()

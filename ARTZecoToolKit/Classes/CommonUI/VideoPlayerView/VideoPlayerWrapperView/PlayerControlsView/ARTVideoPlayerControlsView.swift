@@ -129,6 +129,13 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     open func updatePlayPauseButtonInControls(isPlaying: Bool) {
         bottomBar.updatePlayPauseButton(isPlaying: isPlaying)
     }
+    
+    /// 更新倍数按钮状态
+    /// - Parameter rate: 当前倍数
+    open func updateRateButtonInControls(rate: Float) {
+        guard let bottomBar = bottomBar as? ARTVideoPlayerLandscapeFullscreenBottombar else { return }
+        bottomBar.updateRateButtonTitle(rate: rate)
+    }
 }
 
 // MARK: - Setup Initializer
