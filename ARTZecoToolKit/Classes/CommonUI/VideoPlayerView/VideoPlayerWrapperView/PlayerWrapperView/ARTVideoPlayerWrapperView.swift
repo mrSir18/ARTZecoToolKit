@@ -398,16 +398,15 @@ extension ARTVideoPlayerWrapperView {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSortingTapGesture(_:)))
         tapRecognizer.numberOfTapsRequired = 1
         tapRecognizer.numberOfTouchesRequired = 1
+        tapRecognizer.delegate = self
         addGestureRecognizer(tapRecognizer)
         
         // 双击手势
         let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTapGesture(_:)))
         doubleTapRecognizer.numberOfTapsRequired = 2
         doubleTapRecognizer.numberOfTouchesRequired = 1
+        doubleTapRecognizer.delegate = self
         addGestureRecognizer(doubleTapRecognizer)
-        
-        // 确保单击手势在双击手势失败后触发
-        tapRecognizer.require(toFail: doubleTapRecognizer)
         
         // 捏合手势
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
@@ -422,7 +421,7 @@ extension ARTVideoPlayerWrapperView {
 
 // MARK: - Gesture Recognizer
 
-extension ARTVideoPlayerWrapperView {
+extension ARTVideoPlayerWrapperView: UIGestureRecognizerDelegate {
     
     /// 拖动手势
     ///
@@ -464,6 +463,11 @@ extension ARTVideoPlayerWrapperView {
     /// - Parameter gesture: 点击手势
     /// - Note: 重写父类方法，处理点击手势
     @objc open func handleSortingTapGesture(_ gesture: UITapGestureRecognizer) {
+        let location = gesture.location(in: self)  // 获取点击的坐标
+        
+        /// 处理点击事件并委托给弹幕视图
+        if playerOverlayView.handleTapOnOverlay(at: location) { return }
+        
         if playerConfig.isLandscape { // 如果是横屏模式
             playControlsView.toggleControlsVisibility()
             
@@ -511,6 +515,28 @@ extension ARTVideoPlayerWrapperView {
         default:
             break
         }
+    }
+    
+    // MARK: - UIGestureRecognizerDelegate Methods
+    
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false // 允许双击和单击手势同时识别
+    }
+    
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer is UITapGestureRecognizer && otherGestureRecognizer is UITapGestureRecognizer { // 单击手势必须等待双击手势失败
+            return (gestureRecognizer as! UITapGestureRecognizer).numberOfTapsRequired == 1 &&
+                (otherGestureRecognizer as! UITapGestureRecognizer).numberOfTapsRequired == 2
+        }
+        return false
+    }
+    
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer is UITapGestureRecognizer && otherGestureRecognizer is UITapGestureRecognizer { // 双击手势必须等待单击
+            return (gestureRecognizer as! UITapGestureRecognizer).numberOfTapsRequired == 2 &&
+                (otherGestureRecognizer as! UITapGestureRecognizer).numberOfTapsRequired == 1
+        }
+        return false
     }
 }
 

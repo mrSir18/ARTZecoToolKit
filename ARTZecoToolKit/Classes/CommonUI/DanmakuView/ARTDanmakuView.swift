@@ -131,7 +131,7 @@ public class ARTDanmakuView: UIView {
 extension ARTDanmakuView {
     
     /// 注册前后台通知
-    public func registerApplicationNotifications() {
+    @objc open func registerApplicationNotifications() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleAppDidEnterBackground),
@@ -147,12 +147,12 @@ extension ARTDanmakuView {
     }
     
     /// 处理App进入后台
-    @objc public func handleAppDidEnterBackground() {
+    @objc open func handleAppDidEnterBackground() {
         pauseDanmaku()
     }
-
+    
     /// 处理App即将进入前台
-    @objc public func handleAppWillEnterForeground() {
+    @objc open func handleAppWillEnterForeground() {
         resumeDanmaku()
     }
 }
@@ -423,7 +423,7 @@ extension ARTDanmakuView {
         shouldPauseOnDanmakuClick = true
         shouldResumeAfterDanmakuClick = true
         shouldHighlightOnDanmakuClick = true
-        cancelAllResumeTimers() // 取消所有恢复定时器
+        removeAllPausedDanmakuTimers() // 移除所有暂停的弹幕定时器
         resetAnimationLayer() // 重置动画
         clearAllDanmaku() // 清理所有弹幕
         danmakuTrackYs = [] // 清空轨道坐标
@@ -433,7 +433,7 @@ extension ARTDanmakuView {
     /// 更新弹幕轨道数量
     /// - Parameter count: 弹幕轨道的数量
     /// - NOTE: 轨道数量必须大于等于 0
-    public func updateDanmakuTrackCount(_ count: Int) {
+    @objc open func updateDanmakuTrackCount(_ count: Int) {
         danmakuTrackCount = max(0, count) // 确保轨道数量非负
         configureDanmakuTracks() // 重新配置轨道
         clearOutdatedDanmaku() // 清理多余的弹幕
@@ -442,7 +442,7 @@ extension ARTDanmakuView {
     /// 更新弹幕透明度
     /// - Parameter alpha: 弹幕透明度
     /// - NOTE: 透明度限制在 0 到 1 之间
-    public func updateDanmakuAlpha(_ alpha: CGFloat) {
+    @objc open func updateDanmakuAlpha(_ alpha: CGFloat) {
         danmakuAlpha = max(0.0, min(1.0, alpha)) // 限制在 0 到 1 之间
         for case let cell as ARTDanmakuCell in subviews { cell.alpha = alpha } // 更新当前显示的弹幕透明度
     }
@@ -462,7 +462,7 @@ extension ARTDanmakuView {
     
     /// 动态调整弹幕的缩放比例
     /// - Parameter scale: 缩放比例（0.1 ~ 1.0之间的值，表示10%到100%大小）
-    public func updateDanmakuScale(to scale: CGFloat) {
+    @objc open func updateDanmakuScale(to scale: CGFloat) {
         guard scale > 0 else { return }
         
         danmakuScale = scale
@@ -477,6 +477,25 @@ extension ARTDanmakuView {
             return totalDistance / animation.duration
         }
     }
+    
+    /// 处理弹幕点击事件
+    ///
+    /// - Parameter location: 点击的坐标
+    /// - Returns: 返回是否成功处理了弹幕点击事件
+    /// - Note: 如果点击了某条弹幕，会触发对应的点击事件；否则返回 `false`
+    @objc open func processDanmakuTap(at location: CGPoint) -> Bool {
+        guard self.bounds.contains(location) else { return false }
+        for subview in subviews { // 遍历当前视图的所有子视图，判断点击是否命中弹幕单元
+            guard let cell = subview as? ARTDanmakuCell else { continue }
+            let cellFrame = cell.layer.presentation()?.frame ?? cell.frame // 获取当前动画或静态帧
+            if cellFrame.contains(location) {
+                handleDanmakuClick(for: cell) // 处理弹幕点击事件
+                return true
+            }
+        }
+        resumeAllDanmaku() // 恢复所有暂停的弹幕
+        return false
+    }
 }
 
 // MARK: - CAAnimationDelegate
@@ -484,13 +503,13 @@ extension ARTDanmakuView {
 extension ARTDanmakuView: CAAnimationDelegate {
     
     /// 动画开始回调
-    public func animationDidStart(_ anim: CAAnimation) {
+    @objc open func animationDidStart(_ anim: CAAnimation) {
         guard let cell = anim.value(forKey: kAssociatedDanmakuCellKey) as? ARTDanmakuCell else { return }
         delegate?.danmakuView?(self, willDisplayDanmakuCell: cell)
     }
     
     /// 动画结束回调
-    public func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+    @objc open func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         guard flag else { return }
         guard let cell = anim.value(forKey: kAssociatedDanmakuCellKey) as? ARTDanmakuCell else { return }
         delegate?.danmakuView?(self, didEndDisplayDanmakuCell: cell)
@@ -514,7 +533,7 @@ extension ARTDanmakuView {
             }
         }
     }
-
+    
     /// 处理弹幕点击逻辑
     private func handleDanmakuClick(for cell: ARTDanmakuCell) {
         if shouldPauseOnDanmakuClick {
@@ -526,7 +545,7 @@ extension ARTDanmakuView {
     
     /// 安排弹幕恢复操作
     private func scheduleDanmakuResume(for cell: ARTDanmakuCell, delay: TimeInterval) {
-        cancelResumeTimer(for: cell) // 如果已有定时器，先取消
+        removePausedDanmakuTimer(for: cell) // 如果已有定时器，先取消
         let timer = Timer.scheduledTimer(withTimeInterval: delay, repeats: false) { [weak self] _ in
             self?.resumeDanmakuCell(cell)
             self?.resumeTimers[cell] = nil // 定时器完成后移除引用
@@ -534,18 +553,25 @@ extension ARTDanmakuView {
         resumeTimers[cell] = timer
     }
     
-    /// 取消单个弹幕的恢复定时器
-    private func cancelResumeTimer(for cell: ARTDanmakuCell) {
+    /// 移除指定弹幕的暂停定
+    private func removePausedDanmakuTimer(for cell: ARTDanmakuCell) {
         resumeTimers[cell]?.invalidate()
         resumeTimers[cell] = nil
+        resumeTimers.removeValue(forKey: cell)
     }
-
-    /// 停止所有弹幕时取消所有恢复任务
-    private func cancelAllResumeTimers() {
+    
+    /// 移除所有暂停弹幕定时
+    private func removeAllPausedDanmakuTimers() {
         for timer in resumeTimers.values {
             timer.invalidate()
         }
         resumeTimers.removeAll()
+    }
+    
+    /// 恢复所有暂停的弹幕
+    private func resumeAllDanmaku() {
+        resumeTimers.keys.forEach { resumeDanmakuCell($0) } // 恢复所有暂停的弹幕
+        removeAllPausedDanmakuTimers() // 移除所有暂停的弹幕定时器
     }
     
     /// 暂停弹幕单元动画
@@ -557,7 +583,7 @@ extension ARTDanmakuView {
         cell.layer.speed = 0 // 暂停动画速度
         updateDanmakuCellAlpha(cell, isHighlighted: shouldHighlightOnDanmakuClick)
     }
-
+    
     /// 恢复弹幕单元动画
     /// - Parameter cell: 需要恢复的弹幕单元
     private func resumeDanmakuCell(_ cell: ARTDanmakuCell) {
@@ -569,7 +595,7 @@ extension ARTDanmakuView {
         cell.layer.beginTime = timeSincePause
         updateDanmakuCellAlpha(cell, isHighlighted: false)
     }
-
+    
     /// 更新弹幕单元的透明度
     /// - Parameters:
     ///   - cell: 需要更新透明度的弹幕单元

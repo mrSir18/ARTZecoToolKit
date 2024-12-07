@@ -11,7 +11,7 @@ open class ARTVideoPlayerOverlayView: ARTPassThroughView {
     public weak var delegate: ARTVideoPlayerOverlayViewDelegate?
     
     /// 弹幕视图
-    private var danmakuView: ARTDanmakuView!
+    public var danmakuView: ARTDanmakuView!
     
     
     // MARK: - Initialization
@@ -31,10 +31,7 @@ open class ARTVideoPlayerOverlayView: ARTPassThroughView {
     open override func setupViews() {
         setupDanmakuView()
     }
-}
-
-extension ARTVideoPlayerOverlayView {
-
+    
     /// 创建弹幕视图
     @objc open func setupDanmakuView() {
         danmakuView = ARTDanmakuView(self)
@@ -76,5 +73,16 @@ extension ARTVideoPlayerOverlayView {
     @objc open func danmakuStop() {
         print("结束")
         danmakuView.stopDanmaku()
+    }
+}
+
+// MARK: - Public Methods
+
+extension ARTVideoPlayerOverlayView {
+    
+    /// 处理点击事件并委托给弹幕视图
+    @objc open func handleTapOnOverlay(at location: CGPoint) -> Bool {
+        guard let danmakuView = danmakuView else { return false }
+        return danmakuView.processDanmakuTap(at: location)
     }
 }
