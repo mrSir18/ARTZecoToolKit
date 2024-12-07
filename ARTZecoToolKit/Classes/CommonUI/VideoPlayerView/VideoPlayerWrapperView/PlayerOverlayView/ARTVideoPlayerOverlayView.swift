@@ -40,39 +40,6 @@ open class ARTVideoPlayerOverlayView: ARTPassThroughView {
         danmakuView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        let button = UIButton(type: .custom)
-        button.setTitle("开始弹幕", for: .normal)
-        button.backgroundColor = .art_randomColor()
-        button.addTarget(self, action: #selector(danmakuStart), for: .touchUpInside)
-        addSubview(button)
-        button.snp.makeConstraints { make in
-            make.size.equalTo(ARTAdaptedSize(width: 80, height: 80))
-            make.centerY.equalToSuperview()
-            make.right.equalTo(snp.centerX).offset(-ARTAdaptedValue(10))
-        }
-        
-        let button1 = UIButton(type: .custom)
-        button1.setTitle("结束弹幕", for: .normal)
-        button1.backgroundColor = .art_randomColor()
-        button1.addTarget(self, action: #selector(danmakuStop), for: .touchUpInside)
-        addSubview(button1)
-        button1.snp.makeConstraints { make in
-            make.size.equalTo(button)
-            make.centerY.equalToSuperview()
-            make.left.equalTo(snp.centerX).offset(ARTAdaptedValue(10))
-        }
-    }
-    
-    /// 添加弹幕
-    @objc open func danmakuStart() {
-        print("开始")
-        danmakuView.startDanmaku()
-    }
-    
-    @objc open func danmakuStop() {
-        print("结束")
-        danmakuView.stopDanmaku()
     }
 }
 
@@ -87,9 +54,9 @@ extension ARTVideoPlayerOverlayView {
         let topPosition: CGFloat = {
             switch orientation {
             case .window, .landscapeFullScreen: // 横屏模式时，将弹幕视图设置为全屏
-                return ARTAdaptedValue(12.0)
+                return ARTAdaptedValue(6.0)
             case .portraitFullScreen: // 竖屏模式时，调整弹幕视图的位置和高度
-                return art_navigationFullHeight() + ARTAdaptedValue(12.0)
+                return art_navigationFullHeight() + ARTAdaptedValue(6.0)
             default:
                 return danmakuView.danmakuCellPositionY
             }
@@ -101,6 +68,17 @@ extension ARTVideoPlayerOverlayView {
     @objc open func handleTapOnOverlay(at location: CGPoint) -> Bool {
         guard let danmakuView = danmakuView else { return false }
         return danmakuView.processDanmakuTap(at: location)
+    }
+    
+    /// 是否开始发送弹幕
+    /// - Parameter isDanmakuEnabled: 是否开启弹幕
+    @objc open func shouldSendDanmaku(isDanmakuEnabled: Bool) {
+        isDanmakuEnabled ? startDanmaku() : stopDanmaku()
+    }
+    
+    /// 开始弹幕
+    @objc open func startDanmaku() {
+        danmakuView.startDanmaku()
     }
     
     /// 停止弹幕

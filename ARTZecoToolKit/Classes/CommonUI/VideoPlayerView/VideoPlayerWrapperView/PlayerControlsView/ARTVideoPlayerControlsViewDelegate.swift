@@ -75,7 +75,8 @@
     @objc optional func controlsViewDidTapPause(for controlsView: ARTVideoPlayerControlsView, isPlaying: Bool)
     
     /// 当弹幕开关按钮被点击时调用
-    @objc optional func controlsViewDidTapDanmakuToggle(for controlsView: ARTVideoPlayerControlsView)
+    /// - Parameters: isDanmakuEnabled 是否启用弹幕
+    @objc optional func controlsViewDidTapDanmakuToggle(for controlsView: ARTVideoPlayerControlsView, isDanmakuEnabled: Bool)
     
     /// 当弹幕设置按钮被点击时调用
     @objc optional func controlsViewDidTapDanmakuSettings(for controlsView: ARTVideoPlayerControlsView)

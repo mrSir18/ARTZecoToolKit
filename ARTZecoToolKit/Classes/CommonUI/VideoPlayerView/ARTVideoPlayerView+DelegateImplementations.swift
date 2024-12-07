@@ -82,8 +82,8 @@ extension ARTVideoPlayerView: ARTVideoPlayerWrapperViewDelegate {
         delegate?.playerViewDidTapPause?(for: self, isPlaying: isPlaying)
     }
     
-    public func wrapperViewDidTapDanmakuToggle(for wrapperView: ARTVideoPlayerWrapperView) { // 弹幕开关 (点击弹幕开关按钮)
-        delegate?.playerViewDidTapDanmakuToggle?(for: self)
+    public func wrapperViewDidTapDanmakuToggle(for wrapperView: ARTVideoPlayerWrapperView, isDanmakuEnabled: Bool) { // 弹幕开关 (点击弹幕开关按钮)
+        delegate?.playerViewDidTapDanmakuToggle?(for: self, isDanmakuEnabled: isDanmakuEnabled)
     }
     
     public func wrapperViewDidTapDanmakuSettings(for wrapperView: ARTVideoPlayerWrapperView) { // 弹幕设置 (点击弹幕设置按钮)

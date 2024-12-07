@@ -56,8 +56,8 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerBottombarDelegate {
         delegate?.controlsViewDidTapPause?(for: self, isPlaying: isPlaying)
     }
     
-    public func bottombarDidTapDanmakuToggle(for bottombar: ARTVideoPlayerBottombar) { // 点击弹幕开关按钮
-        delegate?.controlsViewDidTapDanmakuToggle?(for: self)
+    public func bottombarDidTapDanmakuToggle(for bottombar: ARTVideoPlayerBottombar, isDanmakuEnabled: Bool) { // 点击弹幕开关按钮
+        delegate?.controlsViewDidTapDanmakuToggle?(for: self, isDanmakuEnabled: isDanmakuEnabled)
     }
     
     public func bottombarDidTapDanmakuSettings(for bottombar: ARTVideoPlayerBottombar) { // 点击弹幕设置按钮

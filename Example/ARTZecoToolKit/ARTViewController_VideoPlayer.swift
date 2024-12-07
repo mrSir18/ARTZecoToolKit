@@ -271,8 +271,8 @@ extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
         print("播放状态 \(isPlaying ? "暂停" : "播放")")
     }
     
-    func playerViewDidTapDanmakuToggle(for playerView: ARTVideoPlayerView) { // 弹幕开关 (点击弹幕开关按钮)
-        print("弹幕开关")
+    func playerViewDidTapDanmakuToggle(for playerView: ARTVideoPlayerView, isDanmakuEnabled: Bool) { // 弹幕开关 (点击弹幕开关按钮)
+        print("\(isDanmakuEnabled ? "弹幕已开启" : "弹幕已关闭")")
     }
     
     func playerViewDidTapDanmakuSettings(for playerView: ARTVideoPlayerView) { // 弹幕设置 (点击弹幕设置按钮)

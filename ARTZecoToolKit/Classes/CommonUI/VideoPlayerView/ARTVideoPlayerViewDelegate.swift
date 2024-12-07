@@ -94,7 +94,8 @@
     @objc optional func playerViewDidTapPause(for playerView: ARTVideoPlayerView, isPlaying: Bool)
     
     /// 当弹幕开关按钮被点击时调用
-    @objc optional func playerViewDidTapDanmakuToggle(for playerView: ARTVideoPlayerView)
+    /// - Parameters: isDanmakuEnabled
+    @objc optional func playerViewDidTapDanmakuToggle(for playerView: ARTVideoPlayerView, isDanmakuEnabled: Bool)
     
     /// 当弹幕设置按钮被点击时调用
     @objc optional func playerViewDidTapDanmakuSettings(for playerView: ARTVideoPlayerView)

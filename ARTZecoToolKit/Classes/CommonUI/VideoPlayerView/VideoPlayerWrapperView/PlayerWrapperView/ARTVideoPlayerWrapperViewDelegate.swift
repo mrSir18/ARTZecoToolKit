@@ -94,7 +94,8 @@
     @objc optional func wrapperViewDidTapPause(for wrapperView: ARTVideoPlayerWrapperView, isPlaying: Bool)
     
     /// 当弹幕开关按钮被点击时调用
-    @objc optional func wrapperViewDidTapDanmakuToggle(for wrapperView: ARTVideoPlayerWrapperView)
+    /// - Parameters: isDanmakuEnabled 弹幕是否开启
+    @objc optional func wrapperViewDidTapDanmakuToggle(for wrapperView: ARTVideoPlayerWrapperView, isDanmakuEnabled: Bool)
     
     /// 当弹幕设置按钮被点击时调用
     @objc optional func wrapperViewDidTapDanmakuSettings(for wrapperView: ARTVideoPlayerWrapperView)

@@ -111,8 +111,9 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
         delegate?.wrapperViewDidTapPause?(for: self, isPlaying: isPlaying)
     }
     
-    public func controlsViewDidTapDanmakuToggle(for controlsView: ARTVideoPlayerControlsView) { // 弹幕开关 (点击弹幕开关按钮)
-        delegate?.wrapperViewDidTapDanmakuToggle?(for: self)
+    public func controlsViewDidTapDanmakuToggle(for controlsView: ARTVideoPlayerControlsView, isDanmakuEnabled: Bool) { // 弹幕开关 (点击弹幕开关按钮)
+        playerOverlayView.shouldSendDanmaku(isDanmakuEnabled: isDanmakuEnabled)
+        delegate?.wrapperViewDidTapDanmakuToggle?(for: self, isDanmakuEnabled: isDanmakuEnabled)
     }
     
     public func controlsViewDidTapDanmakuSettings(for controlsView: ARTVideoPlayerControlsView) { // 弹幕设置 (点击弹幕设置按钮)

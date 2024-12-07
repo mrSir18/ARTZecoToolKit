@@ -28,7 +28,8 @@ import AVFoundation
     @objc optional func bottombarDidTapPause(for bottombar: ARTVideoPlayerBottombar, isPlaying: Bool)
     
     /// 当弹幕开关按钮被点击时调用
-    @objc optional func bottombarDidTapDanmakuToggle(for bottombar: ARTVideoPlayerBottombar)
+    /// - Parameter isDanmakuEnabled: 是否开启弹幕
+    @objc optional func bottombarDidTapDanmakuToggle(for bottombar: ARTVideoPlayerBottombar, isDanmakuEnabled: Bool)
     
     /// 当弹幕设置按钮被点击时调用
     @objc optional func bottombarDidTapDanmakuSettings(for bottombar: ARTVideoPlayerBottombar)

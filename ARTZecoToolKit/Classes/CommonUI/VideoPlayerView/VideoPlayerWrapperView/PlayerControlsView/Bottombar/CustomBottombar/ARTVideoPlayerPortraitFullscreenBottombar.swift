@@ -132,7 +132,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
     /// 点击弹幕按钮
     @objc open func didTapDanmakuButton() {
         danmakuButton.isSelected = !danmakuButton.isSelected
-        delegate?.bottombarDidTapDanmakuToggle?(for: self)
+        delegate?.bottombarDidTapDanmakuToggle?(for: self, isDanmakuEnabled: danmakuButton.isSelected)
     }
     
     /// 点击发送弹幕按钮
