@@ -28,15 +28,15 @@ extension ARTDanmakuView {
         func randomDuration() -> CGFloat {
             switch self {
             case .extremelyFast:
-                return CGFloat.random(in: 3...5)
+                return CGFloat.random(in: 9...11)
             case .fast:
-                return CGFloat.random(in: 6...8)
-            case .moderate:
-                return CGFloat.random(in: 9...10)
-            case .slow:
                 return CGFloat.random(in: 11...13)
+            case .moderate:
+                return CGFloat.random(in: 13...15)
+            case .slow:
+                return CGFloat.random(in: 15...17)
             case .extremelySlow:
-                return CGFloat.random(in: 14...16)
+                return CGFloat.random(in: 17...19)
             }
         }
     }

@@ -605,8 +605,10 @@ extension ARTVideoPlayerWrapperView {
             systemControlsView.hideVideoPlayerDisplay()
             player.play()
             player.rate = currentRate
+            playerOverlayView.resumeDanmaku()
         case .paused: // 如果是暂停状态，暂停播放
             player.pause()
+            playerOverlayView.pauseDanmaku()
         default:
             break
         }

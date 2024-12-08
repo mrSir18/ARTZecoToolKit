@@ -81,6 +81,16 @@ extension ARTVideoPlayerOverlayView {
         danmakuView.startDanmaku()
     }
     
+    /// 暂停弹幕
+    @objc open func pauseDanmaku() {
+        danmakuView.pauseDanmaku()
+    }
+    
+    /// 恢复弹幕
+    @objc open func resumeDanmaku() {
+        danmakuView.resumeDanmaku()
+    }
+    
     /// 停止弹幕
     @objc open func stopDanmaku() {
         danmakuView.stopDanmaku()

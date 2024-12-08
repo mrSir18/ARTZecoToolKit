@@ -43,7 +43,7 @@ public class ARTDanmakuView: UIView {
     public var danmakuCellPositionY: CGFloat = 0.0
     
     /// 弹幕轨道数量 默认4
-    public var danmakuTrackCount: Int = 4
+    public var danmakuTrackCount: Int = 3
     
     /// 弹幕透明度 默认1.0
     public var danmakuAlpha: CGFloat = 1.0
