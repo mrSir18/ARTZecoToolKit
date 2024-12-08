@@ -64,7 +64,7 @@ class ARTCustomDanmakuCell: ARTDanmakuCell {
         danmakuLabel = UILabel()
         danmakuLabel.text       = danmakuContents.randomElement()
         danmakuLabel.textColor  = .white
-        danmakuLabel.font       = .art_regular(16.0)
+        danmakuLabel.font       = .art_regular(ARTAdaptedValue(16.0))
         danmakuLabel.sizeToFit()
         addSubview(danmakuLabel)
         danmakuLabel.snp.makeConstraints { make in

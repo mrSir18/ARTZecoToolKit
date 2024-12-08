@@ -176,7 +176,7 @@ extension ARTDanmakuView {
         guard let (startY, trackIndex) = findAvailableTrack(for: danmakuCell, duration: randomDuration) else { return } // 查找可用轨道
         
         // 配置弹幕单元
-        configureDanmakuCell(danmakuCell, at: danmakuCellPositionY+startY, on: trackIndex, duration: randomDuration)
+        configureDanmakuCell(danmakuCell, at: startY, on: trackIndex, duration: randomDuration)
         animateDanmaku(danmakuCell, duration: randomDuration)
     }
     
@@ -192,6 +192,8 @@ extension ARTDanmakuView {
         cell.alpha      = danmakuAlpha // 设置透明度
         cell.tag        = trackIndex // 标记轨道编号
         cell.transform  = CGAffineTransform(scaleX: danmakuScale, y: danmakuScale)
+        cell.layer.shouldRasterize    = true // 开启光栅化
+        cell.layer.rasterizationScale = UIScreen.main.scale // 设置光栅化比例
         addSubview(cell)
         danmakuLastTimes[trackIndex] = Date().timeIntervalSince1970
     }
@@ -287,7 +289,7 @@ extension ARTDanmakuView {
     /// 配置弹 幕轨道
     private func configureDanmakuTracks() {
         danmakuTrackYs = (0..<danmakuTrackCount).map { // 重新生成轨道起始位置
-            CGFloat($0) * (danmakuTrackHeight + danmakuTrackSpacing)
+            danmakuCellPositionY + CGFloat($0) * (danmakuTrackHeight + danmakuTrackSpacing)
         }
         
         danmakuLastTimes = (0..<danmakuTrackCount).map { index in // 调整最近使用时间数组的大小
@@ -464,20 +466,26 @@ extension ARTDanmakuView {
     }
     
     /// 动态调整弹幕的缩放比例
-    /// - Parameter scale: 缩放比例（0.1 ~ 1.0之间的值，表示10%到100%大小）
+    /// - Parameter scale: 缩放比例（0.8 ~ 1.2之间的值，表示80%到120%大小）
     @objc open func updateDanmakuScale(to scale: CGFloat) {
         guard scale > 0 else { return }
-        
         danmakuScale = scale
+        
+        // 根据缩放比例计算轨道高度
+        let trackHeight = scale <= 1.0 ? danmakuTrackHeight : danmakuTrackHeight * scale
+        
+        // 更新轨道 Y 坐标
+        danmakuTrackYs = (0..<danmakuTrackCount).map { trackIndex in
+            danmakuCellPositionY + CGFloat(trackIndex) * (trackHeight + danmakuTrackSpacing)
+        }
         
         // 遍历所有弹幕单元并应用缩放
         for case let cell as ARTDanmakuCell in subviews {
             cell.transform = CGAffineTransform(scaleX: scale, y: scale)
-        }
-        
-        updateDanmakuAnimations { cell, animation in
-            let totalDistance = bounds.width + cell.danmakuSize.width * scale
-            return totalDistance / animation.duration
+            // 当 scale 大于 1.0 时，更新弹幕单元的 Y 坐标 (防止弹幕重叠)
+            if scale > 1.0, cell.tag < danmakuTrackYs.count {
+                cell.frame.origin.y = danmakuTrackYs[cell.tag]
+            }
         }
     }
     
