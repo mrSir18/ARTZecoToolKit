@@ -103,6 +103,7 @@ public struct ARTVideoPlayerGeneralDanmakuEntity {
     /// - Parameters:
     ///  - index: 下标
     ///  - newOption: 新选项
+    ///  - Note: 更新失败时会打印错误信息
     public mutating func updateOption(at index: Int, with newOption: SliderOption) {
         guard sliderOptions.indices.contains(index) else {
             print("更新失败: 下标 \(index) 超出范围")
@@ -110,6 +111,13 @@ public struct ARTVideoPlayerGeneralDanmakuEntity {
         }
         sliderOptions[index] = newOption
         saveSliderOptions()
+    }
+    
+    /// 根据 OptionType 获取对应的 defaultValue 值
+    /// - Parameter optionType: 滑块选项类型
+    /// - Returns: 如果找到对应的选项，返回其 `defaultValue`；否则返回 nil
+    public func defaultValue(for optionType: SliderOptionType) -> Int? {
+        return sliderOptions.first(where: { $0.optionType == optionType })?.defaultValue
     }
     
     /// 恢复默认值

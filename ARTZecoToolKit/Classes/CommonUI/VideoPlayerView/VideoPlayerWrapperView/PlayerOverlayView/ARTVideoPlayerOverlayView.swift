@@ -24,7 +24,7 @@ open class ARTVideoPlayerOverlayView: ARTPassThroughView {
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     // MARK: - Override Super Methods
     
     /// 重写父类方法，设置子视图
@@ -40,6 +40,7 @@ open class ARTVideoPlayerOverlayView: ARTPassThroughView {
         danmakuView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        applyDanmakuSettings() // 设置弹幕属性
     }
 }
 
@@ -99,23 +100,37 @@ extension ARTVideoPlayerOverlayView {
     /// 更新弹幕滑块值改变事件
     /// - Parameter sliderOption: 滑块选项
     public func updateDanmakuSliderValueChanged(for sliderOption: ARTVideoPlayerGeneralDanmakuEntity.SliderOption) {
-        switch sliderOption.optionType {
+        updateDanmakuProperty(for: sliderOption)
+    }
+    
+    /// 应用弹幕设置
+    public func applyDanmakuSettings() {
+        let danmakuEntity = ARTVideoPlayerGeneralDanmakuEntity()
+        danmakuEntity.sliderOptions.forEach { option in
+            updateDanmakuProperty(for: option)
+        }
+    }
+    
+    /// 更新弹幕的属性
+    /// - Parameter option: 弹幕选项
+    private func updateDanmakuProperty(for option: ARTVideoPlayerGeneralDanmakuEntity.SliderOption) {
+        switch option.optionType {
         case .opacity: // 不透明度
-            let danmakuOpacity = CGFloat(sliderOption.defaultValue) / 100.0
+            let danmakuOpacity = CGFloat(option.defaultValue) / 100.0
             danmakuView.updateDanmakuAlpha(to: danmakuOpacity)
-
+            
         case .displayArea: // 显示区域
-            let displayArea = sliderOption.defaultValue + 1 // 计算显示区域，注意 sliderOption.defaultValue 的值从 0 开始，所以下标+1
+            let displayArea = option.defaultValue + 1 // 计算显示区域，注意 option.defaultValue 的值从 0 开始，所以下标+1
             danmakuView.updateDanmakuDisplayArea(to: displayArea)
             
         case .scale: // 缩放比例
-            let scaleLevel = sliderOption.defaultValue + 1 // 缩放级别（从 1 开始）
+            let scaleLevel = option.defaultValue + 1 // 缩放级别（从 1 开始）
             let scaleValues: [CGFloat] = [0.8, 0.9, 1.0, 1.1, 1.2]
             let danmakuScale = scaleValues[safe: scaleLevel - 1] ?? 1.0  // 使用 safe 下标来防止越界
             danmakuView.updateDanmakuScale(to: danmakuScale)
             
         case .speed: // 移动速度
-            let speedIndex = sliderOption.defaultValue + 1 // 移动速度（从 1 开始）
+            let speedIndex = option.defaultValue + 1 // 移动速度（从 1 开始）
             let speedLevel = ARTDanmakuView.SpeedLevel(rawValue: speedIndex) ?? .moderate
             danmakuView.updateDanmakuSpeed(to: speedLevel)
         }

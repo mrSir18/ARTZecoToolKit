@@ -41,12 +41,15 @@ public class ARTDanmakuView: UIView {
     
     /// 弹幕单元起始位置Y 默认0.0
     public var danmakuCellPositionY: CGFloat = 0.0
+        
+    /// 弹幕透明度 默认1.0
+    public var danmakuAlpha: CGFloat = 1.0
     
     /// 弹幕轨道数量 默认4
     public var danmakuTrackCount: Int = 3
     
-    /// 弹幕透明度 默认1.0
-    public var danmakuAlpha: CGFloat = 1.0
+    /// 弹幕缩放比例 默认1.0
+    public var danmakuScale: CGFloat = 1.0
     
     /// 弹幕移动速度 默认适中
     public var danmakuSpeed: SpeedLevel = .moderate
@@ -80,9 +83,6 @@ public class ARTDanmakuView: UIView {
     
     /// 弹幕安全间隔 默认12.0
     public var danmakuSafeSpacing: CGFloat = 12.0
-    
-    /// 弹幕缩放比例 默认1.0
-    public var danmakuScale: CGFloat = 1.0
     
     /// 点击弹幕事件是否暂停 默认true
     public var shouldPauseOnDanmakuClick: Bool = true
