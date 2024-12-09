@@ -24,6 +24,10 @@ extension ARTVideoPlayerView: ARTVideoPlayerWrapperViewDelegate {
     
 // MARK: - 弹幕视图 - 公共方法
     
+    public func wrapperViewDidDidCustomDanmakuView(for wrapperView: ARTVideoPlayerWrapperView) -> ARTDanmakuView? { // 自定义弹幕视图
+        return delegate?.playerViewDidCustomDanmakuView?(for: self)
+    }
+    
     public func wrapperViewDidCreateDanmakuCell(for wrapperView: ARTVideoPlayerWrapperView) -> ARTDanmakuCell { // 创建弹幕
         return delegate?.playerViewDidCreateDanmakuCell?(for: self) ?? ARTDanmakuCell()
     }

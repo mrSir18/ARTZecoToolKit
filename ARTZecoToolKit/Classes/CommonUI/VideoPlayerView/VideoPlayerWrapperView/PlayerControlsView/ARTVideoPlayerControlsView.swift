@@ -53,6 +53,7 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
         super.init(frame: .zero)
         self.delegate = delegate
         self.clipsToBounds = true
+        setupViews()
     }
     
     required public init?(coder: NSCoder) {
@@ -61,8 +62,8 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     
     // MARK: - Override Super Methods
     
-    /// 重写父类方法，设置子视图
-    open override func setupViews() {
+    /// 子类方法，设置子视图
+    open func setupViews() {
         setupToolBars()
     }
     

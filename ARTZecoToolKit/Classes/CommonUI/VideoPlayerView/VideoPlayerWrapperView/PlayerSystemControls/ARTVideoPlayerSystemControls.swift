@@ -28,6 +28,7 @@ open class ARTVideoPlayerSystemControls: ARTPassThroughView {
     public init(_ delegate: ARTVideoPlayerSystemControlsDelegate? = nil) {
         super.init(frame: .zero)
         self.delegate = delegate
+        setupViews()
     }
     
     required public init?(coder: NSCoder) {
@@ -36,8 +37,8 @@ open class ARTVideoPlayerSystemControls: ARTPassThroughView {
     
     // MARK: - Override Super Methods
     
-    /// 重写父类方法，设置子视图
-    open override func setupViews() {
+    /// 子类重写: 设置视图
+    open func setupViews() {
         setupVideoPlayerDisplay()
     }
 

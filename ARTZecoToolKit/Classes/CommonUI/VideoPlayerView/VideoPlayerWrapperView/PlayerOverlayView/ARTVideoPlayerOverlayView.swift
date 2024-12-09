@@ -19,6 +19,7 @@ open class ARTVideoPlayerOverlayView: ARTPassThroughView {
     public init(_ delegate: ARTVideoPlayerOverlayViewDelegate? = nil) {
         super.init(frame: .zero)
         self.delegate = delegate
+        setupViews()
     }
     
     required public init?(coder: NSCoder) {
@@ -26,21 +27,32 @@ open class ARTVideoPlayerOverlayView: ARTPassThroughView {
     }
     
     // MARK: - Override Super Methods
-    
-    /// 重写父类方法，设置子视图
-    open override func setupViews() {
+
+    /// 子类重写: 设置视图
+    open func setupViews() {
         setupDanmakuView()
     }
     
     /// 创建弹幕视图
     @objc open func setupDanmakuView() {
-        danmakuView = ARTDanmakuView(self)
-        danmakuView.danmakuTrackHeight = ARTAdaptedValue(42.0) // 弹幕轨道高度
+        danmakuView = delegate_customDanmakuView() ?? defaultDanmakuView()
         addSubview(danmakuView)
         danmakuView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         applyDanmakuSettings() // 设置弹幕属性
+    }
+}
+
+// MARK: - Private Methods
+
+extension ARTVideoPlayerOverlayView {
+    
+    /// 默认弹幕视图
+    internal func defaultDanmakuView() -> ARTDanmakuView {
+        danmakuView = ARTDanmakuView(self)
+        danmakuView.danmakuTrackHeight = ARTAdaptedValue(42.0) // 弹幕轨道高度
+        return danmakuView
     }
 }
 
@@ -134,5 +146,17 @@ extension ARTVideoPlayerOverlayView {
             let speedLevel = ARTDanmakuView.SpeedLevel(rawValue: speedIndex) ?? .moderate
             danmakuView.updateDanmakuSpeed(to: speedLevel)
         }
+    }
+}
+
+
+// MARK: - Private Delegate Methods
+
+extension ARTVideoPlayerOverlayView {
+
+    /// 获取自定义弹幕视图
+    /// - Returns: 自定义弹幕视图
+    private func delegate_customDanmakuView() -> ARTDanmakuView? {
+        return delegate?.overlayViewDidCustomDanmakuView?(for: self)
     }
 }

@@ -10,6 +10,10 @@
 /// - NOTE: 可继承该协议方法
 @objc public protocol ARTVideoPlayerOverlayViewDelegate: AnyObject {
     
+    /// 自定义弹幕视图
+    /// - Returns: 自定义弹幕视图
+    @objc optional func overlayViewDidCustomDanmakuView(for overlayView: ARTVideoPlayerOverlayView) -> ARTDanmakuView?
+    
     /// 创建弹幕回调
     /// - Returns: 新创建的弹幕单元
     @objc optional func overlayViewDidCreateDanmakuCell(for overlayView: ARTVideoPlayerOverlayView) -> ARTDanmakuCell

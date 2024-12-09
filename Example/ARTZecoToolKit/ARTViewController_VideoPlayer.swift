@@ -164,9 +164,9 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
         // MARK: - Test Methods
         
         var config = ARTVideoPlayerConfig()
-        config.url = URL(string: "https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4")
+//        config.url = URL(string: "https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4")
 //        config.url = URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")
-//        config.url = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MP4")!)
+        config.url = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MP4")!)
         videoPlayerView.startVideoPlayback(with: config)
     }
     
@@ -210,6 +210,18 @@ extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
     
     
 // MARK: - 弹幕视图 - 公共方法
+    
+    func playerViewDidCustomDanmakuView(for playerView: ARTVideoPlayerView) -> ARTDanmakuView? { // 自定义弹幕视图
+        /*
+         自定义需要继承 ARTDanmakuView 类 实现 ARTDanmakuViewDelegate 协议
+         
+         let danmakuView = ARTDanmakuView(self)
+         danmakuView.danmakuTrackHeight = ARTAdaptedValue(42.0) // 弹幕轨道高度
+         danmakuView.danmakuAlpha = 0.8
+         */
+        
+        return nil
+    }
     
     func playerViewDidCreateDanmakuCell(for playerView: ARTVideoPlayerView) -> ARTDanmakuCell { // 创建弹幕
         let cell = ARTCustomDanmakuCell()

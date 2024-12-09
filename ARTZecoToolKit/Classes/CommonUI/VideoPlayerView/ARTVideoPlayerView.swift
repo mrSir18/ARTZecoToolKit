@@ -12,7 +12,7 @@ open class ARTVideoPlayerView: UIStackView {
     public weak var delegate: ARTVideoPlayerViewDelegate?
     
     /// 视频播放器包装视图
-    private var wrapperView: ARTVideoPlayerWrapperView!
+    public var wrapperView: ARTVideoPlayerWrapperView!
     
     
     // MARK: - Initialization

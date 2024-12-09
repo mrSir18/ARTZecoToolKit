@@ -16,6 +16,10 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerSystemControlsDelegate {
 
 extension ARTVideoPlayerWrapperView: ARTVideoPlayerOverlayViewDelegate {
     
+    public func overlayViewDidCustomDanmakuView(for overlayView: ARTVideoPlayerOverlayView) -> ARTDanmakuView? { // 自定义弹幕视图
+        return delegate?.wrapperViewDidDidCustomDanmakuView?(for: self)
+    }
+    
     public func overlayViewDidCreateDanmakuCell(for overlayView: ARTVideoPlayerOverlayView) -> ARTDanmakuCell { // 创建弹幕
         return delegate?.wrapperViewDidCreateDanmakuCell?(for: self) ?? ARTDanmakuCell()
     }

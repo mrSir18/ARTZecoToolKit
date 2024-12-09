@@ -31,6 +31,10 @@
     
     
 // MARK: - 弹幕视图 - 公共方法
+
+    /// 自定义弹幕视图
+    /// - Returns: 自定义弹幕视图
+    @objc optional func playerViewDidCustomDanmakuView(for playerView: ARTVideoPlayerView) -> ARTDanmakuView?
     
     /// 创建弹幕回调
     /// - Returns: 新创建的弹幕单元

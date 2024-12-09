@@ -37,7 +37,7 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
     public var durationLabel: UILabel!
     
     /// 暂停按钮
-    open var pauseButton: ARTAlignmentButton!
+    public var pauseButton: ARTAlignmentButton!
     
     /// 下一集按钮
     public var nextButton: ARTAlignmentButton!

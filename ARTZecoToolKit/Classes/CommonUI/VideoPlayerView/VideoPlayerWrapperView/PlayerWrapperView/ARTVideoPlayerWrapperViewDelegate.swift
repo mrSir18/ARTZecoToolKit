@@ -32,6 +32,10 @@
     
 // MARK: - 弹幕视图 - 公共方法
     
+    /// 自定义弹幕视图
+    /// - Returns: 自定义弹幕视图
+    @objc optional func wrapperViewDidDidCustomDanmakuView(for wrapperView: ARTVideoPlayerWrapperView) -> ARTDanmakuView?
+    
     /// 创建弹幕回调
     /// - Returns: 新创建的弹幕单元
     @objc optional func wrapperViewDidCreateDanmakuCell(for wrapperView: ARTVideoPlayerWrapperView) -> ARTDanmakuCell
