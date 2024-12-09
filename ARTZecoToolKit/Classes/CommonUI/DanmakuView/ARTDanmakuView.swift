@@ -41,7 +41,7 @@ public class ARTDanmakuView: UIView {
     
     /// 弹幕单元起始位置Y 默认0.0
     public var danmakuCellPositionY: CGFloat = 0.0
-        
+    
     /// 弹幕透明度 默认1.0
     public var danmakuAlpha: CGFloat = 1.0
     
@@ -288,10 +288,7 @@ extension ARTDanmakuView {
     
     /// 配置弹 幕轨道
     private func configureDanmakuTracks() {
-        danmakuTrackYs = (0..<danmakuTrackCount).map { // 重新生成轨道起始位置
-            danmakuCellPositionY + CGFloat($0) * (danmakuTrackHeight + danmakuTrackSpacing)
-        }
-        
+        updateDanmakuLayout() // 重新生成轨道起始位置
         danmakuLastTimes = (0..<danmakuTrackCount).map { index in // 调整最近使用时间数组的大小
             index < danmakuLastTimes.count ? danmakuLastTimes[index] : 0
         }
@@ -463,7 +460,6 @@ extension ARTDanmakuView {
     @objc open func updateDanmakuDisplayArea(to count: Int) {
         danmakuTrackCount = max(0, count) // 确保轨道数量非负
         configureDanmakuTracks() // 重新配置轨道
-        updateDanmakuLayout() // 更新布局
         clearOutdatedDanmaku() // 清理多余的弹幕
     }
     
