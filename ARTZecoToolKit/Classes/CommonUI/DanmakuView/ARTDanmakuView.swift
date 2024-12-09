@@ -386,6 +386,28 @@ extension ARTDanmakuView {
             cell.layer.add(newAnimation, forKey: kDanmakuAnimationKey)
         }
     }
+    
+    /// 更新弹幕布局（轨道高度、Y 坐标、缩放比例）
+    private func updateDanmakuLayout() {
+        // 根据缩放比例计算轨道高度
+        let scale = danmakuScale
+        let trackHeight = scale <= 1.0 ? danmakuTrackHeight : danmakuTrackHeight * scale
+        
+        // 更新轨道 Y 坐标
+        danmakuTrackYs = (0..<danmakuTrackCount).map { trackIndex in
+            danmakuCellPositionY + CGFloat(trackIndex) * (trackHeight + danmakuTrackSpacing)
+        }
+        
+        // 遍历所有弹幕单元并应用缩放和位置调整
+        for case let cell as ARTDanmakuCell in subviews {
+            cell.transform = CGAffineTransform(scaleX: scale, y: scale)
+            
+            // 更新 Y 坐标防止弹幕重叠
+            if cell.tag < danmakuTrackYs.count {
+                cell.frame.origin.y = danmakuTrackYs[cell.tag]
+            }
+        }
+    }
 }
 
 // MARK: - Public Methods
@@ -441,6 +463,7 @@ extension ARTDanmakuView {
     @objc open func updateDanmakuDisplayArea(to count: Int) {
         danmakuTrackCount = max(0, count) // 确保轨道数量非负
         configureDanmakuTracks() // 重新配置轨道
+        updateDanmakuLayout() // 更新布局
         clearOutdatedDanmaku() // 清理多余的弹幕
     }
     
@@ -470,23 +493,7 @@ extension ARTDanmakuView {
     @objc open func updateDanmakuScale(to scale: CGFloat) {
         guard scale > 0 else { return }
         danmakuScale = scale
-        
-        // 根据缩放比例计算轨道高度
-        let trackHeight = scale <= 1.0 ? danmakuTrackHeight : danmakuTrackHeight * scale
-        
-        // 更新轨道 Y 坐标
-        danmakuTrackYs = (0..<danmakuTrackCount).map { trackIndex in
-            danmakuCellPositionY + CGFloat(trackIndex) * (trackHeight + danmakuTrackSpacing)
-        }
-        
-        // 遍历所有弹幕单元并应用缩放
-        for case let cell as ARTDanmakuCell in subviews {
-            cell.transform = CGAffineTransform(scaleX: scale, y: scale)
-            // 当 scale 大于 1.0 时，更新弹幕单元的 Y 坐标 (防止弹幕重叠)
-            if scale > 1.0, cell.tag < danmakuTrackYs.count {
-                cell.frame.origin.y = danmakuTrackYs[cell.tag]
-            }
-        }
+        updateDanmakuLayout() // 更新布局
     }
     
     /// 处理弹幕点击事件
