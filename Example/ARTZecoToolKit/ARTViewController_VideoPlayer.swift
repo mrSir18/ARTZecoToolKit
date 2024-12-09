@@ -138,7 +138,7 @@ import ARTZecoToolKit
 class ARTViewController_VideoPlayer: ARTBaseViewController {
     
     /// 弹幕视图
-    private var danmakuView: ARTDanmakuView!
+    private var playerView: ARTVideoPlayerView!
     
     
     // MARK: - Initialization
@@ -153,9 +153,9 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
 
     private func setupPlayerView() { // 创建播放器视图
         let aspectRatio: CGFloat = 16.0 / 9.0
-        let videoPlayerView = ARTVideoPlayerView(self)
-        view.addSubview(videoPlayerView)
-        videoPlayerView.snp.makeConstraints { make in
+        playerView = ARTVideoPlayerView(self)
+        view.addSubview(playerView)
+        playerView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.centerY.equalToSuperview()
             make.height.equalTo(view.bounds.width / aspectRatio)
@@ -164,10 +164,10 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
         // MARK: - Test Methods
         
         var config = ARTVideoPlayerConfig()
-//        config.url = URL(string: "https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4")
+        config.url = URL(string: "https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4")
 //        config.url = URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")
-        config.url = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MP4")!)
-        videoPlayerView.startVideoPlayback(with: config)
+//        config.url = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MP4")!)
+        playerView.startVideoPlayback(with: config)
     }
     
     /// 设置支持的 AVPlayer 文件扩展名
@@ -213,7 +213,9 @@ extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
     
     func playerViewDidCustomDanmakuView(for playerView: ARTVideoPlayerView) -> ARTDanmakuView? { // 自定义弹幕视图
         /*
-         自定义需要继承 ARTDanmakuView 类 实现 ARTDanmakuViewDelegate 协议
+         1.自定义需要继承 ARTDanmakuView 类 实现 ARTDanmakuViewDelegate 协议
+         
+         2.可通过 ARTVideoPlayerGeneralDanmakuEntity 结构体设置弹幕属性
          
          let danmakuView = ARTDanmakuView(self)
          danmakuView.danmakuTrackHeight = ARTAdaptedValue(42.0) // 弹幕轨道高度
@@ -299,8 +301,9 @@ extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
     
     func playerViewDidTransitionToFullscreen(for playerView: ARTVideoPlayerView, orientation: ScreenOrientation) { // 点击全屏按钮
         print("点击全屏按钮")
+        playerView.startDanmaku() // 开启弹幕
     }
-    
+
     
 // MARK: - 横屏模式 - 底部工具栏
     

@@ -134,9 +134,10 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
 // MARK: - 窗口模式 - 底部工具栏
     
     public func controlsViewDidTransitionToFullscreen(for controlsView: ARTVideoPlayerControlsView, orientation: ScreenOrientation) { // 点击全屏按钮
-        delegate?.wrapperViewDidTransitionToFullscreen?(for: self, orientation: orientation)
         fullscreenManager.presentFullscreenWithRotation { [weak self] in // 切换全屏模式顶底栏
-            self?.updateScreenMode(for: orientation)
+            guard let self = self else { return }
+            self.updateScreenMode(for: orientation)
+            self.delegate?.wrapperViewDidTransitionToFullscreen?(for: self, orientation: orientation)
         }
     }
     

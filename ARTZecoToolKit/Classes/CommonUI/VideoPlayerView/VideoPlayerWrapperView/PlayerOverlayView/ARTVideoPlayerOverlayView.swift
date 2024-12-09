@@ -149,7 +149,6 @@ extension ARTVideoPlayerOverlayView {
     }
 }
 
-
 // MARK: - Private Delegate Methods
 
 extension ARTVideoPlayerOverlayView {

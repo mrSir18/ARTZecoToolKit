@@ -37,6 +37,12 @@ open class ARTVideoPlayerView: UIStackView {
     open func startVideoPlayback(with config: ARTVideoPlayerConfig?) {
         wrapperView.startVideoPlayback(with: config)
     }
+    
+    /// 开始弹幕播放
+    /// - Note: 重写父类方法，开始弹幕播放
+    open func startDanmaku() {
+        wrapperView.startDanmaku()
+    }
 }
 
 // MARK: Private Methods

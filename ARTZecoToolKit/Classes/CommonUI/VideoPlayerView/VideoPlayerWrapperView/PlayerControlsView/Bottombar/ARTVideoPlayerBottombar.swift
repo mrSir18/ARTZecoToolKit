@@ -211,6 +211,11 @@ extension ARTVideoPlayerBottombar {
     @objc open func updatePlayPauseButton(isPlaying: Bool) {
         
     }
+    
+    /// 更新弹幕开关按钮状态
+    @objc open func updateDanmakuToggle() {
+        
+    }
 }
 
 // MARK: - Private Methods

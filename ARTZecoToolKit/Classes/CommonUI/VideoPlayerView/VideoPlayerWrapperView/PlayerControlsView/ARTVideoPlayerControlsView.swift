@@ -131,6 +131,11 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
         bottomBar.updatePlayPauseButton(isPlaying: isPlaying)
     }
     
+    /// 更新弹幕开关按钮状态
+    open func updateDanmakuToggleInControls() {
+        bottomBar.updateDanmakuToggle()
+    }
+    
     /// 更新倍数按钮状态
     /// - Parameter rate: 当前倍数
     open func updateRateButtonInControls(rate: Float) {

@@ -105,8 +105,45 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
         setupAnimation()
     }
     
-    // MARK: - Button Actions
+    // MARK: - Override Super Methods
     
+    open override func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) { // 自定义滑块外观
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: duration) {
+                self.sliderView.trackHeight = trackHeight
+                self.progressView.layer.cornerRadius = cornerRadius
+                if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: thumbSize) {
+                    self.sliderView.setThumbImage(thumbImage, for: .normal)
+                }
+                self.progressView.snp.updateConstraints { make in
+                    make.height.equalTo(trackHeight)
+                }
+                self.layoutIfNeeded()
+            }
+        }
+    }
+    
+    open override func updateDanmakuToggle() { // 更新弹幕开关
+        didTapDanmakuButton()
+    }
+}
+
+// MARK: - Public Methods
+
+extension ARTVideoPlayerPortraitFullscreenBottombar {
+    
+    /// 更新收藏状态
+    ///
+    /// - Parameter isFavorited: 是否已收藏
+    public func updateFavoriteState(isFavorited: Bool) {
+        self.isFavorited = isFavorited
+    }
+}
+
+// MARK: - Button Actions
+
+extension ARTVideoPlayerPortraitFullscreenBottombar {
+
     /// 点击收藏按钮
     @objc open func didTapFavoriteButton() {
         isFavorited.toggle()
@@ -159,33 +196,6 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
                 self.containerView.alpha = 1.0
             }
         }
-    }
-    
-    // MARK: - Override Super Methods
-    
-    open override func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) { // 自定义滑块外观
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: duration) {
-                self.sliderView.trackHeight = trackHeight
-                self.progressView.layer.cornerRadius = cornerRadius
-                if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: thumbSize) {
-                    self.sliderView.setThumbImage(thumbImage, for: .normal)
-                }
-                self.progressView.snp.updateConstraints { make in
-                    make.height.equalTo(trackHeight)
-                }
-                self.layoutIfNeeded()
-            }
-        }
-    }
-    
-    // MARK: - Public Methods
-
-    /// 更新收藏状态
-    ///
-    /// - Parameter isFavorited: 是否已收藏
-    public func updateFavoriteState(isFavorited: Bool) {
-        self.isFavorited = isFavorited
     }
 }
 
@@ -364,7 +374,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
     
     @objc open func setupDanmakuButton() { // 创建弹幕按钮
         danmakuButton = ARTAlignmentButton(type: .custom)
-        danmakuButton.isSelected = true
+        danmakuButton.isSelected = false
         danmakuButton.layoutType = .freeform
         danmakuButton.imageAlignment = .bottomLeft
         danmakuButton.imageSize = ARTAdaptedSize(width: 30.0, height: 30.0)

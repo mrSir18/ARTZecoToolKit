@@ -271,6 +271,11 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
             }
         }
     }
+    
+    /// 开始弹幕播放
+    open func startDanmaku() {
+        playControlsView.updateDanmakuToggleInControls()
+    }
 }
 
 // MARK: - Setup Initializer
