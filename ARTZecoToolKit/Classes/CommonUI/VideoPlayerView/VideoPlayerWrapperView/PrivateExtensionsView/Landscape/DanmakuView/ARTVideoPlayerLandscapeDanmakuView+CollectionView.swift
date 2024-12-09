@@ -18,8 +18,10 @@ extension ARTVideoPlayerLandscapeDanmakuView: UICollectionViewDelegate, UICollec
         cell.sliderValueChanged = { [weak self] value, shouldSave in
             guard let self = self else { return }
             if shouldSave {
-                self.danmakuEntity.sliderOptions[indexPath.item].defaultValue = value // 保存滑块值
-                self.delegate?.slidingViewDidSliderValueChanged(for: self.danmakuEntity.sliderOptions[indexPath.item]) // 滑块值改变事件回调
+                var updatedOption = self.danmakuEntity.sliderOptions[indexPath.item] // 更新滑块值
+                updatedOption.defaultValue = value
+                self.danmakuEntity.updateOption(at: indexPath.item, with: updatedOption) // 更新弹幕设置选项并保存
+                self.delegate?.slidingViewDidSliderValueChanged(for: updatedOption) // 通知代理滑块值改变事件
             }
         }
         cell.configureWithSliderOption(danmakuEntity.sliderOptions[indexPath.item])
