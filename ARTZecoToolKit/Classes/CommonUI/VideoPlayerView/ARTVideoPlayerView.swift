@@ -38,6 +38,14 @@ open class ARTVideoPlayerView: UIStackView {
         wrapperView.startVideoPlayback(with: config)
     }
     
+    /// 播放下一个视频
+    ///
+    /// - Parameter config: 视频播放器配置模型
+    /// - Note: 重写父类方法，切换播放视频
+    open func playNextVideo(with config: ARTVideoPlayerConfig?) {
+        wrapperView.playNextVideo(with: config)
+    }
+    
     /// 开始弹幕播放
     /// - Note: 重写父类方法，开始弹幕播放
     open func startDanmaku() {

@@ -50,8 +50,8 @@
 		02E9847F2D08C8000052C36A /* ARTControllerBottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E984682D08C8000052C36A /* ARTControllerBottomBar.swift */; };
 		02E984802D08C8000052C36A /* ARTBaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E9844F2D08C8000052C36A /* ARTBaseTabBarController.swift */; };
 		02E984872D08C8450052C36A /* ARTVideoPlayerLandscapeChaptersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E984832D08C8450052C36A /* ARTVideoPlayerLandscapeChaptersView.swift */; };
-		02E984882D08C8450052C36A /* ARTVideoPlayerLandscapeChaptersView+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E984842D08C8450052C36A /* ARTVideoPlayerLandscapeChaptersView+CollectionView.swift */; };
 		02E984892D08C8450052C36A /* ARTVideoPlayerLandscapeChaptersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E984812D08C8450052C36A /* ARTVideoPlayerLandscapeChaptersCell.swift */; };
+		02ED01032D08D3BA00D51D2E /* ARTVideoPlayerLandscapeChaptersView+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02ED01022D08D3BA00D51D2E /* ARTVideoPlayerLandscapeChaptersView+CollectionView.swift */; };
 		02F8AE2B2BF66B3E00A111F6 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F8AE262BF66B3D00A111F6 /* 0.png */; };
 		02F8AE2C2BF66B3E00A111F6 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F8AE272BF66B3D00A111F6 /* 2.png */; };
 		02F8AE2D2BF66B3E00A111F6 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F8AE282BF66B3D00A111F6 /* 1.png */; };
@@ -129,7 +129,7 @@
 		02E9846D2D08C8000052C36A /* ARTWebCustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTWebCustomViewController.swift; sourceTree = "<group>"; };
 		02E984812D08C8450052C36A /* ARTVideoPlayerLandscapeChaptersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerLandscapeChaptersCell.swift; sourceTree = "<group>"; };
 		02E984832D08C8450052C36A /* ARTVideoPlayerLandscapeChaptersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerLandscapeChaptersView.swift; sourceTree = "<group>"; };
-		02E984842D08C8450052C36A /* ARTVideoPlayerLandscapeChaptersView+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTVideoPlayerLandscapeChaptersView+CollectionView.swift"; sourceTree = "<group>"; };
+		02ED01022D08D3BA00D51D2E /* ARTVideoPlayerLandscapeChaptersView+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTVideoPlayerLandscapeChaptersView+CollectionView.swift"; sourceTree = "<group>"; };
 		02F8AE262BF66B3D00A111F6 /* 0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0.png; sourceTree = "<group>"; };
 		02F8AE272BF66B3D00A111F6 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		02F8AE282BF66B3D00A111F6 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
@@ -371,7 +371,7 @@
 			isa = PBXGroup;
 			children = (
 				02E984832D08C8450052C36A /* ARTVideoPlayerLandscapeChaptersView.swift */,
-				02E984842D08C8450052C36A /* ARTVideoPlayerLandscapeChaptersView+CollectionView.swift */,
+				02ED01022D08D3BA00D51D2E /* ARTVideoPlayerLandscapeChaptersView+CollectionView.swift */,
 				02E984822D08C8450052C36A /* Cell */,
 			);
 			path = EpisodeSelectionView;
@@ -710,6 +710,7 @@
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				0292ECA72C733B7A00D08248 /* ARTViewController+WebView.swift in Sources */,
 				023F976D2C32F5A1009CD62B /* ARTViewController_AlertView.swift in Sources */,
+				02ED01032D08D3BA00D51D2E /* ARTVideoPlayerLandscapeChaptersView+CollectionView.swift in Sources */,
 				026A7B6C2C3431AE00D3134E /* ARTViewController_ActionSheet.swift in Sources */,
 				02F8AE512BF67E7E00A111F6 /* ARTViewController_AlertController.swift in Sources */,
 				02F8AE542BF67E7E00A111F6 /* ARTViewController_Debug.swift in Sources */,
@@ -738,7 +739,6 @@
 				02F8AE532BF67E7E00A111F6 /* ARTViewController_Quantity.swift in Sources */,
 				0258CA9E2C03995300A486E7 /* ARTViewController_PageViewController.swift in Sources */,
 				02E984872D08C8450052C36A /* ARTVideoPlayerLandscapeChaptersView.swift in Sources */,
-				02E984882D08C8450052C36A /* ARTVideoPlayerLandscapeChaptersView+CollectionView.swift in Sources */,
 				02E984892D08C8450052C36A /* ARTVideoPlayerLandscapeChaptersCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

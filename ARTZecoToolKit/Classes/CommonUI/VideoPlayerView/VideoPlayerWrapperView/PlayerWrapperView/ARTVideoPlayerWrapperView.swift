@@ -191,11 +191,29 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     ///
     /// - Parameter url: 新的视频 URL
     /// - Note: 重写父类方法，播放下一集视频
-    open func playNextVideo(with url: URL) {
+    open func playNextVideo(with config: ARTVideoPlayerConfig?) {
+        guard let url = config?.url else { return }
         thumbnailCache.removeAll() // 清空缓存
-        playerItem = AVPlayerItem(asset: AVAsset(url: url))
-        player?.replaceCurrentItem(with: playerItem)
-        player?.play()
+//        showLoadingIndicator() // 显示加载动画
+        
+        // 加载新的视频资源
+        let nextAsset = AVURLAsset(url: url)
+        nextAsset.loadValuesAsynchronously(forKeys: ["playable"]) { [weak self] in
+            guard let self = self else { return }
+            var error: NSError?
+            let isPlayable = nextAsset.statusOfValue(forKey: "playable", error: &error) == .loaded
+            if isPlayable { // 视频可播放
+                DispatchQueue.main.async {
+//                    self.hideLoadingIndicator() // 移除加载动画
+                    let nextPlayerItem = AVPlayerItem(asset: nextAsset)
+                    self.player.replaceCurrentItem(with: nextPlayerItem)
+                    self.setPlayerVolume(playerItem: nextPlayerItem, volume: 2.0)
+                    self.setupImageGenerator(nextAsset)
+                }
+            } else {
+                print("视频不可播放: \(error?.localizedDescription ?? "未知错误")")
+            }
+        }
     }
     
     /// 指定播放时间

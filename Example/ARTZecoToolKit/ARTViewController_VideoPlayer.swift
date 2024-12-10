@@ -137,15 +137,17 @@ import ARTZecoToolKit
 
 class ARTViewController_VideoPlayer: ARTBaseViewController {
     
-    /// 弹幕视图
-    private var playerView: ARTVideoPlayerView!
+    /// 播放器视图
+    public var playerView: ARTVideoPlayerView!
     
     /// 懒加载目录视图
     public lazy var chaptersView: ARTVideoPlayerLandscapeSlidingView = {
         let chaptersView = ARTVideoPlayerLandscapeChaptersView()
         chaptersView.chapterCallback = { [weak self] index in
             guard let self = self else { return }
-            print("选择了第 \(index) 集")
+            var config = ARTVideoPlayerConfig()
+            config.url = URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")
+            self.playerView.playNextVideo(with: config)
         }
         return chaptersView
     }()
