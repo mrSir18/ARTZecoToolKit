@@ -149,15 +149,14 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
     }
     
     public func controlsViewDidTapSpeed(for controlsView: ARTVideoPlayerControlsView) { // 点击倍速按钮
-//        delegate?.wrapperViewDidTapSpeed?(for: self)
+        delegate?.wrapperViewDidTapSpeed?(for: self)
         playControlsView.autoHideControls()
         rateView.showExtensionsView()
     }
     
-    public func controlsViewDidTapCollection(for controlsView: ARTVideoPlayerControlsView) { // 点击目录按钮
-//        delegate?.wrapperViewDidTapCollection?(for: self)
+    public func controlsViewDidTapCatalogue(for controlsView: ARTVideoPlayerControlsView) { // 点击目录按钮
+        delegate?.wrapperViewDidTapCatalogue?(for: self)
         playControlsView.autoHideControls()
-        chaptersView.showExtensionsView()
     }
     
     
@@ -171,6 +170,7 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerControlsViewDelegate {
         portraitDanmakuView.showExtensionsView()
     }
 }
+
 
 // MARK: - ARTVideoPlayerSlidingViewDelegate
 

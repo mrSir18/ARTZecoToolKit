@@ -104,7 +104,7 @@
     @objc optional func controlsViewDidTapSpeed(for controlsView: ARTVideoPlayerControlsView)
     
     /// 当目录按钮被点击时调用
-    @objc optional func controlsViewDidTapCollection(for controlsView: ARTVideoPlayerControlsView)
+    @objc optional func controlsViewDidTapCatalogue(for controlsView: ARTVideoPlayerControlsView)
     
     
 // MARK: - 竖屏模式 - 底部工具栏

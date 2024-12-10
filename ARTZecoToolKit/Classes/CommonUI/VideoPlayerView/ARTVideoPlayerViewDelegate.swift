@@ -127,7 +127,7 @@
     @objc optional func playerViewDidTapSpeed(for playerView: ARTVideoPlayerView)
     
     /// 当目录按钮被点击时调用
-    @objc optional func playerViewDidTapCollection(for playerView: ARTVideoPlayerView)
+    @objc optional func playerViewDidTapCatalogue(for playerView: ARTVideoPlayerView)
     
     
 // MARK: - 竖屏模式 - 底部工具栏

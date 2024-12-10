@@ -5,7 +5,7 @@
 //  Created by mrSir18 on 2024/11/4.
 //
 
-public class ARTVideoPlayerLandscapeSlidingView: UIView {
+open class ARTVideoPlayerLandscapeSlidingView: UIView {
     
     /// 代理对象
     public weak var delegate: ARTVideoPlayerSlidingViewDelegate?
@@ -42,7 +42,7 @@ public class ARTVideoPlayerLandscapeSlidingView: UIView {
     // MARK: - Override Super Methods
     
     /// 重写父类方法，设置子视图
-    func setupViews() {
+    open func setupViews() {
         setupContainerView()
         setupGradientView()
         setupSeparatorLineView()
@@ -58,7 +58,7 @@ public class ARTVideoPlayerLandscapeSlidingView: UIView {
     ///
     /// - Parameter animated: 是否动画
     /// - Note: 重写父类方法，设置子视图布局
-    func showExtensionsView(_ completion: (() -> Void)? = nil) {
+    open func showExtensionsView(_ completion: (() -> Void)? = nil) {
         if self.superview == nil { // 判断视图是否已在父视图中
             art_keyWindow.addSubview(self)
             snp.makeConstraints { make in
@@ -78,7 +78,7 @@ public class ARTVideoPlayerLandscapeSlidingView: UIView {
     ///
     /// - Parameter animated: 是否动画
     /// - Note: 重写父类方法，设置子视图布局
-    func hideExtensionsView(_ completion: (() -> Void)? = nil) {
+    open func hideExtensionsView(_ completion: (() -> Void)? = nil) {
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut]) {
             self.containerView.transform = CGAffineTransformTranslate(self.containerView.transform, UIScreen.art_currentScreenWidth, 0)
         } completion: { _ in
@@ -89,7 +89,7 @@ public class ARTVideoPlayerLandscapeSlidingView: UIView {
     
     // MARK: - Button Actions
     
-    @objc func didTapRestoreButton() { // 恢复
+    @objc open func didTapRestoreButton() { // 恢复
    
     }
     
@@ -99,7 +99,7 @@ public class ARTVideoPlayerLandscapeSlidingView: UIView {
     ///
     /// - Parameter gesture: 点击手势
     /// - Note: 重写父类方法，处理点击手势
-    @objc func handleSortingTapGesture(_ gesture: UITapGestureRecognizer) {
+    @objc open func handleSortingTapGesture(_ gesture: UITapGestureRecognizer) {
         hideExtensionsView()
     }
 }

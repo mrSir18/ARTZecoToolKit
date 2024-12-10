@@ -5,6 +5,8 @@
 //  Created by mrSir18 on 2024/11/5.
 //
 
+import ARTZecoToolKit
+
 class ARTVideoPlayerLandscapeChaptersCell: UICollectionViewCell {
     
     /// 标题标签

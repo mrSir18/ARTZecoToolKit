@@ -82,16 +82,6 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         return rateView
     }()
     
-    /// 懒加载目录视图
-    internal lazy var chaptersView: ARTVideoPlayerLandscapeSlidingView = {
-        let chaptersView = ARTVideoPlayerLandscapeChaptersView(self)
-        chaptersView.chapterCallback = { [weak self] index in
-            guard let self = self else { return }
-            print("选择了第 \(index) 集")
-        }
-        return chaptersView
-    }()
-    
     /// 懒加载竖屏弹幕视图
     internal lazy var portraitDanmakuView: ARTVideoPlayerPortraitDanmakuView = {
         let danmakuView = ARTVideoPlayerPortraitDanmakuView(self)

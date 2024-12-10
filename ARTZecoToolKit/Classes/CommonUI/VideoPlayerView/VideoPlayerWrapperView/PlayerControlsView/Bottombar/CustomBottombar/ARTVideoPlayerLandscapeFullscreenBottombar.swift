@@ -19,7 +19,7 @@ import AVFoundation
     @objc optional func bottombarDidTapSpeed(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
     
     /// 当合集按钮被点击时调用
-    @objc optional func bottombarDidTapCollection(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
+    @objc optional func bottombarDidTapCatalogue(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
 }
 
 open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
@@ -83,7 +83,7 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
         setupDanmakuButton()
         setupDanmakuSettingsButton()
         setupDanmakuInputField()
-        setupCollectionButton()
+        setupCatalogueButton()
         setupSpeedButton()
     }
     
@@ -167,9 +167,9 @@ extension ARTVideoPlayerLandscapeFullscreenBottombar {
         subclassDelegate?.bottombarDidTapSpeed?(for: self)
     }
     
-    /// 点击合集按钮
-    @objc open func didTapCollectionButton() {
-        subclassDelegate?.bottombarDidTapCollection?(for: self)
+    /// 点击目录按钮
+    @objc open func didTapCatalogueButton() {
+        subclassDelegate?.bottombarDidTapCatalogue?(for: self)
     }
 }
 
@@ -327,13 +327,13 @@ extension ARTVideoPlayerLandscapeFullscreenBottombar {
         }
     }
     
-    @objc open func setupCollectionButton() { // 创建合集按钮
+    @objc open func setupCatalogueButton() { // 创建合集按钮
         collectionButton = UIButton(type: .custom)
         collectionButton.titleLabel?.font = .art_medium(ARTAdaptedValue(12.0))
         collectionButton.contentHorizontalAlignment = .right
         collectionButton.setTitle("目录", for: .normal)
         collectionButton.setTitleColor(.art_color(withHEXValue: 0xFFFFFF), for: .normal)
-        collectionButton.addTarget(self, action: #selector(didTapCollectionButton), for: .touchUpInside)
+        collectionButton.addTarget(self, action: #selector(didTapCatalogueButton), for: .touchUpInside)
         containerView.addSubview(collectionButton)
         collectionButton.snp.makeConstraints { make in
             make.size.equalTo(ARTAdaptedSize(width: 44.0, height: 37.0))

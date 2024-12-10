@@ -5,6 +5,8 @@
 //  Created by mrSir18 on 2024/11/4.
 //
 
+import ARTZecoToolKit
+
 class ARTVideoPlayerLandscapeChaptersView: ARTVideoPlayerLandscapeSlidingView {
     
     /// 默认选中的索引路径

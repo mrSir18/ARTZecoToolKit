@@ -127,7 +127,7 @@
     @objc optional func wrapperViewDidTapSpeed(for wrapperView: ARTVideoPlayerWrapperView)
     
     /// 当目录按钮被点击时调用
-    @objc optional func wrapperViewDidTapCollection(for wrapperView: ARTVideoPlayerWrapperView)
+    @objc optional func wrapperViewDidTapCatalogue(for wrapperView: ARTVideoPlayerWrapperView)
     
     
 // MARK: - 竖屏模式 - 底部工具栏

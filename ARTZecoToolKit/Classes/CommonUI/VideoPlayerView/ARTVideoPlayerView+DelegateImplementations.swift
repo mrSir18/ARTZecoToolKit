@@ -116,8 +116,8 @@ extension ARTVideoPlayerView: ARTVideoPlayerWrapperViewDelegate {
         delegate?.playerViewDidTapSpeed?(for: self)
     }
     
-    public func wrapperViewDidTapCollection(for wrapperView: ARTVideoPlayerWrapperView) { // 点击收藏按钮
-        delegate?.playerViewDidTapCollection?(for: self)
+    public func wrapperViewDidTapCatalogue(for wrapperView: ARTVideoPlayerWrapperView) { // 点击目录按钮
+        delegate?.playerViewDidTapCatalogue?(for: self)
     }
     
     

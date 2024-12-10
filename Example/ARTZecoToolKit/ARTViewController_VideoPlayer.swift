@@ -140,6 +140,16 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
     /// 弹幕视图
     private var playerView: ARTVideoPlayerView!
     
+    /// 懒加载目录视图
+    public lazy var chaptersView: ARTVideoPlayerLandscapeSlidingView = {
+        let chaptersView = ARTVideoPlayerLandscapeChaptersView()
+        chaptersView.chapterCallback = { [weak self] index in
+            guard let self = self else { return }
+            print("选择了第 \(index) 集")
+        }
+        return chaptersView
+    }()
+    
     
     // MARK: - Initialization
     
@@ -164,9 +174,9 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
         // MARK: - Test Methods
         
         var config = ARTVideoPlayerConfig()
-//        config.url = URL(string: "https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4")
+        config.url = URL(string: "https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4")
 //        config.url = URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")
-        config.url = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MP4")!)
+//        config.url = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MP4")!)
         playerView.startVideoPlayback(with: config)
     }
     
@@ -315,8 +325,9 @@ extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
         print("点击倍速按钮")
     }
     
-    func playerViewDidTapCollection(for playerView: ARTVideoPlayerView) { // 点击目录按钮
+    func playerViewDidTapCatalogue(for playerView: ARTVideoPlayerView) { // 点击目录按钮
         print("点击目录按钮")
+        chaptersView.showExtensionsView()
     }
     
     
