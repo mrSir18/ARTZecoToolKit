@@ -222,6 +222,11 @@ extension ARTVideoPlayerBottombar {
     @objc open func updateDanmakuToggle() {
         
     }
+
+    /// 检查弹幕功能是否启用
+    @objc open func isDanmakuEnabled() -> Bool {
+        return UserDefaults.standard.bool(forKey: "DanmakuEnabledKey")
+    }
 }
 
 // MARK: - Private Methods

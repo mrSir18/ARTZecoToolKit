@@ -79,7 +79,6 @@ public struct ARTVideoPlayerGeneralDanmakuEntity {
         do {
             let data = try JSONEncoder().encode(sliderOptions)
             UserDefaults.standard.set(data, forKey: Self.storageKey)
-            UserDefaults.standard.synchronize()
         } catch {
             print("保存 sliderOptions 失败: \(error)")
         }

@@ -312,7 +312,6 @@ extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
 // MARK: - 窗口模式 - 底部工具栏
     
     func playerViewDidTransitionToFullscreen(for playerView: ARTVideoPlayerView, orientation: ScreenOrientation) { // 点击全屏按钮
-        print("点击全屏按钮")
         playerView.startDanmaku() // 开启弹幕
     }
 

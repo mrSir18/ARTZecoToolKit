@@ -124,7 +124,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
     }
     
     open override func updateDanmakuToggle() { // 更新弹幕开关
-        didTapDanmakuButton()
+        if isDanmakuEnabled() { didTapDanmakuButton() }
     }
 }
 

@@ -337,6 +337,11 @@ extension ARTVideoPlayerControlsView {
             resetAutoHideTimer()
         }
     }
+    
+    /// 本地存储弹幕状态
+    internal func saveDanmakuEnabled(isDanmakuEnabled: Bool) {
+        UserDefaults.standard.set(isDanmakuEnabled, forKey: "DanmakuEnabledKey")
+    }
 }
 
 // MARK: - Private Delegate Methods

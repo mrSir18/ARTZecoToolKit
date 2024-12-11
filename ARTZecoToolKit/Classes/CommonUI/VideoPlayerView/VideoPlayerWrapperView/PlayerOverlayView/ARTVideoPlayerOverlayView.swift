@@ -91,7 +91,7 @@ extension ARTVideoPlayerOverlayView {
     
     /// 开始弹幕
     @objc open func startDanmaku() {
-        danmakuView.startDanmaku()
+        if isDanmakuEnabled() { danmakuView.startDanmaku() }
     }
     
     /// 暂停弹幕
@@ -101,7 +101,7 @@ extension ARTVideoPlayerOverlayView {
     
     /// 恢复弹幕
     @objc open func resumeDanmaku() {
-        danmakuView.resumeDanmaku()
+        if isDanmakuEnabled() { danmakuView.resumeDanmaku() }
     }
     
     /// 停止弹幕
@@ -146,6 +146,11 @@ extension ARTVideoPlayerOverlayView {
             let speedLevel = ARTDanmakuView.SpeedLevel(rawValue: speedIndex) ?? .moderate
             danmakuView.updateDanmakuSpeed(to: speedLevel)
         }
+    }
+    
+    /// 检查弹幕功能是否启用
+    private func isDanmakuEnabled() -> Bool {
+        return UserDefaults.standard.bool(forKey: "DanmakuEnabledKey")
     }
 }
 
