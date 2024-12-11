@@ -111,6 +111,11 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
         }
     }
     
+    open override func resetPlaybackTimeLabels() { // 重置播放时间标签
+        currentTimeLabel.text = "00:00"
+        durationLabel.text = "/00:00"
+    }
+    
     open override func updatePlayPauseButton(isPlaying: Bool) { // 更新播放暂停按钮
         pauseButton.isSelected = !isPlaying
     }

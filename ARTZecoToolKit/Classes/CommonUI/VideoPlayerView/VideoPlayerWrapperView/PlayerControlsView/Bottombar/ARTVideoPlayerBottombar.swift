@@ -203,6 +203,12 @@ extension ARTVideoPlayerBottombar {
     @objc open func resetSliderValue(value: Float = 0.0) {
         progressView.setProgress(value, animated: false)
         sliderView.setValue(value, animated: false)
+        resetPlaybackTimeLabels()
+    }
+    
+    /// 重置播放时间标签
+    @objc open func resetPlaybackTimeLabels() {
+        
     }
     
     /// 更新播放按钮状态

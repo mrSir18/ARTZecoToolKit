@@ -118,6 +118,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     open override func onReceivePlayerReadyToPlay() { // 播放器准备好
         super.onReceivePlayerReadyToPlay()
+//        hideLoadingIndicator() // 移除加载动画
         player.play()
     }
     
@@ -130,7 +131,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     open override func onReceivePlayerProgressDidChange(time: CMTime) { // 更新播放时间
         super.onReceivePlayerProgressDidChange(time: time)
-        let duration = player.currentItem?.duration ?? interval // 获取当前视频的时长
+        let duration = player.currentItem?.duration ?? totalDuration // 获取当前视频的时长
         guard CMTimeGetSeconds(time) > 0, CMTimeGetSeconds(duration) > 0 else {
             return // 防止除零错误
         }
@@ -161,6 +162,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     open override func onReceivePlayerItemDidPlayToEnd(_ notification: Notification) { // 播放完成
         super.onReceivePlayerItemDidPlayToEnd(notification)
+        playerOverlayView.stopDanmaku() // 停止弹幕
         player.pause()
         playerState = .ended
         playControlsView.updatePlayerStateInControls(playerState: playerState)
@@ -184,7 +186,6 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         }
         playerConfig = config
         setupPreparePlayer(with: url)
-        addPlayerObservers()
     }
     
     /// 播放下一集视频
@@ -193,25 +194,20 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     /// - Note: 重写父类方法，播放下一集视频
     open func playNextVideo(with config: ARTVideoPlayerConfig?) {
         guard let url = config?.url else { return }
-        thumbnailCache.removeAll() // 清空缓存
+        prepareForNextVideo() // 为播放下一集准备工作
 //        showLoadingIndicator() // 显示加载动画
-        
-        // 加载新的视频资源
-        let nextAsset = AVURLAsset(url: url)
-        nextAsset.loadValuesAsynchronously(forKeys: ["playable"]) { [weak self] in
+
+        /// 加载视频资源
+        loadAssetAsync(url: url, keys: ["tracks"]) { [weak self] result in
             guard let self = self else { return }
-            var error: NSError?
-            let isPlayable = nextAsset.statusOfValue(forKey: "playable", error: &error) == .loaded
-            if isPlayable { // 视频可播放
-                DispatchQueue.main.async {
-//                    self.hideLoadingIndicator() // 移除加载动画
-                    let nextPlayerItem = AVPlayerItem(asset: nextAsset)
-                    self.player.replaceCurrentItem(with: nextPlayerItem)
-                    self.setPlayerVolume(playerItem: nextPlayerItem, volume: 2.0)
-                    self.setupImageGenerator(nextAsset)
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let asset):
+                    self.finalizeNextVideoPlayback(with: asset) // 完成播放设置
+                case .failure(let error):
+                    print("Tracks 属性加载失败: \(error.localizedDescription)")
+//                    self.hideLoadingIndicator() // 隐藏加载动画
                 }
-            } else {
-                print("视频不可播放: \(error?.localizedDescription ?? "未知错误")")
             }
         }
     }
@@ -245,7 +241,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     /// - Parameter slider: 代表视频播放进度的滑动条
     /// - Note: 子类重写该方法更新预览
     open func updatePreviewImageForSliderValueChange(_ slider: ARTVideoPlayerSlider) {
-        let duration = player.currentItem?.duration ?? interval
+        let duration = player.currentItem?.duration ?? totalDuration
         let currentTime = CMTime(seconds: Double(slider.value) * duration.seconds, preferredTimescale: 600)
         systemControlsView.updateTimeInSystemControls(with: currentTime, duration: duration)
         
@@ -295,23 +291,12 @@ extension ARTVideoPlayerWrapperView {
     /// - Parameter url: 视频文件或资源的 URL
     /// - Note: 验证 URL 后，配置音频会话并初始化播放器
     /// - Note: 重写父类方法，设置子视图
-    @objc open func setupPreparePlayer(with videoUrl: URL) {
-        guard validateURL(videoUrl) else { return }
+    @objc open func setupPreparePlayer(with url: URL) {
+        guard validateURL(url) else { return }
+        configureAudioSession() // 配置音频会话
         
-        // 配置音频会话
-        configureAudioSession()
-        
-        let asset = AVURLAsset(url: videoUrl)
-        playerItem = AVPlayerItem(asset: asset)
-        setPlayerVolume(playerItem: playerItem, volume: 2.0)  // 将音量设置为2倍
-        player = AVPlayer(playerItem: playerItem)
-        guard let playerLayer = layer as? AVPlayerLayer else {
-            print("当前 layer 不是 AVPlayerLayer，无法播放视频。")
-            return
-        }
-        playerLayer.videoGravity = .resizeAspectFill
-        playerLayer.player = player
-        setupImageGenerator(asset)
+//        showLoadingIndicator() // 显示加载动画
+        initializePlayer(with: url) // 初始化播放器
     }
     
     /// 设置播放器音量
@@ -618,7 +603,6 @@ extension ARTVideoPlayerWrapperView {
             systemControlsView.hideVideoPlayerDisplay()
             player.play()
             player.rate = currentRate
-            playerOverlayView.resumeDanmaku()
         case .paused: // 如果是暂停状态，暂停播放
             player.pause()
             playerOverlayView.pauseDanmaku()
@@ -646,13 +630,13 @@ extension ARTVideoPlayerWrapperView {
     /// - Parameter orientation: 屏幕模式
     internal func updateScreenMode(for orientation: ScreenOrientation) {
         sliderValue = playControlsView.bottomBar.sliderView.value
-        isDraggingSlider = true
-        playerOverlayView.resizeDanmakuCellPosition(for: orientation)
-        systemControlsView.updateScreenOrientationInSystemControls(screenOrientation: orientation)
-        playControlsView.transitionToFullscreen(orientation: orientation, playerState: playerState)
-        playControlsView.resetSliderValueInControls(value: sliderValue)
-        playControlsView.updateTimeInControls(with: currentTime, duration: totalDuration)
-        isDraggingSlider = false
+        isDraggingSlider = true // 设置正在拖动滑块
+        playerOverlayView.resizeDanmakuCellPosition(for: orientation) // 更新弹幕位置
+        systemControlsView.updateScreenOrientationInSystemControls(screenOrientation: orientation) // 更新系统控制视图
+        playControlsView.transitionToFullscreen(orientation: orientation, playerState: playerState) // 更新播放控制视图
+        playControlsView.resetSliderValueInControls(value: sliderValue) // 重置滑块值
+        playControlsView.updateTimeInControls(with: currentTime, duration: totalDuration) // 更新时间
+        isDraggingSlider = false // 设置拖动滑块
     }
     
     /// 处理播放器状态
@@ -661,10 +645,12 @@ extension ARTVideoPlayerWrapperView {
     internal func handlePlayerState() {
         switch playerState {
         case .paused: // 恢复播放
+            playerOverlayView.resumeDanmaku() // 恢复弹幕
             resumePlayer()
         case .playing: // 暂停播放
             pausePlayer()
         case .ended: // 重新播放
+            playerOverlayView.startDanmaku() // 开始弹幕
             playControlsView.resetSliderValueInControls()
             playControlsView.updatePlayPauseButtonInControls(isPlaying: true)
             player.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] _ in
@@ -672,6 +658,85 @@ extension ARTVideoPlayerWrapperView {
             }
         default:
             break
+        }
+    }
+}
+
+// MARK: - AVPlayerItem KVO
+
+extension ARTVideoPlayerWrapperView {
+    
+    /// 初始化播放器
+    ///
+    /// - Parameter url: 视频 URL
+    private func initializePlayer(with url: URL) {
+        let asset = AVURLAsset(url: url)
+        playerItem = AVPlayerItem(asset: asset)
+        setPlayerVolume(playerItem: playerItem, volume: 2.0)  // 将音量设置为2倍
+        player = AVPlayer(playerItem: playerItem)
+        
+        configurePlayerLayer() // 配置播放器 Layer
+        setupImageGenerator(asset) // 配置图像生成器
+    }
+
+    /// 为播放下一集准备工作
+    private func prepareForNextVideo() {
+        thumbnailCache.removeAll() // 清空缓存
+        player.pause() // 暂停播放
+        playerState = .playing // 更新播放器状态
+        playControlsView.updatePlayerStateInControls(playerState: playerState) // 更新播放按钮状态
+        isDraggingSlider = true // 设置正在拖动状态
+        playerOverlayView.stopDanmaku() // 停止弹幕
+        playControlsView.resetSliderValueInControls() // 重置进度条时间
+        onReceiveRemovePeriodicTimeObserver() // 移除时间观察者
+        
+        if let playerLayer = self.layer as? AVPlayerLayer {
+            playerLayer.player = nil // 清空当前播放器内容
+            playerLayer.backgroundColor = UIColor.black.cgColor
+        }
+    }
+
+    /// 完成下一集视频的播放设置
+    ///
+    /// - Parameter asset: 加载完成的 AVAsset
+    private func finalizeNextVideoPlayback(with asset: AVURLAsset) {
+        isDraggingSlider = (playerState == .paused) // 设置拖动滑块状态
+        playControlsView.updatePlayPauseButtonInControls(isPlaying: playerState == .playing)
+        playerOverlayView.startDanmaku() // 开始弹幕
+        
+        playerItem = AVPlayerItem(asset: asset)
+        player.replaceCurrentItem(with: playerItem)
+        setPlayerVolume(playerItem: playerItem, volume: 2.0) // 设置音量
+        setupImageGenerator(asset) // 配置图像生成器
+        configurePlayerLayer() // 配置播放器 Layer
+    }
+
+    /// 配置播放器 Layer
+    ///
+    /// - Parameter player: AVPlayer 实例
+    private func configurePlayerLayer() {
+        guard let playerLayer = self.layer as? AVPlayerLayer else {
+            print("当前 layer 不是 AVPlayerLayer，无法播放视频。")
+            return
+        }
+        playerLayer.backgroundColor = UIColor.black.cgColor
+        playerLayer.videoGravity = .resizeAspectFill
+        playerLayer.player = player
+        addPlayerObservers() // 添加播放器观察者
+    }
+    
+    /// 添加播放器观察者
+    /// - Note: 重写父类方法，添加播放器观察者
+    private func loadAssetAsync(url: URL, keys: [String], completion: @escaping (Result<AVURLAsset, Error>) -> Void) {
+        let asset = AVURLAsset(url: url)
+        asset.loadValuesAsynchronously(forKeys: keys) {
+            var error: NSError?
+            let status = asset.statusOfValue(forKey: keys.first ?? "", error: &error)
+            if status == .loaded {
+                completion(.success(asset))
+            } else {
+                completion(.failure(error ?? NSError(domain: "ARTVideoPlayer", code: -1, userInfo: [NSLocalizedDescriptionKey: "Asset loading failed."])))
+            }
         }
     }
 }

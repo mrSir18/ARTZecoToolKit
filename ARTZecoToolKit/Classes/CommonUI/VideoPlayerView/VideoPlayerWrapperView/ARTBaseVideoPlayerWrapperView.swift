@@ -40,9 +40,6 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     /// 视频播放器
     public var player: AVPlayer!
     
-    /// 播放器图层
-    public var playerLayer: AVPlayerLayer!
-    
     /// 播放器的状态
     public var playerItem: AVPlayerItem!
     
@@ -395,6 +392,8 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     ///
     /// - Note: 子类重写: 移除时间观察者
     open func onReceiveRemovePeriodicTimeObserver() {
+        currentTime = .zero
+        totalDuration = .zero
         statusObserver?.invalidate()
         loadedTimeRangesObserver?.invalidate()
         playbackBufferEmptyObserver?.invalidate()

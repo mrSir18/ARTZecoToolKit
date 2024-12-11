@@ -87,6 +87,11 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
             }
         }
     }
+    
+    open override func resetPlaybackTimeLabels() { // 重置播放时间标签
+        currentTimeLabel.text = "00:00"
+        durationLabel.text = "/00:00"
+    }
 }
 
 // MARK: - Setup Initializer
