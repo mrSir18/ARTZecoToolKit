@@ -298,9 +298,8 @@ extension ARTVideoPlayerWrapperView {
     @objc open func setupPreparePlayer(with url: URL) {
         guard validateURL(url) else { return }
         configureAudioSession() // 配置音频会话
-        
-        loadingView?.startLoading() // 显示加载动画
         initializePlayer(with: url) // 初始化播放器
+        loadingView?.startLoading() // 显示加载动画
     }
     
     /// 设置播放器音量
@@ -364,7 +363,6 @@ extension ARTVideoPlayerWrapperView {
     /// - Note: 重写父类方法，设置加载动画视图
     @objc open func setupLoadingView() {
         guard let loadingView = delegate?.wrapperViewDidBeginLoading?(for: self) else { return }
-        loadingView.isHidden = true
         addSubview(loadingView)
         loadingView.snp.makeConstraints { make in
             make.edges.equalToSuperview()

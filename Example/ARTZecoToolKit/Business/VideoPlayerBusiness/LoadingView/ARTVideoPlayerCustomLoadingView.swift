@@ -23,7 +23,7 @@ class ARTVideoPlayerCustomLoadingView: ARTVideoPlayerLoadingView {
         addSubview(loadingView)
         loadingView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.size.equalTo(ARTAdaptedSize(width: 200.0, height: 200.0))
+            make.size.equalTo(ARTAdaptedSize(width: 150.0, height: 150.0))
         }
     }
     
