@@ -29,6 +29,12 @@
     /// - Returns: 自定义底部工具栏视图（需继承自 ARTVideoPlayerBottombar）
     @objc optional func customBottomBar(for wrapperView: ARTVideoPlayerWrapperView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerBottombar?
     
+    /// 加载动画
+    /// - Parameters:
+    ///  - wrapperView: 播放器层视图
+    /// - Returns: 加载动画视图
+    @objc optional func wrapperViewDidBeginLoading(for wrapperView: ARTVideoPlayerWrapperView) -> ARTVideoPlayerLoadingView?
+    
     
 // MARK: - 弹幕视图 - 公共方法
     

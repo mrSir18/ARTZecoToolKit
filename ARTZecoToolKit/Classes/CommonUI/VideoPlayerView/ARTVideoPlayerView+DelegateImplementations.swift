@@ -21,6 +21,9 @@ extension ARTVideoPlayerView: ARTVideoPlayerWrapperViewDelegate {
         return delegate?.customBottomBar?(for: self, screenOrientation: screenOrientation)
     }
     
+    public func wrapperViewDidBeginLoading(for wrapperView: ARTVideoPlayerWrapperView) -> ARTVideoPlayerLoadingView? { // 加载动画
+        return delegate?.playerViewDidBeginLoading?(for: self)
+    }
     
 // MARK: - 弹幕视图 - 公共方法
     

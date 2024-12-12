@@ -151,7 +151,7 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
         }
         return chaptersView
     }()
-    
+
     
     // MARK: - Initialization
     
@@ -219,6 +219,11 @@ extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
      
      }
      */
+    
+    func playerViewDidBeginLoading(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerLoadingView {
+        let loadingView = ARTVideoPlayerCustomLoadingView()
+        return loadingView
+    }
     
     
 // MARK: - 弹幕视图 - 公共方法

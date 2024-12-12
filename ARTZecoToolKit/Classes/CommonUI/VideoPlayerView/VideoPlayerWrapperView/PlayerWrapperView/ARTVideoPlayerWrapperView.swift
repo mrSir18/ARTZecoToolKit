@@ -60,6 +60,9 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     /// 播放器控制层（最顶层：顶底栏、侧边栏等）
     public var playControlsView: ARTVideoPlayerControlsView!
     
+    /// 播放器加载动画视图
+    public var loadingView: ARTVideoPlayerLoadingView?
+    
 
     // MARK: - 私有扩展视图（个人项目使用）
     
@@ -108,6 +111,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         setupFullscreenManager()
         setupOverlayView()
         setupSystemControlsView()
+        setupLoadingView()
         setupControlsView()
         setupGestureRecognizers()
     }
@@ -118,7 +122,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     open override func onReceivePlayerReadyToPlay() { // 播放器准备好
         super.onReceivePlayerReadyToPlay()
-//        hideLoadingIndicator() // 移除加载动画
+        loadingView?.stopLoading() // 移除加载动画
         player.play()
     }
     
@@ -195,7 +199,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     open func playNextVideo(with config: ARTVideoPlayerConfig?) {
         guard let url = config?.url else { return }
         prepareForNextVideo() // 为播放下一集准备工作
-//        showLoadingIndicator() // 显示加载动画
+        loadingView?.startLoading() // 显示加载动画
 
         /// 加载视频资源
         loadAssetAsync(url: url, keys: ["tracks"]) { [weak self] result in
@@ -206,7 +210,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
                     self.finalizeNextVideoPlayback(with: asset) // 完成播放设置
                 case .failure(let error):
                     print("Tracks 属性加载失败: \(error.localizedDescription)")
-//                    self.hideLoadingIndicator() // 隐藏加载动画
+                    self.loadingView?.stopLoading() // 移除加载动画
                 }
             }
         }
@@ -295,7 +299,7 @@ extension ARTVideoPlayerWrapperView {
         guard validateURL(url) else { return }
         configureAudioSession() // 配置音频会话
         
-//        showLoadingIndicator() // 显示加载动画
+        loadingView?.startLoading() // 显示加载动画
         initializePlayer(with: url) // 初始化播放器
     }
     
@@ -354,6 +358,18 @@ extension ARTVideoPlayerWrapperView {
         systemControlsView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+    }
+    
+    /// 创建加载动画视图
+    /// - Note: 重写父类方法，设置加载动画视图
+    @objc open func setupLoadingView() {
+        guard let loadingView = delegate?.wrapperViewDidBeginLoading?(for: self) else { return }
+        loadingView.isHidden = true
+        addSubview(loadingView)
+        loadingView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        self.loadingView = loadingView
     }
     
     /// 创建播放器控制层（最顶层）

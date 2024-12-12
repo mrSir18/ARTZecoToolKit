@@ -186,3 +186,9 @@ extension ARTVideoPlayerWrapperView: ARTVideoPlayerSlidingViewDelegate {
         playerOverlayView.updateDanmakuSliderValueChanged(for: sliderOption)
     }
 }
+
+// MARK: - ARTVideoPlayerLoadingViewDelegate
+
+extension ARTVideoPlayerWrapperView: ARTVideoPlayerLoadingViewDelegate {
+    
+}
