@@ -5,9 +5,10 @@ platform :ios, '13.0'
 target 'ARTZecoToolKit_Example' do
   pod 'ARTZecoToolKit', :path => '../'
 
+  pod 'libpag', :inhibit_warnings => true
+  
   target 'ARTZecoToolKit_Tests' do
     inherit! :search_paths
 
-    
   end
 end

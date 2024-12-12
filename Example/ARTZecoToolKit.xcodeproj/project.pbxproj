@@ -32,6 +32,8 @@
 		02B4908D2C8AEA4C007F379A /* province.json in Resources */ = {isa = PBXBuildFile; fileRef = 02B490892C8AEA4C007F379A /* province.json */; };
 		02B4908E2C8AEA4C007F379A /* street.json in Resources */ = {isa = PBXBuildFile; fileRef = 02B4908A2C8AEA4C007F379A /* street.json */; };
 		02BE325C2CC9C9DC00F25937 /* video.MP4 in Resources */ = {isa = PBXBuildFile; fileRef = 02BE325B2CC9C9DC00F25937 /* video.MP4 */; };
+		02D1BCC72D0AF8ED0075BF64 /* loading.pag in Resources */ = {isa = PBXBuildFile; fileRef = 02D1BCC62D0AF8ED0075BF64 /* loading.pag */; };
+		02E8E1AE2D0AEEC800C68377 /* ARTPagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E8E1AD2D0AEEC800C68377 /* ARTPagView.swift */; };
 		02E984702D08C8000052C36A /* ARTWebCustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E9846D2D08C8000052C36A /* ARTWebCustomViewController.swift */; };
 		02E984712D08C8000052C36A /* ARTCustomDanmakuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E984662D08C8000052C36A /* ARTCustomDanmakuCell.swift */; };
 		02E984722D08C8000052C36A /* ARTCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E984632D08C8000052C36A /* ARTCollectionViewModel.swift */; };
@@ -71,8 +73,8 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		A1C9FAD4D0C49DBA793D1525 /* Pods_ARTZecoToolKit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67CFF70A1C7462B909B1E6AC /* Pods_ARTZecoToolKit_Tests.framework */; };
 		BC8CBDE46972C8FF23B47DF8 /* Pods_ARTZecoToolKit_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93254949C2F77EC4627A0C8B /* Pods_ARTZecoToolKit_Example.framework */; };
+		F812B962E7A952147B6000F6 /* Pods_ARTZecoToolKit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D429E006CEEC3DDCA4A8053 /* Pods_ARTZecoToolKit_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +113,9 @@
 		02B490892C8AEA4C007F379A /* province.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = province.json; sourceTree = "<group>"; };
 		02B4908A2C8AEA4C007F379A /* street.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = street.json; sourceTree = "<group>"; };
 		02BE325B2CC9C9DC00F25937 /* video.MP4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.MP4; sourceTree = "<group>"; };
+		02D1BCC62D0AF8ED0075BF64 /* loading.pag */ = {isa = PBXFileReference; lastKnownFileType = file; path = loading.pag; sourceTree = "<group>"; };
+		02E8E1AD2D0AEEC800C68377 /* ARTPagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTPagView.swift; sourceTree = "<group>"; };
+		02E8E1AF2D0AF15E00C68377 /* ARTZecoToolKit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ARTZecoToolKit-Bridging-Header.h"; sourceTree = "<group>"; };
 		02E9844E2D08C8000052C36A /* ARTBaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTBaseNavigationController.swift; sourceTree = "<group>"; };
 		02E9844F2D08C8000052C36A /* ARTBaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTBaseTabBarController.swift; sourceTree = "<group>"; };
 		02E984502D08C8000052C36A /* ARTBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTBaseViewController.swift; sourceTree = "<group>"; };
@@ -146,6 +151,7 @@
 		02F8AE4B2BF67E7E00A111F6 /* ARTViewController_SlideBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARTViewController_SlideBar.swift; sourceTree = "<group>"; };
 		02FC53412CF1B25E009794A4 /* privacy-policy.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "privacy-policy.html"; sourceTree = "<group>"; };
 		02FD9AFD2D0ADAE3006898C0 /* ARTVideoPlayerCustomLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerCustomLoadingView.swift; sourceTree = "<group>"; };
+		5D429E006CEEC3DDCA4A8053 /* Pods_ARTZecoToolKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARTZecoToolKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* ARTZecoToolKit_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARTZecoToolKit_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -154,12 +160,11 @@
 		607FACE51AFB9204008FA782 /* ARTZecoToolKit_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARTZecoToolKit_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		67CFF70A1C7462B909B1E6AC /* Pods_ARTZecoToolKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARTZecoToolKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		64C66A94BFBB8BB9FA70421F /* Pods-ARTZecoToolKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARTZecoToolKit_Tests.debug.xcconfig"; path = "Target Support Files/Pods-ARTZecoToolKit_Tests/Pods-ARTZecoToolKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		93254949C2F77EC4627A0C8B /* Pods_ARTZecoToolKit_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARTZecoToolKit_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9A31A08E8F90BA713DC188D7 /* Pods-ARTZecoToolKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARTZecoToolKit_Tests.debug.xcconfig"; path = "Target Support Files/Pods-ARTZecoToolKit_Tests/Pods-ARTZecoToolKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		A13A46B6F22885964AF67601 /* ARTZecoToolKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ARTZecoToolKit.podspec; path = ../ARTZecoToolKit.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A63906680CD7412AF2D3826F /* Pods-ARTZecoToolKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARTZecoToolKit_Example.debug.xcconfig"; path = "Target Support Files/Pods-ARTZecoToolKit_Example/Pods-ARTZecoToolKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		C8E8ADF3319EB4FADAC10D27 /* Pods-ARTZecoToolKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARTZecoToolKit_Tests.release.xcconfig"; path = "Target Support Files/Pods-ARTZecoToolKit_Tests/Pods-ARTZecoToolKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		B3D3030B4205F9C1FFDFF24B /* Pods-ARTZecoToolKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARTZecoToolKit_Tests.release.xcconfig"; path = "Target Support Files/Pods-ARTZecoToolKit_Tests/Pods-ARTZecoToolKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		CB45B7B3F467FA99B0E4C6AD /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		D8F7423B5C4DB1F56DAB0F07 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		FB62E3843681E50A82325A7C /* Pods-ARTZecoToolKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARTZecoToolKit_Example.release.xcconfig"; path = "Target Support Files/Pods-ARTZecoToolKit_Example/Pods-ARTZecoToolKit_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -178,7 +183,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1C9FAD4D0C49DBA793D1525 /* Pods_ARTZecoToolKit_Tests.framework in Frameworks */,
+				F812B962E7A952147B6000F6 /* Pods_ARTZecoToolKit_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,6 +193,7 @@
 		0290B4622CC5986700D49079 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				02D1BCC62D0AF8ED0075BF64 /* loading.pag */,
 				02FC53412CF1B25E009794A4 /* privacy-policy.html */,
 				0250693D2D01BEE9009637ED /* zeco-test.html */,
 				02F8AE262BF66B3D00A111F6 /* 0.png */,
@@ -392,6 +398,7 @@
 			isa = PBXGroup;
 			children = (
 				02FD9AFD2D0ADAE3006898C0 /* ARTVideoPlayerCustomLoadingView.swift */,
+				02E8E1AD2D0AEEC800C68377 /* ARTPagView.swift */,
 			);
 			path = LoadingView;
 			sourceTree = "<group>";
@@ -455,6 +462,7 @@
 				02A375A22CC5588800248BBC /* DINPro-Medium.ttf */,
 				02A375A32CC5588800248BBC /* DINPro-Regular.otf */,
 				02A375A42CC5588800248BBC /* SourceHanSansCN-Heavy.otf */,
+				02E8E1AF2D0AF15E00C68377 /* ARTZecoToolKit-Bridging-Header.h */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD41AFB9204008FA782 /* Info.plist */,
@@ -494,8 +502,8 @@
 			children = (
 				A63906680CD7412AF2D3826F /* Pods-ARTZecoToolKit_Example.debug.xcconfig */,
 				FB62E3843681E50A82325A7C /* Pods-ARTZecoToolKit_Example.release.xcconfig */,
-				9A31A08E8F90BA713DC188D7 /* Pods-ARTZecoToolKit_Tests.debug.xcconfig */,
-				C8E8ADF3319EB4FADAC10D27 /* Pods-ARTZecoToolKit_Tests.release.xcconfig */,
+				64C66A94BFBB8BB9FA70421F /* Pods-ARTZecoToolKit_Tests.debug.xcconfig */,
+				B3D3030B4205F9C1FFDFF24B /* Pods-ARTZecoToolKit_Tests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -504,7 +512,7 @@
 			isa = PBXGroup;
 			children = (
 				93254949C2F77EC4627A0C8B /* Pods_ARTZecoToolKit_Example.framework */,
-				67CFF70A1C7462B909B1E6AC /* Pods_ARTZecoToolKit_Tests.framework */,
+				5D429E006CEEC3DDCA4A8053 /* Pods_ARTZecoToolKit_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -535,7 +543,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "ARTZecoToolKit_Tests" */;
 			buildPhases = (
-				13BB9B7F3DC9E5F9C8C095F3 /* [CP] Check Pods Manifest.lock */,
+				02053FEF19C8630FDE6D87CC /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
@@ -614,6 +622,7 @@
 				02F8AE2C2BF66B3E00A111F6 /* 2.png in Resources */,
 				0258B7AB2BFA845800AEB349 /* 3.png in Resources */,
 				02F8AE2D2BF66B3E00A111F6 /* 1.png in Resources */,
+				02D1BCC72D0AF8ED0075BF64 /* loading.pag in Resources */,
 				02B4908E2C8AEA4C007F379A /* street.json in Resources */,
 				0250693E2D01BEE9009637ED /* zeco-test.html in Resources */,
 				0235E28F2C794B30003DEFA8 /* portrait.jpg in Resources */,
@@ -635,6 +644,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		02053FEF19C8630FDE6D87CC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ARTZecoToolKit_Tests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		0B22B629A42AE9CBC3A03E3F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -657,28 +688,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		13BB9B7F3DC9E5F9C8C095F3 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ARTZecoToolKit_Tests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		150F850CFA09C5A70B9CDE6E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -691,6 +700,7 @@
 				"${BUILT_PRODUCTS_DIR}/SmartCodable/SmartCodable.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/YYText/YYText.framework",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/libpag/libpag.framework/libpag",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -699,6 +709,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SmartCodable.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYText.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libpag.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -723,6 +734,7 @@
 				023F976D2C32F5A1009CD62B /* ARTViewController_AlertView.swift in Sources */,
 				02ED01032D08D3BA00D51D2E /* ARTVideoPlayerLandscapeChaptersView+CollectionView.swift in Sources */,
 				026A7B6C2C3431AE00D3134E /* ARTViewController_ActionSheet.swift in Sources */,
+				02E8E1AE2D0AEEC800C68377 /* ARTPagView.swift in Sources */,
 				02F8AE512BF67E7E00A111F6 /* ARTViewController_AlertController.swift in Sources */,
 				02F8AE542BF67E7E00A111F6 /* ARTViewController_Debug.swift in Sources */,
 				02F8AE4E2BF67E7E00A111F6 /* ARTViewController_CollectionView.swift in Sources */,
@@ -896,6 +908,7 @@
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wxfz.zeco;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ARTZecoToolKit/ARTZecoToolKit-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 			};
@@ -913,6 +926,7 @@
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wxfz.zeco;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ARTZecoToolKit/ARTZecoToolKit-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 			};
@@ -920,7 +934,7 @@
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9A31A08E8F90BA713DC188D7 /* Pods-ARTZecoToolKit_Tests.debug.xcconfig */;
+			baseConfigurationReference = 64C66A94BFBB8BB9FA70421F /* Pods-ARTZecoToolKit_Tests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -946,7 +960,7 @@
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C8E8ADF3319EB4FADAC10D27 /* Pods-ARTZecoToolKit_Tests.release.xcconfig */;
+			baseConfigurationReference = B3D3030B4205F9C1FFDFF24B /* Pods-ARTZecoToolKit_Tests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;

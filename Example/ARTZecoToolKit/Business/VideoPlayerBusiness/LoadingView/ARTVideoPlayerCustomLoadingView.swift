@@ -11,15 +11,15 @@ import ARTZecoToolKit
 class ARTVideoPlayerCustomLoadingView: ARTVideoPlayerLoadingView {
     
     /// 动画视图
-    private var loadingView: UIView!
+    private var loadingView: ARTPagView!
     
     
     // MARK: - Override Super Methods
     
     open override func setupViews() {
+        
         /// 创建动画视图
-        loadingView = UIView()
-        loadingView.backgroundColor = .art_randomColor()
+        loadingView = ARTPagView()
         addSubview(loadingView)
         loadingView.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -29,9 +29,11 @@ class ARTVideoPlayerCustomLoadingView: ARTVideoPlayerLoadingView {
     
     override func startLoading() { // 开始动画
         super.startLoading()
+        loadingView.playAnimation(_withFileName: "loading", repeatCount: 0)
     }
     
     override func stopLoading() { // 停止动画
         super.stopLoading()
+        if loadingView.isPlaying() { loadingView.stop() } // 停止动画
     }
 }
