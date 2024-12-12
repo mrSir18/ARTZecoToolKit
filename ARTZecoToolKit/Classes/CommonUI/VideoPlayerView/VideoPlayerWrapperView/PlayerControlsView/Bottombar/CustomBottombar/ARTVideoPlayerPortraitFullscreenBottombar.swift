@@ -122,10 +122,6 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
             }
         }
     }
-    
-    open override func updateDanmakuToggle() { // 更新弹幕开关
-        if isDanmakuEnabled() { didTapDanmakuButton() }
-    }
 }
 
 // MARK: - Public Methods
@@ -374,7 +370,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
     
     @objc open func setupDanmakuButton() { // 创建弹幕按钮
         danmakuButton = ARTAlignmentButton(type: .custom)
-        danmakuButton.isSelected = false
+        danmakuButton.isSelected = isDanmakuEnabled()
         danmakuButton.layoutType = .freeform
         danmakuButton.imageAlignment = .bottomLeft
         danmakuButton.imageSize = ARTAdaptedSize(width: 30.0, height: 30.0)

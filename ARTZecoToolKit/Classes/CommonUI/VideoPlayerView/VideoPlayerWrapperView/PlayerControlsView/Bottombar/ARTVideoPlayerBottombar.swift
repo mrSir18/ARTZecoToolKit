@@ -73,6 +73,9 @@ open class ARTVideoPlayerBottombar: UIView {
         return view
     }()
     
+    /// 弹幕Key
+    public let kDanmakuEnabledKey = "DanmakuEnabledKey"
+    
     
     // MARK: - Initialization
     
@@ -217,15 +220,18 @@ extension ARTVideoPlayerBottombar {
     @objc open func updatePlayPauseButton(isPlaying: Bool) {
         
     }
-    
-    /// 更新弹幕开关按钮状态
-    @objc open func updateDanmakuToggle() {
-        
-    }
 
     /// 检查弹幕功能是否启用
     @objc open func isDanmakuEnabled() -> Bool {
-        return UserDefaults.standard.bool(forKey: "DanmakuEnabledKey")
+        if UserDefaults.standard.object(forKey: kDanmakuEnabledKey) == nil { // 检查是否已设置
+            saveDanmakuEnabled(isDanmakuEnabled: true)
+        }
+        return UserDefaults.standard.bool(forKey: kDanmakuEnabledKey)
+    }
+    
+    /// 本地存储弹幕状态
+    internal func saveDanmakuEnabled(isDanmakuEnabled: Bool) {
+        UserDefaults.standard.set(isDanmakuEnabled, forKey: kDanmakuEnabledKey)
     }
 }
 

@@ -119,10 +119,6 @@ open class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
     open override func updatePlayPauseButton(isPlaying: Bool) { // 更新播放暂停按钮
         pauseButton.isSelected = !isPlaying
     }
-    
-    open override func updateDanmakuToggle() { // 更新弹幕开关
-        if isDanmakuEnabled() { didTapDanmakuButton() }
-    }
 }
 
 // MARK: - Public Methods
@@ -272,7 +268,7 @@ extension ARTVideoPlayerLandscapeFullscreenBottombar {
     
     @objc open func setupDanmakuButton() { // 创建弹幕按钮
         danmakuButton = ARTAlignmentButton(type: .custom)
-        danmakuButton.isSelected = false
+        danmakuButton.isSelected = isDanmakuEnabled() 
         danmakuButton.imageAlignment = .left
         danmakuButton.imageSize = ARTAdaptedSize(width: 23.0, height: 23.0)
         danmakuButton.setImage(UIImage(named: "video_danmaku_off"), for: .normal)

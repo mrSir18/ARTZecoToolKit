@@ -282,7 +282,12 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     /// 开始弹幕播放
     open func startDanmaku() {
-        playControlsView.updateDanmakuToggleInControls()
+        playerOverlayView.startDanmaku()
+        if playerState == .paused { // 如果是暂停状态
+            player.pause()
+            playerOverlayView.pauseDanmaku() // 暂停弹幕
+            playControlsView.updatePlayPauseButtonInControls(isPlaying: false) // 更新播放按钮状态
+        }
     }
 }
 
