@@ -168,9 +168,9 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         super.onReceivePlayerItemDidPlayToEnd(notification)
         playerOverlayView.stopDanmaku() // 停止弹幕
         player.pause()
-        playerState = .ended
-        playControlsView.updatePlayerStateInControls(playerState: playerState)
-        playControlsView.updatePlayPauseButtonInControls(isPlaying: false)
+        playerState = .ended // 更新播放器状态
+        playControlsView.updatePlayerStateInControls(playerState: playerState) // 更新播放器状态
+        playControlsView.updatePlayPauseButtonInControls(isPlaying: false) // 更新播放按钮状态
     }
     
     open override func onReceivePlayerItemFailedToPlayToEnd(_ notification: Notification) { // 播放失败
