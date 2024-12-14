@@ -139,18 +139,6 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
     
     /// 播放器视图
     public var playerView: ARTVideoPlayerView!
-    
-    /// 懒加载目录视图
-    public lazy var chaptersView: ARTVideoPlayerLandscapeSlidingView = {
-        let chaptersView = ARTVideoPlayerLandscapeChaptersView()
-        chaptersView.chapterCallback = { [weak self] index in
-            guard let self = self else { return }
-            var config = ARTVideoPlayerConfig()
-            config.url = URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")
-            self.playerView.playNextVideo(with: config)
-        }
-        return chaptersView
-    }()
 
     
     // MARK: - Initialization
@@ -166,6 +154,7 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
     private func setupPlayerView() { // 创建播放器视图
         let aspectRatio: CGFloat = 16.0 / 9.0
         playerView = ARTVideoPlayerView(self)
+        playerView.backgroundColor = .art_randomColor()
         view.addSubview(playerView)
         playerView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
@@ -179,7 +168,7 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
         config.url = URL(string: "https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4")
 //        config.url = URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")
 //        config.url = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MP4")!)
-        playerView.startVideoPlayback(with: config)
+//        playerView.startVideoPlayback(with: config)
     }
     
     /// 设置支持的 AVPlayer 文件扩展名
@@ -206,140 +195,4 @@ extension ARTViewController_VideoPlayer {
 
 extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
     
-    /*
-     func customScreenOrientation(for playerView: ARTVideoPlayerView) -> ScreenOrientation { // 自定义播放模式
-     
-     }
-     
-     func customTopBar(for playerView: ARTVideoPlayerView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerTopbar? { // 自定义顶部工具栏视图
-     
-     }
-     
-     func customBottomBar(for playerView: ARTVideoPlayerView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerBottombar? { // 自定义底部工具
-     
-     }
-     */
-    
-    func playerViewDidBeginLoading(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerLoadingView {
-        let loadingView = ARTVideoPlayerCustomLoadingView()
-        return loadingView
-    }
-    
-    
-// MARK: - 弹幕视图 - 公共方法
-    
-    func playerViewDidCustomDanmakuView(for playerView: ARTVideoPlayerView) -> ARTDanmakuView? { // 自定义弹幕视图
-        /*
-         1.自定义需要继承 ARTDanmakuView 类 实现 ARTDanmakuViewDelegate 协议
-         
-         2.可通过 ARTVideoPlayerGeneralDanmakuEntity 结构体设置弹幕属性
-         
-         let danmakuView = ARTDanmakuView(self)
-         danmakuView.danmakuTrackHeight = ARTAdaptedValue(42.0) // 弹幕轨道高度
-         danmakuView.danmakuAlpha = 0.8
-         */
-        
-        return nil
-    }
-    
-    func playerViewDidCreateDanmakuCell(for playerView: ARTVideoPlayerView) -> ARTDanmakuCell { // 创建弹幕
-        let cell = ARTCustomDanmakuCell()
-        return cell
-    }
-    
-    func playerViewDidTapDanmakuCell(for playerView: ARTVideoPlayerView, danmakuCell: ARTDanmakuCell) { // 点击弹幕
-        guard let danmakuCell = danmakuCell as? ARTCustomDanmakuCell else { return }
-        print("点击了弹幕：\(danmakuCell.danmakuLabel.text ?? "")")
-    }
-    
-    func playerViewWillDisplayDanmakuCell(for playerView: ARTVideoPlayerView, danmakuCell: ARTDanmakuCell) { // 弹幕开始显示
-//        print("弹幕开始显示")
-    }
-    
-    func playerViewDidEndDisplayDanmakuCell(for playerView: ARTVideoPlayerView, danmakuCell: ARTDanmakuCell) { // 弹幕结束显示
-//        print("弹幕结束显示")
-    }
-    
-    func playerViewDidEndDisplayAllDanmaku(for playerView: ARTVideoPlayerView) {
-        print("所有弹幕显示完毕")
-    }
-    
-// MARK: - 顶部工具栏 - 公共方法
-    
-    func playerViewDidTapBack(for playerView: ARTVideoPlayerView) { // 点击返回按钮
-        print("点击返回按钮")
-    }
-    
-    func playerViewDidTapFavorite(for playerView: ARTVideoPlayerView, isFavorited: Bool) { // 点击收藏按钮
-        print("点击收藏按钮")
-    }
-    
-    func playerViewDidTapShare(for playerView: ARTVideoPlayerView) { // 点击分享按钮
-        print("点击分享按钮")
-    }
-    
-    
-// MARK: - 底部工具栏 - 公共方法
-    
-    func playerViewDidBeginTouch(for playerView: ARTVideoPlayerView, slider: ARTVideoPlayerSlider) { // 暂停播放 (开始拖动滑块)
-        print("暂停播放")
-    }
-    
-    func playerViewDidChangeValue(for playerView: ARTVideoPlayerView, slider: ARTVideoPlayerSlider) { // 快进/快退 (拖动滑块)
-        
-    }
-    
-    func playerViewDidEndTouch(for playerView: ARTVideoPlayerView, slider: ARTVideoPlayerSlider) { // 恢复播放 (结束拖动滑块)
-        print("恢复播放")
-    }
-    
-    func playerViewDidTap(for playerView: ARTVideoPlayerView, slider: ARTVideoPlayerSlider) { // 指定播放时间 (点击滑块)
-        print("指定播放时间")
-    }
-    
-    func playerViewDidTapPause(for playerView: ARTVideoPlayerView, isPlaying: Bool) { // 暂停播放 (点击暂停按钮)
-        print("播放状态 \(isPlaying ? "暂停" : "播放")")
-    }
-    
-    func playerViewDidTapDanmakuToggle(for playerView: ARTVideoPlayerView, isDanmakuEnabled: Bool) { // 弹幕开关 (点击弹幕开关按钮)
-        print("\(isDanmakuEnabled ? "弹幕已开启" : "弹幕已关闭")")
-    }
-    
-    func playerViewDidTapDanmakuSettings(for playerView: ARTVideoPlayerView) { // 弹幕设置 (点击弹幕设置按钮)
-        print("弹幕设置")
-    }
-    
-    func playerViewDidTapDanmakuSend(for playerView: ARTVideoPlayerView, text: String) { // 发送弹幕 (点击发送弹幕按钮)
-        print("发送弹幕")
-    }
-    
-    
-// MARK: - 窗口模式 - 底部工具栏
-    
-    func playerViewDidTransitionToFullscreen(for playerView: ARTVideoPlayerView, orientation: ScreenOrientation) { // 点击全屏按钮
-        playerView.startDanmaku() // 开启弹幕
-    }
-
-    
-// MARK: - 横屏模式 - 底部工具栏
-    
-    func playerViewDidTapNext(for playerView: ARTVideoPlayerView) { // 点击下一个按钮
-        print("点击下一个按钮")
-    }
-    
-    func playerViewDidTapSpeed(for playerView: ARTVideoPlayerView) { // 点击倍速按钮
-        print("点击倍速按钮")
-    }
-    
-    func playerViewDidTapCatalogue(for playerView: ARTVideoPlayerView) { // 点击目录按钮
-        print("点击目录按钮")
-        chaptersView.showExtensionsView()
-    }
-    
-    
-// MARK: - 竖屏模式 - 底部工具栏
-    
-    func playerViewDidTapComment(for playerView: ARTVideoPlayerView) { // 点击评论按钮
-        print("点击评论按钮")
-    }
 }

@@ -7,7 +7,7 @@
 
 import AVFoundation
 
-/// 播放器当前的屏幕方向
+/// 播放器屏幕方向
 @objc public enum ScreenOrientation: Int {
     case portraitFullScreen     = 1 // 竖屏全屏
     case landscapeFullScreen    = 2 // 横屏全屏
@@ -52,15 +52,6 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     /// 播放状态
     public var playerState: PlayerState = .buffering
     
-    /// 是否正在拖动音量条
-    public var isDraggingVolumeSlider = false
-    
-    /// 是否正在拖动亮度条
-    public var isDraggingBrightnessSlider = false
-    
-    /// 是否正在拖动进度条
-    public var isDraggingSlider = false
-    
     /// 播放器的时间观察者
     public var timeObserverToken: Any?
     
@@ -76,12 +67,12 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     
     // MARK: - 播放器观察者属性
     
-    public var statusObserver: NSKeyValueObservation?
-    public var loadedTimeRangesObserver: NSKeyValueObservation?
-    public var playbackBufferEmptyObserver: NSKeyValueObservation?
-    public var playbackLikelyToKeepUpObserver: NSKeyValueObservation?
-    public var presentationSizeObserver: NSKeyValueObservation?
-    public var timeControlStatusObserver: NSKeyValueObservation?
+    public var statusObserver: NSKeyValueObservation? // 播放器状态观察者
+    public var loadedTimeRangesObserver: NSKeyValueObservation? // 加载时间范围观
+    public var playbackBufferEmptyObserver: NSKeyValueObservation? // 播放缓冲是否为空观察者
+    public var playbackLikelyToKeepUpObserver: NSKeyValueObservation? // 播放可能保持播
+    public var presentationSizeObserver: NSKeyValueObservation? // 视频展示尺寸观察者
+    public var timeControlStatusObserver: NSKeyValueObservation? // 时间控制状态观察者
     
     
     // MARK: - Initialization
@@ -102,9 +93,7 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     
     // MARK: - add Observers
     
-    /// 添加播放器的观察者
-    ///
-    /// - Note: 类重写此方法，添加播放器的观察者
+    /// 播放器观察者
     open func addPlayerObservers() {
         guard let player = player, let playerItem = playerItem else {
             assert(player != nil, "【请先初始化 player 和 playerItem】")
@@ -154,7 +143,7 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     
     // MARK: - Private KVO Methods
     
-    /// 处理播放器状态变化
+    /// 播放器状态变化
     private func didPlayerStatusChanged() {
         switch player.status {
         case .readyToPlay:
@@ -167,7 +156,7 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
         }
     }
     
-    /// 处理缓冲进度变化
+    /// 缓冲进度变化
     private func didLoadedTimeRangesChanged() {
         guard let duration = playerItem?.duration else { return }
         totalDuration = duration
@@ -184,12 +173,12 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
         onReceiveLoadedTimeRangesChanged(totalBuffer: bufferedDuration, bufferProgress: bufferProgress)
     }
     
-    /// 处理播放缓冲是否为空
+    /// 播放缓冲是否为空
     private func didPlaybackBufferEmptyChanged() {
         onReceivePlaybackBufferEmptyChanged()
     }
     
-    /// 处理播放可能性变化
+    /// 播放可能性变化
     private func didPlaybackLikelyToKeepUpChanged() {
         if playerItem.isPlaybackLikelyToKeepUp {
             onReceivePlaybackLikelyToKeepUp()
@@ -198,12 +187,12 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
         }
     }
     
-    /// 处理视频尺寸变化
+    /// 视频尺寸变化
     private func didPresentationSizeChanged() {
         onReceivePresentationSizeChanged(size: playerItem.presentationSize)
     }
     
-    /// 处理时间控制状态变化
+    /// 时间控制状态变化
     private func didTimeControlStatusChanged() {
         switch player.timeControlStatus {
         case .playing:
@@ -253,9 +242,8 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
         }
     }
     
-    /// 当前播放时间
-    ///
-    /// - Parameter time: 当前播放时间
+    /// 更新当前播放时间
+    /// - Parameter time: 播放时间
     @objc private func didPlayerProgressDidChange(time: CMTime) {
         onReceivePlayerProgressDidChange(time: time)
     }
@@ -268,129 +256,86 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     // MARK: Public Methods
     
     /// 播放完成
-    ///
-    /// - Parameter notification: 通知
-    /// - Note: 子类重写此方法，处理播放完成
     open func onReceivePlayerItemDidPlayToEnd(_ notification: Notification) {
-        playerState = .ended
         print("播放完成")
     }
     
     /// 播放失败
-    ///
-    /// - Parameter notification: 通知
-    /// - Note: 子类重写此方法，处理播放完成
     open func onReceivePlayerItemFailedToPlayToEnd(_ notification: Notification) {
-        playerState = .error
         print("播放失败")
     }
     
-    /// 音频会话中断开始
-    ///
-    /// - Parameter notification: 通知
-    /// - Note: 子类重写此方法，处理音频会话中断开始
+    /// 处理音频会话中断开始
     open func onReceiveAudioSessionInterruptionBegan(_ notification: Notification) {
-        player.pause()
         print("音频会话中断开始")
     }
     
-    /// 音频会话中断结束
-    ///
-    /// - Parameter notification: 通知
-    /// - Note: 子类重写此方法，处理音频会话中断结束
+    /// 处理音频会话中断结束
     open func onReceiveAudioSessionInterruptionEnded(_ notification: Notification) {
-        player.play()
         print("音频会话中断结束")
     }
     
-    /// 当前播放时间
-    ///
-    /// - Parameter time: 当前播放时间
-    /// - Note: 子类重写此方法，更新播放时间
+    /// 更新当前播放时间
+    /// - Parameter time: 播放时间
     open func onReceivePlayerProgressDidChange(time: CMTime) {
-        currentTime = time
+        
     }
     
     /// 准备播放
-    ///
-    /// - Note: 子类重写此方法以处理播放器准备好后的逻辑
     open func onReceivePlayerReadyToPlay() {
-        playerState = .waiting
         print("准备播放")
     }
     
     /// 播放器加载失败
-    ///
-    /// - Note: 子类重写此方法以处理播放器加载失败后的逻辑
     open func onReceivePlayerFailed() {
-        playerState = .error
         print("播放器加载失败")
     }
     
     /// 缓冲进度变化
-    ///
     /// - Parameters:
-    ///  - totalBuffer: 缓冲总时间
+    ///  - totalBuffer: 总缓冲
     ///  - bufferProgress: 缓冲进度
-    /// - Note: 子类重写此方法以处理缓冲进度变化
     open func onReceiveLoadedTimeRangesChanged(totalBuffer: Double, bufferProgress: Float) {
-  
+        
     }
     
     /// 缓冲为空
-    ///
-    /// - Note: 子类重写此方法以处理缓
     open func onReceivePlaybackBufferEmptyChanged() {
-  
+        
     }
     
-    /// 缓冲可保持播放
-    ///
-    /// - Note: 子类重写此方法以处理缓冲可保持播放的情况
+    /// 缓冲充足，可以继续播放
     open func onReceivePlaybackLikelyToKeepUp() {
-      
+        
     }
     
-    /// 处理缓冲不足，可能无法继续播放
-    ///
-    /// - Note: 子类重写此方法以处理缓冲不足，可能无法继续播放
+    /// 缓冲不足，无法继续播放
     open func onReceivePlaybackLikelyToKeepUpInsufficient() {
-
+        
     }
     
     /// 视频尺寸变化
-    ///
     /// - Parameter size: 当前视频尺寸，最优解决方式从服务端获取视频尺寸，防止视频尺寸变化
-    /// - Note: 子类重写此方法以处理视频尺寸变化
     open func onReceivePresentationSizeChanged(size: CGSize) {
         
     }
     
     /// 正在播放
-    ///
-    /// - Note: 子类重写此方法，处理播放器正在播放状态
     open func onReceiveTimeControlStatusPlaying() {
-        playerState = .playing
         print("正在播放")
     }
     
     /// 播放已暂停
-    ///
-    /// - Note: 子类重写此方法，处理播
     open func onReceiveTimeControlStatusPaused() {
         print("播放器已暂停")
     }
     
     /// 等待播放
-    ///
-    /// - Note: 子类重写此方法，处理播放器正在等待状态
     open func onReceiveTimeControlStatusWaiting() {
-
+        print("等待播放")
     }
     
     /// 移除时间观察者
-    ///
-    /// - Note: 子类重写: 移除时间观察者
     open func onReceiveRemovePeriodicTimeObserver() {
         currentTime = .zero
         totalDuration = .zero

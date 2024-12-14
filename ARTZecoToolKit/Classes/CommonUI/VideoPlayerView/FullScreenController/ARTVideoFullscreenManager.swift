@@ -51,7 +51,7 @@ open class ARTVideoFullscreenManager: NSObject {
             // 初始化动画转场对象和全屏控制器
             self.animationTransitioning = ARTAnimationTransitioning(videoWrapperView)
             self.fullScreenController = ARTFullScreenController()
-            self.fullScreenController.isLandscape = videoWrapperView.playerConfig.isLandscape
+//            self.fullScreenController.isLandscape = videoWrapperView.playerConfig.isLandscape
             self.fullScreenController.transitioningDelegate = self
             self.fullScreenController.modalPresentationStyle = .fullScreen
             rootViewController.present(self.fullScreenController, animated: true) {

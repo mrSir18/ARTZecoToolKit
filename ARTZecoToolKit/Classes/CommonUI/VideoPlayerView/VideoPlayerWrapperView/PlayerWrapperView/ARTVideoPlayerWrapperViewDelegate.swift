@@ -10,134 +10,27 @@
 /// - NOTE: 可继承该协议方法
 @objc public protocol ARTVideoPlayerWrapperViewDelegate: AnyObject {
     
-    /// 自定义播放模式
-    /// - Parameter wrapperView: 播放器层视图
-    /// - Returns: 自定义播放模式
-    @objc optional func customScreenOrientation(for wrapperView: ARTVideoPlayerWrapperView) -> ScreenOrientation
-    
-    /// 自定义顶部工具栏视图
-    /// - Parameters:
-    ///   - wrapperView: 播放器层视图
-    ///   - screenOrientation: 当前屏幕方向
-    /// - Returns: 自定义顶部工具栏视图（需继承自 ARTVideoPlayerTopbar）
-    @objc optional func customTopBar(for wrapperView: ARTVideoPlayerWrapperView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerTopbar?
-    
-    /// 自定义底部工具栏视图
-    /// - Parameters:
-    ///   - wrapperView: 播放器层视图
-    ///   - screenOrientation: 当前屏幕方向
-    /// - Returns: 自定义底部工具栏视图（需继承自 ARTVideoPlayerBottombar）
-    @objc optional func customBottomBar(for wrapperView: ARTVideoPlayerWrapperView, screenOrientation: ScreenOrientation) -> ARTVideoPlayerBottombar?
-    
-    /// 加载动画
-    /// - Parameters:
-    ///  - wrapperView: 播放器层视图
+    /// 获取播放器图层（最底层：用于显示弹幕、广告等）
+    ///
+    /// - Parameter wrapperView: 视频播放器包装视图
+    /// - Returns: 播放器图层视图
+    @objc optional func wrapperViewOverlay(for wrapperView: ARTVideoPlayerWrapperView) -> ARTVideoPlayerOverlayView?
+
+    /// 获取播放器系统控制层（中间层：系统控制）
+    ///
+    /// - Parameter wrapperView: 视频播放器包装视图
+    /// - Returns: 播放器系统控制层视图
+    @objc optional func wrapperViewSystemControls(for wrapperView: ARTVideoPlayerWrapperView) -> ARTVideoPlayerSystemControls?
+
+    /// 获取播放器控制层（最顶层：顶部栏、侧边栏等）
+    ///
+    /// - Parameter wrapperView: 视频播放器包装视图
+    /// - Returns: 播放器控制层视图
+    @objc optional func wrapperViewControls(for wrapperView: ARTVideoPlayerWrapperView) -> ARTVideoPlayerControlsView?
+
+    /// 返回播放器的加载动画视图，用于显示加载动画
+    ///
+    /// - Parameter wrapperView: 视频播放器包装视图
     /// - Returns: 加载动画视图
-    @objc optional func wrapperViewDidBeginLoading(for wrapperView: ARTVideoPlayerWrapperView) -> ARTVideoPlayerLoadingView?
-    
-    
-// MARK: - 弹幕视图 - 公共方法
-    
-    /// 自定义弹幕视图
-    /// - Returns: 自定义弹幕视图
-    @objc optional func wrapperViewDidDidCustomDanmakuView(for wrapperView: ARTVideoPlayerWrapperView) -> ARTDanmakuView?
-    
-    /// 创建弹幕回调
-    /// - Returns: 新创建的弹幕单元
-    @objc optional func wrapperViewDidCreateDanmakuCell(for wrapperView: ARTVideoPlayerWrapperView) -> ARTDanmakuCell
-    
-    /// 点击弹幕事件回调
-    @objc optional func wrapperViewDidTapDanmakuCell(for wrapperView: ARTVideoPlayerWrapperView, danmakuCell: ARTDanmakuCell)
-    
-    /// 弹幕即将显示回调
-    @objc optional func wrapperViewWillDisplayDanmakuCell(for wrapperView: ARTVideoPlayerWrapperView, danmakuCell: ARTDanmakuCell)
-    
-    /// 弹幕显示完成回调
-    @objc optional func wrapperViewDidEndDisplayDanmakuCell(for wrapperView: ARTVideoPlayerWrapperView, danmakuCell: ARTDanmakuCell)
-    
-    /// 所有弹幕显示完成回调
-    @objc optional func wrapperViewDidEndDisplayAllDanmaku(for wrapperView: ARTVideoPlayerWrapperView)
-    
-    
-// MARK: - 顶部工具栏 - 公共方法
-    
-    /// 当返回按钮被点击时调用
-    @objc optional func wrapperViewDidTapBack(for wrapperView: ARTVideoPlayerWrapperView)
-    
-    /// 当收藏按钮被点击时调用
-    /// - Parameters:
-    ///   - wrapperView: 播放器层视图
-    ///   - isFavorited: 是否已收藏
-    @objc optional func wrapperViewDidTapFavorite(for wrapperView: ARTVideoPlayerWrapperView, isFavorited: Bool)
-    
-    /// 当分享按钮被点击时调用
-    @objc optional func wrapperViewDidTapShare(for wrapperView: ARTVideoPlayerWrapperView)
-    
-    
-// MARK: - 底部工具栏 - 公共方法
-    
-    /// 当滑块触摸开始时调用
-    /// - Parameters:
-    ///   - wrapperView: 播放器层视图
-    ///   - slider: 被触摸的滑块
-    @objc optional func wrapperViewDidBeginTouch(for wrapperView: ARTVideoPlayerWrapperView, slider: ARTVideoPlayerSlider)
-    
-    /// 当滑块值改变时调用
-    /// - Parameters:
-    ///   - wrapperView: 播放器层视图
-    ///   - slider: 值已改变的滑块
-    @objc optional func wrapperViewDidChangeValue(for wrapperView: ARTVideoPlayerWrapperView, slider: ARTVideoPlayerSlider)
-    
-    /// 当滑块触摸结束时调用
-    /// - Parameters:
-    ///   - wrapperView: 播放器层视图
-    ///   - slider: 被释放的滑块
-    @objc optional func wrapperViewDidEndTouch(for wrapperView: ARTVideoPlayerWrapperView, slider: ARTVideoPlayerSlider)
-    
-    /// 当滑块被点击时调用
-    /// - Parameters:
-    ///   - wrapperView: 播放器层视图
-    ///   - slider: 被点击的滑块
-    @objc optional func wrapperViewDidTap(for wrapperView: ARTVideoPlayerWrapperView, slider: ARTVideoPlayerSlider)
-    
-    /// 当暂停按钮被点击时调用
-    @objc optional func wrapperViewDidTapPause(for wrapperView: ARTVideoPlayerWrapperView, isPlaying: Bool)
-    
-    /// 当弹幕开关按钮被点击时调用
-    /// - Parameters: isDanmakuEnabled 弹幕是否开启
-    @objc optional func wrapperViewDidTapDanmakuToggle(for wrapperView: ARTVideoPlayerWrapperView, isDanmakuEnabled: Bool)
-    
-    /// 当弹幕设置按钮被点击时调用
-    @objc optional func wrapperViewDidTapDanmakuSettings(for wrapperView: ARTVideoPlayerWrapperView)
-    
-    /// 当发送弹幕按钮被点击时调用
-    /// - Parameter text: 弹幕内容
-    @objc optional func wrapperViewDidTapDanmakuSend(for wrapperView: ARTVideoPlayerWrapperView, text: String)
-    
-    
-// MARK: - 窗口模式 - 底部工具栏
-    
-    /// 全屏切换
-    /// - Parameters:
-    ///   - wrapperView: 播放器层视图
-    ///   - orientation: 屏幕方向
-    @objc optional func wrapperViewDidTransitionToFullscreen(for wrapperView: ARTVideoPlayerWrapperView, orientation: ScreenOrientation)
-    
-    
-// MARK: - 横屏模式 - 底部工具栏
-    
-    /// 当下一个按钮被点击时调用
-    @objc optional func wrapperViewDidTapNext(for wrapperView: ARTVideoPlayerWrapperView)
-    
-    /// 当倍速按钮被点击时调用
-    @objc optional func wrapperViewDidTapSpeed(for wrapperView: ARTVideoPlayerWrapperView)
-    
-    /// 当目录按钮被点击时调用
-    @objc optional func wrapperViewDidTapCatalogue(for wrapperView: ARTVideoPlayerWrapperView)
-    
-    
-// MARK: - 竖屏模式 - 底部工具栏
-    
-    /// 当评论按钮被点击时调用
-    @objc optional func wrapperViewDidTapComment(for wrapperView: ARTVideoPlayerWrapperView)
+    @objc optional func wrapperViewLoading(for wrapperView: ARTVideoPlayerWrapperView) -> ARTVideoPlayerLoadingView?
 }

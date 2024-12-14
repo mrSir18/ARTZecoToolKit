@@ -83,9 +83,9 @@ extension ARTAnimationTransitioning: UIViewControllerAnimatedTransitioning {
             destinationController.contentStackView.addArrangedSubview(videoWrapperView) // 将视频播放器视图添加到目标控制器的堆栈视图
             destinationView.bounds = initialBoundsRect  // 设置目标视图的初始边界
             destinationView.center = startCenter  // 设置目标视图的初始中心
-            if videoWrapperView.playerConfig.isLandscape { // 判断是否横屏
-                destinationView.transform = .init(rotationAngle: .pi * -0.5) // 设置横屏展示旋转动画
-            }
+//            if videoWrapperView.playerConfig.isLandscape { // 判断是否横屏
+//                destinationView.transform = .init(rotationAngle: .pi * -0.5) // 设置横屏展示旋转动画
+//            }
             
             // 执行动画
             UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: [.curveEaseInOut, .layoutSubviews], animations: {
