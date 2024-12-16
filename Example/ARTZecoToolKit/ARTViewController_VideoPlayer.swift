@@ -163,6 +163,7 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
         }
     
         // MARK: - Test Methods
+        
         let url = URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")
 //        let url = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MP4")!)
 //        let url = URL(string: "https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4")
@@ -211,8 +212,7 @@ extension ARTViewController_VideoPlayer: ARTVideoPlayerWrapperViewDelegate {
     }
     
     func wrapperViewControls(for wrapperView: ARTVideoPlayerWrapperView) -> UIView? { // 获取播放器控制层（最顶层：顶部栏、侧边栏等）
-        let controlsView = ARTVideoPlayerControlsView(self)
-        return controlsView
+        return ARTVideoPlayerControlsView(self)
     }
     
     func wrapperViewLoading(for wrapperView: ARTVideoPlayerWrapperView) -> UIView? { // 获取播放器的加载动画视图，用于显示加载动画

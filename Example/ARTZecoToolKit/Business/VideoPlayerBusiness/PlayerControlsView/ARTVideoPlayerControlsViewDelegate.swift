@@ -10,7 +10,7 @@ import ARTZecoToolKit
 /// 协议方法
 ///
 /// - NOTE: 可继承该协议方法
-@objc public protocol ARTVideoPlayerControlsViewDelegate: AnyObject {
+@objc protocol ARTVideoPlayerControlsViewDelegate: AnyObject {
     
     /// 自定义播放模式
     /// - Parameter controlsView: 控制层视图

@@ -459,8 +459,8 @@
 		02E984862D08C8450052C36A /* VideoPlayerBusiness */ = {
 			isa = PBXGroup;
 			children = (
-				025D29652D1096930022FA6E /* PlayerControlsView */,
 				025D29302D1046470022FA6E /* PlayerWrapperView */,
+				025D29652D1096930022FA6E /* PlayerControlsView */,
 			);
 			path = VideoPlayerBusiness;
 			sourceTree = "<group>";

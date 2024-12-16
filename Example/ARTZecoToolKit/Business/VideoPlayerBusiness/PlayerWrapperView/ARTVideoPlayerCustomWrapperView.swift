@@ -9,8 +9,16 @@ import ARTZecoToolKit
 
 class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
     
+    // MARK: - Initialization
+    
     override func setupViews() {
         super.setupViews()
         
     }
+}
+
+// MARK: Override Methods
+
+extension ARTVideoPlayerCustomWrapperView {
+    
 }

@@ -8,7 +8,7 @@
 import AVFoundation
 import ARTZecoToolKit
 
-open class ARTVideoPlayerControlsView: ARTPassThroughView {
+class ARTVideoPlayerControlsView: ARTPassThroughView {
     
     // MARK: - Private Properties
     
@@ -18,9 +18,7 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     /// 是否横向全屏
     public var isLandscape: Bool = true {
         didSet {
-            if !isLandscape {
-                stopAutoHideTimer()
-            }
+            if !isLandscape { stopAutoHideTimer() }
         }
     }
     
@@ -50,21 +48,20 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     
     // MARK: - Initialization
     
-    public init(_ delegate: ARTVideoPlayerControlsViewDelegate? = nil) {
+    init(_ delegate: ARTVideoPlayerControlsViewDelegate? = nil) {
         super.init(frame: .zero)
         self.delegate = delegate
         self.clipsToBounds = true
         setupViews()
     }
     
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Override Super Methods
     
-    /// 子类方法，设置子视图
-    open func setupViews() {
+    func setupViews() {
         setupToolBars()
     }
     
@@ -72,7 +69,7 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     
     /// 旋转屏幕并刷新工具栏
     /// - Parameter orientation: 新的屏幕方向
-    open func transitionToFullscreen(orientation: ScreenOrientation, playerState: PlayerState) {
+    func transitionToFullscreen(orientation: ScreenOrientation, playerState: PlayerState) {
         self.screenOrientation = orientation
         setupToolBars()
         updatePlayerStateInControls(playerState: playerState)
@@ -83,7 +80,7 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     ///   - currentTime: 当前播放时间
     ///   - duration: 视频总时长
     ///   - shouldUpdateSlider: 是否拖动滑块
-    open func updateTimeInControls(with currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = false) {
+    func updateTimeInControls(with currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = false) {
         bottomBar.updatePlaybackTime(currentTime: currentTime, duration: duration, shouldUpdateSlider: shouldUpdateSlider)
     }
 
@@ -92,49 +89,49 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
     ///   - totalBuffer: 缓冲总时间
     ///   - bufferProgress: 缓冲进度
     ///   - shouldUpdateSlider: 是否拖动滑块
-    open func updateBufferProgressInControls(totalBuffer: Double, bufferProgress: Float, shouldUpdateSlider: Bool = false) {
+    func updateBufferProgressInControls(totalBuffer: Double, bufferProgress: Float, shouldUpdateSlider: Bool = false) {
         bottomBar.updateBufferProgress(totalBuffer: totalBuffer, bufferProgress: bufferProgress, shouldUpdateSlider: shouldUpdateSlider)
     }
 
     /// 触摸开始时调用
     /// - Parameter sliderValue: 当前滑块值
-    @objc open func updateSliderTouchBeganInControls(sliderValue: Float) {
+    @objc func updateSliderTouchBeganInControls(sliderValue: Float) {
         bottomBar.updateSliderTouchBegan(value: sliderValue)
     }
 
     /// 更新滑块值
     /// - Parameter sliderValue: 新滑块值
-    open func updateSliderValueInControls(sliderValue: Float) {
+    func updateSliderValueInControls(sliderValue: Float) {
         bottomBar.updateSliderValue(value: sliderValue)
     }
 
     /// 触摸结束时调用
     /// - Parameter sliderValue: 当前滑块值
-    @objc open func updateSliderTouchEndedInControls(sliderValue: Float) {
+    @objc func updateSliderTouchEndedInControls(sliderValue: Float) {
         bottomBar.updateSliderTouchEnded(value: sliderValue)
     }
 
     /// 更新播放按钮状态
     /// - Parameter playerState: 播放状态
-    open func updatePlayerStateInControls(playerState: PlayerState) {
+    func updatePlayerStateInControls(playerState: PlayerState) {
         playImageView.isHidden = (playerState == .playing)
     }
 
     /// 初始化滑块值
     /// - Parameter value: 初始值，默认 0.0
-    open func resetSliderValueInControls(value: Float = 0.0) {
+    func resetSliderValueInControls(value: Float = 0.0) {
         bottomBar.resetSliderValue(value: value)
     }
 
     /// 更新播放/暂停按钮状态
     /// - Parameter isPlaying: 是否正在播放
-    open func updatePlayPauseButtonInControls(isPlaying: Bool) {
+    func updatePlayPauseButtonInControls(isPlaying: Bool) {
         bottomBar.updatePlayPauseButton(isPlaying: isPlaying)
     }
     
     /// 更新倍数按钮状态
     /// - Parameter rate: 当前倍数
-    open func updateRateButtonInControls(rate: Float) {
+    func updateRateButtonInControls(rate: Float) {
         guard let bottomBar = bottomBar as? ARTVideoPlayerLandscapeFullscreenBottombar else { return }
         bottomBar.updateRateButtonTitle(rate: rate)
     }
@@ -145,7 +142,7 @@ open class ARTVideoPlayerControlsView: ARTPassThroughView {
 extension ARTVideoPlayerControlsView {
     
     /// 创建顶部和底部工具栏
-    @objc open func setupToolBars() {
+    private func setupToolBars() {
         setupTopBar()
         setupBottomBar()
         setupPlayButton()
@@ -153,7 +150,7 @@ extension ARTVideoPlayerControlsView {
     }
     
     /// 创建顶部工具栏
-    @objc open func setupTopBar() {
+    private func setupTopBar() {
         let topBarHeight = topBarHeight(for: screenOrientation)
         topBar = delegate_customTopBar() ?? defaultTopBarForOrientation()
         addSubview(topBar)
@@ -164,7 +161,7 @@ extension ARTVideoPlayerControlsView {
     }
     
     /// 创建底部工具栏
-    @objc open func setupBottomBar() {
+    private func setupBottomBar() {
         let bottomBarHeight = bottomBarHeight(for: screenOrientation)
         bottomBar = delegate_customBottomBar() ?? defaultBottomBarForOrientation()
         addSubview(bottomBar)
@@ -175,7 +172,7 @@ extension ARTVideoPlayerControlsView {
     }
     
     /// 创建播放和重试按钮
-    @objc open func setupPlayButton() {
+    private func setupPlayButton() {
         playImageView = UIImageView()
         playImageView.isHidden = true
         playImageView.alpha = 0.5
@@ -188,7 +185,7 @@ extension ARTVideoPlayerControlsView {
     }
     
     /// 切换控制条的显示与隐藏状态
-    @objc open func toggleControlsVisibility() {
+    private func toggleControlsVisibility() {
         toggleControls(visible: isHiddenControls)
         resetAutoHideTimer()
     }
@@ -199,7 +196,7 @@ extension ARTVideoPlayerControlsView {
 extension ARTVideoPlayerControlsView {
     
     /// 根据屏幕方向返认顶部栏
-    internal func defaultTopBarForOrientation() -> ARTVideoPlayerTopbar {
+    func defaultTopBarForOrientation() -> ARTVideoPlayerTopbar {
         switch screenOrientation {
         case .portraitFullScreen:
             return ARTVideoPlayerPortraitFullscreenTopbar(self)
@@ -211,7 +208,7 @@ extension ARTVideoPlayerControlsView {
     }
     
     /// 根据屏幕方向返回底部栏
-    internal func defaultBottomBarForOrientation() -> ARTVideoPlayerBottombar {
+    func defaultBottomBarForOrientation() -> ARTVideoPlayerBottombar {
         switch screenOrientation {
         case .portraitFullScreen:
             return ARTVideoPlayerPortraitFullscreenBottombar(self)
@@ -223,14 +220,14 @@ extension ARTVideoPlayerControlsView {
     }
     
     /// 移除顶部和底部工具栏
-    internal func removeToolBars() {
+    func removeToolBars() {
         topBar.removeFromSuperview()
         bottomBar.removeFromSuperview()
         playImageView.removeFromSuperview()
     }
     
     /// 切换到窗口模式，设置屏幕方向并刷新顶部和底部栏
-    internal func topBarHeight(for orientation: ScreenOrientation) -> CGFloat {
+    func topBarHeight(for orientation: ScreenOrientation) -> CGFloat {
         switch orientation {
         case .portraitFullScreen:
             return art_navigationFullHeight() // 竖屏高度
@@ -242,7 +239,7 @@ extension ARTVideoPlayerControlsView {
     }
     
     /// 切换到窗口模式，设置屏幕方向并刷新顶部和底部栏
-    internal func bottomBarHeight(for orientation: ScreenOrientation) -> CGFloat {
+    func bottomBarHeight(for orientation: ScreenOrientation) -> CGFloat {
         switch orientation {
         case .portraitFullScreen:
             return ARTAdaptedValue(240.0)+art_safeAreaBottom() // 竖屏高度
@@ -254,18 +251,18 @@ extension ARTVideoPlayerControlsView {
     }
     
     /// 自动获取视频屏幕方向
-    internal func autoVideoScreenOrientation() -> ScreenOrientation {
+    func autoVideoScreenOrientation() -> ScreenOrientation {
         return isLandscape ? .landscapeFullScreen : .portraitFullScreen
     }
     
     /// 开启隐藏控件定时器
-    internal func startAutoHideTimer() {
+    func startAutoHideTimer() {
         guard hideControlsTimer == nil, isLandscape else { return }
         hideControlsTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(autoHideControls), userInfo: nil, repeats: false)
     }
     
     /// 自动隐藏控件
-    @objc internal func autoHideControls() {
+    @objc func autoHideControls() {
         toggleControls(visible: false)
     }
     
@@ -274,7 +271,7 @@ extension ARTVideoPlayerControlsView {
     /// - Parameters:
     ///  - visibility: 显示状态
     ///  - animated
-    internal func toggleControls(visible: Bool) {
+    func toggleControls(visible: Bool) {
         isHiddenControls = !visible
         if screenOrientation == .window { // 窗口模式下调整透明度
             let targetAlpha: CGFloat = visible ? 1 : 0
@@ -291,7 +288,7 @@ extension ARTVideoPlayerControlsView {
     }
     
     /// 更新工具栏约束
-    internal func updateBarConstraints(visible: Bool) {
+    func updateBarConstraints(visible: Bool) {
         guard let topBarSuperview = topBar.superview, let bottomBarSuperview = bottomBar.superview else {
             return // 如果没有父视图，直接返回，避免崩溃
         }
@@ -313,19 +310,19 @@ extension ARTVideoPlayerControlsView {
     }
     
     /// 重置自动隐藏定时器
-    internal func resetAutoHideTimer() {
+    func resetAutoHideTimer() {
         stopAutoHideTimer()
         startAutoHideTimer()
     }
     
     /// 停止并销毁定时器的方法
-    internal func stopAutoHideTimer() {
+    func stopAutoHideTimer() {
         hideControlsTimer?.invalidate()
         hideControlsTimer = nil
     }
     
     /// 处理播放器状态
-    internal func handleLandscapeControls(isPlaying: Bool) {
+    func handleLandscapeControls(isPlaying: Bool) {
         if isPlaying {
             stopAutoHideTimer()
             toggleControls(visible: true)
@@ -335,7 +332,7 @@ extension ARTVideoPlayerControlsView {
     }
     
     /// 本地存储弹幕状态
-    internal func saveDanmakuEnabled(isDanmakuEnabled: Bool) {
+    func saveDanmakuEnabled(isDanmakuEnabled: Bool) {
         UserDefaults.standard.set(isDanmakuEnabled, forKey: "DanmakuEnabledKey")
     }
 }
