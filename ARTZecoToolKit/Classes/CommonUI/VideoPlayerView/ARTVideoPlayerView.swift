@@ -24,7 +24,7 @@ open class ARTVideoPlayerView: UIStackView {
     public weak var delegate: ARTVideoPlayerViewDelegate?
     
     /// 视频播放器包装视图
-    public var wrapperView: ARTVideoPlayerWrapperView!
+    public var wrapperView: ARTVideoPlayerWrapperView?
     
     
     // MARK: - Initialization
@@ -43,13 +43,13 @@ open class ARTVideoPlayerView: UIStackView {
     /// 开始播放视频
     /// - Parameter url: 视频文件或资源的 URL
     @objc open func startVideoPlayback(with url: URL?) {
-        wrapperView.startVideoPlayback(with: url)
+        wrapperView?.startVideoPlayback(with: url)
     }
     
     /// 播放下一集视频
     /// - Parameter url: 视频文件或资源的 URL
     @objc open func playNextVideo(with url: URL?) {
-        wrapperView.playNextVideo(with: url)
+        wrapperView?.playNextVideo(with: url)
     }
 }
 

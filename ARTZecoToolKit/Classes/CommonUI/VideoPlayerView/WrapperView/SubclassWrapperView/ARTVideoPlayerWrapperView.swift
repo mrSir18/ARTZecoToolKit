@@ -58,7 +58,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     // MARK: - Initialization
     
-    public init(_ delegate: ARTVideoPlayerWrapperViewDelegate? = nil) {
+    public init(_ delegate: ARTVideoPlayerWrapperViewDelegate) {
         self.delegate = delegate
         super.init()
     }
