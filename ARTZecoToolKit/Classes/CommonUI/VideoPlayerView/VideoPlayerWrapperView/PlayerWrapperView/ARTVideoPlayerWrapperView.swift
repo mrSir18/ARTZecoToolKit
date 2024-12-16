@@ -47,13 +47,13 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     // MARK: - 播放器组件 AVPlayer（最底层：播放器视图）
     
     /// 播放器图层（最底层：用于显示弹幕、广告等）
-    public var overlayView: ARTVideoPlayerOverlayView!
+    public var overlayView: ARTVideoPlayerOverlayView?
     
     /// 播放器系统控制层（中间层：系统控制，位于弹幕、广告等之上）
-    public var systemControls: ARTVideoPlayerSystemControls!
+    public var systemControls: ARTVideoPlayerSystemControls?
     
     /// 播放器控制层（最顶层：顶部栏、侧边栏等）
-    public var controlsView: ARTVideoPlayerControlsView!
+    public var controlsView: ARTVideoPlayerControlsView?
     
     /// 播放器加载动画视图
     public var loadingView: ARTVideoPlayerLoadingView?
@@ -87,6 +87,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     open override func onReceivePlayerItemDidPlayToEnd(_ notification: Notification) { // 播放结束
         super.onReceivePlayerItemDidPlayToEnd(notification)
+        pauseVideoPlayback() // 暂停播放
     }
     
     open override func onReceivePlayerItemFailedToPlayToEnd(_ notification: Notification) { // 播放失败
@@ -541,7 +542,7 @@ extension ARTVideoPlayerWrapperView {
     /// 为播放下一集准备工作
     private func prepareForNextVideo() {
         thumbnailCache.removeAll()
-        player.pause()
+        pauseVideoPlayback() // 暂停播放
         didPrepareForNextVideo() // 通知外部准备播放下一集
         onReceiveRemovePeriodicTimeObserver() // 移除周期性时间观察者
         if let playerLayer = self.layer as? AVPlayerLayer {

@@ -257,11 +257,13 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     
     /// 播放完成
     open func onReceivePlayerItemDidPlayToEnd(_ notification: Notification) {
+        playerState = .ended
         print("播放完成")
     }
     
     /// 播放失败
     open func onReceivePlayerItemFailedToPlayToEnd(_ notification: Notification) {
+        playerState = .error
         print("播放失败")
     }
     
@@ -278,16 +280,18 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     /// 更新当前播放时间
     /// - Parameter time: 播放时间
     open func onReceivePlayerProgressDidChange(time: CMTime) {
-        
+        currentTime = time
     }
     
     /// 准备播放
     open func onReceivePlayerReadyToPlay() {
+        playerState = .waiting
         print("准备播放")
     }
     
     /// 播放器加载失败
     open func onReceivePlayerFailed() {
+        playerState = .error
         print("播放器加载失败")
     }
     
@@ -322,16 +326,19 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     
     /// 正在播放
     open func onReceiveTimeControlStatusPlaying() {
+        playerState = .playing
         print("正在播放")
     }
     
     /// 播放已暂停
     open func onReceiveTimeControlStatusPaused() {
+        playerState = .paused
         print("播放器已暂停")
     }
     
     /// 等待播放
     open func onReceiveTimeControlStatusWaiting() {
+        playerState = .waiting
         print("等待播放")
     }
     
