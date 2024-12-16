@@ -102,7 +102,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         super.onReceivePlayerItemFailedToPlayToEnd(notification)
     }
     
-    open override func onReceivePlayerProgressDidChange(time: CMTime) { // 播放进度改变
+    open override func onReceivePlayerProgressDidChange(time: CMTime) { // 播放进度改变`
         super.onReceivePlayerProgressDidChange(time: time)
     }
     
@@ -199,7 +199,7 @@ extension ARTVideoPlayerWrapperView {
     
     /// 创建全屏管理器
     @objc open func setupFullscreenManager() {
-        fullscreenManager = ARTVideoFullscreenManager(videoWrapperView: self)
+        fullscreenManager = ARTVideoFullscreenManager(wrapperView: self)
     }
     
     /// 创建触觉反馈发生器

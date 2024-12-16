@@ -28,7 +28,7 @@
     /// - Returns: 播放器控制层视图
     @objc optional func wrapperViewControls(for wrapperView: ARTVideoPlayerWrapperView) -> ARTVideoPlayerControlsView?
 
-    /// 返回播放器的加载动画视图，用于显示加载动画
+    /// 获取播放器的加载动画视图，用于显示加载动画
     ///
     /// - Parameter wrapperView: 视频播放器包装视图
     /// - Returns: 加载动画视图

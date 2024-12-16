@@ -64,6 +64,9 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     /// 播放器总时长
     public var totalDuration: CMTime = .zero
     
+    /// 是否横向全屏
+    public var isLandscape: Bool = true
+    
     
     // MARK: - 播放器观察者属性
     
@@ -245,6 +248,9 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     /// 更新当前播放时间
     /// - Parameter time: 播放时间
     @objc private func didPlayerProgressDidChange(time: CMTime) {
+        guard CMTimeGetSeconds(time) > 0, CMTimeGetSeconds(totalDuration) > 0 else {
+            return // 防止除零错误
+        }
         onReceivePlayerProgressDidChange(time: time)
     }
     
@@ -321,7 +327,8 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     /// 视频尺寸变化
     /// - Parameter size: 当前视频尺寸，最优解决方式从服务端获取视频尺寸，防止视频尺寸变化
     open func onReceivePresentationSizeChanged(size: CGSize) {
-        
+        guard size != .zero else { return }
+        isLandscape = size.width > size.height // 根据视频尺寸判断是否横屏/竖屏 (全屏)
     }
     
     /// 正在播放

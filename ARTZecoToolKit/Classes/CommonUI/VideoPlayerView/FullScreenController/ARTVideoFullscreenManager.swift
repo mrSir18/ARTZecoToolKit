@@ -11,7 +11,7 @@ import UIKit
 open class ARTVideoFullscreenManager: NSObject {
     
     /// 弱引用播放器视图，避免强引用循环
-    private weak var videoWrapperView: ARTVideoPlayerWrapperView!
+    private weak var wrapperView: ARTVideoPlayerWrapperView!
     
     /// 全屏控制器
     private var fullScreenController: ARTFullScreenController!
@@ -24,9 +24,9 @@ open class ARTVideoFullscreenManager: NSObject {
     
     /// 初始化方法
     ///
-    /// - Parameter videoWrapperView: 传入的视频播放器视图
-    public init(videoWrapperView: ARTVideoPlayerWrapperView) {
-        self.videoWrapperView = videoWrapperView
+    /// - Parameter wrapperView: 传入的视频播放器视图
+    public init(wrapperView: ARTVideoPlayerWrapperView) {
+        self.wrapperView = wrapperView
     }
     
     /// 关闭全屏视频播放
@@ -44,14 +44,14 @@ open class ARTVideoFullscreenManager: NSObject {
     /// 展示全屏视频播放
     open func presentFullscreenWithRotation(completion: (() -> Void)? = nil) {
         executeOnMainThread { [weak self] in
-            guard let self = self, let videoWrapperView = self.videoWrapperView, videoWrapperView.superview != nil,
+            guard let self = self, let wrapperView = self.wrapperView, wrapperView.superview != nil,
                   self.fullScreenController == nil,
                   let rootViewController = self.getRootViewController() else { return }
             
             // 初始化动画转场对象和全屏控制器
-            self.animationTransitioning = ARTAnimationTransitioning(videoWrapperView)
+            self.animationTransitioning = ARTAnimationTransitioning(wrapperView)
             self.fullScreenController = ARTFullScreenController()
-//            self.fullScreenController.isLandscape = videoWrapperView.playerConfig.isLandscape
+            self.fullScreenController.isLandscape = wrapperView.isLandscape
             self.fullScreenController.transitioningDelegate = self
             self.fullScreenController.modalPresentationStyle = .fullScreen
             rootViewController.present(self.fullScreenController, animated: true) {

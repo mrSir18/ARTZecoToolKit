@@ -161,14 +161,12 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
             make.centerY.equalToSuperview()
             make.height.equalTo(view.bounds.width / aspectRatio)
         }
-        
+    
         // MARK: - Test Methods
-        
-        var config = ARTVideoPlayerConfig()
-        config.url = URL(string: "https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4")
-//        config.url = URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")
-//        config.url = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MP4")!)
-//        playerView.startVideoPlayback(with: config)
+        let url = URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")
+//        let url = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MP4")!)
+//        let url = URL(string: "https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4")
+        playerView.startVideoPlayback(with: url)
     }
     
     /// 设置支持的 AVPlayer 文件扩展名
@@ -195,4 +193,23 @@ extension ARTViewController_VideoPlayer {
 
 extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
     
+    func playerViewWrapper(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerWrapperView? { // 获取播放器基类
+        return ARTVideoPlayerCustomWrapperView()
+    }
+    
+    func playerViewOverlay(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerOverlayView? { // 获取播放器图层（最底层：用于显示弹幕、广告等）
+        return nil
+    }
+    
+    func playerViewSystemControls(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerSystemControls? { // 获取播放器系统控制层（中间层：系统控制）
+        return nil
+    }
+    
+    func playerViewControls(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerControlsView? { // 获取播放器控制层（最顶层：顶部栏、侧边栏等）
+        return nil
+    }
+    
+    func playerViewLoading(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerLoadingView? { // 获取播放器的加载动画视图，用于显示加载动画
+        return nil
+    }
 }

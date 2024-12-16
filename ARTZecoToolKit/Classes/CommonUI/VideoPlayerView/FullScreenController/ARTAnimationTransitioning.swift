@@ -25,7 +25,7 @@ open class ARTAnimationTransitioning: NSObject {
     public var duration: TimeInterval = 0.35
     
     /// 视频播放器视图
-    private weak var videoWrapperView: ARTVideoPlayerWrapperView!
+    private weak var wrapperView: ARTVideoPlayerWrapperView!
     
     /// 基类堆栈视图
     private weak var parentStackView: UIStackView!
@@ -44,13 +44,13 @@ open class ARTAnimationTransitioning: NSObject {
     
     /// 初始化动画过渡处理类
     ///
-    /// - Parameter videoWrapperView: 视频播放器视图
-    public init(_ videoWrapperView: ARTVideoPlayerWrapperView) {
-        self.videoWrapperView = videoWrapperView
-        parentStackView = videoWrapperView.superview as? UIStackView
-        initialBoundsRect = videoWrapperView.bounds
-        initialCenterPoint = videoWrapperView.center
-        finalCenterPoint = videoWrapperView.convert(initialCenterPoint, to: nil) // 转换为全局坐标
+    /// - Parameter wrapperView: 视频播放器视图
+    public init(_ wrapperView: ARTVideoPlayerWrapperView) {
+        self.wrapperView = wrapperView
+        parentStackView = wrapperView.superview as? UIStackView
+        initialBoundsRect = wrapperView.bounds
+        initialCenterPoint = wrapperView.center
+        finalCenterPoint = wrapperView.convert(initialCenterPoint, to: nil) // 转换为全局坐标
     }
 }
 
@@ -70,7 +70,7 @@ extension ARTAnimationTransitioning: UIViewControllerAnimatedTransitioning {
     ///
     /// - Parameter transitionContext: 过渡上下文
     open func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let videoWrapperView = videoWrapperView else { return }
+        guard let wrapperView = wrapperView else { return }
         
         // 判断当前动画类型是否为呈现
         if transitionType == .presentation {
@@ -78,14 +78,14 @@ extension ARTAnimationTransitioning: UIViewControllerAnimatedTransitioning {
                   let destinationController = transitionContext.viewController(forKey: .to) as? ARTFullScreenController else { return }
             
             // 获取起始中心点
-            let startCenter = transitionContext.containerView.convert(initialCenterPoint, from: videoWrapperView)
+            let startCenter = transitionContext.containerView.convert(initialCenterPoint, from: wrapperView)
             transitionContext.containerView.addSubview(destinationView) // 将目标视图添加到容器视图
-            destinationController.contentStackView.addArrangedSubview(videoWrapperView) // 将视频播放器视图添加到目标控制器的堆栈视图
+            destinationController.contentStackView.addArrangedSubview(wrapperView) // 将视频播放器视图添加到目标控制器的堆栈视图
             destinationView.bounds = initialBoundsRect  // 设置目标视图的初始边界
             destinationView.center = startCenter  // 设置目标视图的初始中心
-//            if videoWrapperView.playerConfig.isLandscape { // 判断是否横屏
-//                destinationView.transform = .init(rotationAngle: .pi * -0.5) // 设置横屏展示旋转动画
-//            }
+            if wrapperView.isLandscape { // 判断是否横屏
+                destinationView.transform = .init(rotationAngle: .pi * -0.5) // 设置横屏展示旋转动画
+            }
             
             // 执行动画
             UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: [.curveEaseInOut, .layoutSubviews], animations: {
@@ -113,7 +113,7 @@ extension ARTAnimationTransitioning: UIViewControllerAnimatedTransitioning {
                 presentingView.center = self.finalCenterPoint
                 presentingView.bounds = self.initialBoundsRect
             }) { _ in
-                parentStackView.addArrangedSubview(videoWrapperView) // 将视频播放器视图添加回父堆栈视图
+                parentStackView.addArrangedSubview(wrapperView) // 将视频播放器视图添加回父堆栈视图
                 presentingView.removeFromSuperview()
                 transitionContext.completeTransition(true)
                 UIViewController.attemptRotationToDeviceOrientation()

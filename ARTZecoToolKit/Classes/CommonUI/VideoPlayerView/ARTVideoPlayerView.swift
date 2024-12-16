@@ -27,6 +27,18 @@ open class ARTVideoPlayerView: UIStackView {
     required public init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    /// 开始播放视频
+    /// - Parameter url: 视频文件或资源的 URL
+    @objc open func startVideoPlayback(with url: URL?) {
+        wrapperView.startVideoPlayback(with: url)
+    }
+    
+    /// 播放下一集视频
+    /// - Parameter url: 视频文件或资源的 URL
+    @objc open func playNextVideo(with url: URL?) {
+        wrapperView.playNextVideo(with: url)
+    }
 }
 
 // MARK: Private Methods
@@ -51,6 +63,7 @@ extension ARTVideoPlayerView {
     @objc open func setupVideoWrapperView() {
         guard let wrapperView = delegate_customPlayerWrapper() else { return }
         addArrangedSubview(wrapperView)
+        self.wrapperView = wrapperView
     }
 }
 

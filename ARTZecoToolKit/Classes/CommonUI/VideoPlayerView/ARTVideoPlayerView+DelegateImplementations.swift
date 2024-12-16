@@ -21,7 +21,7 @@ extension ARTVideoPlayerView: ARTVideoPlayerWrapperViewDelegate {
         return delegate?.playerViewControls?(for: self)
     }
     
-    public func wrapperViewLoading(for wrapperView: ARTVideoPlayerWrapperView) -> ARTVideoPlayerLoadingView? { // 返回播放器的加载动画视图，用于显示加载动画
+    public func wrapperViewLoading(for wrapperView: ARTVideoPlayerWrapperView) -> ARTVideoPlayerLoadingView? { // 获取播放器的加载动画视图，用于显示加载动画
         return delegate?.playerViewLoading?(for: self)
     }
 }
