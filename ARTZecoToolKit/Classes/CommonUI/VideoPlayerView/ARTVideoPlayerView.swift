@@ -5,6 +5,18 @@
 //  Created by mrSir18 on 2024/10/19.
 //
 
+/// 协议方法
+///
+/// - NOTE: 可继承该协议方法
+@objc public protocol ARTVideoPlayerViewDelegate: AnyObject {
+    
+    /// 获取播放器基类视图
+    ///
+    ///  Parameter playerView: 基类视图
+    ///  Returns: 播放器基类视图
+    @objc optional func playerViewWrapper(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerWrapperView?
+}
+
 /// 视频播放器栈视图，管理视频播放器的显示
 open class ARTVideoPlayerView: UIStackView {
     
@@ -17,7 +29,7 @@ open class ARTVideoPlayerView: UIStackView {
     
     // MARK: - Initialization
     
-    public init(_ delegate: ARTVideoPlayerViewDelegate? = nil) {
+    public init(_ delegate: ARTVideoPlayerViewDelegate) {
         self.delegate = delegate
         super.init(frame: .zero)
         setupDefaults()

@@ -194,22 +194,34 @@ extension ARTViewController_VideoPlayer {
 extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
     
     func playerViewWrapper(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerWrapperView? { // 获取播放器基类
-        return ARTVideoPlayerCustomWrapperView()
+        return ARTVideoPlayerCustomWrapperView(self)
     }
+}
+
+// MARK: - ARTVideoPlayerWrapperViewDelegate
+
+extension ARTViewController_VideoPlayer: ARTVideoPlayerWrapperViewDelegate {
     
-    func playerViewOverlay(for playerView: ARTVideoPlayerView) -> UIView? { // 获取播放器图层（最底层：用于显示弹幕、广告等）
+    func wrapperViewOverlay(for wrapperView: ARTVideoPlayerWrapperView) -> UIView? { // 获取播放器图层（最底层：用于显示弹幕、广告等）
         return nil
     }
     
-    func playerViewSystemControls(for playerView: ARTVideoPlayerView) -> UIView? { // 获取播放器系统控制层（中间层：系统控制）
+    func wrapperViewSystemControls(for wrapperView: ARTVideoPlayerWrapperView) -> UIView? { // 获取播放器系统控制层（中间层：系统控制）
         return nil
     }
     
-    func playerViewControls(for playerView: ARTVideoPlayerView) -> UIView? { // 获取播放器控制层（最顶层：顶部栏、侧边栏等）
-        return nil
+    func wrapperViewControls(for wrapperView: ARTVideoPlayerWrapperView) -> UIView? { // 获取播放器控制层（最顶层：顶部栏、侧边栏等）
+        let controlsView = ARTVideoPlayerControlsView(self)
+        return controlsView
     }
     
-    func playerViewLoading(for playerView: ARTVideoPlayerView) -> UIView? { // 获取播放器的加载动画视图，用于显示加载动画
+    func wrapperViewLoading(for wrapperView: ARTVideoPlayerWrapperView) -> UIView? { // 获取播放器的加载动画视图，用于显示加载动画
         return nil
     }
+}
+
+// MARK: - ARTVideoPlayerControlsViewDelegate
+
+extension ARTViewController_VideoPlayer: ARTVideoPlayerControlsViewDelegate {
+    
 }

@@ -6,6 +6,7 @@
 //
 
 import AVFoundation
+import ARTZecoToolKit
 
 open class ARTVideoPlayerControlsView: ARTPassThroughView {
     

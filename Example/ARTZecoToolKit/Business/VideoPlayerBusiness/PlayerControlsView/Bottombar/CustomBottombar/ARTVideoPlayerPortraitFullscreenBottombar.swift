@@ -6,6 +6,7 @@
 //
 
 import AVFoundation
+import ARTZecoToolKit
 
 /// 协议方法
 ///
