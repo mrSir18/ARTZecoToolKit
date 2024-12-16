@@ -20,9 +20,6 @@ extension ARTVideoPlayerWrapperView {
 
 open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
-    /// 代理对象
-    public weak var delegate: ARTVideoPlayerWrapperViewDelegate?
-    
     /// 全屏管理器
     public var fullscreenManager: ARTVideoFullscreenManager!
     
@@ -41,30 +38,14 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     public var feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     
-    // MARK: - 播放器组件 AVPlayer（最底层：播放器视图）
-    
-    /// 播放器图层（最底层：用于显示弹幕、广告等）
-    public var overlayView: UIView?
-    
-    /// 播放器系统控制层（中间层：系统控制，位于弹幕、广告等之上）
-    public var systemControls: UIView?
-    
-    /// 播放器控制层（最顶层：顶部栏、侧边栏等）
-    public var controlsView: UIView?
-    
-    /// 播放器加载动画视图
-    public var loadingView: UIView?
-    
-    
     // MARK: - Initialization
-    
-    public init(_ delegate: ARTVideoPlayerWrapperViewDelegate) {
-        self.delegate = delegate
+
+    public override init() {
         super.init()
     }
     
     required public init?(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Setup Methods
@@ -154,44 +135,24 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
 
 extension ARTVideoPlayerWrapperView {
     
-    /// 创建播放器图层（最底层）
+    /// 创建播放器图层（最底层：用于显示弹幕、广告等）
     @objc open func setupOverlayView() {
-        guard let overlayView = delegate_customPlayerOverlay() else { return }
-        addSubview(overlayView)
-        overlayView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        self.overlayView = overlayView
+
     }
     
-    /// 创建系统控制层（中间层）
+    /// 创建系统控制层（中间层：系统控制）
     @objc open func setupSystemControls() {
-        guard let systemControls = delegate_customSystemControls() else { return }
-        addSubview(systemControls)
-        systemControls.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        self.systemControls = systemControls
+
     }
     
     /// 创建加载动画视图
     @objc open func setupLoadingView() {
-        guard let loadingView = delegate_customLoading() else { return }
-        addSubview(loadingView)
-        loadingView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        self.loadingView = loadingView
+
     }
     
-    /// 创建播放器控制层（最顶层）
+    /// 创建播放器控制层（最顶层：顶部栏、侧边栏等）
     @objc open func setupControlsView() {
-        guard let controlsView = delegate_customPlayControls() else { return }
-        addSubview(controlsView)
-        controlsView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        self.controlsView = controlsView
+
     }
     
     /// 创建全屏管理器
@@ -660,31 +621,6 @@ extension ARTVideoPlayerWrapperView {
     /// 跳转到指定时间
     private func seek(to time: CMTime, completion: @escaping (Bool) -> Void) {
         player.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero, completionHandler: completion)
-    }
-}
-
-// MARK: - Private Delegate Methods
-
-extension ARTVideoPlayerWrapperView {
-    
-    /// 获取自定义播放器图层
-    private func delegate_customPlayerOverlay() -> UIView? {
-        return delegate?.wrapperViewOverlay?(for: self)
-    }
-    
-    /// 获取自定义播放器系统控制层
-    private func delegate_customSystemControls() -> UIView? {
-        return delegate?.wrapperViewSystemControls?(for: self)
-    }
-    
-    /// 获取自定义播放器控制层
-    private func delegate_customPlayControls() -> UIView? {
-        return delegate?.wrapperViewControls?(for: self)
-    }
-    
-    /// 获取自定义加载动画视图
-    private func delegate_customLoading() -> UIView? {
-        return delegate?.wrapperViewLoading?(for: self)
     }
 }
 
