@@ -26,9 +26,6 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     /// 全屏管理器
     public var fullscreenManager: ARTVideoFullscreenManager!
     
-    /// 播放器配置模型
-    public var playerConfig: ARTVideoPlayerConfig!
-    
     /// 手势方向
     public var swipeDirection: SwipeDirection = .unknown
     
@@ -47,16 +44,16 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     // MARK: - 播放器组件 AVPlayer（最底层：播放器视图）
     
     /// 播放器图层（最底层：用于显示弹幕、广告等）
-    public var overlayView: ARTVideoPlayerOverlayView?
+    public var overlayView: UIView?
     
     /// 播放器系统控制层（中间层：系统控制，位于弹幕、广告等之上）
-    public var systemControls: ARTVideoPlayerSystemControls?
+    public var systemControls: UIView?
     
     /// 播放器控制层（最顶层：顶部栏、侧边栏等）
-    public var controlsView: ARTVideoPlayerControlsView?
+    public var controlsView: UIView?
     
     /// 播放器加载动画视图
-    public var loadingView: ARTVideoPlayerLoadingView?
+    public var loadingView: UIView?
     
     
     // MARK: - Initialization
@@ -108,7 +105,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     open override func onReceivePlayerReadyToPlay() { // 准备播放
         super.onReceivePlayerReadyToPlay()
-        loadingView?.stopLoading() // 停止加载动画
+        didStopLoadingAnimation() // 停止加载动画
         player.play() // 开始播放
     }
     
@@ -372,7 +369,7 @@ extension ARTVideoPlayerWrapperView {
                 self?.finalizeNextVideoPlayback(with: asset) // 完成下一集视频的播放设置
             case .failure(let error):
                 print("Tracks 属性加载失败: \(error.localizedDescription)")
-                self?.loadingView?.stopLoading() // 移除加载动画
+                self?.didStopLoadingAnimation() // 移除加载动画
             }
         }
     }
@@ -453,7 +450,16 @@ extension ARTVideoPlayerWrapperView {
     @objc open func didUpdatePreviewTime(currentTime: CMTime, totalTime: CMTime) {
         
     }
-
+    
+    /// 通知外部加载动画已开始
+    @objc open func didStartLoadingAnimation() {
+        
+    }
+    
+    /// 通知外部加载动画已停止
+    @objc open func didStopLoadingAnimation() {
+        
+    }
     
     // MARK: - Gesture Recognizer
     
@@ -489,7 +495,7 @@ extension ARTVideoPlayerWrapperView {
         guard validateURL(url) else { return }
         configureAudioSession() // 配置音频会话
         initializePlayer(with: url) // 初始化播放器
-        loadingView?.startLoading() // 显示加载动画
+        didStartLoadingAnimation() // 显示加载动画
     }
     
     /// 验证 URL 的有效性
@@ -549,7 +555,7 @@ extension ARTVideoPlayerWrapperView {
             playerLayer.player = nil
             playerLayer.backgroundColor = UIColor.black.cgColor
         }
-        loadingView?.startLoading() // 显示加载动画
+        didStartLoadingAnimation() // 显示加载动画
     }
     
     /// 完成下一集视频的播放设置
@@ -662,22 +668,22 @@ extension ARTVideoPlayerWrapperView {
 extension ARTVideoPlayerWrapperView {
     
     /// 获取自定义播放器图层
-    private func delegate_customPlayerOverlay() -> ARTVideoPlayerOverlayView? {
+    private func delegate_customPlayerOverlay() -> UIView? {
         return delegate?.wrapperViewOverlay?(for: self)
     }
     
     /// 获取自定义播放器系统控制层
-    private func delegate_customSystemControls() -> ARTVideoPlayerSystemControls? {
+    private func delegate_customSystemControls() -> UIView? {
         return delegate?.wrapperViewSystemControls?(for: self)
     }
     
     /// 获取自定义播放器控制层
-    private func delegate_customPlayControls() -> ARTVideoPlayerControlsView? {
+    private func delegate_customPlayControls() -> UIView? {
         return delegate?.wrapperViewControls?(for: self)
     }
     
     /// 获取自定义加载动画视图
-    private func delegate_customLoading() -> ARTVideoPlayerLoadingView? {
+    private func delegate_customLoading() -> UIView? {
         return delegate?.wrapperViewLoading?(for: self)
     }
 }

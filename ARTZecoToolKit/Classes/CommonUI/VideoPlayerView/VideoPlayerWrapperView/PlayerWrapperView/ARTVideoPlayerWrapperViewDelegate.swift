@@ -14,23 +14,23 @@
     ///
     /// - Parameter wrapperView: 视频播放器包装视图
     /// - Returns: 播放器图层视图
-    @objc optional func wrapperViewOverlay(for wrapperView: ARTVideoPlayerWrapperView) -> ARTVideoPlayerOverlayView?
+    @objc optional func wrapperViewOverlay(for wrapperView: ARTVideoPlayerWrapperView) -> UIView?
 
     /// 获取播放器系统控制层（中间层：系统控制）
     ///
     /// - Parameter wrapperView: 视频播放器包装视图
     /// - Returns: 播放器系统控制层视图
-    @objc optional func wrapperViewSystemControls(for wrapperView: ARTVideoPlayerWrapperView) -> ARTVideoPlayerSystemControls?
+    @objc optional func wrapperViewSystemControls(for wrapperView: ARTVideoPlayerWrapperView) -> UIView?
 
     /// 获取播放器控制层（最顶层：顶部栏、侧边栏等）
     ///
     /// - Parameter wrapperView: 视频播放器包装视图
     /// - Returns: 播放器控制层视图
-    @objc optional func wrapperViewControls(for wrapperView: ARTVideoPlayerWrapperView) -> ARTVideoPlayerControlsView?
+    @objc optional func wrapperViewControls(for wrapperView: ARTVideoPlayerWrapperView) -> UIView?
 
     /// 获取播放器的加载动画视图，用于显示加载动画
     ///
     /// - Parameter wrapperView: 视频播放器包装视图
     /// - Returns: 加载动画视图
-    @objc optional func wrapperViewLoading(for wrapperView: ARTVideoPlayerWrapperView) -> ARTVideoPlayerLoadingView?
+    @objc optional func wrapperViewLoading(for wrapperView: ARTVideoPlayerWrapperView) -> UIView?
 }

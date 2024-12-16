@@ -20,23 +20,23 @@
     ///
     ///  Parameter playerView: 基类视图
     ///  Returns: 播放器图层视图
-    @objc optional func playerViewOverlay(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerOverlayView?
+    @objc optional func playerViewOverlay(for playerView: ARTVideoPlayerView) -> UIView?
     
     /// 获取播放器系统控制层（中间层：系统控制）
     ///
     ///  Parameter playerView: 基类视图
     ///  Returns: 播放器系统控制层视图
-    @objc optional func playerViewSystemControls(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerSystemControls?
+    @objc optional func playerViewSystemControls(for playerView: ARTVideoPlayerView) -> UIView?
     
     /// 获取播放器控制层（最顶层：顶部栏、侧边栏等）
     ///
     ///  Parameter playerView: 基类视图
     ///  Returns: 播放器控制层视图
-    @objc optional func playerViewControls(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerControlsView?
+    @objc optional func playerViewControls(for playerView: ARTVideoPlayerView) -> UIView?
     
     /// 获取播放器的加载动画视图，用于显示加载动画
     ///
     ///  Parameter playerView: 基类视图
     ///  Returns: 加载动画视图
-    @objc optional func playerViewLoading(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerLoadingView?
+    @objc optional func playerViewLoading(for playerView: ARTVideoPlayerView) -> UIView?
 }
