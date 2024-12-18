@@ -39,7 +39,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     
     // MARK: - Initialization
-
+    
     public override init() {
         super.init()
     }
@@ -65,7 +65,6 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     open override func onReceivePlayerItemDidPlayToEnd(_ notification: Notification) { // 播放结束
         super.onReceivePlayerItemDidPlayToEnd(notification)
-        pauseVideoPlayback() // 暂停播放
     }
     
     open override func onReceivePlayerItemFailedToPlayToEnd(_ notification: Notification) { // 播放失败
@@ -73,11 +72,11 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     }
     
     open override func onReceiveAudioSessionInterruptionBegan(_ notification: Notification) { // 音频会话中断开始
-        super.onReceivePlayerItemFailedToPlayToEnd(notification)
+        super.onReceiveAudioSessionInterruptionBegan(notification)
     }
     
     open override func onReceiveAudioSessionInterruptionEnded(_ notification: Notification) { // 音频会话中断结束
-        super.onReceivePlayerItemFailedToPlayToEnd(notification)
+        super.onReceiveAudioSessionInterruptionEnded(notification)
     }
     
     open override func onReceivePlayerProgressDidChange(time: CMTime) { // 播放进度改变`
@@ -87,7 +86,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     open override func onReceivePlayerReadyToPlay() { // 准备播放
         super.onReceivePlayerReadyToPlay()
         didStopLoadingAnimation() // 停止加载动画
-        player.play() // 开始播放
+        resumeVideoPlayback() // 开始播放
     }
     
     open override func onReceivePlayerFailed() { // 播放失败
@@ -137,22 +136,22 @@ extension ARTVideoPlayerWrapperView {
     
     /// 创建播放器图层（最底层：用于显示弹幕、广告等）
     @objc open func setupOverlayView() {
-
+        
     }
     
     /// 创建系统控制层（中间层：系统控制）
     @objc open func setupSystemControls() {
-
+        
     }
     
     /// 创建加载动画视图
     @objc open func setupLoadingView() {
-
+        
     }
     
     /// 创建播放器控制层（最顶层：顶部栏、侧边栏等）
     @objc open func setupControlsView() {
-
+        
     }
     
     /// 创建全屏管理器
@@ -242,14 +241,16 @@ extension ARTVideoPlayerWrapperView: UIGestureRecognizerDelegate {
     /// - Parameter gesture: 点击手势
     /// - Note: 重写父类方法，处理单击手势，根据横竖屏模式展示控制面板或切换播放状态
     @objc open func handleTapGesture(_ gesture: UITapGestureRecognizer) {
-        
+        let location = gesture.location(in: self)  // 获取点击的坐标
+        didReceiveTapGesture(at: location) // 通知外部点击事件
     }
     
     /// 处理双击手势
     /// - Parameter gesture: 双击手势
     /// - Note: 仅在横屏模式下切换播放状态
     @objc open func handleDoubleTapGesture(_ gesture: UITapGestureRecognizer) {
-        
+        guard isLandscape else { return } // 如果是横屏模式
+        didReceivewDoubleTapGesture() // 通知外部双击事件
     }
     
     /// 处理捏合手势
@@ -324,7 +325,7 @@ extension ARTVideoPlayerWrapperView {
     @objc open func playNextVideo(with url: URL?) {
         guard let url = url else { return }
         prepareForNextVideo() // 准备播放下一集
-        loadAssetAsync(url: url, keys: ["duration"]) { [weak self] result in
+        loadAssetAsync(url: url, keys: ["tracks"]) { [weak self] result in
             switch result {
             case .success(let asset):
                 self?.finalizeNextVideoPlayback(with: asset) // 完成下一集视频的播放设置
@@ -444,6 +445,19 @@ extension ARTVideoPlayerWrapperView {
     @objc open func didReceiveSliderTouchEnded(sliderValue: Float) {
         
     }
+    
+    /// 点击手势
+    /// - Parameter location: 点击的位置
+    /// - Note: 该方法在接收到点击手势时被调用，通常用于显示或隐藏控制面板
+    @objc open func didReceiveTapGesture(at location: CGPoint) {
+        
+    }
+    
+    /// 双击手势
+    /// - Note: 该方法在接收到双击手势时被调用，通常用于切换播放状态
+    @objc open func didReceivewDoubleTapGesture() {
+        
+    }
 }
 
 // MARK: - Private Methods
@@ -459,41 +473,6 @@ extension ARTVideoPlayerWrapperView {
         didStartLoadingAnimation() // 显示加载动画
     }
     
-    /// 验证 URL 的有效性
-    /// - Parameter url: 需要验证的 URL
-    /// - Returns: 如果有效返回 true，否则返回 false
-    private func validateURL(_ url: URL) -> Bool {
-        if url.absoluteString.isEmpty { // 检查 URL 是否为空
-            print("无效的 URL。")
-            return false
-        }
-        
-        if url.isFileURL { // 检查本地文件是否存在
-            if !FileManager.default.fileExists(atPath: url.path) {
-                print("本地视频文件不存在：\(url.path)")
-                return false
-            }
-        } else if url.scheme == "file",
-                  Bundle.main.path(forResource: url.lastPathComponent, ofType: nil) == nil { // 检查应用内资源是否存在
-            print("应用内视频资源不存在：\(url.lastPathComponent)")
-            return false
-        }
-        
-        return true
-    }
-    
-    /// 配置音频会话
-    /// - Note: 设置音频会话为播放模式并激活
-    private func configureAudioSession() {
-        do { // 获取共享音频会话实例并配置
-            let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.playback, mode: .default)
-            try session.setActive(true)
-        } catch {
-            print("设置音频会话时发生错误: \(error.localizedDescription)")
-        }
-    }
-    
     /// 初始化播放器
     /// - Parameter url: 视频 URL
     private func initializePlayer(with url: URL) {
@@ -501,7 +480,7 @@ extension ARTVideoPlayerWrapperView {
         playerItem = AVPlayerItem(asset: asset)
         setPlayerVolume(playerItem: playerItem, volume: 2.0)  // 将音量设置为2倍
         player = AVPlayer(playerItem: playerItem)
-
+        
         configurePlayerLayer() // 配置播放器 Layer
         setupImageGenerator(asset) // 配置图像生成器
     }
@@ -541,21 +520,6 @@ extension ARTVideoPlayerWrapperView {
         playerLayer.videoGravity = .resizeAspectFill
         playerLayer.player = player
         addPlayerObservers() // 添加播放器观察者
-    }
-    
-    /// 添加播放器观察者
-    /// - Note: 重写父类方法，添加播放器观察者
-    private func loadAssetAsync(url: URL, keys: [String], completion: @escaping (Result<AVURLAsset, Error>) -> Void) {
-        let asset = AVURLAsset(url: url)
-        asset.loadValuesAsynchronously(forKeys: keys) {
-            var error: NSError?
-            let status = asset.statusOfValue(forKey: keys.first ?? "", error: &error)
-            if status == .loaded {
-                completion(.success(asset))
-            } else {
-                completion(.failure(error ?? NSError(domain: "ARTVideoPlayer", code: -1, userInfo: [NSLocalizedDescriptionKey: "Asset loading failed."])))
-            }
-        }
     }
     
     /// 设置播放器音量
@@ -621,6 +585,56 @@ extension ARTVideoPlayerWrapperView {
     /// 跳转到指定时间
     private func seek(to time: CMTime, completion: @escaping (Bool) -> Void) {
         player.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero, completionHandler: completion)
+    }
+    
+    /// 验证 URL 的有效性
+    /// - Parameter url: 需要验证的 URL
+    /// - Returns: 如果有效返回 true，否则返回 false
+    private func validateURL(_ url: URL) -> Bool {
+        if url.absoluteString.isEmpty { // 检查 URL 是否为空
+            print("无效的 URL。")
+            return false
+        }
+        
+        if url.isFileURL { // 检查本地文件是否存在
+            if !FileManager.default.fileExists(atPath: url.path) {
+                print("本地视频文件不存在：\(url.path)")
+                return false
+            }
+        } else if url.scheme == "file",
+                  Bundle.main.path(forResource: url.lastPathComponent, ofType: nil) == nil { // 检查应用内资源是否存在
+            print("应用内视频资源不存在：\(url.lastPathComponent)")
+            return false
+        }
+        
+        return true
+    }
+    
+    /// 配置音频会话
+    /// - Note: 设置音频会话为播放模式并激活
+    private func configureAudioSession() {
+        do { // 获取共享音频会话实例并配置
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playback, mode: .default)
+            try session.setActive(true)
+        } catch {
+            print("设置音频会话时发生错误: \(error.localizedDescription)")
+        }
+    }
+    
+    /// 添加播放器观察者
+    /// - Note: 重写父类方法，添加播放器观察者
+    private func loadAssetAsync(url: URL, keys: [String], completion: @escaping (Result<AVURLAsset, Error>) -> Void) {
+        let asset = AVURLAsset(url: url)
+        asset.loadValuesAsynchronously(forKeys: keys) {
+            var error: NSError?
+            let status = asset.statusOfValue(forKey: keys.first ?? "", error: &error)
+            if status == .loaded {
+                completion(.success(asset))
+            } else {
+                completion(.failure(error ?? NSError(domain: "ARTVideoPlayer", code: -1, userInfo: [NSLocalizedDescriptionKey: "Asset loading failed."])))
+            }
+        }
     }
 }
 
