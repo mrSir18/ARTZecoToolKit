@@ -10,19 +10,23 @@ import ARTZecoToolKit
 
 class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
     
+    /// 是否正在拖动进度条
+    public var isDraggingSlider = false
+    
+    
     // MARK: - 播放器组件 AVPlayer（最底层：播放器视图）
     
     /// 播放器图层（最底层：用于显示弹幕、广告等）
-    public var overlayView: UIView!
+    public var overlayView: ARTVideoPlayerOverlayView!
     
     /// 播放器系统控制层（中间层：系统控制，位于弹幕、广告等之上）
-    public var systemControls: UIView!
+    public var systemControls: ARTVideoPlayerSystemControls!
     
     /// 播放器控制层（最顶层：顶部栏、侧边栏等）
     public var controlsView: ARTVideoPlayerControlsView!
     
     /// 播放器加载动画视图
-    public var loadingView: UIView!
+    public var loadingView: ARTVideoPlayerLoadingView!
     
     
     // MARK: - Initialization
@@ -100,7 +104,7 @@ extension ARTVideoPlayerCustomWrapperView {
     }
  
     override func didStartLoadingAnimation() { // 开始加载动画
-        
+         
     }
 
     override func didStopLoadingAnimation() { // 停止加载动画
@@ -110,22 +114,55 @@ extension ARTVideoPlayerCustomWrapperView {
     // MARK: - Gesture Recognizer
 
     override func didReceiveSliderTouchBegan(sliderValue: Float) { // 触摸开始时调用
-        
+        controlsView.updateSliderTouchBeganInControls(sliderValue: sliderValue)
     }
    
     override func didReceiveSliderValue(sliderValue: Float) { // 滑动过程中调用
-        
+        controlsView.updateSliderValueInControls(sliderValue: sliderValue)
     }
     
     override func didReceiveSliderTouchEnded(sliderValue: Float) { // 触摸结束时调用
-        
+        controlsView.updateSliderTouchEndedInControls(sliderValue: sliderValue)
     }
 
     override func didReceiveTapGesture(at location: CGPoint) { // 点击手势
-        
+//        if overlayView.handleTapOnOverlay(at: location) { return } // 如果弹幕视图处理了点击事件，直接返回
+        if isLandscape { // 如果是横屏模式，切换控制
+            controlsView.toggleControlsVisibility()
+        } else { // 如果是竖屏模 
+            togglePlayerState()
+        }
     }
 
     override func didReceivewDoubleTapGesture() { // 双击手势
-        
+        togglePlayerState()
+    }
+}
+
+
+// MARK: - Public Methods
+
+extension ARTVideoPlayerCustomWrapperView {
+    
+    /// 切换播放器状态
+    public func togglePlayerState() {
+        switch playerState {
+        case .paused: // 恢复播放
+//            overlayView.resumeDanmaku() // 恢复弹幕
+//            resumePlayer()
+            print("恢复播放")
+        case .playing: // 暂停播放
+            pausePlayer()
+        case .ended: // 重新播放
+//            overlayView.startDanmaku() // 开始弹幕
+            controlsView.resetSliderValueInControls()
+            controlsView.updatePlayPauseButtonInControls(isPlaying: true)
+            seek(to: CMTime.zero) { [weak self] _ in
+//                self?.resumePlayer()
+                print("重新播放")
+            }
+        default:
+            break
+        }
     }
 }

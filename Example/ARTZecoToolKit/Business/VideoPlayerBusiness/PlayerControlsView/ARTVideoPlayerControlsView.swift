@@ -185,7 +185,7 @@ extension ARTVideoPlayerControlsView {
     }
     
     /// 切换控制条的显示与隐藏状态
-    private func toggleControlsVisibility() {
+    public func toggleControlsVisibility() {
         toggleControls(visible: isHiddenControls)
         resetAutoHideTimer()
     }

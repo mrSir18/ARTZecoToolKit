@@ -81,12 +81,15 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     open override func onReceivePlayerProgressDidChange(time: CMTime) { // 播放进度改变`
         super.onReceivePlayerProgressDidChange(time: time)
+        guard CMTimeGetSeconds(time) > 0, CMTimeGetSeconds(totalDuration) > 0 else {
+            return // 防止除零错误
+        }
     }
     
     open override func onReceivePlayerReadyToPlay() { // 准备播放
         super.onReceivePlayerReadyToPlay()
         didStopLoadingAnimation() // 停止加载动画
-        resumeVideoPlayback() // 开始播放
+        resumePlayer() // 开始播放
     }
     
     open override func onReceivePlayerFailed() { // 播放失败
@@ -337,20 +340,20 @@ extension ARTVideoPlayerWrapperView {
     }
     
     /// 暂停播放视频
-    @objc open func pauseVideoPlayback() {
+    @objc open func pausePlayer() {
         player.pause()
     }
     
     /// 恢复播放视频
-    @objc open func resumeVideoPlayback() {
+    @objc open func resumePlayer() {
         player.play()
         player.rate = currentRate
     }
     
     /// 重新播放视频
-    @objc open func restartVideoPlayback() {
+    @objc open func replayPlayer() {
         seek(to: .zero) { [weak self] _ in
-            self?.resumeVideoPlayback()
+            self?.resumePlayer()
         }
     }
     
@@ -358,7 +361,7 @@ extension ARTVideoPlayerWrapperView {
     /// - Parameter rate: 播放倍速
     @objc open func updatePlaybackRate(rate: Float) {
         currentRate = rate
-        resumeVideoPlayback() // 恢复播放
+        resumePlayer() // 恢复播放
     }
     
     /// 指定时间播放视频
@@ -373,6 +376,11 @@ extension ARTVideoPlayerWrapperView {
             completion?()
             self.player.rate = self.currentRate
         }
+    }
+    
+    /// 跳转到指定时间
+    @objc open func seek(to time: CMTime, completion: @escaping (Bool) -> Void) {
+        player.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero, completionHandler: completion)
     }
     
     /// 更新进度预览图像
@@ -488,7 +496,7 @@ extension ARTVideoPlayerWrapperView {
     /// 为播放下一集准备工作
     private func prepareForNextVideo() {
         thumbnailCache.removeAll()
-        pauseVideoPlayback() // 暂停播放
+        pausePlayer() // 暂停播放
         didPrepareForNextVideo() // 通知外部准备播放下一集
         onReceiveRemovePeriodicTimeObserver() // 移除周期性时间观察者
         if let playerLayer = self.layer as? AVPlayerLayer {
@@ -580,11 +588,6 @@ extension ARTVideoPlayerWrapperView {
                 self?.didUpdatePreviewImage(previewImage: uiImage)
             }
         }
-    }
-    
-    /// 跳转到指定时间
-    private func seek(to time: CMTime, completion: @escaping (Bool) -> Void) {
-        player.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero, completionHandler: completion)
     }
     
     /// 验证 URL 的有效性

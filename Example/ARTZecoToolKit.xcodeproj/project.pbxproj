@@ -40,7 +40,6 @@
 		025D29A42D10BF710022FA6E /* ARTVideoPlayerOverlayView+DelegateImplementations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29752D10BF710022FA6E /* ARTVideoPlayerOverlayView+DelegateImplementations.swift */; };
 		025D29A52D10BF710022FA6E /* ARTVideoPlayerPortraitBarrageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29912D10BF710022FA6E /* ARTVideoPlayerPortraitBarrageView.swift */; };
 		025D29A62D10BF710022FA6E /* ARTVideoPlayerOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29742D10BF710022FA6E /* ARTVideoPlayerOverlayView.swift */; };
-		025D29A72D10BF710022FA6E /* ARTCMTimeHashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29782D10BF710022FA6E /* ARTCMTimeHashable.swift */; };
 		025D29A82D10BF710022FA6E /* ARTVideoPlayerPortraitDanmakuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D299B2D10BF710022FA6E /* ARTVideoPlayerPortraitDanmakuView.swift */; };
 		025D29A92D10BF710022FA6E /* ARTVideoPlayerPortraitBarrageHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D298F2D10BF710022FA6E /* ARTVideoPlayerPortraitBarrageHeader.swift */; };
 		025D29AA2D10BF710022FA6E /* ARTVideoPlayerPortraitSlidingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D299D2D10BF710022FA6E /* ARTVideoPlayerPortraitSlidingView.swift */; };
@@ -152,7 +151,6 @@
 		025D29742D10BF710022FA6E /* ARTVideoPlayerOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerOverlayView.swift; sourceTree = "<group>"; };
 		025D29752D10BF710022FA6E /* ARTVideoPlayerOverlayView+DelegateImplementations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTVideoPlayerOverlayView+DelegateImplementations.swift"; sourceTree = "<group>"; };
 		025D29762D10BF710022FA6E /* ARTVideoPlayerOverlayViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerOverlayViewDelegate.swift; sourceTree = "<group>"; };
-		025D29782D10BF710022FA6E /* ARTCMTimeHashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTCMTimeHashable.swift; sourceTree = "<group>"; };
 		025D29792D10BF710022FA6E /* ARTVideoPlayerDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerDisplayView.swift; sourceTree = "<group>"; };
 		025D297B2D10BF710022FA6E /* ARTVideoPlayerSystemControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerSystemControls.swift; sourceTree = "<group>"; };
 		025D297D2D10BF710022FA6E /* ARTVideoPlayerLandscapeDanmakuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerLandscapeDanmakuCell.swift; sourceTree = "<group>"; };
@@ -342,7 +340,6 @@
 		025D297A2D10BF710022FA6E /* PlayerDisplayView */ = {
 			isa = PBXGroup;
 			children = (
-				025D29782D10BF710022FA6E /* ARTCMTimeHashable.swift */,
 				025D29792D10BF710022FA6E /* ARTVideoPlayerDisplayView.swift */,
 			);
 			path = PlayerDisplayView;
@@ -351,8 +348,8 @@
 		025D297C2D10BF710022FA6E /* PlayerSystemControls */ = {
 			isa = PBXGroup;
 			children = (
-				025D297A2D10BF710022FA6E /* PlayerDisplayView */,
 				025D297B2D10BF710022FA6E /* ARTVideoPlayerSystemControls.swift */,
+				025D297A2D10BF710022FA6E /* PlayerDisplayView */,
 			);
 			path = PlayerSystemControls;
 			sourceTree = "<group>";
@@ -691,11 +688,11 @@
 		02E984862D08C8450052C36A /* VideoPlayerBusiness */ = {
 			isa = PBXGroup;
 			children = (
+				025D29302D1046470022FA6E /* PlayerWrapperView */,
+				025D29652D1096930022FA6E /* PlayerControlsView */,
 				025D29772D10BF710022FA6E /* PlayerOverlayView */,
 				025D297C2D10BF710022FA6E /* PlayerSystemControls */,
 				025D29A02D10BF710022FA6E /* PrivateExtensionsView */,
-				025D29302D1046470022FA6E /* PlayerWrapperView */,
-				025D29652D1096930022FA6E /* PlayerControlsView */,
 			);
 			path = VideoPlayerBusiness;
 			sourceTree = "<group>";
@@ -1049,7 +1046,6 @@
 				025D29A42D10BF710022FA6E /* ARTVideoPlayerOverlayView+DelegateImplementations.swift in Sources */,
 				025D29A52D10BF710022FA6E /* ARTVideoPlayerPortraitBarrageView.swift in Sources */,
 				025D29A62D10BF710022FA6E /* ARTVideoPlayerOverlayView.swift in Sources */,
-				025D29A72D10BF710022FA6E /* ARTCMTimeHashable.swift in Sources */,
 				025D29A82D10BF710022FA6E /* ARTVideoPlayerPortraitDanmakuView.swift in Sources */,
 				025D29A92D10BF710022FA6E /* ARTVideoPlayerPortraitBarrageHeader.swift in Sources */,
 				025D29AA2D10BF710022FA6E /* ARTVideoPlayerPortraitSlidingView.swift in Sources */,
