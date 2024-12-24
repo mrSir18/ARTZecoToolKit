@@ -16,7 +16,7 @@ extension ARTPhotoBrowserCell {
 class ARTPhotoBrowserCell: UICollectionViewCell {
     
     /// 默认配置
-    public let configuration = ARTPhotoBrowserStyleConfiguration.default()
+    private let configuration = ARTPhotoBrowserStyleConfiguration.default()
     
     /// 滚动视图，用于支持缩放图片
     private var scrollView: UIScrollView!
@@ -26,6 +26,9 @@ class ARTPhotoBrowserCell: UICollectionViewCell {
     
     /// 背景图片用于模糊效果
     private var backgroundImageView: UIImageView!
+    
+    /// 高斯模糊效果
+    private var blurEffectView: UIView!
     
     /// 双击手势缩放
     private var doubleTapZoomGesture: UITapGestureRecognizer!
@@ -49,55 +52,74 @@ class ARTPhotoBrowserCell: UICollectionViewCell {
     }
     
     private func setupViews() {
+        setupBlurEffectView() // 设置模糊效果
+        setupScrollView() // 设置滚动视图
+        setupImageView() // 设置图片视图
+        setupGestures() // 设置手势
+    }
+    
+    // MARK: - Setup Methods
+    
+    private func setupBlurEffectView() { // 创建高斯模糊效果视图
+        guard configuration.enableBackgroundBlurEffect else { return }
         
-        if configuration.enableBackgroundBlurEffect {
-            // 创建背景图片视图
-            backgroundImageView = UIImageView()
-            backgroundImageView.contentMode = .scaleAspectFill
-            backgroundImageView.clipsToBounds =  true
-            contentView.addSubview(backgroundImageView)
-            backgroundImageView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-            
-            let blurEffect = UIBlurEffect(style: .dark)
-            let visualView = UIVisualEffectView(effect: blurEffect)
-            contentView.addSubview(visualView)
-            visualView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
+        blurEffectView = UIView()
+        contentView.addSubview(blurEffectView)
+        blurEffectView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
         
-        // 创建滚动视图
+        // 创建背景图片视图
+        backgroundImageView = UIImageView()
+        backgroundImageView.contentMode = .scaleAspectFill
+        backgroundImageView.clipsToBounds = true
+        blurEffectView.addSubview(backgroundImageView)
+        backgroundImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        // 添加模糊效果
+        let blurEffect = UIBlurEffect(style: .dark)
+        let visualEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.addSubview(visualEffectView)
+        visualEffectView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    private func setupScrollView() { // 创建滚动视图
         scrollView = UIScrollView(frame: contentView.bounds)
         scrollView.delegate = self
         scrollView.minimumZoomScale = configuration.minimumZoomScale
         scrollView.maximumZoomScale = configuration.maximumZoomScale
         scrollView.contentInsetAdjustmentBehavior = .never
         contentView.addSubview(scrollView)
-        
-        // 创建图片视图
+    }
+    
+    private func setupImageView() { // 创建图片视图
         imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         scrollView.addSubview(imageView)
-        
-        if configuration.enableDoubleTapZoomGesture { // 创建双击手势
+    }
+
+    private func setupGestures() { // 添加双击缩放手势
+        if configuration.enableDoubleTapZoomGesture {
             doubleTapZoomGesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
             doubleTapZoomGesture.numberOfTapsRequired = 2
             contentView.addGestureRecognizer(doubleTapZoomGesture)
         }
         
-        if configuration.enableSingleTapDismissGesture || configuration.enableTopBottomFadeOutAnimator { // 创建单击手势
+        if configuration.enableSingleTapDismissGesture || configuration.enableTopBottomFadeOutAnimator { // 添加单击手势
             singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(_:)))
             singleTapGesture.delaysTouchesBegan = false
             singleTapGesture.numberOfTapsRequired = 1
-            if configuration.enableDoubleTapZoomGesture { // 解决单击事件和双击事件的冲突
+            if configuration.enableDoubleTapZoomGesture { // 防止与双击手势冲突
                 singleTapGesture.require(toFail: doubleTapZoomGesture)
             }
             contentView.addGestureRecognizer(singleTapGesture)
         }
     }
-    
+
     // MARK: - Private UITapGestureRecognizer Methods
     
     @objc private func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
@@ -221,6 +243,30 @@ class ARTPhotoBrowserCell: UICollectionViewCell {
             imageView.image = image
             handleImageLoadResult(image: image)
             return
+        }
+    }
+    
+    /// 处理滑动收起视图手势
+    @objc public func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        let panTranslation = gesture.translation(in: contentView)
+        let maxVerticalTranslation: CGFloat = 500.0 // 最大垂直滑动距离，用于计算背景透明度
+        let backgroundOpacity = max(0.0, 1 - min(panTranslation.y / maxVerticalTranslation, 1))
+        let scalingFactor = max(0.4, 1 - panTranslation.y / 2000) // 控制缩小速度及最小缩放比例（0.4 ~ 1.0）
+        
+        switch gesture.state {
+        case .changed:
+            if scrollView.contentOffset.y > 0 { return } // 如果 ScrollView 未滑动到顶部，不执行处理
+            let scaleTransformation = CGAffineTransform(scaleX: scalingFactor, y: scalingFactor) // 计算缩放和平移变换
+            let translationTransformation = CGAffineTransform(translationX: panTranslation.x, y: panTranslation.y)
+            scrollView.transform = scaleTransformation.concatenating(translationTransformation)
+            blurEffectView.alpha = backgroundOpacity // 背景透明度
+        case .ended, .cancelled:
+            UIView.animate(withDuration: 0.25) {
+                self.scrollView.transform = .identity
+                self.blurEffectView.alpha = 1.0
+            }
+        default:
+            break
         }
     }
 }

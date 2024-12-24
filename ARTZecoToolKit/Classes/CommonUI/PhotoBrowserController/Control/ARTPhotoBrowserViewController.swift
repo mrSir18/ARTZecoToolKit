@@ -73,11 +73,11 @@ open class ARTPhotoBrowserViewController: UIViewController {
     /// 存储照片的数组
     internal var photos: [Any] = []
     
-    /// 当前显示的照片索引,规则与数组索引一致
+    /// 开始显示的照片索引,规则与数组索引一致
     internal var startIndex: Int = 0
     
     /// 记录上一次回调的索引
-    private var lastReportedIndex = -1
+    private var lastReportedIndex: Int = -1
     
     /// 标记首次布局完成
     private var isFirstLayout = true
@@ -91,6 +91,9 @@ open class ARTPhotoBrowserViewController: UIViewController {
     /// 当前显示的照片索引回调
     public var currentIndexCallback: ((Int) -> Void)?
     
+    /// 保存当前图片url回调
+    public var saveCurrentPhotoCallback: ((Any) -> Void)?
+    
     
     // MARK: - Class Methods
     
@@ -103,8 +106,8 @@ open class ARTPhotoBrowserViewController: UIViewController {
     ///  - currentIndexCallback: 当前显示的照片索引回调
     ///  - Note: 该方法为类方法，直接调用即可展示图片浏览器
     ///  - Note: 该方法默认使用 present 弹屏方式展示
-    public class func showPhotoBrowser(withPhotos photos: [Any], startIndex index: Int = 0, delegate: ARTPhotoBrowserViewControllerProtocol? = nil, currentIndexCallback: ((Int) -> Void)? = nil) {
-        let photoBrowserViewController = ARTPhotoBrowserViewController(photos: photos, startIndex: index, delegate: delegate, currentIndexCallback: currentIndexCallback)
+    public class func showPhotoBrowser(withPhotos photos: [Any], startIndex index: Int = 0, delegate: ARTPhotoBrowserViewControllerProtocol? = nil, currentIndexCallback: ((Int) -> Void)? = nil, saveCurrentPhotoCallback: ((Any) -> Void)? = nil) {
+        let photoBrowserViewController = ARTPhotoBrowserViewController(photos: photos, startIndex: index, delegate: delegate, currentIndexCallback: currentIndexCallback, saveCurrentPhotoCallback: saveCurrentPhotoCallback)
         photoBrowserViewController.presentPhotoBrowser()
     }
     
@@ -117,11 +120,12 @@ open class ARTPhotoBrowserViewController: UIViewController {
     
     // MARK: - Initialization
     
-    public init(photos: [Any], startIndex: Int = 0, delegate: ARTPhotoBrowserViewControllerProtocol? = nil, currentIndexCallback: ((Int) -> Void)? = nil) {
+    public init(photos: [Any], startIndex: Int = 0, delegate: ARTPhotoBrowserViewControllerProtocol? = nil, currentIndexCallback: ((Int) -> Void)? = nil, saveCurrentPhotoCallback: ((Any) -> Void)? = nil) {
         self.photos = photos
         self.startIndex = (startIndex >= 0 && startIndex < photos.count) ? startIndex : 0 // 索引越界处理,默认为 0
         self.delegate = delegate
         self.currentIndexCallback = currentIndexCallback
+        self.saveCurrentPhotoCallback = saveCurrentPhotoCallback
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -133,17 +137,11 @@ open class ARTPhotoBrowserViewController: UIViewController {
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        // 控制器基础配置
-        setupBaseConfiguration()
-        
-        // 创建导航栏
-        setupNavigationBar()
-        
-        // 创建底部工具栏
-        setupBottomBar()
-        
-        // 创建列表视图
-        setupCollectionView()
+        setupBaseConfiguration() // 控制器基础配置
+        setupNavigationBar() // 创建导航栏
+        setupBottomBar() // 创建底部工具栏
+        setupCollectionView() // 创建列表视图
+        setupGestures() // 设置手势
     }
     
     open override func viewDidLayoutSubviews() {
@@ -240,6 +238,24 @@ open class ARTPhotoBrowserViewController: UIViewController {
         }
     }
     
+    /// 设置手势
+    open func setupGestures() {
+        if configuration.enableSwipeToDismissGesture { // 是否支持滑动关闭视图手势
+            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+            panGesture.maximumNumberOfTouches = 1
+            panGesture.delaysTouchesBegan = true
+            panGesture.delaysTouchesEnded = true
+            panGesture.cancelsTouchesInView = true
+            view.addGestureRecognizer(panGesture)
+        }
+
+        if configuration.enableLongPressSaveImageGesture { // 长按手势
+            let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+            longPressGesture.minimumPressDuration = 0.5 // 设置长按时间
+            view.addGestureRecognizer(longPressGesture)
+        }
+    }
+    
     // MARK: - Private Instance Methods
     
     /// 展示图片浏览器
@@ -254,12 +270,38 @@ open class ARTPhotoBrowserViewController: UIViewController {
         }
     }
     
+    // 提取创建 ActionSheet 内容项的函数
+    private func createActionSheetItems(text: String) -> [ARTActionSheetContentEntity] {
+        let textFont = .art_medium(ARTAdaptedValue(14.0)) ?? UIFont.systemFont(ofSize: ARTAdaptedValue(14.0))
+        let textColor = UIColor.art_color(withHEXValue: 0x000000)
+        let separatorLineColor = UIColor.art_color(withHEXValue: 0xEEEEEE)
+        let textInset = UIEdgeInsets(top: 0.0, left: ARTAdaptedValue(24.0), bottom: 0.0, right: ARTAdaptedValue(24.0))
+        return [
+            ARTActionSheetContentEntity(
+                text: text,
+                textFont: textFont,
+                textColor: textColor,
+                textAlignment: .left,
+                separatorLineColor: separatorLineColor,
+                showSeparatorLine: false,
+                textInset: textInset
+            )
+        ]
+    }
+    
+    /// 保存当前图片
+    /// - Note: 保存当前显示的图片
+    private func saveCurrentPhoto() {
+        let currentIndex = (lastReportedIndex != -1) ? lastReportedIndex : startIndex
+        saveCurrentPhotoCallback?(photos[currentIndex])
+    }
+    
     // MARK: - Private Delegate Methods
     
     /// 退出图片浏览器
     ///
     /// - Note: 退出图片浏览器，通知代理对象
-    internal func dismissPhotoBrowser() {
+    func dismissPhotoBrowser() {
         guard (delegate?.dismissPhotoBrowser?(for: self, animated: true, completion: {
             print("图片浏览器退出成功")
         })) != nil else { /// 使用默认退出方式
@@ -335,6 +377,88 @@ extension ARTPhotoBrowserViewController {
         if delayTopBottomBarTask != nil {
             delayTopBottomBarTask?.cancel()
             delayTopBottomBarTask = nil
+        }
+    }
+    
+    /// 显示保存图片操作
+    public func showActionSheet() {
+        ARTActionSheetStyleConfiguration.resetConfiguration()
+        
+        // 容器样式
+        var containerEntity = ARTActionSheetStyleConfiguration.default().containerEntity
+        containerEntity.height = ARTAdaptedValue(156.0)
+        
+        // 创建按钮样式内容
+        let defaultStyleItems = createActionSheetItems(text: "保存图片")
+        let groupStyleItems = createActionSheetItems(text: "取消")
+        
+        // 更新样式配置
+        ARTActionSheetStyleConfiguration.default()
+            .containerEntity(containerEntity)
+            .contentEntitys([defaultStyleItems, groupStyleItems])
+        
+        // 创建并显示 ActionSheet
+        let actionSheet = ARTActionSheet()
+        actionSheet.didSelectItemCallback = { [weak self] buttonIndex in
+            switch buttonIndex {
+            case .first: // 保存图片
+                self?.saveCurrentPhoto()
+            default:
+                break
+            }
+        }
+        actionSheet.show()
+    }
+}
+
+// MARK: - UIGestureRecognizer
+
+extension ARTPhotoBrowserViewController {
+    
+    /// 处理拖动手势 - 滑动关闭视图
+    @objc open func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: view)
+        let velocity = gesture.velocity(in: view)
+        guard let currentIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)), // 获取当前手势位置对应的 indexPath 和 cell
+              let photoCell = collectionView.cellForItem(at: currentIndexPath) as? ARTPhotoBrowserCell else {
+            return
+        }
+        switch gesture.state {
+        case .began:
+            view.backgroundColor = .clear // 设置背景颜色透明
+        case .changed:
+            if translation.y > 0 {
+                if navigationBar.alpha > 0 || bottomBar.alpha > 0 { // 避免重复设置
+                    let targetAlpha = max(1 - translation.y / 200, 0)
+                    navigationBar.alpha = targetAlpha
+                    bottomBar.alpha = targetAlpha
+                }
+                photoCell.handlePanGesture(gesture) // 处理图片拖动手势
+            }
+        case .ended, .cancelled:
+            let shouldDismiss = translation.y > 100 || velocity.y > 300
+            if shouldDismiss { // 关闭视图
+                dismissPhotoBrowser()
+            } else { // 恢复视图
+                view.backgroundColor = configuration.controllerBackgroundColor // 恢复背景颜色
+                UIView.animate(withDuration: 0.3) {
+                    self.navigationBar.alpha = 1
+                    self.bottomBar.alpha = 1
+                }
+                photoCell.handlePanGesture(gesture) // 处理图片拖动手势
+            }
+        default:
+            break
+        }
+    }
+    
+    /// 处理长按手势 - 保存图片
+    @objc open func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+        switch gesture.state {
+        case .began: // 显示保存图片操作
+            showActionSheet()
+        default:
+            break
         }
     }
 }

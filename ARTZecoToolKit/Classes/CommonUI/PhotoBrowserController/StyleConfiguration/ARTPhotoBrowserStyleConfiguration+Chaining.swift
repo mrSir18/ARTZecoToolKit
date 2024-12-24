@@ -79,6 +79,18 @@ public extension ARTPhotoBrowserStyleConfiguration {
     }
     
     @discardableResult
+    func enableSwipeToDismissGesture(_ enable: Bool) -> ARTPhotoBrowserStyleConfiguration {
+        enableSwipeToDismissGesture = enable
+        return self
+    }
+    
+    @discardableResult
+    func enableLongPressSaveImageGesture(_ enable: Bool) -> ARTPhotoBrowserStyleConfiguration {
+        enableLongPressSaveImageGesture = enable
+        return self
+    }
+    
+    @discardableResult
     func maximumZoomScale(_ scale: CGFloat) -> ARTPhotoBrowserStyleConfiguration {
         maximumZoomScale = scale
         return self

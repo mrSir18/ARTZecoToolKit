@@ -183,6 +183,34 @@ public class ARTPhotoBrowserStyleConfiguration: NSObject {
         }
     }
     
+    /// 是否支持滑动关闭视图手势.
+    ///
+    /// - Note: 默认true.
+    /// - Note: 开启后可滑动关闭视图.
+    private var pri_enableSwipeToDismissGesture: Bool = true
+    public var enableSwipeToDismissGesture: Bool {
+        get {
+            pri_enableSwipeToDismissGesture
+        }
+        set {
+            pri_enableSwipeToDismissGesture = newValue
+        }
+    }
+    
+    /// 是否支持长按保存图片手势.
+    ///
+    /// - Note: 默认true.
+    /// - Note: 开启后可长按保存图片.
+    private var pri_enableLongPressSaveImageGesture: Bool = true
+    public var enableLongPressSaveImageGesture: Bool {
+        get {
+            pri_enableLongPressSaveImageGesture
+        }
+        set {
+            pri_enableLongPressSaveImageGesture = newValue
+        }
+    }
+    
     /// 双击最大缩放比例.
     ///
     /// - Note: 默认1.5.

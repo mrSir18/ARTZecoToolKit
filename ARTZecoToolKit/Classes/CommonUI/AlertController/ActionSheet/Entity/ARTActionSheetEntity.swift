@@ -10,15 +10,15 @@ public struct ARTActionSheetContainerEntity {
     /// 容器高度
     public var height: CGFloat
     /// 容器背景色
-    public let backgroundColor: UIColor
+    public var backgroundColor: UIColor
     /// 容器圆角
-    public let radius: CGFloat
+    public var radius: CGFloat
     /// 是否允许通过下拉关闭 Sheet 视图
-    public let allowDismissByPullDown: Bool
+    public var allowDismissByPullDown: Bool
     /// 是否允许通过点击空白区域关闭 Sheet 视图
-    public let allowDismissByTapOnBackground: Bool
+    public var allowDismissByTapOnBackground: Bool
     /// 是否根据内容高度设定容器高度
-    public let enableAutoHeight: Bool
+    public var enableAutoHeight: Bool
 
     
     // MARK: - Initialization
@@ -47,13 +47,13 @@ public struct ARTActionSheetContainerEntity {
 /// 线块实体
 public struct ARTActionSheetLineEntity {
     /// 线块颜色
-    public let backgroundColor: UIColor
+    public var backgroundColor: UIColor
     /// 线块Size
-    public let size: CGSize
+    public var size: CGSize
     /// 线块圆角
-    public let radius: CGFloat
+    public var radius: CGFloat
     /// 是否隐藏顶部下拉线块
-    public let showSeparatorLine: Bool
+    public var showSeparatorLine: Bool
     
     
     // MARK: - Initialization
@@ -78,21 +78,21 @@ public struct ARTActionSheetLineEntity {
 /// 表单实体
 public struct ARTActionSheetCollectionEntity {
     /// 表单背景色
-    public let backgroundColor: UIColor
+    public var backgroundColor: UIColor
     /// 表单圆角
-    public let radius: CGFloat
+    public var radius: CGFloat
     /// 是否滚动
-    public let scrolling: Bool
+    public var scrolling: Bool
     /// 表单距离父视图边距，默认+安全区域
-    public let contentInset: UIEdgeInsets
+    public var contentInset: UIEdgeInsets
     /// 表单内边距
-    public let sectionInsets: UIEdgeInsets
+    public var sectionInsets: UIEdgeInsets
     /// 表单高度
-    public let cellHeight: CGFloat
+    public var cellHeight: CGFloat
     /// 表单组背景色
-    public let groupBackgroundColor: UIColor
+    public var groupBackgroundColor: UIColor
     /// 组头距离上一个组尾的间距
-    public let headerSpacing: CGFloat
+    public var headerSpacing: CGFloat
     
     
     // MARK: - Initialization
@@ -134,19 +134,19 @@ public struct ARTActionSheetCollectionEntity {
 /// 内容实体
 public struct ARTActionSheetContentEntity {
     /// 文本
-    public let text: String
+    public var text: String
     /// 文本字体
-    public let textFont: UIFont
+    public var textFont: UIFont
     /// 文本颜色
-    public let textColor: UIColor
+    public var textColor: UIColor
     /// 文本
-    public let textAlignment: NSTextAlignment
+    public var textAlignment: NSTextAlignment
     /// 分割颜色
-    public let separatorLineColor: UIColor
+    public var separatorLineColor: UIColor
     /// 是否显示分割线
-    public let showSeparatorLine: Bool
+    public var showSeparatorLine: Bool
     /// 文本上下左右间距
-    public let textInset: UIEdgeInsets
+    public var textInset: UIEdgeInsets
     
     
     // MARK: - Initialization

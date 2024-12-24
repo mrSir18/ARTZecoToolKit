@@ -72,7 +72,9 @@ class ARTViewController_PhotoBrowser: ARTBaseViewController {
         ///
         ///  - Note: 第三种: 示例代码
         ///  - Code: ARTPhotoBrowserViewController.showPhotoBrowser(withPhotos: photos, startIndex: 2)
-        ARTPhotoBrowserViewController.showPhotoBrowser(withPhotos: photos, startIndex: 2)
+        ARTPhotoBrowserViewController.showPhotoBrowser(withPhotos: photos, startIndex: 2, saveCurrentPhotoCallback: { urlString in
+            print("保存当前显示的照片地址：\(urlString)")
+        })
         
         
         /// 实例方法初始化
@@ -104,6 +106,9 @@ class ARTViewController_PhotoBrowser: ARTBaseViewController {
          photoBrowserViewController.delegate = self
          photoBrowserViewController.currentIndexCallback = { index in
          print("当前显示的照片索引为：\(index)")
+         }
+         photoBrowserViewController.saveCurrentPhotoCallback = { urlString in
+         print("保存当前显示的照片地址：\(urlString)")
          }
          photoBrowserViewController.showPhotoBrowser()
          */
@@ -173,6 +178,7 @@ extension ARTViewController_PhotoBrowser: ARTControllerNavigationBarDelegate {
 extension ARTViewController_PhotoBrowser: ARTControllerBottomBarDelegate {
     
     func bottomBarDidTakePhoto(_ bottomBar: ARTControllerBottomBar) {
+        ARTActionSheetStyleConfiguration.resetConfiguration()
         let actionSheet = ARTActionSheet()
         actionSheet.didSelectItemCallback = { index in
             print("点击了第\(index)个按钮")
