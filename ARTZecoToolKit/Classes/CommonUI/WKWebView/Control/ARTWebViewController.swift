@@ -44,6 +44,12 @@ open class ARTWebViewController: UIViewController {
     /// 是否隐藏工具栏  默认为 `false`
     public var shouldHideToolbar: Bool = false
     
+    /// 背景颜色
+    public var backgroundColor: UIColor = .white
+    
+    /// 是否禁止滚动  默认为 `false`
+    public var isScrollEnabled: Bool = true
+    
     /// 自定义 JS 方法名数组
     public var jsMethodNames: [String] = []
     
@@ -87,7 +93,7 @@ open class ARTWebViewController: UIViewController {
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        view.backgroundColor = backgroundColor
         setupNavigationBarView()
         setupWebView()
         setupToolBarView()
@@ -117,6 +123,8 @@ open class ARTWebViewController: UIViewController {
     open func setupWebView() {
         /// 子类重写: 此方法以自定义 WebView
         webView = ARTWebView(self)
+        webView.backgroundColor = backgroundColor
+        webView.scrollView.isScrollEnabled = isScrollEnabled
         view.addSubview(webView)
         view.sendSubviewToBack(webView)
         webView.snp.makeConstraints { make in

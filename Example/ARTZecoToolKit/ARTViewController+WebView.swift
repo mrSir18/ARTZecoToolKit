@@ -125,6 +125,7 @@ class ARTViewController_WebView: ARTBaseViewController {
     /// 默认WebView
     func defaultWebViewMethod () {
         let webViewController = ARTWebViewController()
+        webViewController.backgroundColor = .art_randomColor()
         webViewController.jsMethodNames = ["webViewContentHeight", "testMethod", "customJumpToH5"] // 自定义 JS 方法名数组, webViewContentHeight 为获取 WebView 内容高度的方法，testMethod、customJumpToH5 为测试方法
         webViewController.shouldAutoFetchTitle = false
         webViewController.navigationBarTitle = "育儿教育我们是认真的"
