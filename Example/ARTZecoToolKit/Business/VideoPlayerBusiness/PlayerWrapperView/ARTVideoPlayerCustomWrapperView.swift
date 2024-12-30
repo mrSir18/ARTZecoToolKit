@@ -18,13 +18,13 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
     
     /// 播放器图层（最底层：用于显示弹幕、广告等）
     public var overlayView: ARTVideoPlayerOverlayView!
-    
+     
     /// 播放器系统控制层（中间层：系统控制，位于弹幕、广告等之上）
     public var systemControls: ARTVideoPlayerSystemControls!
     
     /// 播放器控制层（最顶层：顶部栏、侧边栏等）
     public var controlsView: ARTVideoPlayerControlsView!
-    
+     
     /// 播放器加载动画视图
     public var loadingView: ARTVideoPlayerLoadingView!
     
@@ -96,11 +96,11 @@ extension ARTVideoPlayerCustomWrapperView {
     }
 
     override func didUpdatePreviewImage(previewImage: UIImage) { // 更新预览图像
-        
+//        systemControlsView.updatePreviewImageInSystemControls(previewImage: previewImage)
     }
 
     override func didUpdatePreviewTime(currentTime: CMTime, totalTime: CMTime) { // 更新当前预览视频的时间与视频总时长
-        
+//        systemControlsView.updateTimeInSystemControls(with: currentTime, duration: totalTime)
     }
  
     override func didStartLoadingAnimation() { // 开始加载动画
@@ -145,7 +145,7 @@ extension ARTVideoPlayerCustomWrapperView {
 extension ARTVideoPlayerCustomWrapperView {
     
     /// 切换播放器状态
-    public func togglePlayerState() {
+    func togglePlayerState() {
         switch playerState {
         case .paused: // 恢复播放
 //            overlayView.resumeDanmaku() // 恢复弹幕

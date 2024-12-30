@@ -107,7 +107,7 @@ public func art_isDynamicIslandSupported() -> Bool {
 
 /// 检查设备型号是否以支持的前缀开头
 private func art_isSupportedDevice(modelName: String) -> Bool {
-    let supportedModelPrefixes = ["iPhone14", "iPhone15", "iPhone16", "iPhone17", "iPhone18", "iPhone19", "iPhone20", "iPhone21", "iPhone22"]
+    let supportedModelPrefixes = ["iPhone15", "iPhone16", "iPhone17", "iPhone18", "iPhone19", "iPhone20", "iPhone21", "iPhone22"]
     return supportedModelPrefixes.contains(where: modelName.starts(with:))
 }
 
