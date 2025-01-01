@@ -36,7 +36,7 @@ open class ARTWebViewController: UIViewController {
     public var navigationBarTitle: String = "成长智库"
     
     /// 返回按钮图片
-    public var backButtonImageName: String = "back_black_left"
+    public var backButtonImageName: String = "icon_back_black_left"
     
     /// 是否隐藏导航栏  默认为 `false`
     public var shouldHideNavigationBar: Bool = false

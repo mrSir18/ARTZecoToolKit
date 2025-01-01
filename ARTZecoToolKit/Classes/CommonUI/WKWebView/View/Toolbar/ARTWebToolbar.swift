@@ -67,8 +67,8 @@ open class ARTWebToolbar: UIView {
         goBackButton.titleAlignment             = .right
         goBackButton.contentInset               = ARTAdaptedValue(4.0)
         goBackButton.imageSize                  = ARTAdaptedSize(width: 58.0, height: 58.0)
-        goBackButton.setImage(UIImage(named: "web_go_back_normal"), for: .normal)
-        goBackButton.setImage(UIImage(named: "web_go_back_selected"), for: .selected)
+        goBackButton.setImage(UIImage(named: "icon_web_go_back_normal"), for: .normal)
+        goBackButton.setImage(UIImage(named: "icon_web_go_back_selected"), for: .selected)
         goBackButton.addTarget(self, action: #selector(goBackButtonTapped), for: .touchUpInside)
         addSubview(goBackButton)
         goBackButton.snp.makeConstraints { make in
@@ -82,8 +82,8 @@ open class ARTWebToolbar: UIView {
         goForwardButton.titleAlignment          = .left
         goForwardButton.contentInset            = ARTAdaptedValue(4.0)
         goForwardButton.imageSize               = ARTAdaptedSize(width: 58.0, height: 58.0)
-        goForwardButton.setImage(UIImage(named: "web_go_forward_normal"), for: .normal)
-        goForwardButton.setImage(UIImage(named: "web_go_forward_selected"), for: .selected)
+        goForwardButton.setImage(UIImage(named: "icon_web_go_forward_normal"), for: .normal)
+        goForwardButton.setImage(UIImage(named: "icon_web_go_forward_selected"), for: .selected)
         goForwardButton.addTarget(self, action: #selector(goForwardButtonTapped), for: .touchUpInside)
         addSubview(goForwardButton)
         goForwardButton.snp.makeConstraints { make in
