@@ -93,8 +93,8 @@ public class ARTStarRatingStyleConfiguration: NSObject {
     
     /// 星星默认图片.
     ///
-    /// - Note: 默认order_review_star.
-    private var pri_starNormalImageName: String = "order_review_star"
+    /// - Note: 默认icon_order_review_star.
+    private var pri_starNormalImageName: String = "icon_order_review_star"
     public var starNormalImageName: String {
         get {
             pri_starNormalImageName
@@ -106,8 +106,8 @@ public class ARTStarRatingStyleConfiguration: NSObject {
     
     /// 星星选择图片.
     ///
-    /// - Note: 默认order_review_star_fill.
-    private var pri_starSelectedImageName: String = "order_review_star_fill"
+    /// - Note: 默认icon_order_review_star_fill.
+    private var pri_starSelectedImageName: String = "icon_order_review_star_fill"
     public var starSelectedImageName: String {
         get {
             pri_starSelectedImageName

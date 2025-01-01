@@ -22,8 +22,8 @@ class ARTViewController_StartRating: ARTBaseViewController {
             .starSize(ARTAdaptedSize(width: 24.0, height: 24.0))
             .starSpacing(ARTAdaptedValue(12.0))
             .starCount(5)
-            .starNormalImageName("order_review_star")
-            .starSelectedImageName("order_review_star_fill")
+            .starNormalImageName("icon_order_review_star")
+            .starSelectedImageName("icon_order_review_star_fill")
          */
         
         // 创建星级评分视图
