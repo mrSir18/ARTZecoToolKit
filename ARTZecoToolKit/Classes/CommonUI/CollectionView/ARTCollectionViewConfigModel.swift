@@ -48,6 +48,9 @@ public class ARTCollectionViewConfigModel: NSObject {
     /// 圆角.
     public var cornerRadius: CGFloat = 0.0
     
+    /// 渐变色
+    public var gradientLayer: CAGradientLayer?
+    
     /// 指定应用圆角效果需设定cornerRadius大小.
     /// - Parameters:
     ///   - layerMinXMinYCorner: 左上角.

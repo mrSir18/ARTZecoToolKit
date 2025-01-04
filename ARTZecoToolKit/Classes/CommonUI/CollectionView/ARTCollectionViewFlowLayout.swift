@@ -58,6 +58,11 @@ private class ART_CollectionReusableView: UICollectionReusableView {
                 containerView.layer.maskedCorners   = maskedCorners
             }
             
+            if let gradientLayer = model.gradientLayer { // 设置渐变层
+                containerView.layer.sublayers?.filter { $0 is CAGradientLayer }.forEach { $0.removeFromSuperlayer() } // 如果已经存在渐变层，先移除再添加，避免重复
+                containerView.layer.insertSublayer(gradientLayer, at: 0) // 添加渐变层到最底层
+            }
+            
             /// 如果模型中包含非空且非空字符串的图像 URL，则根据情况设置背景图像视图的内容模式和图像.
             if let imageURLString = model.imageURLString, !imageURLString.isEmpty {
                 self.backgroundImageView.contentMode = model.contentMode
