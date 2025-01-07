@@ -60,4 +60,18 @@ extension String {
         }
         return nil
     }
+    
+    /// 检查字符串是否包含汉字
+    /// - Returns:
+    ///  如果包含汉字则返回 true，否则返回 false.
+    public func art_containsChinese() -> Bool {
+        for scalar in unicodeScalars {
+            if (scalar.value >= 0x4E00 && scalar.value <= 0x9FFF) || // 基本汉字
+               (scalar.value >= 0x3400 && scalar.value <= 0x4DBF) || // 扩展 A
+               (scalar.value >= 0x20000 && scalar.value <= 0x2A6DF) { // 扩展 B
+                return true
+            }
+        }
+        return false
+    }
 }
