@@ -133,9 +133,17 @@ private func art_getDeviceModelName() -> String? {
 public func print<T>(_ items: T..., separator: String = " ", terminator: String = "\n", file: NSString = #file, funcName: String = #function, lineNum: Int = #line) {
     #if DEBUG
     let fileName: String = file.lastPathComponent
-    let output = items.map { "\($0)" }.joined(separator: separator)
+    let output = items.map { (item: T) -> String in
+        if let optionalItem = item as? Optional<CustomStringConvertible>, let unwrappedItem = optionalItem {
+            return "\(unwrappedItem)"
+        } else if let unwrappedItem = item as? CustomStringConvertible {
+            return "\(unwrappedItem)"
+        } else {
+            return "nil"
+        }
+    }.joined(separator: separator)
+    
     let log = "\(fileName)-\(funcName)-(\(lineNum))-\(output)"
     Swift.print(log, terminator: terminator)
     #endif
 }
-
