@@ -79,11 +79,8 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         super.onReceiveAudioSessionInterruptionEnded(notification)
     }
     
-    open override func onReceivePlayerProgressDidChange(time: CMTime) { // 播放进度改变`
+    open override func onReceivePlayerProgressDidChange(time: CMTime) { // 播放进度改变
         super.onReceivePlayerProgressDidChange(time: time)
-        guard CMTimeGetSeconds(time) > 0, CMTimeGetSeconds(totalDuration) > 0 else {
-            return // 防止除零错误
-        }
     }
     
     open override func onReceivePlayerReadyToPlay() { // 准备播放

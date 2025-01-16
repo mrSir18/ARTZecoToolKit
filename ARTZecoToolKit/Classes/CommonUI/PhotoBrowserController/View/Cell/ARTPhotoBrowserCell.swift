@@ -250,14 +250,15 @@ class ARTPhotoBrowserCell: UICollectionViewCell {
     @objc public func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
         let panTranslation = gesture.translation(in: contentView)
         let maxVerticalTranslation: CGFloat = 500.0 // 最大垂直滑动距离，用于计算背景透明度
-        let backgroundOpacity = max(0.0, 1 - min(panTranslation.y / maxVerticalTranslation, 1))
-        let scalingFactor = max(0.4, 1 - panTranslation.y / 2000) // 控制缩小速度及最小缩放比例（0.4 ~ 1.0）
-        
+        let translationY = panTranslation.y // 当前手势的垂直偏移量
+        let backgroundOpacity = max(0.0, 1 - min(abs(translationY) / maxVerticalTranslation, 1)) // 计算背景透明度和缩放比例
+        let scalingFactor = max(0.4, 1 - abs(translationY) / 2000) // 控制缩小速度及最小缩放比例（0.4 ~ 1.0）
+
         switch gesture.state {
         case .changed:
-            if scrollView.contentOffset.y > 0 { return } // 如果 ScrollView 未滑动到顶部，不执行处理
-            let scaleTransformation = CGAffineTransform(scaleX: scalingFactor, y: scalingFactor) // 计算缩放和平移变换
-            let translationTransformation = CGAffineTransform(translationX: panTranslation.x, y: panTranslation.y)
+            if scrollView.zoomScale != scrollView.minimumZoomScale || scrollView.contentOffset.y != 0 { return }
+            let scaleTransformation = CGAffineTransform(scaleX: scalingFactor, y: scalingFactor)
+            let translationTransformation = CGAffineTransform(translationX: panTranslation.x, y: translationY)
             scrollView.transform = scaleTransformation.concatenating(translationTransformation)
             blurEffectView.alpha = backgroundOpacity // 背景透明度
         case .ended, .cancelled:

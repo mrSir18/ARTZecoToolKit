@@ -427,19 +427,19 @@ extension ARTPhotoBrowserViewController {
         case .began:
             view.backgroundColor = .clear // 设置背景颜色透明
         case .changed:
-            if translation.y > 0 {
+            if translation.y != 0 {
                 if navigationBar.alpha > 0 || bottomBar.alpha > 0 { // 避免重复设置
-                    let targetAlpha = max(1 - translation.y / 200, 0)
+                    let targetAlpha = max(1 - abs(translation.y) / 200, 0)
                     navigationBar.alpha = targetAlpha
                     bottomBar.alpha = targetAlpha
                 }
                 photoCell.handlePanGesture(gesture) // 处理图片拖动手势
             }
         case .ended, .cancelled:
-            let shouldDismiss = translation.y > 100 || velocity.y > 300
+            let shouldDismiss = translation.y > 100 || translation.y < -100 || abs(velocity.y) > 300
             if shouldDismiss { // 关闭视图
                 dismissPhotoBrowser()
-            } else { // 恢复视图
+            } else { // 恢复视图状态
                 view.backgroundColor = configuration.controllerBackgroundColor // 恢复背景颜色
                 UIView.animate(withDuration: 0.3) {
                     self.navigationBar.alpha = 1

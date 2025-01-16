@@ -23,7 +23,7 @@ class ARTCustomDanmakuCell: ARTDanmakuCell {
         "https://iknow-pic.cdn.bcebos.com/96dda144ad34598256a6a80f1ef431adcbef847b",
         "https://iknow-pic.cdn.bcebos.com/b999a9014c086e063e9ee0d610087bf40ad1cb7d",
         "https://iknow-pic.cdn.bcebos.com/a71ea8d3fd1f4134e66901e0371f95cad0c85ed5",
-        "https://img0.baidu.com/it/u=3859095577,4054514440&fm=253&fmt=auto&app=120&f=JPEG?w=800&h=800",
+        "https://img0.baidu.com/it/u=3859095577,4054514440&fm=253&fmt=auto&app=120&f=JPEG?w=800& h=800",
         "https://img0.baidu.com/it/u=3712328583,2534587902&fm=253&fmt=auto&app=120&f=JPEG?w=800&h=800",
         "https://img1.baidu.com/it/u=3398593938,3000538022&fm=253&fmt=auto&app=120&f=JPEG?w=800&h=800",
         "https://img1.baidu.com/it/u=2582590344,1308971812&fm=253&fmt=auto&app=120&f=JPEG?w=800&h=800"
