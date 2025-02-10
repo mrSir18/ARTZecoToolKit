@@ -91,7 +91,7 @@ class ARTPhotoBrowserCell: UICollectionViewCell {
         scrollView = UIScrollView(frame: contentView.bounds)
         scrollView.delegate = self
         scrollView.minimumZoomScale = configuration.minimumZoomScale
-        scrollView.maximumZoomScale = configuration.maximumZoomScale
+        scrollView.maximumZoomScale = 3.0
         scrollView.contentInsetAdjustmentBehavior = .never
         contentView.addSubview(scrollView)
     }
@@ -133,7 +133,7 @@ class ARTPhotoBrowserCell: UICollectionViewCell {
             /// 获取当前缩放比例
             let newZoomScale: CGFloat
             if self.scrollView.zoomScale == self.scrollView.minimumZoomScale {
-                newZoomScale = self.scrollView.maximumZoomScale
+                newZoomScale = self.configuration.maximumZoomScale
             } else {
                 newZoomScale = self.scrollView.minimumZoomScale
             }

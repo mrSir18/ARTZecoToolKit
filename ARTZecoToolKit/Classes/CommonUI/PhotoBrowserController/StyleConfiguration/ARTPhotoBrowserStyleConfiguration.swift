@@ -214,21 +214,19 @@ public class ARTPhotoBrowserStyleConfiguration: NSObject {
     /// 双击最大缩放比例.
     ///
     /// - Note: 默认1.5.
-    /// - Note: 最大缩放比例为1.0时不可放大.
     private var pri_maximumZoomScale: CGFloat = 1.5
     public var maximumZoomScale: CGFloat {
         get {
             pri_maximumZoomScale
         }
         set {
-            pri_maximumZoomScale = max(1.0, newValue)
+            pri_maximumZoomScale = max(0.1, newValue)
         }
     }
     
     /// 双击最小缩放比例.
     ///
-    /// - Note: 默认1.0.'
-    /// - Note: 最小缩放比例为1.0时不可缩小.
+    /// - Note: 默认1.0.
     private var pri_minimumZoomScale: CGFloat = 1.0
     public var minimumZoomScale: CGFloat {
         get {
