@@ -103,6 +103,10 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
             return
         }
         
+        // 设置音频会话类别
+        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+        try? AVAudioSession.sharedInstance().setActive(true)
+        
         // 观察播放器状态变化（例如，准备播放、播放失败）
         statusObserver = player.observe(\.status, options: [.new, .initial]) { [weak self] player, change in
             self?.didPlayerStatusChanged()
@@ -137,6 +141,7 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
         NotificationCenter.default.addObserver(self, selector: #selector(didPlayerItemDidPlayToEnd(_:)), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
         NotificationCenter.default.addObserver(self, selector: #selector(didPlayerItemFailedToPlayToEnd(_:)), name: .AVPlayerItemFailedToPlayToEndTime, object: playerItem)
         NotificationCenter.default.addObserver(self, selector: #selector(didAudioSessionInterrupted(_:)), name: AVAudioSession.interruptionNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didAudioRouteChanged(_:)), name: AVAudioSession.routeChangeNotification, object: nil)
         
         // 添加定时观察者以跟踪播放进度
         timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
@@ -245,6 +250,11 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
         }
     }
     
+    /// 音频路由改变耳机插拔
+    @objc private func didAudioRouteChanged(_ notification: Notification) {
+        onReceiveAudioRouteChanged(notification)
+    }
+    
     /// 更新当前播放时间
     /// - Parameter time: 播放时间
     @objc private func didPlayerProgressDidChange(time: CMTime) {
@@ -283,6 +293,12 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     open func onReceiveAudioSessionInterruptionEnded(_ notification: Notification) {
         player.play()
         print("音频会话中断结束")
+    }
+    
+    /// 音频路由改变耳机插拔
+    open func onReceiveAudioRouteChanged(_ notification: Notification) {
+        player.play()
+        print("音频路由改变耳机插拔")
     }
     
     /// 更新当前播放时间

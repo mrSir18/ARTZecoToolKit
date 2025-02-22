@@ -95,6 +95,10 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         super.onReceiveAudioSessionInterruptionEnded(notification)
     }
     
+    open override func onReceiveAudioRouteChanged(_ notification: Notification) { // 音频路由改变耳机插拔
+        super.onReceiveAudioRouteChanged(notification)
+    }
+    
     open override func onReceivePlayerProgressDidChange(time: CMTime) { // 播放进度改变
         super.onReceivePlayerProgressDidChange(time: time)
     }

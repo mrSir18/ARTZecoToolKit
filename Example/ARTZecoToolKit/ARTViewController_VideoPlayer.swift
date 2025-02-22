@@ -154,7 +154,6 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
     private func setupPlayerView() { // 创建播放器视图
         let aspectRatio: CGFloat = 16.0 / 9.0
         playerView = ARTVideoPlayerView(self)
-        playerView.backgroundColor = .art_randomColor()
         view.addSubview(playerView)
         playerView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
