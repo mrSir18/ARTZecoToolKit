@@ -297,7 +297,7 @@ extension ARTVideoPlayerWrapperView: UIGestureRecognizerDelegate {
             currentPlayer.rate = 3.0
         case .ended, .cancelled, .failed: // 恢复播放速率为正常值
             guard let currentPlayer = player else { return }
-            currentPlayer.rate = 1.0
+            currentPlayer.rate = currentRate
         default:
             break
         }

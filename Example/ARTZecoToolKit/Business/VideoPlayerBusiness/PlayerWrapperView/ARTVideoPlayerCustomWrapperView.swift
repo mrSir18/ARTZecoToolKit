@@ -219,18 +219,16 @@ extension ARTVideoPlayerCustomWrapperView {
     public func togglePlayerState() {
         switch playerState {
         case .paused: // 恢复播放
-            overlayView.resumeDanmaku() // 恢复弹幕
+            overlayView.resumeDanmaku()
             syncControlsWithPlayerState(to: .playing)
-            print("恢复播放")
         case .playing: // 暂停播放
             syncControlsWithPlayerState(to: .paused)
         case .ended: // 重新播放
-            overlayView.startDanmaku() // 开始弹幕
+            overlayView.startDanmaku()
             controlsView.resetSliderValueInControls()
             controlsView.updatePlayPauseButtonInControls(isPlaying: true)
             seek(to: CMTime.zero) { [weak self] _ in
                 self?.syncControlsWithPlayerState(to: .playing)
-                print("重新播放")
             }
         default:
             break
