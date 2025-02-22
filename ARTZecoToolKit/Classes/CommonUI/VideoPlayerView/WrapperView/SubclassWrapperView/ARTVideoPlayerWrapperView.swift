@@ -99,6 +99,14 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         super.onReceiveAudioRouteChanged(notification)
     }
     
+    open override func onReceiveBecomeActive(_ notification: Notification) { // 进入前台
+        super.onReceiveBecomeActive(notification)
+    }
+    
+    open override func onReceiveEnterBackground(_ notification: Notification) { // 进入后台
+        super.onReceiveEnterBackground(notification)
+    }
+    
     open override func onReceivePlayerProgressDidChange(time: CMTime) { // 播放进度改变
         super.onReceivePlayerProgressDidChange(time: time)
     }

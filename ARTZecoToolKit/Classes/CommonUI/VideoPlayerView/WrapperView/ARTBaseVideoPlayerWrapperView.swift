@@ -142,6 +142,8 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
         NotificationCenter.default.addObserver(self, selector: #selector(didPlayerItemFailedToPlayToEnd(_:)), name: .AVPlayerItemFailedToPlayToEndTime, object: playerItem)
         NotificationCenter.default.addObserver(self, selector: #selector(didAudioSessionInterrupted(_:)), name: AVAudioSession.interruptionNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didAudioRouteChanged(_:)), name: AVAudioSession.routeChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
         
         // 添加定时观察者以跟踪播放进度
         timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
@@ -233,7 +235,6 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
               let interruptionType = AVAudioSession.InterruptionType(rawValue: typeValue) else { // 获取通知中的用户信息
             return
         }
-        
         switch interruptionType {
         case .began: // 音频会话中断开始
             onReceiveAudioSessionInterruptionBegan(notification)
@@ -253,6 +254,16 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     /// 音频路由改变耳机插拔
     @objc private func didAudioRouteChanged(_ notification: Notification) {
         onReceiveAudioRouteChanged(notification)
+    }
+    
+    /// 应用程序进入前台
+    @objc private func didBecomeActive(_ notification: Notification) {
+        onReceiveBecomeActive(notification)
+    }
+    
+    /// 应用程序进入后台
+    @objc private func didEnterBackground(_ notification: Notification) {
+        onReceiveEnterBackground(notification)
     }
     
     /// 更新当前播放时间
@@ -299,6 +310,20 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     open func onReceiveAudioRouteChanged(_ notification: Notification) {
         player.play()
         print("音频路由改变耳机插拔")
+    }
+    
+    /// 应用程序进入前台
+    open func onReceiveBecomeActive(_ notification: Notification) {
+        try? AVAudioSession.sharedInstance().setActive(true)
+        player.play()
+        print("应用程序进入前台")
+    }
+    
+    /// 应用程序进入后台
+    open func onReceiveEnterBackground(_ notification: Notification) {
+        try? AVAudioSession.sharedInstance().setActive(false)
+        player.pause()
+        print("应用程序进入后台")
     }
     
     /// 更新当前播放时间
