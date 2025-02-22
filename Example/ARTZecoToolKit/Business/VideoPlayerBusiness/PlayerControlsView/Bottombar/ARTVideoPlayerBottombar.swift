@@ -11,7 +11,7 @@ import ARTZecoToolKit
 /// 协议方法
 ///
 /// - NOTE: 可继承该协议方法
-@objc protocol ARTVideoPlayerBottombarDelegate: AnyObject {
+@objc public protocol ARTVideoPlayerBottombarDelegate: AnyObject {
     
     /// 当滑块触摸开始时调用
     @objc optional func bottombarDidBeginTouch(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider)
@@ -39,7 +39,7 @@ import ARTZecoToolKit
     @objc optional func bottombarDidTapDanmakuSend(for bottombar: ARTVideoPlayerBottombar, text: String)
 }
 
-class ARTVideoPlayerBottombar: UIView {
+open class ARTVideoPlayerBottombar: UIView {
     
     /// 代理对象
     public weak var delegate: ARTVideoPlayerBottombarDelegate?
@@ -80,21 +80,21 @@ class ARTVideoPlayerBottombar: UIView {
     
     // MARK: - Initialization
     
-    init(_ delegate: ARTVideoPlayerBottombarDelegate? = nil) {
+    public init(_ delegate: ARTVideoPlayerBottombarDelegate? = nil) {
         super.init(frame: .zero)
         self.delegate = delegate
         self.backgroundColor = .clear
         setupViews()
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Override Super Methods
     
     /// 重写父类方法，设置子视图
-    public func setupViews() {
+    open func setupViews() {
         
     }
 }
@@ -104,24 +104,24 @@ class ARTVideoPlayerBottombar: UIView {
 extension ARTVideoPlayerBottombar {
     
     /// 触摸开始时调用的函数
-    @objc public func handleSliderTouchBegan(_ slider: ARTVideoPlayerSlider) {
+    @objc open func handleSliderTouchBegan(_ slider: ARTVideoPlayerSlider) {
         configureSliderAppearance(for: slider, isTouching: true)
         delegate?.bottombarDidBeginTouch?(for: self, slider: slider)
     }
     
     /// 滑块值改变时调用的函数
-    @objc public func handleSliderValueChanged(_ slider: ARTVideoPlayerSlider) {
+    @objc open func handleSliderValueChanged(_ slider: ARTVideoPlayerSlider) {
         delegate?.bottombarDidChangeValue?(for: self, slider: slider)
     }
     
     /// 触摸结束时调用的函数
-    @objc public func handleSliderTouchEnded(_ slider: ARTVideoPlayerSlider) {
+    @objc open func handleSliderTouchEnded(_ slider: ARTVideoPlayerSlider) {
         configureSliderAppearance(for: slider, isTouching: false)
         delegate?.bottombarDidEndTouch?(for: self, slider: slider)
     }
     
     /// 处理滑块被点击的手势
-    @objc public func sliderTapped(_ gesture: UITapGestureRecognizer) {
+    @objc open func sliderTapped(_ gesture: UITapGestureRecognizer) {
         guard let sliderView = gesture.view as? ARTVideoPlayerSlider else { return }
         let location = gesture.location(in: sliderView)
         guard sliderView.bounds.contains(location) else { return } // 点击位置不在滑块范围内，直接返回
@@ -146,7 +146,7 @@ extension ARTVideoPlayerBottombar {
     ///   - currentTime: 当前播放时间
     ///   - duration: 视频总时长
     ///   - shouldUpdateSlider: 是否拖动滑块
-    @objc public func updatePlaybackTime(currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = false) {
+    @objc open func updatePlaybackTime(currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = false) {
         let currentSeconds = CMTimeGetSeconds(currentTime)
         let totalSeconds = CMTimeGetSeconds(duration)
         
@@ -164,7 +164,7 @@ extension ARTVideoPlayerBottombar {
     ///   - totalBuffer: 缓冲总时间
     ///   - bufferProgress: 缓冲进度
     ///   - shouldUpdateSlider: 是否拖动滑块
-    @objc public func updateBufferProgress(totalBuffer: Double, bufferProgress: Float, shouldUpdateSlider: Bool = false) {
+    @objc open func updateBufferProgress(totalBuffer: Double, bufferProgress: Float, shouldUpdateSlider: Bool = false) {
         if !shouldUpdateSlider {
             UIView.animate(withDuration: 1.0) {
                 self.progressView.setProgress(bufferProgress, animated: true)
@@ -179,51 +179,51 @@ extension ARTVideoPlayerBottombar {
     ///   - cornerRadius: 进度条圆角半径
     ///   - thumbSize: 滑块大小
     ///   - duration: 动画时间
-    @objc public func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) {
+    @objc open func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) {
         
     }
     
     /// 触摸开始时调用
-    @objc public func updateSliderTouchBegan(value: Float) {
+    @objc open func updateSliderTouchBegan(value: Float) {
         handleSliderTouchBegan(sliderView)
     }
     
     /// 更新滑块值
     ///
     /// - Parameter value: 滑块值
-    @objc public func updateSliderValue(value: Float) {
+    @objc open func updateSliderValue(value: Float) {
         adjustSliderValue(value: value)
         delegate?.bottombarDidChangeValue?(for: self, slider: sliderView)
     }
     
     /// 触摸结束时调用
-    @objc public func updateSliderTouchEnded(value: Float) {
+    @objc open func updateSliderTouchEnded(value: Float) {
         handleSliderTouchEnded(sliderView)
     }
     
     /// 初始化滑块值
     ///
     /// - Parameter value: 滑块值
-    @objc public func resetSliderValue(value: Float = 0.0) {
+    @objc open func resetSliderValue(value: Float = 0.0) {
         progressView.setProgress(value, animated: false)
         sliderView.setValue(value, animated: false)
         resetPlaybackTimeLabels()
     }
     
     /// 重置播放时间标签
-    @objc public func resetPlaybackTimeLabels() {
+    @objc open func resetPlaybackTimeLabels() {
         
     }
     
     /// 更新播放按钮状态
     ///
     /// - Parameter isPlaying: 是否播放中
-    @objc public func updatePlayPauseButton(isPlaying: Bool) {
+    @objc open func updatePlayPauseButton(isPlaying: Bool) {
         
     }
 
     /// 检查弹幕功能是否启用
-    @objc public func isDanmakuEnabled() -> Bool {
+    @objc open func isDanmakuEnabled() -> Bool {
         if UserDefaults.standard.object(forKey: kDanmakuEnabledKey) == nil { // 检查是否已设置
             saveDanmakuEnabled(isDanmakuEnabled: true)
         }
@@ -231,7 +231,7 @@ extension ARTVideoPlayerBottombar {
     }
     
     /// 本地存储弹幕状态
-    public func saveDanmakuEnabled(isDanmakuEnabled: Bool) {
+    internal func saveDanmakuEnabled(isDanmakuEnabled: Bool) {
         UserDefaults.standard.set(isDanmakuEnabled, forKey: kDanmakuEnabledKey)
     }
 }

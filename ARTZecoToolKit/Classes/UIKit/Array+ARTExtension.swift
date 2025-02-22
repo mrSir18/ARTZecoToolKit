@@ -43,7 +43,7 @@ extension Array {
     
     /// 安全获取数组元素.
     /// - Parameter index: 索引.
-    subscript(safe index: Index) -> Element? {
+    public func safeElement(at index: Index) -> Element? {
         return indices.contains(index) ? self[index] : nil
     }
 }

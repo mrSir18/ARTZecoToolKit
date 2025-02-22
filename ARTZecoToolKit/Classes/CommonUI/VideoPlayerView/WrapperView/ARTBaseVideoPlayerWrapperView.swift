@@ -275,11 +275,13 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     
     /// 处理音频会话中断开始
     open func onReceiveAudioSessionInterruptionBegan(_ notification: Notification) {
+        player.pause()
         print("音频会话中断开始")
     }
     
     /// 处理音频会话中断结束
     open func onReceiveAudioSessionInterruptionEnded(_ notification: Notification) {
+        player.play()
         print("音频会话中断结束")
     }
     
@@ -339,8 +341,8 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     
     /// 播放已暂停
     open func onReceiveTimeControlStatusPaused() {
-        playerState = .paused
-        print("播放器已暂停")
+        if playerState != .ended { playerState = .paused }
+        print("播放已暂停")
     }
     
     /// 等待播放

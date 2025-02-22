@@ -65,6 +65,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     open override func onReceivePlayerItemDidPlayToEnd(_ notification: Notification) { // 播放结束
         super.onReceivePlayerItemDidPlayToEnd(notification)
+        pausePlayer() // 暂停播放
     }
     
     open override func onReceivePlayerItemFailedToPlayToEnd(_ notification: Notification) { // 播放失败
@@ -382,7 +383,7 @@ extension ARTVideoPlayerWrapperView {
     
     /// 更新进度预览图像
     /// - Parameter time: 预览时间
-    @objc open func updatePreviewImage(at time: Double) {
+    @objc open func updatePreviewImage(at time: Float) {
         let duration = player.currentItem?.duration ?? totalDuration
         let currentTime = CMTime(seconds: Double(time) * duration.seconds, preferredTimescale: 600)
         didUpdatePreviewTime(currentTime: currentTime, totalTime: duration) // 更新时间
@@ -494,6 +495,7 @@ extension ARTVideoPlayerWrapperView {
     private func prepareForNextVideo() {
         thumbnailCache.removeAll()
         pausePlayer() // 暂停播放
+        playerState = .playing // 更新播放器状态
         didPrepareForNextVideo() // 通知外部准备播放下一集
         onReceiveRemovePeriodicTimeObserver() // 移除周期性时间观察者
         if let playerLayer = self.layer as? AVPlayerLayer {

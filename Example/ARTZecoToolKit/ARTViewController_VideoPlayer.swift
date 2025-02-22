@@ -164,9 +164,9 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
     
         // MARK: - Test Methods
         
-        let url = URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")
+//        let url = URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")
 //        let url = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MP4")!)
-//        let url = URL(string: "https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4")
+        let url = URL(string: "https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4")
         playerView.startVideoPlayback(with: url)
     }
     
@@ -195,6 +195,10 @@ extension ARTViewController_VideoPlayer {
 extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
     
     func playerViewWrapper(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerWrapperView? { // 获取播放器基类
-        return ARTVideoPlayerCustomWrapperView()
+        return ARTVideoPlayerCustomWrapperView(self)
     }
+}
+
+extension ARTViewController_VideoPlayer: ARTVideoPlayerCustomWrapperViewDelegate {
+    
 }

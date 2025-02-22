@@ -10,6 +10,7 @@
 		0222B4432C35A9F600FA82B7 /* ARTViewController_StartRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0222B4422C35A9F600FA82B7 /* ARTViewController_StartRating.swift */; };
 		0235E28F2C794B30003DEFA8 /* portrait.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0235E28E2C794B30003DEFA8 /* portrait.jpg */; };
 		023F976D2C32F5A1009CD62B /* ARTViewController_AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023F976C2C32F5A1009CD62B /* ARTViewController_AlertView.swift */; };
+		0242B1912D69E58200E45B5F /* ARTPagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0242B1902D69E58200E45B5F /* ARTPagView.swift */; };
 		024F9A4F2C456D50008DF3AB /* ARTViewController_PhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024F9A4E2C456D50008DF3AB /* ARTViewController_PhotoBrowser.swift */; };
 		0250693E2D01BEE9009637ED /* zeco-test.html in Resources */ = {isa = PBXBuildFile; fileRef = 0250693D2D01BEE9009637ED /* zeco-test.html */; };
 		0258B7AB2BFA845800AEB349 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0258B7A82BFA845800AEB349 /* 3.png */; };
@@ -125,6 +126,7 @@
 		0222B4422C35A9F600FA82B7 /* ARTViewController_StartRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_StartRating.swift; sourceTree = "<group>"; };
 		0235E28E2C794B30003DEFA8 /* portrait.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = portrait.jpg; sourceTree = "<group>"; };
 		023F976C2C32F5A1009CD62B /* ARTViewController_AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_AlertView.swift; sourceTree = "<group>"; };
+		0242B1902D69E58200E45B5F /* ARTPagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTPagView.swift; sourceTree = "<group>"; };
 		024F9A4E2C456D50008DF3AB /* ARTViewController_PhotoBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_PhotoBrowser.swift; sourceTree = "<group>"; };
 		0250693D2D01BEE9009637ED /* zeco-test.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "zeco-test.html"; sourceTree = "<group>"; };
 		0258B7A82BFA845800AEB349 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
@@ -413,6 +415,7 @@
 			isa = PBXGroup;
 			children = (
 				025D298B2D10BF710022FA6E /* ARTVideoPlayerLoadingView.swift */,
+				0242B1902D69E58200E45B5F /* ARTPagView.swift */,
 			);
 			path = LoadingView;
 			sourceTree = "<group>";
@@ -1066,6 +1069,7 @@
 				025D29B92D10BF710022FA6E /* ARTVideoPlayerGeneralDanmakuEntity.swift in Sources */,
 				02E984732D08C8000052C36A /* ARTCollectionCell.swift in Sources */,
 				02E984742D08C8000052C36A /* ARTSecondCarouselCell.swift in Sources */,
+				0242B1912D69E58200E45B5F /* ARTPagView.swift in Sources */,
 				02E984752D08C8000052C36A /* ARTBaseViewController.swift in Sources */,
 				02E984762D08C8000052C36A /* ARTCarouselEntity.swift in Sources */,
 				02E984772D08C8000052C36A /* ARTViewController+CollectionView.swift in Sources */,

@@ -100,6 +100,7 @@ extension ARTWebViewController {
         let dispatchGroup = DispatchGroup()
         
         scripts.forEach { script in
+            print("即将注入的 JS 代码: \(script)")
             dispatchGroup.enter()
             webView.evaluateJavaScript(script) { (result, error) in
                 if let error = error {

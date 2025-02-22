@@ -10,6 +10,11 @@ import ARTZecoToolKit
 
 class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
     
+    // MARK: - Private Properties
+    
+    /// 代理对象
+    public weak var delegate: ARTVideoPlayerCustomWrapperViewDelegate?
+    
     /// 是否正在拖动进度条
     public var isDraggingSlider = false
     
@@ -28,6 +33,45 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
     /// 播放器加载动画视图
     public var loadingView: ARTVideoPlayerLoadingView!
     
+
+    // MARK: - 私有扩展视图（个人项目使用）
+    
+    /// 懒加载弹幕设置视图
+    internal lazy var danmakuView: ARTVideoPlayerLandscapeDanmakuView = {
+        let danmakuView = ARTVideoPlayerLandscapeDanmakuView(self)
+        return danmakuView
+    }()
+    
+    /// 懒加载倍速视图
+    internal lazy var rateView: ARTVideoPlayerLandscapeSlidingView = {
+        let rateView = ARTVideoPlayerLandscapePlaybackRateView(self)
+        rateView.rateCallback = { [weak self] rate in
+            guard let self = self else { return }
+            self.controlsView.updateRateButtonInControls(rate: rate)
+            self.currentRate = rate
+            self.player.rate = rate
+            self.resumePlayer()
+        }
+        return rateView
+    }()
+    
+    /// 懒加载竖屏弹幕视图
+    internal lazy var portraitDanmakuView: ARTVideoPlayerPortraitDanmakuView = {
+        let danmakuView = ARTVideoPlayerPortraitDanmakuView(self)
+        return danmakuView
+    }()
+    
+    
+    // MARK: - Initialization
+    
+    public init(_ delegate: ARTVideoPlayerCustomWrapperViewDelegate) {
+        self.delegate = delegate
+        super.init()
+    }
+    
+    required public init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
     
     // MARK: - Initialization
     
@@ -38,17 +82,29 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
     
     /// 创建播放器图层（最底层：用于显示弹幕、广告等）
     override func setupOverlayView() {
-
+        overlayView = ARTVideoPlayerOverlayView(self)
+        addSubview(overlayView)
+        overlayView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     /// 创建系统控制层（中间层：系统控制）
     override func setupSystemControls() {
-
+        systemControls = ARTVideoPlayerSystemControls(self)
+        addSubview(systemControls)
+        systemControls.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     /// 创建加载动画视图
     override func setupLoadingView() {
-
+        loadingView = ARTVideoPlayerLoadingView(self)
+        addSubview(loadingView)
+        loadingView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     /// 创建播放器控制层（最顶层：顶部栏、侧边栏等）
@@ -64,10 +120,16 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
     
     override func onReceivePlayerItemDidPlayToEnd(_ notification: Notification) { // 播放结束
         super.onReceivePlayerItemDidPlayToEnd(notification)
+        overlayView.stopDanmaku() // 停止弹幕
+        controlsView.updatePlayerStateInControls(playerState: playerState) // 更新播放器状态
+        controlsView.updatePlayPauseButtonInControls(isPlaying: false) // 更新播放按钮状态
     }
     
     override func onReceivePlayerProgressDidChange(time: CMTime) { // 播放进度改变
         super.onReceivePlayerProgressDidChange(time: time)
+        controlsView.updateTimeInControls(with: time,
+                                          duration: totalDuration,
+                                          shouldUpdateSlider: isDraggingSlider)
     }
     
     override func onReceivePlayerReadyToPlay() { // 播放器准备好播
@@ -76,10 +138,15 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
     
     override func onReceiveLoadedTimeRangesChanged(totalBuffer: Double, bufferProgress: Float) { // 缓冲进度改变
         super.onReceiveLoadedTimeRangesChanged(totalBuffer: totalBuffer, bufferProgress: bufferProgress)
+        controlsView.updateBufferProgressInControls(totalBuffer: totalBuffer,
+                                                    bufferProgress: bufferProgress,
+                                                    shouldUpdateSlider: isDraggingSlider)
     }
     
     override func onReceivePresentationSizeChanged(size: CGSize) { // 视频尺寸改变
         super.onReceivePresentationSizeChanged(size: size)
+        controlsView.isLandscape = isLandscape
+        systemControls.updateContentModeInSystemControls(isLandscape: isLandscape)
     }
 }
 
@@ -88,27 +155,32 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
 extension ARTVideoPlayerCustomWrapperView {
     
     override func didPrepareForNextVideo() { // 准备好播放下一集
-        
+        controlsView.updatePlayerStateInControls(playerState: playerState) // 更新播放按钮状态
+        isDraggingSlider = true // 设置正在拖动状态
+        overlayView.stopDanmaku() // 停止弹幕
+        controlsView.resetSliderValueInControls() // 重置进度条时间
     }
   
     override func didCompleteSetupForNextVideo() { // 播放下一集
-        
+        isDraggingSlider = (playerState == .paused) // 设置拖动滑块状态
+        controlsView.updatePlayPauseButtonInControls(isPlaying: playerState == .playing)
+        overlayView.startDanmaku() // 开始弹幕
     }
 
     override func didUpdatePreviewImage(previewImage: UIImage) { // 更新预览图像
-//        systemControlsView.updatePreviewImageInSystemControls(previewImage: previewImage)
+        systemControls.updatePreviewImageInSystemControls(previewImage: previewImage)
     }
 
     override func didUpdatePreviewTime(currentTime: CMTime, totalTime: CMTime) { // 更新当前预览视频的时间与视频总时长
-//        systemControlsView.updateTimeInSystemControls(with: currentTime, duration: totalTime)
+        systemControls.updateTimeInSystemControls(with: currentTime, duration: totalTime)
     }
  
     override func didStartLoadingAnimation() { // 开始加载动画
-         
+        loadingView.startLoading()
     }
 
     override func didStopLoadingAnimation() { // 停止加载动画
- 
+        loadingView.stopLoading()
     }
     
     // MARK: - Gesture Recognizer
@@ -126,7 +198,7 @@ extension ARTVideoPlayerCustomWrapperView {
     }
 
     override func didReceiveTapGesture(at location: CGPoint) { // 点击手势
-//        if overlayView.handleTapOnOverlay(at: location) { return } // 如果弹幕视图处理了点击事件，直接返回
+        if overlayView.handleTapOnOverlay(at: location) { return } // 如果弹幕视图处理了点击事件，直接返回
         if isLandscape { // 如果是横屏模式，切换控制
             controlsView.toggleControlsVisibility()
         } else { // 如果是竖屏模 
@@ -139,30 +211,82 @@ extension ARTVideoPlayerCustomWrapperView {
     }
 }
 
-
 // MARK: - Public Methods
 
 extension ARTVideoPlayerCustomWrapperView {
     
     /// 切换播放器状态
-    func togglePlayerState() {
+    public func togglePlayerState() {
         switch playerState {
         case .paused: // 恢复播放
-//            overlayView.resumeDanmaku() // 恢复弹幕
-//            resumePlayer()
+            overlayView.resumeDanmaku() // 恢复弹幕
+            syncControlsWithPlayerState(to: .playing)
             print("恢复播放")
         case .playing: // 暂停播放
-            pausePlayer()
+            syncControlsWithPlayerState(to: .paused)
         case .ended: // 重新播放
-//            overlayView.startDanmaku() // 开始弹幕
+            overlayView.startDanmaku() // 开始弹幕
             controlsView.resetSliderValueInControls()
             controlsView.updatePlayPauseButtonInControls(isPlaying: true)
             seek(to: CMTime.zero) { [weak self] _ in
-//                self?.resumePlayer()
+                self?.syncControlsWithPlayerState(to: .playing)
                 print("重新播放")
             }
         default:
             break
+        }
+    }
+    
+    /// 更新播放器状态
+    ///
+    /// - Parameter newState: 新的播放器状态
+    /// - Note: 根据新的状态进行对应的播放或暂停操作，避免重复状态更新
+    private func syncControlsWithPlayerState(to newState: PlayerState) {
+        guard playerState != newState else { return }
+        
+        // 更新播放器状态
+        playerState = newState
+        controlsView.updatePlayerStateInControls(playerState: playerState)
+        
+        // 根据不同的状态处理是否正在拖动滑块
+        isDraggingSlider = (newState == .paused)
+        controlsView.updatePlayPauseButtonInControls(isPlaying: newState == .playing)
+        
+        if isLandscape { controlsView.handleLandscapeControls(isPlaying: isDraggingSlider) } // 如果是横屏模式
+        switch newState {
+        case .playing: // 如果是播放状态，隐藏系统控制视图并开始播放
+            systemControls.hideVideoPlayerDisplay()
+            resumePlayer()
+        case .paused: // 如果是暂停状态，暂停播放
+            pausePlayer()
+            overlayView.pauseDanmaku()
+        default:
+            break
+        }
+    }
+    
+    /// 更新屏幕方向
+    ///
+    /// - Parameter orientation: 屏幕方向
+    /// - Note: 根据屏幕方向更新播放器视图的约束
+    public func updateScreenOrientation(for orientation: ScreenOrientation) {
+        let sliderValue = controlsView.bottomBar.sliderView.value
+        isDraggingSlider = true // 设置正在拖动滑块
+        overlayView.resizeDanmakuCellPosition(for: orientation) // 更新弹幕位置
+        systemControls.updateScreenOrientationInSystemControls(screenOrientation: orientation) // 更新系统控制视图
+        controlsView.transitionToFullscreen(orientation: orientation, playerState: playerState) // 更新播放控制视图
+        controlsView.resetSliderValueInControls(value: sliderValue) // 重置滑块值
+        controlsView.updateTimeInControls(with: currentTime, duration: totalDuration) // 更新时间
+        isDraggingSlider = false // 设置拖动滑块
+    }
+    
+    /// 开始弹幕播放
+    public func startDanmaku() {
+        overlayView.startDanmaku()
+        if playerState == .paused { // 如果是暂停状态
+            pausePlayer()
+            overlayView.pauseDanmaku() // 暂停弹幕
+            controlsView.updatePlayPauseButtonInControls(isPlaying: false) // 更新播放按钮状态
         }
     }
 }

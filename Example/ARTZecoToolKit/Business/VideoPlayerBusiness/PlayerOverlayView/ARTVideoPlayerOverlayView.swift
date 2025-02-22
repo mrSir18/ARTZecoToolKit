@@ -140,9 +140,8 @@ extension ARTVideoPlayerOverlayView {
         case .scale: // 缩放比例
             let scaleLevel = option.defaultValue + 1 // 缩放级别（从 1 开始）
             let scaleValues: [CGFloat] = [0.8, 0.9, 1.0, 1.1, 1.2]
-//            let danmakuScale = scaleValues[safe: scaleLevel - 1] ?? 1.0  // 使用 safe 下标来防止越界
-//            let danmakuScale = scaleValues[safe: scaleLevel - 1] ?? 1.0  // 使用 safe 下标来防止越界
-//            danmakuView.updateDanmakuScale(to: danmakuScale)
+            let danmakuScale = scaleValues.safeElement(at: scaleLevel - 1) ?? 1.0  // 使用 safe 下标来防止越界
+            danmakuView.updateDanmakuScale(to: danmakuScale)
             
         case .speed: // 移动速度
             let speedIndex = option.defaultValue + 1 // 移动速度（从 1 开始）
