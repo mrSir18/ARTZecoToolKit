@@ -38,6 +38,21 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     public var feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     
+    // MARK: - Private Properties
+    
+    /// 记录上次点击的时间
+    private var lastTapTime: TimeInterval = 0
+    
+    /// 定时器，用于判断是否为双击
+    private var tapTimer: Timer?
+    
+    /// 当前的手势对象
+    private var tapGesture: UITapGestureRecognizer?
+    
+    /// 双击最大时间间隔
+    private let doubleTapDelay: TimeInterval = 0.3
+
+    
     // MARK: - Initialization
     
     public override init() {
@@ -181,14 +196,7 @@ extension ARTVideoPlayerWrapperView {
         tapGesture.numberOfTouchesRequired = 1
         tapGesture.delegate = self
         addGestureRecognizer(tapGesture)
-        
-        // 双击手势
-        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTapGesture(_:)))
-        doubleTapGesture.numberOfTapsRequired = 2
-        doubleTapGesture.numberOfTouchesRequired = 1
-        doubleTapGesture.delegate = self
-        addGestureRecognizer(doubleTapGesture)
-        
+
         // 捏合手势
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
         addGestureRecognizer(pinchGesture)
@@ -238,20 +246,28 @@ extension ARTVideoPlayerWrapperView: UIGestureRecognizerDelegate {
         }
     }
     
-    /// 处理单击手势
+    /// 处理单击 - 双击手势
     /// - Parameter gesture: 点击手势
     /// - Note: 重写父类方法，处理单击手势，根据横竖屏模式展示控制面板或切换播放状态
     @objc open func handleTapGesture(_ gesture: UITapGestureRecognizer) {
-        let location = gesture.location(in: self)  // 获取点击的坐标
-        didReceiveTapGesture(at: location) // 通知外部点击事件
+        let currentTime = Date().timeIntervalSince1970
+        if currentTime - lastTapTime < doubleTapDelay { // 双击事件
+            tapTimer?.invalidate()
+            guard isLandscape else { return } // 如果是横屏模式才触发
+            didReceivewDoubleTapGesture() // 通知外部双击事件
+            
+        } else { // 单击事件
+            tapGesture = gesture
+            tapTimer?.invalidate()
+            tapTimer = Timer.scheduledTimer(timeInterval: doubleTapDelay, target: self, selector: #selector(handleSingleTapGesture), userInfo: nil, repeats: false)
+        }
+        lastTapTime = currentTime // 更新上次点击的时间
     }
-    
-    /// 处理双击手势
-    /// - Parameter gesture: 双击手势
-    /// - Note: 仅在横屏模式下切换播放状态
-    @objc open func handleDoubleTapGesture(_ gesture: UITapGestureRecognizer) {
-        guard isLandscape else { return } // 如果是横屏模式
-        didReceivewDoubleTapGesture() // 通知外部双击事件
+
+    @objc open func handleSingleTapGesture() {
+        guard let gesture = tapGesture else { return }
+        let location = gesture.location(in: self)
+        didReceiveTapGesture(at: location) // 通知外部单击事件
     }
     
     /// 处理捏合手势
