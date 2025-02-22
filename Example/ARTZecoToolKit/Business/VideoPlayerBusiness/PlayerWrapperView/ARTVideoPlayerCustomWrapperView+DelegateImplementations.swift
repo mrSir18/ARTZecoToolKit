@@ -111,6 +111,7 @@ extension ARTVideoPlayerCustomWrapperView: ARTVideoPlayerControlsViewDelegate {
         systemControls.hideVideoPlayerDisplay()
         seekToTime(from: slider.value) { [weak self] in
             self?.isDraggingSlider = false
+            self?.overlayView.resumeDanmaku() // 恢复弹幕
             self?.resumePlayer()
         }
     }
