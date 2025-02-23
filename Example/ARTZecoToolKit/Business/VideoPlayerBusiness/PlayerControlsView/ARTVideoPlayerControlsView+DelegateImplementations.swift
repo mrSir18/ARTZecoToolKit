@@ -11,7 +11,7 @@
 extension ARTVideoPlayerControlsView: ARTVideoPlayerTopbarDelegate {
     
     func topbarDidTapBack(for topbar: ARTVideoPlayerTopbar) { // 点击返回按钮
-        removeToolBars()
+        didRemoveToolBarsInControls()
         delegate?.controlsViewDidTapBack(for: self)
     }
     
@@ -32,8 +32,8 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerBottombarDelegate {
     
     func bottombarDidBeginTouch(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider) { // 滑块开始触摸
         if isLandscape { // 横屏模式
-            stopAutoHideTimer()
-            toggleControls(visible: true)
+            didStopAutoHideTimer()
+            didToggleControlsInControls(visible: true)
         }
         delegate?.controlsViewDidBeginTouch(for: self, slider: slider)
     }
@@ -43,12 +43,12 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerBottombarDelegate {
     }
     
     func bottombarDidEndTouch(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider) { // 滑块结束触摸
-        if isLandscape { resetAutoHideTimer() } // 横屏模式
+        if isLandscape { didResetAutoHideTimerInControls() } // 横屏模式
         delegate?.controlsViewDidEndTouch(for: self, slider: slider)
     }
     
     func bottombarDidTap(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider) { // 点击滑块
-        if isLandscape { resetAutoHideTimer() } // 横屏模式
+        if isLandscape { didResetAutoHideTimerInControls() } // 横屏模式
         delegate?.controlsViewDidTap(for: self, slider: slider)
     }
     
@@ -57,7 +57,7 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerBottombarDelegate {
     }
     
     func bottombarDidTapDanmakuToggle(for bottombar: ARTVideoPlayerBottombar, isDanmakuEnabled: Bool) { // 点击弹幕开关按钮
-        saveDanmakuEnabled(isDanmakuEnabled: isDanmakuEnabled) // 本地存储弹幕状态
+        didSaveDanmakuStateInControls(isDanmakuEnabled: isDanmakuEnabled) // 本地存储弹幕状态
         delegate?.controlsViewDidTapDanmakuToggle(for: self, isDanmakuEnabled: isDanmakuEnabled)
     }
     
@@ -74,8 +74,8 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerBottombarDelegate {
 extension ARTVideoPlayerControlsView: ARTVideoPlayerWindowBottombarDelegate {
     
     func bottombarDidTapFullscreen(for bottombar: ARTVideoPlayerWindowBottombar) { // 点击全屏按钮
-        removeToolBars()
-        delegate?.controlsViewDidTransitionToFullscreen(for: self, orientation: autoVideoScreenOrientation())
+        didRemoveToolBarsInControls()
+        delegate?.controlsViewDidTransitionToFullscreen(for: self, orientation: didAutoVideoScreenOrientation())
     }
 }
 

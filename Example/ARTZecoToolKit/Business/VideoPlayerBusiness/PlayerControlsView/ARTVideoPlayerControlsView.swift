@@ -27,8 +27,8 @@ class ARTVideoPlayerControlsView: ARTPassThroughView {
         return delegate_customScreenOrientation()
     }()
     
-    /// 隐藏控件定时器
-    public var hideControlsTimer: Timer?
+    /// 自动隐藏控件的定时器
+    public var autoHideControlsTimer: Timer?
     
     /// 是否隐藏顶底工具栏
     public var isHiddenControls: Bool = false
@@ -40,7 +40,7 @@ class ARTVideoPlayerControlsView: ARTPassThroughView {
     private var topBar: ARTVideoPlayerTopbar!
     
     /// 底部工具栏视图
-    public var bottomBar: ARTVideoPlayerBottombar!
+    private var bottomBar: ARTVideoPlayerBottombar!
     
     /// 播放、重试图片
     private var playImageView: UIImageView!
@@ -69,10 +69,10 @@ class ARTVideoPlayerControlsView: ARTPassThroughView {
     
     /// 旋转屏幕并刷新工具栏
     /// - Parameter orientation: 新的屏幕方向
-    public func transitionToFullscreen(orientation: ScreenOrientation, playerState: PlayerState) {
+    public func didTransitionToFullscreenInControls(orientation: ScreenOrientation, playerState: PlayerState) {
         self.screenOrientation = orientation
         setupToolBars()
-        updatePlayerStateInControls(playerState: playerState)
+        didUpdatePlayPauseStateInControls(playerState: playerState)
     }
     
     /// 更新当前播放时间和总时长
@@ -80,7 +80,7 @@ class ARTVideoPlayerControlsView: ARTPassThroughView {
     ///   - currentTime: 当前播放时间
     ///   - duration: 视频总时长
     ///   - shouldUpdateSlider: 是否拖动滑块
-    public func updateTimeInControls(with currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = false) {
+    public func didUpdatePlaybackTimeInControls(with currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = false) {
         bottomBar.updatePlaybackTime(currentTime: currentTime, duration: duration, shouldUpdateSlider: shouldUpdateSlider)
     }
     
@@ -89,122 +89,112 @@ class ARTVideoPlayerControlsView: ARTPassThroughView {
     ///   - totalBuffer: 缓冲总时间
     ///   - bufferProgress: 缓冲进度
     ///   - shouldUpdateSlider: 是否拖动滑块
-    public func updateBufferProgressInControls(totalBuffer: Double, bufferProgress: Float, shouldUpdateSlider: Bool = false) {
-        bottomBar.updateBufferProgress(totalBuffer: totalBuffer, bufferProgress: bufferProgress, shouldUpdateSlider: shouldUpdateSlider)
+    public func didUpdateBufferingProgressInControls(totalBuffer: Double, bufferProgress: Float, shouldUpdateSlider: Bool = false) {
+        bottomBar.updateBufferingProgress(totalBuffer: totalBuffer, bufferProgress: bufferProgress, shouldUpdateSlider: shouldUpdateSlider)
     }
     
     /// 触摸开始时调用
     /// - Parameter sliderValue: 当前滑块值
-    public func updateSliderTouchBeganInControls(sliderValue: Float) {
+    public func didBeginSliderTouchInControls(sliderValue: Float) {
         bottomBar.updateSliderTouchBegan(value: sliderValue)
     }
     
     /// 更新滑块值
     /// - Parameter sliderValue: 新滑块值
-    public func updateSliderValueInControls(sliderValue: Float) {
-        bottomBar.updateSliderValue(value: sliderValue)
+    public func didUpdateSliderPositionInControls(sliderValue: Float) {
+        bottomBar.updateSliderPosition(value: sliderValue)
     }
     
     /// 触摸结束时调用
     /// - Parameter sliderValue: 当前滑块值
-    public func updateSliderTouchEndedInControls(sliderValue: Float) {
+    public func didEndSliderTouchInControls(sliderValue: Float) {
         bottomBar.updateSliderTouchEnded(value: sliderValue)
     }
     
     /// 更新播放按钮状态
     /// - Parameter playerState: 播放状态
-    public func updatePlayerStateInControls(playerState: PlayerState) {
+    public func didUpdatePlayPauseStateInControls(playerState: PlayerState) {
         playImageView.isHidden = (playerState == .playing)
     }
     
     /// 初始化滑块值
     /// - Parameter value: 初始值，默认 0.0
-    public func resetSliderValueInControls(value: Float = 0.0) {
-        bottomBar.resetSliderValue(value: value)
+    public func didResetSliderPositionInControls(value: Float = 0.0) {
+        bottomBar.resetSliderPosition(value: value)
     }
     
     /// 更新播放/暂停按钮状态
     /// - Parameter isPlaying: 是否正在播放
-    public func updatePlayPauseButtonInControls(isPlaying: Bool) {
-        bottomBar.updatePlayPauseButton(isPlaying: isPlaying)
+    public func didUpdatePlayPauseButtonStateInControls(isPlaying: Bool) {
+        bottomBar.updatePlayPauseButtonState(isPlaying: isPlaying)
     }
     
     /// 更新倍数按钮状态
     /// - Parameter rate: 当前倍数
-    public func updateRateButtonInControls(rate: Float) {
+    public func didUpdatePlaybackRateButtonInControls(rate: Float) {
         guard let bottomBar = bottomBar as? ARTVideoPlayerLandscapeFullscreenBottombar else { return }
         bottomBar.updateRateButtonTitle(rate: rate)
     }
     
     /// 切换控制条的显示与隐藏状态
-    public func toggleControlsVisibility() {
-        toggleControls(visible: isHiddenControls)
-        resetAutoHideTimer()
+    public func didToggleControlsVisibilityInControls() {
+        toggleControlsInControls(visible: isHiddenControls)
+        didResetAutoHideTimerInControls()
     }
     
     /// 移除顶部和底部工具栏
-    public func removeToolBars() {
+    public func didRemoveToolBarsInControls() {
         topBar.removeFromSuperview()
         bottomBar.removeFromSuperview()
         playImageView.removeFromSuperview()
     }
     
     /// 自动获取视频屏幕方向
-    public func autoVideoScreenOrientation() -> ScreenOrientation {
-        return isLandscape ? .landscapeFullScreen : .portraitFullScreen
+    public func didAutoVideoScreenOrientation() -> ScreenOrientation {
+        return autoVideoScreenOrientation()
     }
     
     /// 自动隐藏控件
-    @objc public func autoHideControls() {
-        toggleControls(visible: false)
-    }
-    
-    /// 显隐控件
-    ///
-    /// - Parameters:
-    ///  - visibility: 显示状态
-    ///  - animated
-    public func toggleControls(visible: Bool) {
-        isHiddenControls = !visible
-        if screenOrientation == .window { // 窗口模式下调整透明度
-            let targetAlpha: CGFloat = visible ? 1 : 0
-            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut], animations: {
-                self.topBar.containerView.alpha = targetAlpha
-                self.bottomBar.alpha = targetAlpha
-            })
-        } else { // 横屏全屏模式下调整约束
-            updateBarConstraints(visible: visible)
-            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut], animations: {
-                self.layoutIfNeeded()
-            })
-        }
+    @objc public func didAutoHideControls() {
+        autoHideControls()
     }
     
     /// 重置自动隐藏定时器
-    public func resetAutoHideTimer() {
+    public func didResetAutoHideTimerInControls() {
         stopAutoHideTimer()
         startAutoHideTimer()
     }
     
     /// 停止并销毁定时器的方法
-    public func stopAutoHideTimer() {
-        hideControlsTimer?.invalidate()
-        hideControlsTimer = nil
+    public func didStopAutoHideTimer() {
+        stopAutoHideTimer()
+    }
+    
+    /// 显隐控件
+    /// - Parameter visible: 是否显示
+    public func didToggleControlsInControls(visible: Bool) {
+        toggleControlsInControls(visible: visible)
     }
     
     /// 处理播放器状态
-    public func handleLandscapeControls(isPlaying: Bool) {
+    /// - Parameter isPlaying: 是否正在播放
+    public func didUpdatePlayerStateInControls(isPlaying: Bool) {
         if isPlaying {
             stopAutoHideTimer()
-            toggleControls(visible: true)
+            toggleControlsInControls(visible: true)
         } else {
-            resetAutoHideTimer()
+            didResetAutoHideTimerInControls()
         }
     }
     
     /// 本地存储弹幕状态
-    public func saveDanmakuEnabled(isDanmakuEnabled: Bool) {
+    public func didSaveDanmakuStateInControls(isDanmakuEnabled: Bool) {
         UserDefaults.standard.set(isDanmakuEnabled, forKey: "DanmakuEnabledKey")
+    }
+    
+    /// 获取当前滑块的值
+    public func getSliderPositionInControls() -> Float {
+        return bottomBar.sliderView.value
     }
 }
 
@@ -283,7 +273,7 @@ extension ARTVideoPlayerControlsView {
             return ARTVideoPlayerWindowBottombar(self)
         }
     }
-
+    
     /// 切换到窗口模式，设置屏幕方向并刷新顶部和底部栏
     private func topBarHeight(for orientation: ScreenOrientation) -> CGFloat {
         switch orientation {
@@ -308,14 +298,42 @@ extension ARTVideoPlayerControlsView {
         }
     }
     
+    /// 自动获取视频屏幕方向
+    private func autoVideoScreenOrientation() -> ScreenOrientation {
+        return isLandscape ? .landscapeFullScreen : .portraitFullScreen
+    }
+    
     /// 开启隐藏控件定时器
     private func startAutoHideTimer() {
-        guard hideControlsTimer == nil, isLandscape else { return }
-        hideControlsTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(autoHideControls), userInfo: nil, repeats: false)
+        guard autoHideControlsTimer == nil, isLandscape else { return }
+        autoHideControlsTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(autoHideControls), userInfo: nil, repeats: false)
+    }
+    
+    /// 自动隐藏控件
+    @objc private func autoHideControls() {
+        toggleControlsInControls(visible: false)
+    }
+    
+    /// 显隐控件
+    /// - Parameter visible: 是否显示
+    private func toggleControlsInControls(visible: Bool) {
+        isHiddenControls = !visible
+        if screenOrientation == .window { // 窗口模式下调整透明度
+            let targetAlpha: CGFloat = visible ? 1 : 0
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut], animations: {
+                self.topBar.containerView.alpha = targetAlpha
+                self.bottomBar.alpha = targetAlpha
+            })
+        } else { // 横屏全屏模式下调整约束
+            updateBarsVisibility(visible: visible)
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut], animations: {
+                self.layoutIfNeeded()
+            })
+        }
     }
     
     /// 更新工具栏约束
-    private func updateBarConstraints(visible: Bool) {
+    private func updateBarsVisibility(visible: Bool) {
         guard let topBarSuperview = topBar.superview, let bottomBarSuperview = bottomBar.superview else {
             return // 如果没有父视图，直接返回，避免崩溃
         }
@@ -334,6 +352,12 @@ extension ARTVideoPlayerControlsView {
             make.height.equalTo(bottomBarHeight)
             make.bottom.equalTo(visible ? 0 : bottomBarHeight) // 显示时底部对齐，隐藏时推到下方
         }
+    }
+    
+    /// 停止并销毁定时器的方法
+    private func stopAutoHideTimer() {
+        autoHideControlsTimer?.invalidate()
+        autoHideControlsTimer = nil
     }
 }
 

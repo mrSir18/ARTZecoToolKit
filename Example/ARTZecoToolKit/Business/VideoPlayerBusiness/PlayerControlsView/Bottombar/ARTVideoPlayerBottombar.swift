@@ -164,7 +164,7 @@ extension ARTVideoPlayerBottombar {
     ///   - totalBuffer: 缓冲总时间
     ///   - bufferProgress: 缓冲进度
     ///   - shouldUpdateSlider: 是否拖动滑块
-    @objc public func updateBufferProgress(totalBuffer: Double, bufferProgress: Float, shouldUpdateSlider: Bool = false) {
+    @objc public func updateBufferingProgress(totalBuffer: Double, bufferProgress: Float, shouldUpdateSlider: Bool = false) {
         if !shouldUpdateSlider {
             UIView.animate(withDuration: 1.0) {
                 self.progressView.setProgress(bufferProgress, animated: true)
@@ -191,7 +191,7 @@ extension ARTVideoPlayerBottombar {
     /// 更新滑块值
     ///
     /// - Parameter value: 滑块值
-    @objc public func updateSliderValue(value: Float) {
+    @objc public func updateSliderPosition(value: Float) {
         adjustSliderValue(value: value)
         delegate?.bottombarDidChangeValue(for: self, slider: sliderView)
     }
@@ -204,7 +204,7 @@ extension ARTVideoPlayerBottombar {
     /// 初始化滑块值
     ///
     /// - Parameter value: 滑块值
-    @objc public func resetSliderValue(value: Float = 0.0) {
+    @objc public func resetSliderPosition(value: Float = 0.0) {
         progressView.setProgress(value, animated: false)
         sliderView.setValue(value, animated: false)
         resetPlaybackTimeLabels()
@@ -218,7 +218,7 @@ extension ARTVideoPlayerBottombar {
     /// 更新播放按钮状态
     ///
     /// - Parameter isPlaying: 是否播放中
-    @objc public func updatePlayPauseButton(isPlaying: Bool) {
+    @objc public func updatePlayPauseButtonState(isPlaying: Bool) {
         
     }
     
@@ -241,7 +241,6 @@ extension ARTVideoPlayerBottombar {
 extension ARTVideoPlayerBottombar {
     
     /// 更新进度条
-    ///
     /// - Parameter progress: 进度值
     private func updateProgressBar(progress: Float) {
         UIView.animate(withDuration: 1.0, delay: 0, options: [.curveEaseInOut], animations: {
@@ -265,7 +264,6 @@ extension ARTVideoPlayerBottombar {
     }
     
     /// 更新滑块值
-    ///
     /// - Parameter value: 滑块值变化
     private func adjustSliderValue(value: Float) {
         sliderView.setValue(min(max(sliderView.value + value, 0), 1), animated: true)

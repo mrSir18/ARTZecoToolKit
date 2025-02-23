@@ -116,8 +116,7 @@ class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
         currentTimeLabel.text = "00:00"
         durationLabel.text = "/00:00"
     }
-    
-    override func updatePlayPauseButton(isPlaying: Bool) { // 更新播放暂停按钮
+    override func updatePlayPauseButtonState(isPlaying: Bool) { // 更新播放暂停按钮
         pauseButton.isSelected = !isPlaying
     }
 }

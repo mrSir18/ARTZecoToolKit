@@ -12,9 +12,7 @@ import ARTZecoToolKit
 /// - NOTE: 可继承该协议方法
 protocol ARTVideoPlayerControlsViewDelegate: AnyObject {
     
-    /// 自定义播放模式
-    /// - Parameter controlsView: 控制层视图
-    /// - Returns: 自定义播放模式
+    /// 自定义屏幕方向
     func customScreenOrientation(for controlsView: ARTVideoPlayerControlsView) -> ScreenOrientation
     
     /// 自定义顶部工具栏视图

@@ -95,8 +95,8 @@ extension ARTVideoPlayerCustomWrapperView: ARTVideoPlayerControlsViewDelegate {
 // MARK: - 底部工具栏 - 公共方法
     
     public func controlsViewDidBeginTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 暂停播放 (开始拖动滑块)
-        controlsView.updatePlayPauseButtonInControls(isPlaying: true)
-        controlsView.updatePlayerStateInControls(playerState: .playing)
+        controlsView.didUpdatePlayPauseButtonStateInControls(isPlaying: true)
+        controlsView.didUpdatePlayPauseStateInControls(playerState: .playing)
         isDraggingSlider = true
         delegate?.wrapperViewDidBeginTouch?(for: self, slider: slider)
     }
@@ -139,7 +139,7 @@ extension ARTVideoPlayerCustomWrapperView: ARTVideoPlayerControlsViewDelegate {
     
     public func controlsViewDidTapDanmakuSettings(for controlsView: ARTVideoPlayerControlsView) { // 弹幕设置 (点击弹幕设置按钮)
         delegate?.wrapperViewDidTapDanmakuSettings?(for: self)
-        controlsView.autoHideControls()
+        controlsView.didAutoHideControls()
         danmakuView.showExtensionsView()
     }
     
@@ -167,13 +167,13 @@ extension ARTVideoPlayerCustomWrapperView: ARTVideoPlayerControlsViewDelegate {
     
     public func controlsViewDidTapSpeed(for controlsView: ARTVideoPlayerControlsView) { // 点击倍速按钮
         delegate?.wrapperViewDidTapSpeed?(for: self)
-        controlsView.autoHideControls()
+        controlsView.didAutoHideControls()
         rateView.showExtensionsView()
     }
     
     public func controlsViewDidTapCatalogue(for controlsView: ARTVideoPlayerControlsView) { // 点击目录按钮
         delegate?.wrapperViewDidTapCatalogue?(for: self)
-        controlsView.autoHideControls()
+        controlsView.didAutoHideControls()
     }
     
     
