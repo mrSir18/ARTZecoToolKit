@@ -76,7 +76,6 @@ extension ARTVideoPlayerCustomWrapperView: ARTVideoPlayerControlsViewDelegate {
     
     func controlsViewDidTapBack(for controlsView: ARTVideoPlayerControlsView) { // 点击返回按钮
         overlayView.stopDanmaku() // 停止弹幕
-        delegate?.wrapperViewDidTapBack?(for: self)
         fullscreenManager.dismiss { [weak self] in // 切换窗口模式顶底栏
             self?.updateScreenOrientation(for: .window)
         }
@@ -87,8 +86,24 @@ extension ARTVideoPlayerCustomWrapperView: ARTVideoPlayerControlsViewDelegate {
     }
     
     func controlsViewDidTapShare(for controlsView: ARTVideoPlayerControlsView) { // 点击分享按钮
-        delegate?.wrapperViewDidTapShare?(for: self)
-        portraitDanmakuView.showExtensionsView()
+        if isLandscape { // 横屏模式
+            let alertView = ARTAlertView()
+            alertView.title("成长智库")
+            alertView.desc("\n点击了横屏分享按钮\n")
+            alertView.buttonTappedCallback = { buttonIndex in
+                switch buttonIndex {
+                case .first:
+                    print("First mode selected")
+                case .second:
+                    print("Second mode selected")
+                default:
+                    break
+                }
+            }
+            alertView.show()
+        } else { // 竖屏模式
+            portraitDanmakuView.showExtensionsView()
+        }
     }
     
     
@@ -98,16 +113,13 @@ extension ARTVideoPlayerCustomWrapperView: ARTVideoPlayerControlsViewDelegate {
         controlsView.didUpdatePlayPauseButtonStateInControls(isPlaying: true)
         controlsView.didUpdatePlayPauseStateInControls(playerState: .playing)
         isDraggingSlider = true
-        delegate?.wrapperViewDidBeginTouch?(for: self, slider: slider)
     }
     
     func controlsViewDidChangeValue(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 快进/快退 (拖动滑块)
         updatePreviewImage(at: slider.value)
-        delegate?.wrapperViewDidChangeValue?(for: self, slider: slider)
     }
     
     func controlsViewDidEndTouch(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 恢复播放 (结束拖动滑块)
-        delegate?.wrapperViewDidEndTouch?(for: self, slider: slider)
         systemControls.hideVideoPlayerDisplay()
         seekToTime(from: slider.value) { [weak self] in
             self?.isDraggingSlider = false
@@ -117,7 +129,6 @@ extension ARTVideoPlayerCustomWrapperView: ARTVideoPlayerControlsViewDelegate {
     }
     
     func controlsViewDidTap(for controlsView: ARTVideoPlayerControlsView, slider: ARTVideoPlayerSlider) { // 指定播放时间 (点击滑块)
-        delegate?.wrapperViewDidTap?(for: self, slider: slider)
         controlsViewDidBeginTouch(for: controlsView, slider: slider)
         seekToTime(from: slider.value) { [weak self] in // 指定播放时间
             self?.controlsViewDidEndTouch(for: controlsView, slider: slider)
@@ -126,19 +137,16 @@ extension ARTVideoPlayerCustomWrapperView: ARTVideoPlayerControlsViewDelegate {
     
     func controlsViewDidTapPause(for controlsView: ARTVideoPlayerControlsView, isPlaying: Bool) { // 暂停播放 (点击暂停按钮)
         togglePlayerState()
-        delegate?.wrapperViewDidTapPause?(for: self, isPlaying: isPlaying)
     }
     
     func controlsViewDidTapDanmakuToggle(for controlsView: ARTVideoPlayerControlsView, isDanmakuEnabled: Bool) { // 弹幕开关 (点击弹幕开关按钮)
         if playerState != .ended { // 播放结束时不允许切换弹幕
             overlayView.shouldSendDanmaku(isDanmakuEnabled: isDanmakuEnabled) // 是否开始发送弹幕
-            delegate?.wrapperViewDidTapDanmakuToggle?(for: self, isDanmakuEnabled: isDanmakuEnabled) // 弹幕开关按钮被点击调用
             if isDanmakuEnabled && playerState == .paused { overlayView.pauseDanmaku() } // 暂停弹幕
         }
     }
     
     func controlsViewDidTapDanmakuSettings(for controlsView: ARTVideoPlayerControlsView) { // 弹幕设置 (点击弹幕设置按钮)
-        delegate?.wrapperViewDidTapDanmakuSettings?(for: self)
         controlsView.didAutoHideControls()
         danmakuView.showExtensionsView()
     }
@@ -162,18 +170,15 @@ extension ARTVideoPlayerCustomWrapperView: ARTVideoPlayerControlsViewDelegate {
 // MARK: - 横屏模式 - 底部工具栏
     
     func controlsViewDidTapNext(for controlsView: ARTVideoPlayerControlsView) { // 点击下一个按钮
-//        delegate?.wrapperViewDidTapNext?(for: self)
         playNextVideo(with: URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4"))
     }
     
     func controlsViewDidTapSpeed(for controlsView: ARTVideoPlayerControlsView) { // 点击倍速按钮
-        delegate?.wrapperViewDidTapSpeed?(for: self)
         controlsView.didAutoHideControls()
         rateView.showExtensionsView()
     }
     
     func controlsViewDidTapCatalogue(for controlsView: ARTVideoPlayerControlsView) { // 点击目录按钮
-//        delegate?.wrapperViewDidTapCatalogue?(for: self)
         chaptersView.showExtensionsView()
         controlsView.didAutoHideControls()
     }
