@@ -45,7 +45,7 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     
     /// 双击最大时间间隔
     private let doubleTapDelay: TimeInterval = 0.3
-
+    
     
     // MARK: - Initialization
     
@@ -202,7 +202,7 @@ extension ARTVideoPlayerWrapperView {
         tapGesture.numberOfTouchesRequired = 1
         tapGesture.delegate = self
         addGestureRecognizer(tapGesture)
-
+        
         // 捏合手势
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
         addGestureRecognizer(pinchGesture)
@@ -267,7 +267,7 @@ extension ARTVideoPlayerWrapperView: UIGestureRecognizerDelegate {
         }
         lastTapTime = currentTime // 更新上次点击的时间
     }
-
+    
     @objc open func handleDoubleTapGesture(_ gesture: UITapGestureRecognizer) {
         guard isLandscape else { return } // 如果是横屏模式
         didReceivewDoubleTapGesture() // 通知外部双击事件
@@ -538,14 +538,16 @@ extension ARTVideoPlayerWrapperView {
     /// 配置播放器 Layer
     /// - Parameter player: AVPlayer 实例
     private func configurePlayerLayer() {
-        guard let playerLayer = self.layer as? AVPlayerLayer else {
-            print("当前 layer 不是 AVPlayerLayer，无法播放视频。")
-            return
+        DispatchQueue.main.async {
+            guard let playerLayer = self.layer as? AVPlayerLayer else {
+                print("当前 layer 不是 AVPlayerLayer，无法播放视频。")
+                return
+            }
+            playerLayer.backgroundColor = UIColor.black.cgColor
+            playerLayer.videoGravity = .resizeAspectFill
+            playerLayer.player = self.player
+            self.addPlayerObservers() // 添加播放器观察者
         }
-        playerLayer.backgroundColor = UIColor.black.cgColor
-        playerLayer.videoGravity = .resizeAspectFill
-        playerLayer.player = player
-        addPlayerObservers() // 添加播放器观察者
     }
     
     /// 设置播放器音量
@@ -650,10 +652,12 @@ extension ARTVideoPlayerWrapperView {
         asset.loadValuesAsynchronously(forKeys: keys) {
             var error: NSError?
             let status = asset.statusOfValue(forKey: keys.first ?? "", error: &error)
-            if status == .loaded {
-                completion(.success(asset))
-            } else {
-                completion(.failure(error ?? NSError(domain: "ARTVideoPlayer", code: -1, userInfo: [NSLocalizedDescriptionKey: "Asset loading failed."])))
+            DispatchQueue.main.async { // 这里确保 completion 回调在主线程执行
+                if status == .loaded {
+                    completion(.success(asset))
+                } else {
+                    completion(.failure(error ?? NSError(domain: "ARTVideoPlayer", code: -1, userInfo: [NSLocalizedDescriptionKey: "Asset loading failed."])))
+                }
             }
         }
     }

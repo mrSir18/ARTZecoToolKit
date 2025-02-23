@@ -37,13 +37,13 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
     // MARK: - 私有扩展视图（个人项目使用）
     
     /// 懒加载弹幕设置视图
-    internal lazy var danmakuView: ARTVideoPlayerLandscapeDanmakuView = {
+    public lazy var danmakuView: ARTVideoPlayerLandscapeDanmakuView = {
         let danmakuView = ARTVideoPlayerLandscapeDanmakuView(self)
         return danmakuView
     }()
     
     /// 懒加载倍速视图
-    internal lazy var rateView: ARTVideoPlayerLandscapeSlidingView = {
+    public lazy var rateView: ARTVideoPlayerLandscapeSlidingView = {
         let rateView = ARTVideoPlayerLandscapePlaybackRateView(self)
         rateView.rateCallback = { [weak self] rate in
             guard let self = self else { return }
@@ -55,8 +55,18 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
         return rateView
     }()
     
+    /// 懒加载目录视图
+    public lazy var chaptersView: ARTVideoPlayerLandscapeSlidingView = {
+        let chaptersView = ARTVideoPlayerLandscapeChaptersView()
+        chaptersView.chapterCallback = { [weak self] index in
+            guard let self = self else { return }
+            self.playNextVideo(with: URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4"))
+        }
+        return chaptersView
+    }()
+    
     /// 懒加载竖屏弹幕视图
-    internal lazy var portraitDanmakuView: ARTVideoPlayerPortraitDanmakuView = {
+    public lazy var portraitDanmakuView: ARTVideoPlayerPortraitDanmakuView = {
         let danmakuView = ARTVideoPlayerPortraitDanmakuView(self)
         return danmakuView
     }()

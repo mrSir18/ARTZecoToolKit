@@ -162,7 +162,8 @@ extension ARTVideoPlayerCustomWrapperView: ARTVideoPlayerControlsViewDelegate {
 // MARK: - 横屏模式 - 底部工具栏
     
     func controlsViewDidTapNext(for controlsView: ARTVideoPlayerControlsView) { // 点击下一个按钮
-        delegate?.wrapperViewDidTapNext?(for: self)
+//        delegate?.wrapperViewDidTapNext?(for: self)
+        playNextVideo(with: URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4"))
     }
     
     func controlsViewDidTapSpeed(for controlsView: ARTVideoPlayerControlsView) { // 点击倍速按钮
@@ -172,7 +173,8 @@ extension ARTVideoPlayerCustomWrapperView: ARTVideoPlayerControlsViewDelegate {
     }
     
     func controlsViewDidTapCatalogue(for controlsView: ARTVideoPlayerControlsView) { // 点击目录按钮
-        delegate?.wrapperViewDidTapCatalogue?(for: self)
+//        delegate?.wrapperViewDidTapCatalogue?(for: self)
+        chaptersView.showExtensionsView()
         controlsView.didAutoHideControls()
     }
     
