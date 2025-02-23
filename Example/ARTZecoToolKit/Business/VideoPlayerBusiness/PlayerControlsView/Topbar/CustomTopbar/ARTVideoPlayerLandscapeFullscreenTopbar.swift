@@ -25,7 +25,7 @@ class ARTVideoPlayerLandscapeFullscreenTopbar: ARTVideoPlayerTopbar {
 
 extension ARTVideoPlayerLandscapeFullscreenTopbar {
     
-    @objc open func setupContainerView() { // 创建容器视图
+    private func setupContainerView() { // 创建容器视图
         containerView = UIView()
         containerView.alpha = 0.0
         addSubview(containerView)
@@ -34,7 +34,7 @@ extension ARTVideoPlayerLandscapeFullscreenTopbar {
         }
     }
     
-    @objc open func setupBackButton() { // 创建返回按钮
+    private func setupBackButton() { // 创建返回按钮
         let leftInset = UIScreen.art_currentScreenIsIphoneX ? ARTAdaptedValue(54.0) : 0.0
         backButton = ARTAlignmentButton(type: .custom)
         backButton.imageAlignment       = .left
@@ -54,7 +54,7 @@ extension ARTVideoPlayerLandscapeFullscreenTopbar {
         }
     }
     
-    @objc open func setupShareButton() { // 创建分享按钮
+    private func setupShareButton() { // 创建分享按钮
         let rightInset = UIScreen.art_currentScreenIsIphoneX ? ARTAdaptedValue(42.0) : 0.0
         shareButton = ARTAlignmentButton(type: .custom)
         shareButton.imageAlignment      = .right
@@ -72,7 +72,7 @@ extension ARTVideoPlayerLandscapeFullscreenTopbar {
         }
     }
     
-    @objc open func setupFavoriteButton() { // 创建收藏按钮
+    private func setupFavoriteButton() { // 创建收藏按钮
         favoriteButton = ARTAlignmentButton(type: .custom)
         favoriteButton.isSelected       = true
         favoriteButton.imageAlignment   = .right
@@ -89,7 +89,7 @@ extension ARTVideoPlayerLandscapeFullscreenTopbar {
         }
     }
     
-    @objc open func setupAnimation() { // 过度动画流畅
+    private func setupAnimation() { // 过度动画流畅
         UIView.animate(withDuration: 0.3) {
             self.containerView.alpha = 1.0
         }

@@ -43,12 +43,6 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     /// 记录上次点击的时间
     private var lastTapTime: TimeInterval = 0
     
-    /// 定时器，用于判断是否为双击
-    private var tapTimer: Timer?
-    
-    /// 当前的手势对象
-    private var tapGesture: UITapGestureRecognizer?
-    
     /// 双击最大时间间隔
     private let doubleTapDelay: TimeInterval = 0.3
 
@@ -264,22 +258,19 @@ extension ARTVideoPlayerWrapperView: UIGestureRecognizerDelegate {
     @objc open func handleTapGesture(_ gesture: UITapGestureRecognizer) {
         let currentTime = Date().timeIntervalSince1970
         if currentTime - lastTapTime < doubleTapDelay { // 双击事件
-            tapTimer?.invalidate()
-            guard isLandscape else { return } // 如果是横屏模式才触发
+            guard isLandscape else { return }
             didReceivewDoubleTapGesture() // 通知外部双击事件
             
         } else { // 单击事件
-            tapGesture = gesture
-            tapTimer?.invalidate()
-            tapTimer = Timer.scheduledTimer(timeInterval: doubleTapDelay, target: self, selector: #selector(handleSingleTapGesture), userInfo: nil, repeats: false)
+            let location = gesture.location(in: self)
+            didReceiveTapGesture(at: location) // 通知外部点击事件
         }
         lastTapTime = currentTime // 更新上次点击的时间
     }
 
-    @objc open func handleSingleTapGesture() {
-        guard let gesture = tapGesture else { return }
-        let location = gesture.location(in: self)
-        didReceiveTapGesture(at: location) // 通知外部单击事件
+    @objc open func handleDoubleTapGesture(_ gesture: UITapGestureRecognizer) {
+        guard isLandscape else { return } // 如果是横屏模式
+        didReceivewDoubleTapGesture() // 通知外部双击事件
     }
     
     /// 处理捏合手势

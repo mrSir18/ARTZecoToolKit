@@ -23,8 +23,8 @@ class ARTVideoPlayerWindowTopbar: ARTVideoPlayerTopbar {
 // MARK: - Setup Initializer
 
 extension ARTVideoPlayerWindowTopbar {
-
-    @objc open func setupContainerView() { // 创建容器视图
+    
+    private func setupContainerView() { // 创建容器视图
         containerView = UIView()
         addSubview(containerView)
         containerView.snp.makeConstraints { make in
@@ -32,7 +32,7 @@ extension ARTVideoPlayerWindowTopbar {
         }
     }
     
-    @objc open func setupBackButton() { // 创建返回按钮
+    private func setupBackButton() { // 创建返回按钮
         backButton = ARTAlignmentButton(type: .custom)
         backButton.imageAlignment       = .left
         backButton.titleAlignment       = .right
@@ -47,7 +47,7 @@ extension ARTVideoPlayerWindowTopbar {
         }
     }
     
-    @objc open func setupShareButton() { // 创建分享按钮
+    private func setupShareButton() { // 创建分享按钮
         shareButton = ARTAlignmentButton(type: .custom)
         shareButton.imageAlignment      = .right
         shareButton.titleAlignment      = .left
@@ -62,7 +62,7 @@ extension ARTVideoPlayerWindowTopbar {
         }
     }
     
-    @objc open func setupFavoriteButton() { // 创建收藏按钮
+    private func setupFavoriteButton() { // 创建收藏按钮
         favoriteButton = ARTAlignmentButton(type: .custom)
         favoriteButton.isSelected       = true
         favoriteButton.imageAlignment   = .right

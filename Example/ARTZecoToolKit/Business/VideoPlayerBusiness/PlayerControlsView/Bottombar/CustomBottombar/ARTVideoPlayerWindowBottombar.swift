@@ -11,33 +11,33 @@ import ARTZecoToolKit
 /// 协议方法
 ///
 /// - NOTE: 可继承该协议方法
-public protocol ARTVideoPlayerWindowBottombarDelegate: ARTVideoPlayerBottombarDelegate {
+protocol ARTVideoPlayerWindowBottombarDelegate: ARTVideoPlayerBottombarDelegate {
     
     /// 当全屏按钮被点击时调用
     func bottombarDidTapFullscreen(for bottombar: ARTVideoPlayerWindowBottombar)
 }
 
-open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
+class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     
     /// 代理对象
-    public weak var subclassDelegate: ARTVideoPlayerWindowBottombarDelegate?
+    weak var subclassDelegate: ARTVideoPlayerWindowBottombarDelegate?
     
     /// 容器视图
-    public var containerView: UIView!
+    private var containerView: UIView!
     
     /// 当前播放时间标签
-    public var currentTimeLabel: UILabel!
+    private var currentTimeLabel: UILabel!
     
     /// 总时长标签
-    public var durationLabel: UILabel!
+    private var durationLabel: UILabel!
     
     /// 全屏按钮
-    public var fullscreenButton: ARTAlignmentButton!
+    private var fullscreenButton: ARTAlignmentButton!
     
     
     // MARK: - Initializatio
     
-    public init(_ subclassDelegate: ARTVideoPlayerWindowBottombarDelegate? = nil) {
+    init(_ subclassDelegate: ARTVideoPlayerWindowBottombarDelegate? = nil) {
         self.subclassDelegate = subclassDelegate
         super.init(subclassDelegate)
     }
@@ -48,7 +48,7 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     
     // MARK: - Override Super Methods
     
-    open override func setupViews() {
+    override func setupViews() {
         super.setupViews()
         setupContainerView()
         setupCurrentTimeLabel()
@@ -58,22 +58,15 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
         setupSliderView()
     }
     
-    // MARK: - Button Actions
-    
-    /// 点击全屏按钮
-    @objc open func didTapFullscreenButton() {
-        subclassDelegate?.bottombarDidTapFullscreen(for: self)
-    }
-    
     // MARK: - Override Super Methods
     
-    open override func updatePlaybackTime(currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = true) { // 更新当前播放时间和总时长
+    override func updatePlaybackTime(currentTime: CMTime, duration: CMTime, shouldUpdateSlider: Bool = true) { // 更新当前播放时间和总时长
         super.updatePlaybackTime(currentTime: currentTime, duration: duration, shouldUpdateSlider: shouldUpdateSlider)
         currentTimeLabel.text = currentTime.art_formattedTime()
         durationLabel.text = duration.art_formattedTime()
     }
     
-    open override func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) { // 自定义滑块外观
+    override func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) { // 自定义滑块外观
         DispatchQueue.main.async {
             UIView.animate(withDuration: duration) {
                 self.sliderView.trackHeight = trackHeight
@@ -89,9 +82,19 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
         }
     }
     
-    open override func resetPlaybackTimeLabels() { // 重置播放时间标签
+    override func resetPlaybackTimeLabels() { // 重置播放时间标签
         currentTimeLabel.text = "00:00"
         durationLabel.text = "/00:00"
+    }
+}
+
+// MARK: - Button Actions
+
+extension ARTVideoPlayerWindowBottombar {
+    
+    /// 点击全屏按钮
+    @objc func didTapFullscreenButton() {
+        subclassDelegate?.bottombarDidTapFullscreen(for: self)
     }
 }
 
@@ -99,7 +102,7 @@ open class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
 
 extension ARTVideoPlayerWindowBottombar {
     
-    @objc open func setupContainerView() { // 创建容器视图
+    private func setupContainerView() { // 创建容器视图
         containerView = UIView()
         addSubview(containerView)
         containerView.snp.makeConstraints { make in
@@ -107,7 +110,7 @@ extension ARTVideoPlayerWindowBottombar {
         }
     }
     
-    @objc open func setupCurrentTimeLabel() { // 创建当前播放时间标签
+    private func setupCurrentTimeLabel() { // 创建当前播放时间标签
         currentTimeLabel = UILabel()
         currentTimeLabel.text               = "00:00"
         currentTimeLabel.textAlignment      = .left
@@ -121,7 +124,7 @@ extension ARTVideoPlayerWindowBottombar {
         }
     }
     
-    @objc open func setupDurationLabel() { // 创建总时长标签
+    private func setupDurationLabel() { // 创建总时长标签
         durationLabel = UILabel()
         durationLabel.text                  = "00:00"
         durationLabel.textAlignment         = .right
@@ -135,7 +138,7 @@ extension ARTVideoPlayerWindowBottombar {
         }
     }
     
-    @objc open func setupFullscreenButton() { // 创建全屏按钮
+    private func setupFullscreenButton() { // 创建全屏按钮
         fullscreenButton = ARTAlignmentButton(type: .custom)
         fullscreenButton.layoutType         = .freeform
         fullscreenButton.imageAlignment     = .topLeft
@@ -150,7 +153,7 @@ extension ARTVideoPlayerWindowBottombar {
         }
     }
     
-    @objc open func setupProgressView() { // 创建进度条
+    private func setupProgressView() { // 创建进度条
         containerView.addSubview(progressView)
         progressView.snp.makeConstraints { make in
             make.left.equalTo(currentTimeLabel)
@@ -160,7 +163,7 @@ extension ARTVideoPlayerWindowBottombar {
         }
     }
     
-    @objc open func setupSliderView() { // 创建滑块视图
+    private func setupSliderView() { // 创建滑块视图
         containerView.addSubview(sliderView)
         sliderView.snp.makeConstraints { make in
             make.left.equalTo(progressView.snp.left).offset(ARTAdaptedValue(2.0))

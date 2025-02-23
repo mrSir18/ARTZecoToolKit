@@ -11,70 +11,67 @@ import ARTZecoToolKit
 /// 协议方法
 ///
 /// - NOTE: 可继承该协议方法
-@objc public protocol ARTVideoPlayerPortraitFullscreenBottombarDelegate: ARTVideoPlayerBottombarDelegate {
+protocol ARTVideoPlayerPortraitFullscreenBottombarDelegate: ARTVideoPlayerBottombarDelegate {
     
     /// 当收藏按钮被点击时调用
-    ///
-    /// - Parameters:
-    ///   - topbar: 当前的 `ARTVideoPlayerTopbar` 实例
-    ///   - isFavorited: 是否已收藏
-    @objc optional func bottombarDidTapFavorite(for bottombar: ARTVideoPlayerPortraitFullscreenBottombar, isFavorited: Bool)
+    /// - Parameter isFavorited: 是否已收藏
+    func bottombarDidTapFavorite(for bottombar: ARTVideoPlayerPortraitFullscreenBottombar, isFavorited: Bool)
     
     /// 当评论按钮被点击时调用
-    @objc optional func bottombarDidTapComment(for bottombar: ARTVideoPlayerPortraitFullscreenBottombar)
+    func bottombarDidTapComment(for bottombar: ARTVideoPlayerPortraitFullscreenBottombar)
     
     /// 当分享按钮被点击时调用
-    @objc optional func bottombarDidTapShare(for bottombar: ARTVideoPlayerPortraitFullscreenBottombar)
+    func bottombarDidTapShare(for bottombar: ARTVideoPlayerPortraitFullscreenBottombar)
     
     /// 当更多按钮被点击时调用
-    @objc optional func bottombarDidTapMore(for bottombar: ARTVideoPlayerPortraitFullscreenBottombar)
+    func bottombarDidTapMore(for bottombar: ARTVideoPlayerPortraitFullscreenBottombar)
 }
 
-open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
+class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
     
     /// 代理对象
-    public weak var subclassDelegate: ARTVideoPlayerPortraitFullscreenBottombarDelegate?
+    weak var subclassDelegate: ARTVideoPlayerPortraitFullscreenBottombarDelegate?
     
     /// 容器视图
-    public var containerView: UIView!
+    private var containerView: UIView!
     
     /// 工具栏视图
-    public var toolBarView: UIView!
+    private var toolBarView: UIView!
     
     /// 标题标签
-    public var titleLabel: UILabel!
+    private var titleLabel: UILabel!
     
     /// 描述标签
-    public var descLabel: UILabel!
+    private var descLabel: UILabel!
     
     /// 收藏按钮
-    public var favoriteButton: ARTAlignmentButton!
+    private var favoriteButton: ARTAlignmentButton!
     
     /// 评价按钮
     private var commentButton: ARTAlignmentButton!
     
     /// 弹幕按钮
-    public var shareButton: ARTAlignmentButton!
+    private var shareButton: ARTAlignmentButton!
     
     /// 更多按钮
-    public var moreButton: ARTAlignmentButton!
+    private var moreButton: ARTAlignmentButton!
     
     /// 弹幕设置按钮
-    public var danmakuButton: ARTAlignmentButton!
+    private var danmakuButton: ARTAlignmentButton!
     
     /// 弹幕输入框
-    public var danmakuInputLabel: YYLabel!
+    private var danmakuInputLabel: YYLabel!
     
     /// 退出清屏按钮视图
-    public var exitClearView: UIView!
+    private var exitClearView: UIView!
     
     /// 当前收藏状态
-    public var isFavorited: Bool = false
+    private var isFavorited: Bool = false
     
     
     // MARK: - Initializatio
     
-    public init(_ subclassDelegate: ARTVideoPlayerPortraitFullscreenBottombarDelegate? = nil) {
+    init(_ subclassDelegate: ARTVideoPlayerPortraitFullscreenBottombarDelegate? = nil) {
         self.subclassDelegate = subclassDelegate
         super.init(subclassDelegate)
         self.backgroundColor = .clear
@@ -86,7 +83,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
     
     // MARK: - Override Super Methods
     
-    open override func setupViews() {
+    override func setupViews() {
         super.setupViews()
         setupContainerView()
         setupToolBarView()
@@ -108,7 +105,7 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
     
     // MARK: - Override Super Methods
     
-    open override func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) { // 自定义滑块外观
+    override func customizeSliderAppearance(trackHeight: CGFloat, cornerRadius: CGFloat, thumbSize: CGSize, duration: TimeInterval) { // 自定义滑块外观
         DispatchQueue.main.async {
             UIView.animate(withDuration: duration) {
                 self.sliderView.trackHeight = trackHeight
@@ -129,54 +126,54 @@ open class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
 
 extension ARTVideoPlayerPortraitFullscreenBottombar {
     
-    /// 更新收藏状态
-    ///
+    /// 更新收藏按钮状态
     /// - Parameter isFavorited: 是否已收藏
-    public func updateFavoriteState(isFavorited: Bool) {
+    public func updateFavoriteButtonImage(isFavorited: Bool) {
         self.isFavorited = isFavorited
+        // 根据 isFavorited 更新按钮图片的代码
     }
 }
 
 // MARK: - Button Actions
 
 extension ARTVideoPlayerPortraitFullscreenBottombar {
-
+    
     /// 点击收藏按钮
-    @objc open func didTapFavoriteButton() {
+    @objc func didTapFavoriteButton() {
         isFavorited.toggle()
-        updateFavoriteState(isFavorited: isFavorited)
-        subclassDelegate?.bottombarDidTapFavorite?(for: self, isFavorited: isFavorited)
+        updateFavoriteButtonImage(isFavorited: isFavorited)
+        subclassDelegate?.bottombarDidTapFavorite(for: self, isFavorited: isFavorited)
     }
     
     /// 点击评论按钮
-    @objc open func didTapCommentButton() {
-        subclassDelegate?.bottombarDidTapComment?(for: self)
+    @objc func didTapCommentButton() {
+        subclassDelegate?.bottombarDidTapComment(for: self)
     }
     
     /// 点击分享按钮
-    @objc open func didTapShareButton() {
-        subclassDelegate?.bottombarDidTapShare?(for: self)
+    @objc func didTapShareButton() {
+        subclassDelegate?.bottombarDidTapShare(for: self)
     }
     
     /// 点击更多按钮
-    @objc open func didTapMoreButton() {
-        subclassDelegate?.bottombarDidTapMore?(for: self)
+    @objc func didTapMoreButton() {
+        subclassDelegate?.bottombarDidTapMore(for: self)
     }
     
     /// 点击弹幕按钮
-    @objc open func didTapDanmakuButton() {
+    @objc func didTapDanmakuButton() {
         danmakuButton.isSelected = !danmakuButton.isSelected
-        delegate?.bottombarDidTapDanmakuToggle?(for: self, isDanmakuEnabled: danmakuButton.isSelected)
+        delegate?.bottombarDidTapDanmakuToggle(for: self, isDanmakuEnabled: danmakuButton.isSelected)
     }
     
     /// 点击发送弹幕按钮
-    @objc open func didTapDanmakuSendButton() {
+    @objc func didTapDanmakuSendButton() {
         guard let text = danmakuInputLabel.text else { return }
-        delegate?.bottombarDidTapDanmakuSend?(for: self, text: text)
+        delegate?.bottombarDidTapDanmakuSend(for: self, text: text)
     }
     
     /// 点击清屏按钮
-    @objc open func didTapClearButton() {
+    @objc func didTapClearButton() {
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.25) {
                 self.containerView.alpha = 0.0
@@ -186,7 +183,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
     }
     
     /// 点击退出清屏按钮
-    @objc open func didTapExitClearButton() {
+    @objc func didTapExitClearButton() {
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.25) {
                 self.exitClearView.alpha = 0.0
@@ -200,7 +197,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
 
 extension ARTVideoPlayerPortraitFullscreenBottombar {
     
-    @objc open func setupContainerView() { // 创建容器视图
+    private func setupContainerView() { // 创建容器视图
         containerView = UIView()
         containerView.backgroundColor = .clear
         containerView.alpha = 0.0
@@ -210,7 +207,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         }
     }
     
-    @objc open func setupToolBarView() { // 创建工具栏视图
+    private func setupToolBarView() { // 创建工具栏视图
         toolBarView = UIView()
         toolBarView.backgroundColor = .black
         containerView.addSubview(toolBarView)
@@ -220,7 +217,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         }
     }
     
-    @objc open func setupGradient() { // 创建渐变色
+    private func setupGradient() { // 创建渐变色
         let gradientView = UIView()
         gradientView.backgroundColor            = .clear
         gradientView.isUserInteractionEnabled   = false
@@ -245,7 +242,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         containerView.sendSubviewToBack(gradientView)
     }
     
-    @objc open func setupTitleLabel() { // 创建标题标签
+    private func setupTitleLabel() { // 创建标题标签
         titleLabel = UILabel()
         titleLabel.text                 = "《新生儿科学喂养记录》套件"
         titleLabel.textAlignment        = .left
@@ -260,7 +257,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         }
     }
     
-    @objc open func setupDescLabel() { // 创建描述
+    private func setupDescLabel() { // 创建描述
         descLabel = UILabel()
         descLabel.text                  = "纸质记录表格可以放在家中显眼的地方，方便所有家庭成员查看和填写…"
         descLabel.textAlignment         = .left
@@ -275,7 +272,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         }
     }
     
-    @objc open func setupFavoriteButton() { // 创建收藏按钮
+    private func setupFavoriteButton() { // 创建收藏按钮
         favoriteButton = ARTAlignmentButton(type: .custom)
         favoriteButton.isSelected           = true
         favoriteButton.titleLabel?.font     = .art_regular(ARTAdaptedValue(10.0))
@@ -296,7 +293,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         }
     }
     
-    @objc open func setupCommentButton() { // 创建评论按钮
+    private func setupCommentButton() { // 创建评论按钮
         commentButton = ARTAlignmentButton(type: .custom)
         commentButton.titleLabel?.font      = .art_regular(ARTAdaptedValue(10.0))
         commentButton.imageAlignment        = .top
@@ -315,7 +312,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         }
     }
     
-    @objc open func setupShareButton() { // 创建分享按钮
+    private func setupShareButton() { // 创建分享按钮
         shareButton = ARTAlignmentButton(type: .custom)
         shareButton.titleLabel?.font        = .art_regular(ARTAdaptedValue(10.0))
         shareButton.imageAlignment          = .top
@@ -334,7 +331,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         }
     }
     
-    @objc open func setupProgressView() { // 创建进度条
+    private func setupProgressView() { // 创建进度条
         containerView.addSubview(progressView)
         progressView.snp.makeConstraints { make in
             make.left.equalTo(titleLabel)
@@ -344,7 +341,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         }
     }
     
-    @objc open func setupSliderView() { // 创建滑块视图
+    private func setupSliderView() { // 创建滑块视图
         containerView.addSubview(sliderView)
         sliderView.snp.makeConstraints { make in
             make.left.equalTo(progressView.snp.left).offset(ARTAdaptedValue(2.0))
@@ -354,7 +351,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         }
     }
     
-    @objc open func setupMoreButton() { // 创建更多按钮
+    private func setupMoreButton() { // 创建更多按钮
         moreButton = ARTAlignmentButton(type: .custom)
         moreButton.layoutType       = .freeform
         moreButton.imageAlignment   = .bottomLeft
@@ -369,7 +366,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         }
     }
     
-    @objc open func setupDanmakuButton() { // 创建弹幕按钮
+    private func setupDanmakuButton() { // 创建弹幕按钮
         danmakuButton = ARTAlignmentButton(type: .custom)
         danmakuButton.isSelected = isDanmakuEnabled()
         danmakuButton.layoutType = .freeform
@@ -386,7 +383,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         }
     }
     
-    @objc open func setupDanmakuInputField() { // 创建弹幕输入框
+    private func setupDanmakuInputField() { // 创建弹幕输入框
         let inputView = UIView()
         inputView.backgroundColor           = .art_color(withHEXValue: 0x141414)
         inputView.layer.cornerRadius        = ARTAdaptedValue(6.0)
@@ -419,7 +416,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         }
     }
     
-    @objc open func setupClearButton() { // 创建清屏按钮
+    private func setupClearButton() { // 创建清屏按钮
         let clearContainerView = UIView()
         clearContainerView.backgroundColor      = .art_color(withHEXValue: 0x000000, alpha: 0.5)
         clearContainerView.layer.cornerRadius   = ARTAdaptedValue(17.0)
@@ -441,7 +438,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         }
     }
     
-    @objc open func setupExitClearButton() { // 创建退出清屏按钮
+    private func setupExitClearButton() { // 创建退出清屏按钮
         exitClearView = UIView()
         exitClearView.alpha                 = 0.0
         exitClearView.backgroundColor       = .art_color(withHEXValue: 0x000000, alpha: 0.5)
@@ -464,7 +461,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         }
     }
     
-    @objc open func setupAnimation() { // 过度动画流畅
+    private func setupAnimation() { // 过度动画流畅
         UIView.animate(withDuration: 0.3) {
             self.containerView.alpha = 1.0
         }

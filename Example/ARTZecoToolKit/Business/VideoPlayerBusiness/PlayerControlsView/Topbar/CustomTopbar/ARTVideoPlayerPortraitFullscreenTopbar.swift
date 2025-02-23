@@ -16,10 +16,13 @@ class ARTVideoPlayerPortraitFullscreenTopbar: ARTVideoPlayerTopbar {
         setupContainerView()
         setupBackButton()
     }
+}
+
+// MARK: - Setup Initializer
+
+extension ARTVideoPlayerPortraitFullscreenTopbar {
     
-    // MARK: - Setup Methods
-    
-    @objc open func setupContainerView() { // 创建容器视图
+    private func setupContainerView() { // 创建容器视图
         containerView = UIView()
         containerView.alpha = 0.0
         addSubview(containerView)
@@ -29,7 +32,7 @@ class ARTVideoPlayerPortraitFullscreenTopbar: ARTVideoPlayerTopbar {
         }
     }
     
-    @objc open func setupBackButton() { // 创建返回按钮
+    private func setupBackButton() { // 创建返回按钮
         backButton = ARTAlignmentButton(type: .custom)
         backButton.imageAlignment       = .left
         backButton.titleAlignment       = .right
@@ -41,12 +44,6 @@ class ARTVideoPlayerPortraitFullscreenTopbar: ARTVideoPlayerTopbar {
         backButton.snp.makeConstraints { make in
             make.left.top.bottom.equalTo(containerView)
             make.width.equalTo(ARTAdaptedValue(60.0))
-        }
-    }
-    
-    @objc open func setupAnimation() { // 过度动画流畅
-        UIView.animate(withDuration: 0.25) {
-            self.containerView.alpha = 1.0
         }
     }
 }
