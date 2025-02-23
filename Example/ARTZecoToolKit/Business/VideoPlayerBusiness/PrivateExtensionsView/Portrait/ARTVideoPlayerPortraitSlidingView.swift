@@ -11,7 +11,7 @@ import ARTZecoToolKit
 class ARTVideoPlayerPortraitSlidingView: UIView {
     
     /// 代理对象
-    public weak var delegate: ARTVideoPlayerSlidingViewDelegate?
+    weak var delegate: ARTVideoPlayerSlidingViewDelegate?
     
     /// 容器视图
     public var containerView: UIView!
@@ -35,7 +35,7 @@ class ARTVideoPlayerPortraitSlidingView: UIView {
         setupViews()
     }
     
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -134,7 +134,7 @@ class ARTVideoPlayerPortraitSlidingView: UIView {
 extension ARTVideoPlayerPortraitSlidingView {
     
     /// 创建遮罩视图
-    @objc func setupOverlayView() {
+    private func setupOverlayView() {
         let overlayView = UIView(frame: UIScreen.main.bounds)
         overlayView.backgroundColor = .art_color(withHEXValue: 0x000000, alpha: 0.2)
         addSubview(overlayView)
@@ -143,7 +143,7 @@ extension ARTVideoPlayerPortraitSlidingView {
     }
     
     /// 创建容器视图
-    @objc func setupContainerView() {
+    private func setupContainerView() {
         containerView = UIView()
         containerView.backgroundColor     = .white
         containerView.layer.cornerRadius  = ARTAdaptedValue(18.0)

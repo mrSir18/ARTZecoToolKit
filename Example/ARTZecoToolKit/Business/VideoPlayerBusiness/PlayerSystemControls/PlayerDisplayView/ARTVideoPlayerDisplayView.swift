@@ -8,65 +8,69 @@
 import AVFoundation
 import ARTZecoToolKit
 
-open class ARTVideoPlayerDisplayView: UIView {
+class ARTVideoPlayerDisplayView: UIView {
     
     /// 容器视图
-    public var containerView: ARTCustomView!
+    private var containerView: ARTCustomView!
     
     /// 视频资源
-    public var displayImageView: UIImageView!
+    private var displayImageView: UIImageView!
     
     /// 当前播放时间标签
-    public var currentTimeLabel: UILabel!
+    private var currentTimeLabel: UILabel!
     
     /// 视频总时长标签
-    public var durationLabel: UILabel!
+    private var durationLabel: UILabel!
     
     
     // MARK: - Initialization
     
-    public init() {
+    init() {
         super.init(frame: .zero)
         self.backgroundColor = .clear
         self.isHidden = true
         setupViews()
     }
     
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Override Super Methods
     
     /// 重写父类方法，设置子视图
-    open func setupViews() {
+    func setupViews() {
         setupContainerView()
         setupDisplayImageView()
         setupCurrentTimeLabel()
         setupDurationLabel()
     }
-    
-    // MARK: - Public Methods
+}
+
+
+// MARK: - Public Methods
+
+extension ARTVideoPlayerDisplayView {
     
     /// 更新预览图片
     /// - Parameter previewImage: 视频预览图片
-    open func updatePreviewImage(previewImage: UIImage?) {
+    public func updatePreviewImage(previewImage: UIImage?) {
         displayImageView.image = previewImage
     }
-
+    
     /// 更新当前播放时间和总时长
     /// - Parameters:
     ///   - currentTime: 当前播放时间
     ///   - duration: 视频总时长
-    open func updatePlaybackTime(currentTime: CMTime, duration: CMTime) {
+    public func updatePlaybackTime(currentTime: CMTime, duration: CMTime) {
         self.isHidden = false
         currentTimeLabel.text  = currentTime.art_formattedTime()
         durationLabel.text     = "/\(duration.art_formattedTime())"
     }
-
+    
     /// 更新屏幕方向
     /// - Parameter screenOrientation: 屏幕方向
-    open func updateScreenOrientation(screenOrientation: ScreenOrientation) {
+    public func updateScreenOrientation(screenOrientation: ScreenOrientation) {
         containerView.borderWidth = 1.0
         switch screenOrientation {
         case .window:
@@ -87,10 +91,10 @@ open class ARTVideoPlayerDisplayView: UIView {
             }
         }
     }
-
+    
     /// 更新内容模式
     /// - Parameter isLandscape: 是否横屏
-    open func updateContentMode(isLandscape: Bool) {
+    public func updateContentMode(isLandscape: Bool) {
         displayImageView.contentMode = isLandscape ? .scaleAspectFill : .scaleAspectFit
     }
 }
@@ -99,7 +103,7 @@ open class ARTVideoPlayerDisplayView: UIView {
 
 extension ARTVideoPlayerDisplayView {
     
-    @objc open func setupContainerView() { // 创建容器视图
+    private func setupContainerView() { // 创建容器视图
         containerView = ARTCustomView()
         containerView.customBackgroundColor = .black
         containerView.borderColor           = .art_color(withHEXValue: 0xFFFFFF)
@@ -113,7 +117,7 @@ extension ARTVideoPlayerDisplayView {
         }
     }
     
-    @objc open func setupDisplayImageView() { // 创建显示图片视图
+    private func setupDisplayImageView() { // 创建显示图片视图
         displayImageView = UIImageView()
         displayImageView.contentMode         = .scaleAspectFill
         displayImageView.layer.cornerRadius  = ARTAdaptedValue(6.0)
@@ -124,7 +128,7 @@ extension ARTVideoPlayerDisplayView {
         }
     }
     
-    @objc open func setupCurrentTimeLabel() { // 创建当前播放时间标签
+    private func setupCurrentTimeLabel() { // 创建当前播放时间标签
         currentTimeLabel = UILabel()
         currentTimeLabel.text               = "00:00"
         currentTimeLabel.textColor          = .art_color(withHEXValue: 0xFFFFFF)
@@ -138,7 +142,7 @@ extension ARTVideoPlayerDisplayView {
         }
     }
     
-    @objc open func setupDurationLabel() { // 创建视频总时长标签
+    private func setupDurationLabel() { // 创建视频总时长标签
         durationLabel = UILabel()
         durationLabel.text                  = "/00:00"
         durationLabel.textColor             = .art_color(withHEXValue: 0xFFFFFF, alpha: 0.6)

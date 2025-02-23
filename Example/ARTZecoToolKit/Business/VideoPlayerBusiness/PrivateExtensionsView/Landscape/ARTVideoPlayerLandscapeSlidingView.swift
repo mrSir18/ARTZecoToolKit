@@ -54,13 +54,13 @@ open class ARTVideoPlayerLandscapeSlidingView: UIView {
     }
     
     
-    // MARK: - Override Super Method
+    // MARK: - Public Method
     
     /// 显示动画视图
     ///
     /// - Parameter animated: 是否动画
     /// - Note: 重写父类方法，设置子视图布局
-    open func showExtensionsView(_ completion: (() -> Void)? = nil) {
+    public func showExtensionsView(_ completion: (() -> Void)? = nil) {
         if self.superview == nil { // 判断视图是否已在父视图中
             art_keyWindow.addSubview(self)
             snp.makeConstraints { make in
@@ -80,7 +80,7 @@ open class ARTVideoPlayerLandscapeSlidingView: UIView {
     ///
     /// - Parameter animated: 是否动画
     /// - Note: 重写父类方法，设置子视图布局
-    open func hideExtensionsView(_ completion: (() -> Void)? = nil) {
+    public func hideExtensionsView(_ completion: (() -> Void)? = nil) {
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut]) {
             self.containerView.transform = CGAffineTransformTranslate(self.containerView.transform, UIScreen.art_currentScreenWidth, 0)
         } completion: { _ in
@@ -91,7 +91,7 @@ open class ARTVideoPlayerLandscapeSlidingView: UIView {
     
     // MARK: - Button Actions
     
-    @objc open func didTapRestoreButton() { // 恢复
+    @objc public func didTapRestoreButton() { // 恢复
    
     }
     
@@ -101,7 +101,7 @@ open class ARTVideoPlayerLandscapeSlidingView: UIView {
     ///
     /// - Parameter gesture: 点击手势
     /// - Note: 重写父类方法，处理点击手势
-    @objc open func handleSortingTapGesture(_ gesture: UITapGestureRecognizer) {
+    @objc public func handleSortingTapGesture(_ gesture: UITapGestureRecognizer) {
         hideExtensionsView()
     }
 }
@@ -111,7 +111,7 @@ open class ARTVideoPlayerLandscapeSlidingView: UIView {
 extension ARTVideoPlayerLandscapeSlidingView {
     
     /// 创建容器视图
-    @objc private func setupContainerView() {
+    private func setupContainerView() {
         containerView = UIView()
         containerView.backgroundColor = .clear
         addSubview(containerView)
@@ -123,7 +123,7 @@ extension ARTVideoPlayerLandscapeSlidingView {
     }
     
     /// 创建渐变视图
-    @objc private func setupGradientView() {
+    private func setupGradientView() {
         let gradientWidth: CGFloat = ARTAdaptedValue(660.0)+art_safeAreaBottom()
         let gradientView = UIView()
         gradientView.backgroundColor            = .clear
@@ -153,7 +153,7 @@ extension ARTVideoPlayerLandscapeSlidingView {
     }
     
     /// 设置分割线视图
-    @objc private func setupSeparatorLineView() {
+    private func setupSeparatorLineView() {
         separatorLineView = ARTCustomView()
         separatorLineView.customBackgroundColor = .art_color(withHEXValue: 0xD8D8D8, alpha: 0.2)
         containerView.addSubview(separatorLineView)
@@ -166,7 +166,7 @@ extension ARTVideoPlayerLandscapeSlidingView {
     }
     
     /// 设置标题标签
-    @objc private func setupTitleLabel() {
+    private func setupTitleLabel() {
         titleLabel = UILabel()
         titleLabel.textAlignment      = .left
         titleLabel.font               = .art_medium(ARTAdaptedValue(13.0))
@@ -180,7 +180,7 @@ extension ARTVideoPlayerLandscapeSlidingView {
     }
     
     /// 设置副标题标签
-    @objc private func setupRestoreButton() {
+    private func setupRestoreButton() {
         restoreButton = ARTAlignmentButton(type: .custom)
         restoreButton.contentInset      = ARTAdaptedValue(32.0)
         restoreButton.imageAlignment    = .right
@@ -197,7 +197,7 @@ extension ARTVideoPlayerLandscapeSlidingView {
     }
     
     /// 创建手势识别器
-    @objc private func setupGestureRecognizer() {
+    private func setupGestureRecognizer() {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSortingTapGesture(_:)))
         tapRecognizer.numberOfTapsRequired = 1
         tapRecognizer.numberOfTouchesRequired = 1
