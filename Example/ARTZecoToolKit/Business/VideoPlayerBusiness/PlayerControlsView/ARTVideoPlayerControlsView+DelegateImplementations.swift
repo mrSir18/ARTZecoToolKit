@@ -66,7 +66,8 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerBottombarDelegate {
     }
     
     func bottombarDidTapDanmakuSend(for bottombar: ARTVideoPlayerBottombar, text: String) { // 点击发送弹幕按钮
-        delegate?.controlsViewDidTapDanmakuSend(for: self, text: text)
+//        delegate?.controlsViewDidTapDanmakuSend(for: self, text: text)
+        print("点击发送弹幕按钮")
     }
 }
 

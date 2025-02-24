@@ -56,7 +56,10 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     public var timeObserverToken: Any?
     
     /// 播放器的时间观察者间隔
-    public let interval = CMTime(seconds: 0.2, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+    public let interval = CMTimeMake(value: 1, timescale: 5)
+    
+    /// 上次检测的播放时间
+    public var lastCheckTime: Double = 0
     
     /// 播放器当前时间
     public var currentTime: CMTime = .zero
@@ -330,6 +333,11 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     /// - Parameter time: 播放时间
     open func onReceivePlayerProgressDidChange(time: CMTime) {
         currentTime = time
+        let currentTimeInSeconds = CMTimeGetSeconds(time)
+        if abs(currentTimeInSeconds - lastCheckTime) >= 1 { // 判断是否发生快进/后退（假设阈值为1秒） 1秒内不重复执行，方便弹幕等功能
+            lastCheckTime = currentTimeInSeconds // 如果当前时间距离上次检查时间超过 1 秒（快进或后退的情况），则更新上次检查时间
+            print("当前播放时间: \(lastCheckTime) 秒")
+        }
     }
     
     /// 准备播放

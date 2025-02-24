@@ -18,7 +18,7 @@ protocol ARTVideoPlayerOverlayViewDelegate: AnyObject {
     
     /// 创建弹幕回调
     /// - Returns: 新创建的弹幕单元
-    func overlayViewDidCreateDanmakuCell(for overlayView: ARTVideoPlayerOverlayView) -> ARTDanmakuCell
+    func overlayViewDidCreateDanmakuCell(for overlayView: ARTVideoPlayerOverlayView) -> ARTDanmakuCell?
     
     /// 点击弹幕事件回调
     func overlayViewDidTapDanmakuCell(for overlayView: ARTVideoPlayerOverlayView, danmakuCell: ARTDanmakuCell)

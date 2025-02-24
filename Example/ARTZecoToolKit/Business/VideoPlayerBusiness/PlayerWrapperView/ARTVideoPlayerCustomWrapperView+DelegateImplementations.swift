@@ -21,9 +21,7 @@ extension ARTVideoPlayerCustomWrapperView: ARTVideoPlayerOverlayViewDelegate {
     func overlayViewDidCustomDanmakuView(for overlayView: ARTVideoPlayerOverlayView) -> ARTDanmakuView? { // 自定义弹幕视图
         /*
          1.自定义需要继承 ARTDanmakuView 类 实现 ARTDanmakuViewDelegate 协议
-         
-         2.可通过 ARTVideoPlayerGeneralDanmakuEntity 结构体设置弹幕属性
-         
+     
          let danmakuView = ARTDanmakuView(self)
          danmakuView.danmakuTrackHeight = ARTAdaptedValue(42.0) // 弹幕轨道高度
          danmakuView.danmakuAlpha = 0.8
@@ -32,7 +30,7 @@ extension ARTVideoPlayerCustomWrapperView: ARTVideoPlayerOverlayViewDelegate {
         return nil
     }
     
-    func overlayViewDidCreateDanmakuCell(for overlayView: ARTVideoPlayerOverlayView) -> ARTDanmakuCell { // 创建弹幕
+    func overlayViewDidCreateDanmakuCell(for overlayView: ARTVideoPlayerOverlayView) -> ARTDanmakuCell? { // 创建弹幕
         return ARTCustomDanmakuCell()
     }
     
