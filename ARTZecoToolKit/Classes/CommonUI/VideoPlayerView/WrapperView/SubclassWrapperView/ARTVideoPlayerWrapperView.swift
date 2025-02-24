@@ -538,16 +538,14 @@ extension ARTVideoPlayerWrapperView {
     /// 配置播放器 Layer
     /// - Parameter player: AVPlayer 实例
     private func configurePlayerLayer() {
-        DispatchQueue.main.async {
-            guard let playerLayer = self.layer as? AVPlayerLayer else {
-                print("当前 layer 不是 AVPlayerLayer，无法播放视频。")
-                return
-            }
-            playerLayer.backgroundColor = UIColor.black.cgColor
-            playerLayer.videoGravity = .resizeAspectFill
-            playerLayer.player = self.player
-            self.addPlayerObservers() // 添加播放器观察者
+        guard let playerLayer = self.layer as? AVPlayerLayer else {
+            print("当前 layer 不是 AVPlayerLayer，无法播放视频。")
+            return
         }
+        playerLayer.backgroundColor = UIColor.black.cgColor
+        playerLayer.videoGravity = .resizeAspectFill
+        playerLayer.player = self.player
+        self.addPlayerObservers() // 添加播放器观察者
     }
     
     /// 设置播放器音量
