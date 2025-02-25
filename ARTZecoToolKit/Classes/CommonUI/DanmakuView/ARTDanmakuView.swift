@@ -84,6 +84,12 @@ public class ARTDanmakuView: UIView {
     /// 弹幕安全间隔 默认12.0
     public var danmakuSafeSpacing: CGFloat = 12.0
     
+    /// 弹幕创建时间 默认0.5
+    public var danmakuCreationTime: TimeInterval = 0.5
+    
+    /// 点击弹幕停留时间 默认3.0
+    public var danmakuStayTime: TimeInterval = 3.0
+    
     /// 点击弹幕事件是否暂停 默认true
     public var shouldPauseOnDanmakuClick: Bool = true
     
@@ -296,7 +302,7 @@ extension ARTDanmakuView {
     
     /// 开启主弹幕定时器
     private func startMainDanmakuTimer() {
-        danmakuTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+        danmakuTimer = Timer.scheduledTimer(withTimeInterval: danmakuCreationTime, repeats: true) { [weak self] _ in
             self?.createDanmaku()
         }
         if let danmakuTimer = danmakuTimer { RunLoop.current.add(danmakuTimer, forMode: .common) }
@@ -552,7 +558,7 @@ extension ARTDanmakuView {
     private func handleDanmakuClick(for cell: ARTDanmakuCell) {
         if shouldPauseOnDanmakuClick {
             pauseDanmakuCell(cell) // 暂停弹幕
-            if shouldResumeAfterDanmakuClick { scheduleDanmakuResume(for: cell, delay: 3.0) } // 安排恢复操作
+            if shouldResumeAfterDanmakuClick { scheduleDanmakuResume(for: cell, delay: danmakuStayTime) } // 安排恢复操作
         }
         delegate?.danmakuView?(self, didClickDanmakuCell: cell) // 通知代理点击事件
     }

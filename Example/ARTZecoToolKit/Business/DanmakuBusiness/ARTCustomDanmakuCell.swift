@@ -7,7 +7,18 @@
 
 import ARTZecoToolKit
 
+
+// 协议方法
+//
+// - NOTE: 可继承该协议方法，实现自定义的弹幕视图
+@objc public protocol ARTCustomDanmakuCellDelegate: AnyObject {
+    
+}
+
 class ARTCustomDanmakuCell: ARTDanmakuCell {
+    
+    /// 代理对象
+    public weak var delegate: ARTCustomDanmakuCellDelegate?
     
     /// 弹幕头像
     public var avatarImageView: UIImageView!
@@ -40,6 +51,16 @@ class ARTCustomDanmakuCell: ARTDanmakuCell {
         "弹幕 😄"
     ]
     
+    
+    // MARK: - Initialization
+    
+    init(_ delegate: ARTCustomDanmakuCellDelegate? = nil) {
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Override Super Methods
     
