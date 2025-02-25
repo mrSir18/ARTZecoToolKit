@@ -23,17 +23,17 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
     
     /// 播放器图层（最底层：用于显示弹幕、广告等）
     public var overlayView: ARTVideoPlayerOverlayView!
-     
+    
     /// 播放器系统控制层（中间层：系统控制，位于弹幕、广告等之上）
     public var systemControls: ARTVideoPlayerSystemControls!
     
     /// 播放器控制层（最顶层：顶部栏、侧边栏等）
     public var controlsView: ARTVideoPlayerControlsView!
-     
+    
     /// 播放器加载动画视图
     public var loadingView: ARTVideoPlayerLoadingView!
     
-
+    
     // MARK: - 私有扩展视图（个人项目使用）
     
     /// 懒加载弹幕设置视图
@@ -70,6 +70,18 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
         let danmakuView = ARTVideoPlayerPortraitDanmakuView(self)
         return danmakuView
     }()
+    
+    
+    // TODO: 模拟 - 弹幕时间戳匹配功能
+    
+    /// 弹幕时间戳 [时间]
+    public var timestamps: [Double] = [2.0, 3.5, 5.0, 5.3, 6.0, 7.1, 10.0, 12.5, 15.0]
+    
+    /// 已匹配的时间戳 [时间段索引: 时间]
+    public var matchedTimestamps: [Int: Set<Double>] = [:]
+    
+    /// 分割弹幕时间段 [时间段索引: 时间] 5秒为一个时间段
+    public let segmentDuration: Double = 5.0
     
     
     // MARK: - Initialization
@@ -142,8 +154,38 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
                                                      shouldUpdateSlider: isDraggingSlider)
     }
     
-    override func onReceivePlayerReadyToPlay() { // 播放器准备好播
-        super.onReceivePlayerReadyToPlay()
+    override func onReceiveDanmaku(atTime currentTime: Double) { // 收到弹幕
+        let tolerance: Double = 2.0 // 容差范围，±2秒内匹配
+        
+        // 计算当前时间所在的时间段，使用半开区间 [start, end) 的方式
+        let segmentIndex = Int(currentTime / segmentDuration)
+        
+        // 计算当前时间段的起始和结束时间（左闭右开区间）
+        let segmentStart = Double(segmentIndex) * segmentDuration
+        let segmentEnd = segmentStart + segmentDuration
+        
+        // 获取当前时间段已匹配的时间戳集合
+        var matchedForSegment = matchedTimestamps[segmentIndex] ?? Set<Double>()
+        
+        // 使用二分查找获取与当前时间最接近的所有时间戳
+        let nearbyTimestamps = binarySearch(arr: timestamps, target: currentTime, tolerance: tolerance)
+        
+        // 只遍历一次，进行条件检查和插入
+        var newMatchedTimestamps: [Double] = []
+        
+        for timestamp in nearbyTimestamps {
+            // 如果匹配的时间戳在当前时间段内，并且是新的时间戳（未匹配过）
+            if timestamp >= segmentStart && timestamp < segmentEnd && matchedForSegment.insert(timestamp).inserted {
+                newMatchedTimestamps.append(timestamp)
+            }
+        }
+        
+        if !newMatchedTimestamps.isEmpty {
+            matchedTimestamps[segmentIndex] = matchedForSegment
+            for timestamp in newMatchedTimestamps {
+                print("匹配到时间戳：\(timestamp)")
+            }
+        }
     }
     
     override func onReceiveLoadedTimeRangesChanged(totalBuffer: Double, bufferProgress: Float) { // 缓冲进度改变
@@ -170,35 +212,35 @@ extension ARTVideoPlayerCustomWrapperView {
         overlayView.stopDanmaku() // 停止弹幕
         controlsView.didResetSliderPositionInControls() // 重置进度条时间
     }
-  
+    
     override func didCompleteSetupForNextVideo() { // 播放下一集
         isDraggingSlider = (playerState == .paused) // 设置拖动滑块状态
         controlsView.didUpdatePlayPauseButtonStateInControls(isPlaying: playerState == .playing)
         overlayView.startDanmaku() // 开始弹幕
     }
-
+    
     override func didUpdatePreviewImage(previewImage: UIImage) { // 更新预览图像
         systemControls.updatePreviewImageInSystemControls(previewImage: previewImage)
     }
-
+    
     override func didUpdatePreviewTime(currentTime: CMTime, totalTime: CMTime) { // 更新当前预览视频的时间与视频总时长
         systemControls.updateTimeInSystemControls(with: currentTime, duration: totalTime)
     }
- 
+    
     override func didStartLoadingAnimation() { // 开始加载动画
         loadingView.startLoading()
     }
-
+    
     override func didStopLoadingAnimation() { // 停止加载动画
         loadingView.stopLoading()
     }
     
     // MARK: - Gesture Recognizer
-
+    
     override func didReceiveSliderTouchBegan(sliderValue: Float) { // 触摸开始时调用
         controlsView.didBeginSliderTouchInControls(sliderValue: sliderValue)
     }
-   
+    
     override func didReceiveSliderValue(sliderValue: Float) { // 滑动过程中调用
         controlsView.didUpdateSliderPositionInControls(sliderValue: sliderValue)
     }
@@ -206,7 +248,7 @@ extension ARTVideoPlayerCustomWrapperView {
     override func didReceiveSliderTouchEnded(sliderValue: Float) { // 触摸结束时调用
         controlsView.didEndSliderTouchInControls(sliderValue: sliderValue)
     }
-
+    
     override func didReceiveTapGesture(at location: CGPoint) { // 点击手势
         if overlayView.handleTapOnOverlay(at: location) { return } // 如果弹幕视图处理了点击事件，直接返回
         if isLandscape { // 如果是横屏模式，切换控制
@@ -215,7 +257,7 @@ extension ARTVideoPlayerCustomWrapperView {
             togglePlayerState()
         }
     }
-
+    
     override func didReceivewDoubleTapGesture() { // 双击手势
         togglePlayerState()
     }
@@ -296,5 +338,42 @@ extension ARTVideoPlayerCustomWrapperView {
             overlayView.pauseDanmaku() // 暂停弹幕
             controlsView.didUpdatePlayPauseButtonStateInControls(isPlaying: false) // 更新播放按钮状态
         }
+    }
+}
+
+// MARK: - Private Methods
+
+extension ARTVideoPlayerCustomWrapperView {
+    
+    /// 二分查找算法
+    /// - Parameters:
+    ///   - arr: 已排序的数组
+    ///   - target: 目标时间戳
+    ///   - tolerance: 容差范围，±该值内的时间戳视为匹配
+    /// - Returns: 返回所有与目标时间戳匹配的时间戳（按升序排列）
+    /// - Note: 该算法用于查找与目标时间戳最接近的时间戳，支持容差范围匹配
+    func binarySearch(arr: [Double], target: Double, tolerance: Double) -> [Double] {
+        var low = 0
+        var high = arr.count - 1
+        var result: [Double] = []
+        while low <= high {
+            let mid = low + (high - low) / 2
+            let midValue = arr[mid]
+            
+            if abs(midValue - target) <= tolerance { // 如果时间戳在容差范围内，添加到结果中
+                result.append(midValue)
+            }
+            
+            // 关系调整查找范围
+            if midValue == target {
+                break // 找到目标值，提前退出
+            } else if midValue < target {
+                low = mid + 1 // 调整左边界
+            } else {
+                high = mid - 1 // 调整右边界
+            }
+        }
+        
+        return result.sorted() // 返回升序排列的匹配时间戳
     }
 }

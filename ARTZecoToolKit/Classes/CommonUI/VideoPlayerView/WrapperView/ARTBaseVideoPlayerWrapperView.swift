@@ -336,8 +336,14 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
         let currentTimeInSeconds = CMTimeGetSeconds(time)
         if abs(currentTimeInSeconds - lastCheckTime) >= 1 { // 判断是否发生快进/后退（假设阈值为1秒） 1秒内不重复执行，方便弹幕等功能
             lastCheckTime = currentTimeInSeconds // 如果当前时间距离上次检查时间超过 1 秒（快进或后退的情况），则更新上次检查时间
-            print("当前播放时间: \(lastCheckTime) 秒")
+            onReceiveDanmaku(atTime: lastCheckTime)
         }
+    }
+    
+    /// 检查弹幕
+    /// - Parameter currentTime: 上次检查时间
+    open func onReceiveDanmaku(atTime currentTime: Double) {
+//        print("当前播放时间: \(currentTime) 秒")
     }
     
     /// 准备播放

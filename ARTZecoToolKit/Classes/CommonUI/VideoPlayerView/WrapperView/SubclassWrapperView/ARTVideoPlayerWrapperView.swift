@@ -77,78 +77,10 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
         pausePlayer() // 暂停播放
     }
     
-    open override func onReceivePlayerItemFailedToPlayToEnd(_ notification: Notification) { // 播放失败
-        super.onReceivePlayerItemFailedToPlayToEnd(notification)
-    }
-    
-    open override func onReceiveAudioSessionInterruptionBegan(_ notification: Notification) { // 音频会话中断开始
-        super.onReceiveAudioSessionInterruptionBegan(notification)
-    }
-    
-    open override func onReceiveAudioSessionInterruptionEnded(_ notification: Notification) { // 音频会话中断结束
-        super.onReceiveAudioSessionInterruptionEnded(notification)
-    }
-    
-    open override func onReceiveAudioRouteChanged(_ notification: Notification) { // 音频路由改变耳机插拔
-        super.onReceiveAudioRouteChanged(notification)
-    }
-    
-    open override func onReceiveBecomeActive(_ notification: Notification) { // 进入前台
-        super.onReceiveBecomeActive(notification)
-    }
-    
-    open override func onReceiveEnterBackground(_ notification: Notification) { // 进入后台
-        super.onReceiveEnterBackground(notification)
-    }
-    
-    open override func onReceivePlayerProgressDidChange(time: CMTime) { // 播放进度改变
-        super.onReceivePlayerProgressDidChange(time: time)
-    }
-    
     open override func onReceivePlayerReadyToPlay() { // 准备播放
         super.onReceivePlayerReadyToPlay()
         didStopLoadingAnimation() // 停止加载动画
         resumePlayer() // 开始播放
-    }
-    
-    open override func onReceivePlayerFailed() { // 播放失败
-        super.onReceivePlayerFailed()
-    }
-    
-    open override func onReceiveLoadedTimeRangesChanged(totalBuffer: Double, bufferProgress: Float) { // 缓冲进度改变
-        super.onReceiveLoadedTimeRangesChanged(totalBuffer: totalBuffer, bufferProgress: bufferProgress)
-    }
-    
-    open override func onReceivePlaybackBufferEmptyChanged() { // 缓冲为空
-        super.onReceivePlaybackBufferEmptyChanged()
-    }
-    
-    open override func onReceivePlaybackLikelyToKeepUp() { // 缓冲足够播放
-        super.onReceivePlaybackLikelyToKeepUp()
-    }
-    
-    open override func onReceivePlaybackLikelyToKeepUpInsufficient() { // 缓冲不足
-        super.onReceivePlaybackLikelyToKeepUpInsufficient()
-    }
-    
-    open override func onReceivePresentationSizeChanged(size: CGSize) { // 视频尺寸改变
-        super.onReceivePresentationSizeChanged(size: size)
-    }
-    
-    open override func onReceiveTimeControlStatusPlaying() { // 播放中
-        super.onReceiveTimeControlStatusPlaying()
-    }
-    
-    open override func onReceiveTimeControlStatusPaused() { // 暂停播放
-        super.onReceiveTimeControlStatusPaused()
-    }
-    
-    open override func onReceiveTimeControlStatusWaiting() { // 等待播放
-        super.onReceiveTimeControlStatusWaiting()
-    }
-    
-    open override func onReceiveRemovePeriodicTimeObserver() { // 移除周期性时间观察者
-        super.onReceiveRemovePeriodicTimeObserver()
     }
 }
 

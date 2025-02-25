@@ -36,8 +36,6 @@ import ARTZecoToolKit
     ///  - wrapperView: 播放器层视图
     /// - Returns: 加载动画视图
     @objc optional func wrapperViewDidBeginLoading(for wrapperView: ARTVideoPlayerCustomWrapperView) -> ARTVideoPlayerLoadingView?
-
-// MARK: - 顶部工具栏 - 公共方法
     
     /// 当收藏按钮被点击时调用
     /// - Parameters:
@@ -45,15 +43,9 @@ import ARTZecoToolKit
     ///   - isFavorited: 是否已收藏
     @objc optional func wrapperViewDidTapFavorite(for wrapperView: ARTVideoPlayerCustomWrapperView, isFavorited: Bool)
     
-    
-// MARK: - 底部工具栏 - 公共方法
-    
     /// 当发送弹幕按钮被点击时调用
     /// - Parameter text: 弹幕内容
     @objc optional func wrapperViewDidTapDanmakuSend(for wrapperView: ARTVideoPlayerCustomWrapperView, text: String)
-    
-    
-// MARK: - 竖屏模式 - 底部工具栏
     
     /// 当评论按钮被点击时调用
     @objc optional func wrapperViewDidTapComment(for wrapperView: ARTVideoPlayerCustomWrapperView)
