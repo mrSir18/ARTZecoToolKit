@@ -126,6 +126,12 @@ extension ARTVideoPlayerOverlayView {
         if isDanmakuEnabled() { danmakuView.startDanmaku() }
     }
     
+    /// 添加弹幕
+    /// - Parameter danmaku: 弹幕单元
+    public func addDanmaku(_ danmaku: ARTDanmakuCell) {
+        if isDanmakuEnabled() { danmakuView.addDanmaku(danmaku) }
+    }
+    
     /// 暂停弹幕
     public func pauseDanmaku() {
         danmakuView.pauseDanmaku()

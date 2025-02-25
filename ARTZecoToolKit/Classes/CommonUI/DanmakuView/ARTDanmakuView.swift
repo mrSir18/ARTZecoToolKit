@@ -108,6 +108,12 @@ public class ARTDanmakuView: UIView {
     /// 弹幕锁 用于线程安全 保证弹幕不会重叠
     public var danmakuLock = DispatchSemaphore(value: 1)
     
+    /// 弹幕数组
+    public var danmakus: [ARTDanmakuCell] = []
+    
+    /// 弹幕数量
+    public var danmakuCount: Int = 0
+    
     
     // MARK: - Initialization
     
@@ -172,11 +178,14 @@ extension ARTDanmakuView {
     
     /// 创建弹幕
     private func createDanmaku() {
+        if danmakuCount == 0 { return } // 弹幕数量为 0，直接返回
+        
         danmakuLock.wait()
         defer { danmakuLock.signal() } // 释放信号量
         
-        // 调用代理方法获取弹幕单元
-        guard let danmakuCell = delegate?.danmakuViewCreateCell?(self) else { return }
+        // 获取弹幕单元
+        guard let danmakuCell = danmakus.first else { return }
+        danmakus.removeFirst()
         
         let randomDuration = danmakuSpeed.randomDuration()
         guard let (startY, trackIndex) = findAvailableTrack(for: danmakuCell, duration: randomDuration) else { return } // 查找可用轨道
@@ -427,6 +436,13 @@ extension ARTDanmakuView {
         if let danmakuDelayTimer = danmakuDelayTimer { RunLoop.current.add(danmakuDelayTimer, forMode: .common) }
     }
     
+    /// 添加弹幕
+    /// - Parameter danmaku: 弹幕单元
+    @objc open func addDanmaku(_ danmaku: ARTDanmakuCell) {
+        self.danmakus.append(danmaku)
+        self.danmakuCount += 1
+    }
+    
     /// 暂停弹幕
     @objc open func pauseDanmaku() {
         guard attemptStateTransition(to: .paused, from: [.running]), layer.speed != 0 else { return } // 仅允许在运行状态下暂停
@@ -535,6 +551,9 @@ extension ARTDanmakuView: CAAnimationDelegate {
         delegate?.danmakuView?(self, didEndDisplayDanmakuCell: cell)
         cell.layer.removeAllAnimations()
         cell.removeFromSuperview()
+        
+        danmakuCount -= 1
+        if (danmakuCount <= 0) { delegate?.danmakuViewDidEndDisplayAllDanmaku?(self) } // 所有弹幕显示完成
     }
 }
 

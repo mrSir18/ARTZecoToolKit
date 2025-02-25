@@ -75,7 +75,7 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
     // TODO: 模拟 - 弹幕时间戳匹配功能
     
     /// 弹幕时间戳 [时间]
-    public var timestamps: [Double] = [2.0, 3.5, 5.0, 5.3, 6.0, 7.1, 10.0, 12.5, 15.0]
+    public var timestamps: [Double] = [2.0, 3.5, 5.0, 5.3, 6.0, 7.1, 10.0, 15.0, 40.0]
     
     /// 已匹配的时间戳 [时间段索引: 时间]
     public var matchedTimestamps: [Int: Set<Double>] = [:]
@@ -154,38 +154,6 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
                                                      shouldUpdateSlider: isDraggingSlider)
     }
     
-    /// 二分查找算法
-    /// - Parameters:
-    ///   - arr: 已排序的数组
-    ///   - target: 目标时间戳
-    ///   - tolerance: 容差范围，±该值内的时间戳视为匹配
-    /// - Returns: 返回所有与目标时间戳匹配的时间戳（按升序排列）
-    /// - Note: 该算法用于查找与目标时间戳最接近的时间戳，支持容差范围匹配
-    func binarySearch(arr: [Double], target: Double, tolerance: Double) -> [Double] {
-        var low = 0
-        var high = arr.count - 1
-        var result: [Double] = []
-        while low <= high {
-            let mid = low + (high - low) / 2
-            let midValue = arr[mid]
-            
-            if abs(midValue - target) <= tolerance { // 如果时间戳在容差范围内，添加到结果中
-                result.append(midValue)
-            }
-            
-            // 关系调整查找范围
-            if midValue == target {
-                break // 找到目标值，提前退出
-            } else if midValue < target {
-                low = mid + 1 // 调整左边界
-            } else {
-                high = mid - 1 // 调整右边界
-            }
-        }
-        
-        return result.sorted() // 返回升序排列的匹配时间戳
-    }
-    
     override func onReceiveDanmaku(atTime currentTime: Double) { // 收到弹幕
         let tolerance: Double = 2.0 // 容差范围，±2秒内匹配
         
@@ -215,6 +183,7 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
         if !newMatchedTimestamps.isEmpty {
             matchedTimestamps[segmentIndex] = matchedForSegment
             for timestamp in newMatchedTimestamps {
+                overlayView.addDanmaku(ARTCustomDanmakuCell())
                 print("匹配到时间戳：\(timestamp)")
             }
         }
@@ -377,35 +346,35 @@ extension ARTVideoPlayerCustomWrapperView {
 
 extension ARTVideoPlayerCustomWrapperView {
     
-//    /// 二分查找算法
-//    /// - Parameters:
-//    ///   - arr: 已排序的数组
-//    ///   - target: 目标时间戳
-//    ///   - tolerance: 容差范围，±该值内的时间戳视为匹配
-//    /// - Returns: 返回所有与目标时间戳匹配的时间戳（按升序排列）
-//    /// - Note: 该算法用于查找与目标时间戳最接近的时间戳，支持容差范围匹配
-//    func binarySearch(arr: [Double], target: Double, tolerance: Double) -> [Double] {
-//        var low = 0
-//        var high = arr.count - 1
-//        var result: [Double] = []
-//        while low <= high {
-//            let mid = low + (high - low) / 2
-//            let midValue = arr[mid]
-//            
-//            if abs(midValue - target) <= tolerance { // 如果时间戳在容差范围内，添加到结果中
-//                result.append(midValue)
-//            }
-//            
-//            // 关系调整查找范围
-//            if midValue == target {
-//                break // 找到目标值，提前退出
-//            } else if midValue < target {
-//                low = mid + 1 // 调整左边界
-//            } else {
-//                high = mid - 1 // 调整右边界
-//            }
-//        }
-//        
-//        return result.sorted() // 返回升序排列的匹配时间戳
-//    }
+    /// 二分查找算法
+    /// - Parameters:
+    ///   - arr: 已排序的数组
+    ///   - target: 目标时间戳
+    ///   - tolerance: 容差范围，±该值内的时间戳视为匹配
+    /// - Returns: 返回所有与目标时间戳匹配的时间戳（按升序排列）
+    /// - Note: 该算法用于查找与目标时间戳最接近的时间戳，支持容差范围匹配
+    func binarySearch(arr: [Double], target: Double, tolerance: Double) -> [Double] {
+        var low = 0
+        var high = arr.count - 1
+        var result: [Double] = []
+        while low <= high {
+            let mid = low + (high - low) / 2
+            let midValue = arr[mid]
+            
+            if abs(midValue - target) <= tolerance { // 如果时间戳在容差范围内，添加到结果中
+                result.append(midValue)
+            }
+            
+            // 关系调整查找范围
+            if midValue == target {
+                break // 找到目标值，提前退出
+            } else if midValue < target {
+                low = mid + 1 // 调整左边界
+            } else {
+                high = mid - 1 // 调整右边界
+            }
+        }
+        
+        return result.sorted() // 返回升序排列的匹配时间戳
+    }
 }
