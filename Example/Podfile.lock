@@ -4,11 +4,11 @@ PODS:
     - SmartCodable
     - SnapKit
     - YYText
-  - libpag (4.4.20)
-  - SDWebImage (5.20.0):
-    - SDWebImage/Core (= 5.20.0)
-  - SDWebImage/Core (5.20.0)
-  - SmartCodable (4.3.2)
+  - libpag (4.4.25)
+  - SDWebImage (5.21.0):
+    - SDWebImage/Core (= 5.21.0)
+  - SDWebImage/Core (5.21.0)
+  - SmartCodable (4.3.7)
   - SnapKit (5.7.1)
   - YYText (1.0.7)
 
@@ -30,9 +30,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   ARTZecoToolKit: 5a6fdc0b4c0c0b0b99401565d63f60142f3e4267
-  libpag: 95e154944506e3592dff918d7f8cb180f4db64bc
-  SDWebImage: 73c6079366fea25fa4bb9640d5fb58f0893facd8
-  SmartCodable: 88fbf3d65207c2376fdbce4b080a3d578cb51be8
+  libpag: 154c2213708c16c48a49b3dd51c85399cebb6a5a
+  SDWebImage: f84b0feeb08d2d11e6a9b843cb06d75ebf5b8868
+  SmartCodable: 56babd0a912588ce299f2d0799633126f4c427c2
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 

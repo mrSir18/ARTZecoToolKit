@@ -302,9 +302,11 @@ extension JSONDecoderImpl.KeyedContainer {
         
         if let type = type as? FlatType.Type {
             if type.isArray {
-                return try T(from: superDecoder(forKey: key))
+                let decoded = try T(from: superDecoder(forKey: key))
+                return didFinishMapping(decoded)
             } else {
-                return try T(from: impl)
+                let decoded = try T(from: impl)
+                return didFinishMapping(decoded)
             }
         } else {
             do {
@@ -528,9 +530,15 @@ extension JSONDecoderImpl.KeyedContainer {
     
     
     fileprivate func didFinishMapping<T>(_ decodeValue: T) -> T {
+        // 被属性包装器包裹的属性，是没遵循SmartDecodable协议的。
+        // 这里使用WrapperLifecycle做一层中转处理
         if var value = decodeValue as? SmartDecodable {
             value.didFinishMapping()
             if let temp = value as? T { return temp }
+        } else if let value = decodeValue as? WrapperLifecycle {
+            if let temp = value.wrappedValueDidFinishMapping() as? T {
+                return temp
+            }
         }
         return decodeValue
     }
