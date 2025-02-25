@@ -169,7 +169,7 @@ extension ARTVideoPlayerCustomWrapperView: ARTVideoPlayerControlsViewDelegate {
 // MARK: - 横屏模式 - 底部工具栏
     
     func controlsViewDidTapNext(for controlsView: ARTVideoPlayerControlsView) { // 点击下一个按钮
-        playNextVideo(with: URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4"))
+        playNextVideo(with: URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MP4")!))
     }
     
     func controlsViewDidTapSpeed(for controlsView: ARTVideoPlayerControlsView) { // 点击倍速按钮

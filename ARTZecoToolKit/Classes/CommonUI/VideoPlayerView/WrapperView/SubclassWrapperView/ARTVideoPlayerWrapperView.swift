@@ -320,6 +320,7 @@ extension ARTVideoPlayerWrapperView {
     @objc open func seekToTime(from time: Float, completion: (() -> Void)? = nil) {
         guard let duration = player.currentItem?.duration else { return }
         let currentTime = CMTimeMake(value: Int64(time * Float(duration.value)), timescale: duration.timescale)
+        didUpdateCurrentTime(currentTime: currentTime) // 通知外部更新当前进度
         seek(to: currentTime) { [weak self] completed in
             guard let self = self else { return }
             completion?()
@@ -368,6 +369,12 @@ extension ARTVideoPlayerWrapperView {
     ///  - totalTime: 视频总时长
     @objc open func didUpdatePreviewTime(currentTime: CMTime, totalTime: CMTime) {
         
+    }
+    
+    /// 通知外部更新当前播放进度
+    /// - Parameter currentTime: 当前播放进度的时间
+    @objc open func didUpdateCurrentTime(currentTime: CMTime) {
+
     }
     
     /// 通知外部加载动画已开始

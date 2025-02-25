@@ -14,6 +14,9 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
     
     /// 代理对象
     public weak var delegate: ARTVideoPlayerCustomWrapperViewDelegate?
+
+    /// 屏幕模式
+    public var screenOrientation: ScreenOrientation = .window
     
     /// 是否正在拖动进度条
     public var isDraggingSlider = false
@@ -75,7 +78,7 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
     // TODO: 模拟 - 弹幕时间戳匹配功能
     
     /// 弹幕时间戳 [时间]
-    public var timestamps: [Double] = [2.0, 3.5, 5.0, 5.3, 6.0, 7.1, 10.0, 15.0, 40.0]
+    public var timestamps: [Double] = [2.0, 3.5, 5.0, 5.3, 6.0, 7.1, 10.0, 15.0, 28.0, 40.0, 52.0, 60.0, 61.0, 75.0, 80.0]
     
     /// 已匹配的时间戳 [时间段索引: 时间]
     public var matchedTimestamps: [Int: Set<Double>] = [:]
@@ -142,6 +145,7 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
     
     override func onReceivePlayerItemDidPlayToEnd(_ notification: Notification) { // 播放结束
         super.onReceivePlayerItemDidPlayToEnd(notification)
+        matchedTimestamps = [:]
         overlayView.stopDanmaku() // 停止弹幕
         controlsView.didUpdatePlayPauseStateInControls(playerState: playerState) // 更新播放器状态
         controlsView.didUpdatePlayPauseButtonStateInControls(isPlaying: false) // 更新播放按钮状态
@@ -155,6 +159,8 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
     }
     
     override func onReceiveDanmaku(atTime currentTime: Double) { // 收到弹幕
+        if screenOrientation == .window { return } // 屏幕模式，全屏下展示弹幕
+    
         let tolerance: Double = 2.0 // 容差范围，±2秒内匹配
         
         // 计算当前时间所在的时间段，使用半开区间 [start, end) 的方式
@@ -182,11 +188,21 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
         
         if !newMatchedTimestamps.isEmpty {
             matchedTimestamps[segmentIndex] = matchedForSegment
-            for timestamp in newMatchedTimestamps {
-                overlayView.addDanmaku(ARTCustomDanmakuCell())
-                print("匹配到时间戳：\(timestamp)")
-            }
+            for _ in newMatchedTimestamps { overlayView.addDanmaku(ARTCustomDanmakuCell()) }
         }
+    }
+    
+    override func didUpdateCurrentTime(currentTime: CMTime) {
+        let formattedTime = currentTime.art_formattedTime()
+        guard let seconds = formattedTime.art_secondsFromFormattedTime() else { return }
+        overlayView.stopDanmaku() // 重置弹幕
+        let segmentIndex = Int(seconds / segmentDuration) // 计算当前时间所在的时间段索引
+        for index in matchedTimestamps.keys where index >= segmentIndex { // 清理当前时间以及之后的所有时间段
+            let segmentStart = Double(index) * segmentDuration
+            let segmentEnd = segmentStart + segmentDuration
+            if segmentEnd >= seconds { matchedTimestamps.removeValue(forKey: index) } // 如果当前时间段结束时间大于当前时间，移除该时间段
+        }
+        overlayView.startDanmaku() // 启动弹幕
     }
     
     override func onReceiveLoadedTimeRangesChanged(totalBuffer: Double, bufferProgress: Float) { // 缓冲进度改变
@@ -322,6 +338,7 @@ extension ARTVideoPlayerCustomWrapperView {
     /// - Note: 根据屏幕方向更新播放器视图的约束
     public func updateScreenOrientation(for orientation: ScreenOrientation) {
         let sliderValue = controlsView.getSliderPositionInControls()
+        screenOrientation = orientation
         isDraggingSlider = true // 设置正在拖动滑块
         overlayView.resizeDanmakuCellPosition(for: orientation) // 更新弹幕位置
         systemControls.updateScreenOrientationInSystemControls(screenOrientation: orientation) // 更新系统控制视图

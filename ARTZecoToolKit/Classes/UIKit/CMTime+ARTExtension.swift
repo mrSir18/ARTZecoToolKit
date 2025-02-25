@@ -26,3 +26,34 @@ extension CMTime {
         : String(format: "%02d:%02d", minutes, seconds)
     }
 }
+
+extension String {
+    
+    /// 将格式化时间字符串转换为总秒数。
+    ///
+    /// - Parameter formattedTime: 格式化的时间字符串，支持 "HH:mm:ss" 或 "mm:ss" 格式。
+    /// - Returns: 转换后的总秒数，如果格式不正确或无法解析则返回 `nil`。
+    /// - Note: 该方法支持两种格式：
+    ///   - "mm:ss"：分钟:秒，例如 "02:15" 转换为 135 秒。
+    ///   - "HH:mm:ss"：小时:分钟:秒，例如 "01:01:15" 转换为 3675 秒。
+    public func art_secondsFromFormattedTime() -> Double? {
+        let timeComponents = self.split(separator: ":") // 将输入的时间字符串按 ":" 分隔
+        
+        // 处理 "分钟:秒" 格式 (mm:ss)
+        if timeComponents.count == 2 {
+            guard let minutes = Double(timeComponents[0]), let seconds = Double(timeComponents[1]) else {
+                return nil // 如果无法转换为数字，返回 nil
+            }
+            return minutes * 60 + seconds // 返回总秒数
+        }
+        // 处理 "小时:分钟:秒" 格式 (HH:mm:ss)
+        else if timeComponents.count == 3 {
+            guard let hours = Double(timeComponents[0]), let minutes = Double(timeComponents[1]), let seconds = Double(timeComponents[2]) else {
+                return nil // 如果无法转换为数字，返回 nil
+            }
+            return hours * 3600 + minutes * 60 + seconds // 返回总秒数
+        }
+        
+        return nil // 如果格式不符合预期，返回 nil
+    }
+}

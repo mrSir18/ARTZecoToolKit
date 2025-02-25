@@ -474,6 +474,8 @@ extension ARTDanmakuView {
         clearAllDanmaku() // 清理所有弹幕
         danmakuTrackYs = [] // 清空轨道坐标
         danmakuLastTimes = [] // 清空最近使用时间
+        danmakus = [] // 清空弹幕视图
+        danmakuCount = 0 // 重置弹幕数量
     }
     
     /// 更新弹幕轨道数量

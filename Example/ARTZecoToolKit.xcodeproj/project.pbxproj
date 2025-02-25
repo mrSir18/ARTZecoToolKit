@@ -93,6 +93,7 @@
 		02E9847E2D08C8000052C36A /* ARTFirstCarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E984522D08C8000052C36A /* ARTFirstCarouselCell.swift */; };
 		02E9847F2D08C8000052C36A /* ARTControllerBottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E984682D08C8000052C36A /* ARTControllerBottomBar.swift */; };
 		02E984802D08C8000052C36A /* ARTBaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E9844F2D08C8000052C36A /* ARTBaseTabBarController.swift */; };
+		02EC99432D6E304B00D040D3 /* RickAstley.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 02EC99422D6E304B00D040D3 /* RickAstley.mp4 */; };
 		02F8AE2B2BF66B3E00A111F6 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F8AE262BF66B3D00A111F6 /* 0.png */; };
 		02F8AE2C2BF66B3E00A111F6 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F8AE272BF66B3D00A111F6 /* 2.png */; };
 		02F8AE2D2BF66B3E00A111F6 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F8AE282BF66B3D00A111F6 /* 1.png */; };
@@ -213,6 +214,7 @@
 		02E984682D08C8000052C36A /* ARTControllerBottomBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTControllerBottomBar.swift; sourceTree = "<group>"; };
 		02E9846A2D08C8000052C36A /* ARTControllerNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTControllerNavigationBar.swift; sourceTree = "<group>"; };
 		02E9846D2D08C8000052C36A /* ARTWebCustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTWebCustomViewController.swift; sourceTree = "<group>"; };
+		02EC99422D6E304B00D040D3 /* RickAstley.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = RickAstley.mp4; sourceTree = "<group>"; };
 		02F8AE262BF66B3D00A111F6 /* 0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0.png; sourceTree = "<group>"; };
 		02F8AE272BF66B3D00A111F6 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		02F8AE282BF66B3D00A111F6 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
@@ -521,6 +523,7 @@
 		0290B4622CC5986700D49079 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				02EC99422D6E304B00D040D3 /* RickAstley.mp4 */,
 				02D1BCC62D0AF8ED0075BF64 /* loading.pag */,
 				02FC53412CF1B25E009794A4 /* privacy-policy.html */,
 				0250693D2D01BEE9009637ED /* zeco-test.html */,
@@ -939,6 +942,7 @@
 				02A375A82CC5588800248BBC /* DINPro-Light.ttf in Resources */,
 				02A375A92CC5588800248BBC /* DINPro-Regular.otf in Resources */,
 				02F8AE2F2BF66B3E00A111F6 /* hot_area_format_user.json in Resources */,
+				02EC99432D6E304B00D040D3 /* RickAstley.mp4 in Resources */,
 				02B4908C2C8AEA4C007F379A /* city.json in Resources */,
 				02FC53422CF1B25E009794A4 /* privacy-policy.html in Resources */,
 				02F8AE2C2BF66B3E00A111F6 /* 2.png in Resources */,
