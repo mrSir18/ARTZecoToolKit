@@ -38,8 +38,9 @@ class ARTViewController_DanmakuView: ARTBaseViewController {
         
         // 创建弹幕视图
         danmakuView = ARTDanmakuView(self)
-        danmakuView.backgroundColor = .art_randomColor()
-        danmakuView.danmakuTrackHeight = ARTAdaptedValue(42.0) // 弹幕轨道高度
+        danmakuView.backgroundColor     = .art_randomColor()
+        danmakuView.danmakuTrackHeight  = ARTAdaptedValue(42.0) // 弹幕轨道高度
+        danmakuView.danmakuDotEnabled   = false // 弹幕点显示
         view.addSubview(danmakuView)
         danmakuView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()

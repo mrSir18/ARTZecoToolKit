@@ -108,6 +108,9 @@ public class ARTDanmakuView: UIView {
     /// 弹幕锁 用于线程安全 保证弹幕不会重叠
     public var danmakuLock = DispatchSemaphore(value: 1)
     
+    /// 弹幕打点是否开启 默认true
+    public var danmakuDotEnabled: Bool = true
+    
     /// 弹幕数组
     public var danmakus: [ARTDanmakuCell] = []
     
@@ -178,14 +181,23 @@ extension ARTDanmakuView {
     
     /// 创建弹幕
     private func createDanmaku() {
-        if danmakuCount == 0 { return } // 弹幕数量为 0，直接返回
+        if danmakuDotEnabled { // 弹幕打点开启，则检查弹幕数量为 0，直接返回
+            guard danmakuCount > 0 else { return }
+        }
         
         danmakuLock.wait()
         defer { danmakuLock.signal() } // 释放信号量
         
         // 获取弹幕单元
-        guard let danmakuCell = danmakus.first else { return }
-        danmakus.removeFirst()
+        let danmakuCell: ARTDanmakuCell
+        if danmakuDotEnabled { // 弹幕打点开启，则使用数组中的弹幕
+            guard let firstDanmakuCell = danmakus.first else { return }
+            danmakuCell = firstDanmakuCell
+            danmakus.removeFirst()
+        } else { // 调用代理方法获取弹幕单元
+            guard let cell = delegate?.danmakuViewCreateCell?(self) else { return }
+            danmakuCell = cell
+        }
         
         let randomDuration = danmakuSpeed.randomDuration()
         guard let (startY, trackIndex) = findAvailableTrack(for: danmakuCell, duration: randomDuration) else { return } // 查找可用轨道
@@ -553,9 +565,11 @@ extension ARTDanmakuView: CAAnimationDelegate {
         delegate?.danmakuView?(self, didEndDisplayDanmakuCell: cell)
         cell.layer.removeAllAnimations()
         cell.removeFromSuperview()
-        
-        danmakuCount -= 1
-        if (danmakuCount <= 0) { delegate?.danmakuViewDidEndDisplayAllDanmaku?(self) } // 所有弹幕显示完成
+
+        if danmakuDotEnabled { // 默认开启打点
+            danmakuCount -= 1
+            if (danmakuCount <= 0) { delegate?.danmakuViewDidEndDisplayAllDanmaku?(self) } // 所有弹幕显示完成
+        }
     }
 }
 
