@@ -133,7 +133,7 @@ class ARTPhotoBrowserCell: UICollectionViewCell {
             /// 获取当前缩放比例
             let newZoomScale: CGFloat
             if self.scrollView.zoomScale == self.scrollView.minimumZoomScale {
-                newZoomScale = self.configuration.maximumZoomScale
+                newZoomScale = min(self.scrollView.maximumZoomScale, self.scrollView.zoomScale * 2) // 防止缩放过小
             } else {
                 newZoomScale = self.scrollView.minimumZoomScale
             }

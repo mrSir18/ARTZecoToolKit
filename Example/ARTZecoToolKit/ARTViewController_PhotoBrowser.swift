@@ -26,7 +26,6 @@ class ARTViewController_PhotoBrowser: ARTBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.addSubview(photoBrowserButton)
         photoBrowserButton.snp.makeConstraints { make in
             make.size.equalTo(ARTAdaptedSize(width: 200.0, height: 200.0))
@@ -41,12 +40,16 @@ class ARTViewController_PhotoBrowser: ARTBaseViewController {
         /// - Note: 更多配置请查看ARTPhotoBrowserStyleConfiguration.swift文件
         //        ARTPhotoBrowserStyleConfiguration.default().customBackButtonImageName("back_white_left") // 自定义返回按钮
         //        ARTPhotoBrowserStyleConfiguration.resetConfiguration() // 重置默认配置
-        
+
         
         /// 图片资源
         ///
         /// - Note: 支持URL、UIImage、String、PHAsset资源文件、资源图片名称类型
         let photos: [Any] = [
+            URL(string: "https://img.zecoart.com/mall/upload/202502/31f2e555-1e1d-47be-9fc6-9444ec959091.JPG")!,
+            URL(string: "https://img.zecoart.com/mall/upload/202502/d8f44afe-d179-4141-8f7f-6521fc2948ae.JPG")!,
+            URL(string: "https://img.zecoart.com/mall/upload/202502/5bf9ba17-084d-42c0-a99f-453ff2838a11.JPG")!,
+            URL(string: "https://img1.baidu.com/it/u=2460994331,1878868429&fm=253&fmt=auto?w=200&h=200")!,
             URL(string: "https://img2.baidu.com/it/u=1623302349,1771329113&fm=253&fmt=auto&app=120&f=JPEG?w=800&h=800")!,
             URL(string: "https://p3.itc.cn/q_70/images01/20231108/c665b01b1a9743d598e27e926ff83f15.png")!,
             URL(string: "https://img2.baidu.com/it/u=2053498362,2953193322&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1062")!,
