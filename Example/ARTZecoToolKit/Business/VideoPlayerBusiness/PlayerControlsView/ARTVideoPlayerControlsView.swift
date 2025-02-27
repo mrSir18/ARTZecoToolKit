@@ -181,7 +181,6 @@ class ARTVideoPlayerControlsView: ARTPassThroughView {
     public func didUpdatePlayerStateInControls(isPlaying: Bool) {
         if isPlaying {
             stopAutoHideTimer()
-            toggleControlsInControls(visible: true)
         } else {
             didResetAutoHideTimerInControls()
         }

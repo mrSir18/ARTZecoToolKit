@@ -140,38 +140,6 @@ public class ARTDanmakuView: UIView {
     
     open func setupViews() {
         /// 子类重写: 设置视图
-        registerApplicationNotifications()
-    }
-}
-
-// MARK: - Register & Unregister
-
-extension ARTDanmakuView {
-    
-    /// 注册前后台通知
-    @objc open func registerApplicationNotifications() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleAppDidEnterBackground),
-            name: UIApplication.didEnterBackgroundNotification,
-            object: nil
-        )
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleAppWillEnterForeground),
-            name: UIApplication.willEnterForegroundNotification,
-            object: nil
-        )
-    }
-    
-    /// 处理App进入后台
-    @objc open func handleAppDidEnterBackground() {
-        pauseDanmaku()
-    }
-    
-    /// 处理App即将进入前台
-    @objc open func handleAppWillEnterForeground() {
-        resumeDanmaku()
     }
 }
 

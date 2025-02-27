@@ -48,6 +48,45 @@ class ARTViewController_DanmakuView: ARTBaseViewController {
             make.height.equalTo(ARTAdaptedValue(220.0))
         }
         setupButtons()
+        registerApplicationNotifications() // 注册前后台通知
+    }
+    
+    // MARK: - remove Observers
+    
+    deinit { // 移除播放完成监听
+        NotificationCenter.default.removeObserver(self)
+        print("移除时间观察")
+    }
+}
+
+// MARK: - Register & Unregister
+
+extension ARTViewController_DanmakuView {
+    
+    /// 注册前后台通知
+    @objc open func registerApplicationNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleAppDidEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleAppWillEnterForeground),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
+    }
+    
+    /// 处理App进入后台
+    @objc open func handleAppDidEnterBackground() {
+        danmakuView.pauseDanmaku()
+    }
+    
+    /// 处理App即将进入前台
+    @objc open func handleAppWillEnterForeground() {
+        danmakuView.resumeDanmaku()
     }
 }
 

@@ -217,6 +217,31 @@ class ARTVideoPlayerCustomWrapperView: ARTVideoPlayerWrapperView {
         controlsView.isLandscape = isLandscape
         systemControls.updateContentModeInSystemControls(isLandscape: isLandscape)
     }
+    
+    override func onReceiveAudioSessionInterruptionBegan(_ notification: Notification) { /// 处理音频会话中断开始
+        super.onReceiveAudioSessionInterruptionBegan(notification)
+        syncControlsWithPlayerState(to: .paused)
+    }
+    
+    override func onReceiveAudioSessionInterruptionEnded(_ notification: Notification) { /// 处理音频会话中断结束
+        super.onReceiveAudioSessionInterruptionEnded(notification)
+        if playerState == .paused { togglePlayerState() }
+    }
+    
+    override func onReceiveAudioRouteChanged(_ notification: Notification) { /// 音频路由改变耳机插拔
+        super.onReceiveAudioRouteChanged(notification)
+        syncControlsWithPlayerState(to: .paused)
+    }
+    
+    override func onReceiveBecomeActive(_ notification: Notification) { // 应用进入前台
+        super.onReceiveBecomeActive(notification)
+        if playerState == .paused { togglePlayerState() }
+    }
+    
+    override func onReceiveEnterBackground(_ notification: Notification) { // 应用进入后台
+        super.onReceiveEnterBackground(notification)
+        syncControlsWithPlayerState(to: .paused)
+    }
 }
 
 // MARK: - 发送消息给外部
@@ -309,8 +334,6 @@ extension ARTVideoPlayerCustomWrapperView {
     /// - Parameter newState: 新的播放器状态
     /// - Note: 根据新的状态进行对应的播放或暂停操作，避免重复状态更新
     private func syncControlsWithPlayerState(to newState: PlayerState) {
-        guard playerState != newState else { return }
-        
         // 更新播放器状态
         playerState = newState
         controlsView.didUpdatePlayPauseStateInControls(playerState: playerState)

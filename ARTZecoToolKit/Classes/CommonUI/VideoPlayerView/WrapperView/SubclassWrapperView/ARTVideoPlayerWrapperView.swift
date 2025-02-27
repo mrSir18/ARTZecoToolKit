@@ -186,7 +186,7 @@ extension ARTVideoPlayerWrapperView: UIGestureRecognizerDelegate {
     
     /// 处理单击 - 双击手势
     /// - Parameter gesture: 点击手势
-    /// - Note: 重写父类方法，处理单击手势，根据横竖屏模式展示控制面板或切换播放状态
+    /// - Note: 重写父类方法，处理单击手势，根据横竖屏模式展示控制面板或切换播放状态，防止点击进度条时进行检测，造成卡顿
     @objc open func handleTapGesture(_ gesture: UITapGestureRecognizer) {
         let currentTime = Date().timeIntervalSince1970
         if currentTime - lastTapTime < doubleTapDelay { // 双击事件

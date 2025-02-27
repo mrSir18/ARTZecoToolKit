@@ -299,33 +299,28 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     
     /// 处理音频会话中断开始
     open func onReceiveAudioSessionInterruptionBegan(_ notification: Notification) {
-        player.pause()
         print("音频会话中断开始")
     }
     
     /// 处理音频会话中断结束
     open func onReceiveAudioSessionInterruptionEnded(_ notification: Notification) {
-        player.play()
         print("音频会话中断结束")
     }
     
     /// 音频路由改变耳机插拔
     open func onReceiveAudioRouteChanged(_ notification: Notification) {
-        player.play()
         print("音频路由改变耳机插拔")
     }
     
     /// 应用程序进入前台
     open func onReceiveBecomeActive(_ notification: Notification) {
         try? AVAudioSession.sharedInstance().setActive(true)
-        player.play()
         print("应用程序进入前台")
     }
     
     /// 应用程序进入后台
     open func onReceiveEnterBackground(_ notification: Notification) {
         try? AVAudioSession.sharedInstance().setActive(false)
-        player.pause()
         print("应用程序进入后台")
     }
     
