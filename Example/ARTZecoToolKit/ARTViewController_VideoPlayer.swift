@@ -166,7 +166,7 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPlayerView()
-//        setupSupportedAVPlayerFileExtensions()
+        setupSupportedAVPlayerFileExtensions()
     }
     
     // MARK: - Setup Methods
