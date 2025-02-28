@@ -127,6 +127,26 @@ import ARTZecoToolKit
      }
  }
  
+ TODO: 2.3、CollectionViewCell、TableViewCell 点击示例
+ 
+ extension UICollectionView {
+     
+     func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+         playVideoFromCell(at: indexPath)
+     }
+     
+     func playVideoFromCell(at indexPath: IndexPath) {
+         guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+         
+         if playerView == nil {
+             playerView = ARTVideoPlayerView()
+         }
+         cell.contentView.addSubview(playerView!)
+         playerView?.frame = cell.contentView.bounds
+         playerView.startVideoPlayback(with: url) 视频地址
+     }
+ }
+ 
  TODO: 3.0、视频常用比例
  
  let aspectRatio: CGFloat = 16.0 / 9.0 // 16:9 比例
@@ -163,11 +183,16 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
     
         // MARK: - Test Methods
         
-//        let url = URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")
-//        let url = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MP4")!) //竖屏
-//        let url = URL(string: "https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4") // 横屏
-        let url = URL(fileURLWithPath: Bundle.main.path(forResource: "RickAstley", ofType: "mp4")!) // 横屏
-        playerView.startVideoPlayback(with: url)
+        let urls: [URL] = [
+            URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")!,
+            URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: "MP4")!),
+            URL(fileURLWithPath: Bundle.main.path(forResource: "RickAstley", ofType: "mp4")!),
+            URL(string: "https://www.apple.com/105/media/cn/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/bruce/mac-bruce-tpl-cn-2018_1280x720h.mp4")!,
+            URL(string: "https://www.apple.com/105/media/us/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/peter/mac-peter-tpl-cc-us-2018_1280x720h.mp4")!,
+            URL(string: "https://www.apple.com/105/media/us/mac/family/2018/46c4b917_abfd_45a3_9b51_4e3054191797/films/grimes/mac-grimes-tpl-cc-us-2018_1280x720h.mp4")!,
+            URL(string: "https://www.apple.com/105/media/us/iphone-x/2017/01df5b43-28e4-4848-bf20-490c34a926a7/films/feature/iphone-x-feature-tpl-cc-us-20170912_1280x720h.mp4")!
+        ]
+        playerView.startVideoPlayback(with: urls.randomElement())
     }
     
     /// 设置支持的 AVPlayer 文件扩展名
