@@ -441,14 +441,24 @@ extension ARTVideoPlayerWrapperView {
     /// - Parameter url: 视频 URL
     private func initializePlayer(with url: URL) {
         let asset = AVURLAsset(url: url)
-        playerItem = AVPlayerItem(asset: asset)
-        setPlayerVolume(playerItem: playerItem, volume: 2.0)  // 将音量设置为2倍
-        player = AVPlayer(playerItem: playerItem)
-        
-        configurePlayerLayer() // 配置播放器 Layer
-        setupImageGenerator(asset) // 配置图像生成器
+        asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) {
+            DispatchQueue.main.async {
+                var error: NSError?
+                let status = asset.statusOfValue(forKey: "tracks", error: &error)
+                if status == .loaded {
+                    self.playerItem = AVPlayerItem(asset: asset)
+                    self.setPlayerVolume(playerItem: self.playerItem, volume: 2.0)  // 将音量设置为2倍
+                    self.player = AVPlayer(playerItem: self.playerItem)
+                    
+                    self.configurePlayerLayer() // 配置播放器 Layer
+                    self.setupImageGenerator(asset) // 配置图像生成器
+                } else {
+                    print("Failed to load asset tracks: \(error?.localizedDescription ?? "Unknown error")")
+                }
+            }
+        }
     }
-    
+
     /// 为播放下一集准备工作
     private func prepareForNextVideo() {
         thumbnailCache.removeAll()
