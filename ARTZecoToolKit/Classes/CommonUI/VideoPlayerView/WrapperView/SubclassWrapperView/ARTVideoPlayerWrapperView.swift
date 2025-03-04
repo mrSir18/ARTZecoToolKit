@@ -482,7 +482,7 @@ extension ARTVideoPlayerWrapperView {
             return
         }
         playerLayer.backgroundColor = UIColor.black.cgColor
-        playerLayer.videoGravity = .resizeAspectFill
+        playerLayer.videoGravity = .resizeAspect
         playerLayer.player = self.player
         self.addPlayerObservers() // 添加播放器观察者
     }
