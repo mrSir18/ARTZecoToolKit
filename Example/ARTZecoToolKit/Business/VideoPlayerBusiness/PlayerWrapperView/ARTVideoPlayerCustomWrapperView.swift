@@ -257,7 +257,8 @@ extension ARTVideoPlayerCustomWrapperView {
     
     override func didCompleteSetupForNextVideo() { // 播放下一集
         isDraggingSlider = (playerState == .paused) // 设置拖动滑块状态
-        controlsView.didUpdatePlayPauseButtonStateInControls(isPlaying: playerState == .playing)
+        let hiddenStates: Set<PlayerState> = [.buffering, .waiting, .playing, .error]
+        controlsView.didUpdatePlayPauseButtonStateInControls(isPlaying: hiddenStates.contains(playerState))
         overlayView.startDanmaku() // 开始弹幕
     }
     
@@ -344,7 +345,8 @@ extension ARTVideoPlayerCustomWrapperView {
         
         // 根据不同的状态处理是否正在拖动滑块
         isDraggingSlider = (newState == .paused)
-        controlsView.didUpdatePlayPauseButtonStateInControls(isPlaying: newState == .playing)
+        let hiddenStates: Set<PlayerState> = [.buffering, .waiting, .playing, .error]
+        controlsView.didUpdatePlayPauseButtonStateInControls(isPlaying: hiddenStates.contains(newState))
         
         if isLandscape { controlsView.didUpdatePlayerStateInControls(isPlaying: isDraggingSlider) } // 如果是横屏模式
         switch newState {

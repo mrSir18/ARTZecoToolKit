@@ -114,7 +114,8 @@ class ARTVideoPlayerControlsView: ARTPassThroughView {
     /// 更新播放按钮状态
     /// - Parameter playerState: 播放状态
     public func didUpdatePlayPauseStateInControls(playerState: PlayerState) {
-        playImageView.isHidden = (playerState == .playing)
+        let hiddenStates: Set<PlayerState> = [.buffering, .waiting, .playing, .error]
+        playImageView.isHidden = hiddenStates.contains(playerState)
     }
     
     /// 初始化滑块值
