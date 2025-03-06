@@ -74,6 +74,9 @@ class ARTVideoPlayerBottombar: UIView {
         return view
     }()
     
+    /// 进度条上次点击时间
+    private var lastSliderTapTime: TimeInterval = 0.0
+    
     /// 弹幕Key
     public let kDanmakuEnabledKey = "DanmakuEnabledKey"
     
@@ -122,6 +125,9 @@ extension ARTVideoPlayerBottombar {
     
     /// 处理滑块被点击的手势
     @objc func sliderTapped(_ gesture: UITapGestureRecognizer) {
+        let currentTime = Date().timeIntervalSince1970
+        guard currentTime - lastSliderTapTime >= 0.5 else { return } // 限制点击间隔，至少 0.5 秒, 防止进度条动画未完成时重复点击
+        
         guard let sliderView = gesture.view as? ARTVideoPlayerSlider else { return }
         let location = gesture.location(in: sliderView)
         guard sliderView.bounds.contains(location) else { return } // 点击位置不在滑块范围内，直接返回
@@ -133,6 +139,9 @@ extension ARTVideoPlayerBottombar {
         
         // 指定播放时间
         delegate?.bottombarDidTap(for: self, slider: sliderView)
+        
+        // 更新上次点击的时间
+        lastSliderTapTime = currentTime
     }
 }
 

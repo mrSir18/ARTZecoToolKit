@@ -46,6 +46,12 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     /// 双击最大时间间隔
     private let doubleTapDelay: TimeInterval = 0.3
     
+    /// 上次触摸时间
+    private var lastSeekRequestTime: TimeInterval = 0
+    
+    /// 记录最后一次 seek 的目标时间
+    private var lastSeekTime: CMTime?
+    
     
     // MARK: - Initialization
     
@@ -318,10 +324,21 @@ extension ARTVideoPlayerWrapperView {
     ///  - time: 指定的时间
     ///  - completion: 播放完成后的回调
     @objc open func seekToTime(from time: Float, completion: (() -> Void)? = nil) {
+        let now = Date().timeIntervalSince1970
+        if now - lastSeekRequestTime < 0.2 { return } // 限制 200ms 内的重复 seek
+        lastSeekRequestTime = now
+
         guard let duration = player.currentItem?.duration else { return }
-        let currentTime = CMTimeMake(value: Int64(time * Float(duration.value)), timescale: duration.timescale)
-        didUpdateCurrentTime(currentTime: currentTime) // 通知外部更新当前进度
-        seek(to: currentTime) { [weak self] completed in
+        let newTime = CMTimeMake(value: Int64(time * Float(duration.value)), timescale: duration.timescale)
+
+        if let lastSeek = lastSeekTime, lastSeek != newTime { // 取消之前的 seek 请求
+            player.currentItem?.cancelPendingSeeks()
+        }
+
+        lastSeekTime = newTime
+        didUpdateCurrentTime(currentTime: newTime)  // 通知外部更新当前进度
+        
+        seek(to: newTime) { [weak self] completed in
             guard let self = self else { return }
             completion?()
             self.player.rate = self.currentRate
