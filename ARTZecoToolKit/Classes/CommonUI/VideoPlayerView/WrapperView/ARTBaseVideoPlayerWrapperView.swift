@@ -403,6 +403,7 @@ open class ARTBaseVideoPlayerWrapperView: UIView {
     
     /// 移除时间观察者
     open func onReceiveRemovePeriodicTimeObserver() {
+        playerState = .buffering
         currentTime = .zero
         totalDuration = .zero
         statusObserver?.invalidate()
