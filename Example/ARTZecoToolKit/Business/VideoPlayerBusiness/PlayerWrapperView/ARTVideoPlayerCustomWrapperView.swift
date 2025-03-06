@@ -280,18 +280,22 @@ extension ARTVideoPlayerCustomWrapperView {
     // MARK: - Gesture Recognizer
     
     override func didReceiveSliderTouchBegan(sliderValue: Float) { // 触摸开始时调用
+        guard playerState != .buffering else { return }
         controlsView.didBeginSliderTouchInControls(sliderValue: sliderValue)
     }
     
     override func didReceiveSliderValue(sliderValue: Float) { // 滑动过程中调用
+        guard playerState != .buffering else { return }
         controlsView.didUpdateSliderPositionInControls(sliderValue: sliderValue)
     }
     
     override func didReceiveSliderTouchEnded(sliderValue: Float) { // 触摸结束时调用
+        guard playerState != .buffering else { return }
         controlsView.didEndSliderTouchInControls(sliderValue: sliderValue)
     }
     
     override func didReceiveTapGesture(at location: CGPoint) { // 点击手势
+        guard playerState != .buffering else { return }
         if overlayView.handleTapOnOverlay(at: location) { return } // 如果弹幕视图处理了点击事件，直接返回
         if isLandscape { // 如果是横屏模式，切换控制
             controlsView.didToggleControlsVisibilityInControls()

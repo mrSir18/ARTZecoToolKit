@@ -5,6 +5,8 @@
 //  Created by mrSir18 on 2024/10/29.
 //
 
+import ARTZecoToolKit
+
 // MARK: - ARTVideoPlayerTopbarDelegate
 
 /// 通用顶部工具栏代理
@@ -68,6 +70,10 @@ extension ARTVideoPlayerControlsView: ARTVideoPlayerBottombarDelegate {
     func bottombarDidTapDanmakuSend(for bottombar: ARTVideoPlayerBottombar, text: String) { // 点击发送弹幕按钮
 //        delegate?.controlsViewDidTapDanmakuSend(for: self, text: text)
         print("点击发送弹幕按钮")
+    }
+    
+    func bottombarDidRequestPlayerState(for bottombar: ARTVideoPlayerBottombar) -> PlayerState { // 请求播放器的播放状态
+        return delegate?.controlsViewDidRequestPlayerState(for: self) ?? .buffering
     }
 }
 

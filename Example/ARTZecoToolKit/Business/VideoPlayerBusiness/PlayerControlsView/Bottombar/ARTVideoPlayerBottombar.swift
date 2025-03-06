@@ -37,12 +37,20 @@ protocol ARTVideoPlayerBottombarDelegate: AnyObject {
     
     /// 当弹幕发送按钮被点击时调用
     func bottombarDidTapDanmakuSend(for bottombar: ARTVideoPlayerBottombar, text: String)
+    
+    /// 请求播放器的播放状态
+    func bottombarDidRequestPlayerState(for bottombar: ARTVideoPlayerBottombar) -> PlayerState
 }
 
 class ARTVideoPlayerBottombar: UIView {
     
     /// 代理对象
     public weak var delegate: ARTVideoPlayerBottombarDelegate?
+    
+    /// 播放器状态
+    public var playerState: PlayerState {
+        delegate_requestPlayerState()
+    }
     
     /// 缓冲进度视图
     public lazy var progressView: UIProgressView = {
@@ -108,23 +116,27 @@ extension ARTVideoPlayerBottombar {
     
     /// 触摸开始时调用的函数
     @objc func handleSliderTouchBegan(_ slider: ARTVideoPlayerSlider) {
+        guard playerState != .buffering else { return }
         configureSliderAppearance(for: slider, isTouching: true)
         delegate?.bottombarDidBeginTouch(for: self, slider: slider)
     }
     
     /// 滑块值改变时调用的函数
     @objc func handleSliderValueChanged(_ slider: ARTVideoPlayerSlider) {
+        guard playerState != .buffering else { return }
         delegate?.bottombarDidChangeValue(for: self, slider: slider)
     }
     
     /// 触摸结束时调用的函数
     @objc func handleSliderTouchEnded(_ slider: ARTVideoPlayerSlider) {
+        guard playerState != .buffering else { return }
         configureSliderAppearance(for: slider, isTouching: false)
         delegate?.bottombarDidEndTouch(for: self, slider: slider)
     }
     
     /// 处理滑块被点击的手势
     @objc func sliderTapped(_ gesture: UITapGestureRecognizer) {
+        guard playerState != .buffering else { return }
         let currentTime = Date().timeIntervalSince1970
         guard currentTime - lastSliderTapTime >= 0.5 else { return } // 限制点击间隔，至少 0.5 秒, 防止进度条动画未完成时重复点击
         
@@ -276,5 +288,16 @@ extension ARTVideoPlayerBottombar {
     /// - Parameter value: 滑块值变化
     private func adjustSliderValue(value: Float) {
         sliderView.setValue(min(max(sliderView.value + value, 0), 1), animated: true)
+    }
+}
+
+// MARK: - Private Delegate Methods
+
+extension ARTVideoPlayerBottombar {
+    
+    /// 控制层视图已经显示
+    /// - Parameters: alpha 控制层视图透明度
+    private func delegate_requestPlayerState() -> PlayerState {
+        return delegate?.bottombarDidRequestPlayerState(for: self) ?? .buffering
     }
 }

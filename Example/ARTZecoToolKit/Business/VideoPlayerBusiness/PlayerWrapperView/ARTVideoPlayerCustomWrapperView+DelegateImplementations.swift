@@ -154,6 +154,9 @@ extension ARTVideoPlayerCustomWrapperView: ARTVideoPlayerControlsViewDelegate {
         print("发送弹幕：\(text)")
     }
     
+    func controlsViewDidRequestPlayerState(for controlsView: ARTVideoPlayerControlsView) -> PlayerState { // 请求播放器的播放状态
+        return playerState
+    }
     
 // MARK: - 窗口模式 - 底部工具栏
     

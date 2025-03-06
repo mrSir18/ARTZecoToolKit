@@ -85,6 +85,9 @@ protocol ARTVideoPlayerControlsViewDelegate: AnyObject {
     /// - Parameter text: 弹幕内容
     func controlsViewDidTapDanmakuSend(for controlsView: ARTVideoPlayerControlsView, text: String)
     
+    /// 请求播放器的播放状态
+    func controlsViewDidRequestPlayerState(for controlsView: ARTVideoPlayerControlsView) -> PlayerState
+    
     
 // MARK: - 窗口模式 - 底部工具栏
     
