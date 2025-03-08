@@ -1,6 +1,6 @@
 //
 //  ARTVideoPlayerPortraitFullscreenTopbar.swift
-//  Pods
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/10/17.
 //
@@ -34,16 +34,21 @@ extension ARTVideoPlayerPortraitFullscreenTopbar {
     
     private func setupBackButton() { // 创建返回按钮
         backButton = ARTAlignmentButton(type: .custom)
+        backButton.tag                  = ARTVideoPlayerControls.ButtonType.back.rawValue
         backButton.imageAlignment       = .left
         backButton.titleAlignment       = .right
         backButton.contentInset         = ARTAdaptedValue(12.0)
         backButton.imageSize            = ARTAdaptedSize(width: 18.0, height: 18.0)
-        backButton.setImage(UIImage(named: "video_back"), for: .normal)
-        backButton.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
+        backButton.setImage(UIImage(named: "icon_video_back_fullscreen"), for: .normal)
         addSubview(backButton)
         backButton.snp.makeConstraints { make in
             make.left.top.bottom.equalTo(containerView)
-            make.width.equalTo(ARTAdaptedValue(60.0))
+            make.width.equalTo(ARTAdaptedValue(52.0))
         }
+        backButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.handleButtonTap(self.backButton)
+        })
+        .disposed(by: disposeBag)
     }
 }

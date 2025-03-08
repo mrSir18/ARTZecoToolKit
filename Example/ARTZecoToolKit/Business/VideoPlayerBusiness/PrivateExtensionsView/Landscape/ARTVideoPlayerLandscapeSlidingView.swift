@@ -1,16 +1,16 @@
 //
 //  ARTVideoPlayerLandscapeSlidingView.swift
-//  ARTZecoToolKit
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/11/4.
 //
 
 import ARTZecoToolKit
 
-open class ARTVideoPlayerLandscapeSlidingView: UIView {
+class ARTVideoPlayerLandscapeSlidingView: UIView {
     
     /// 代理对象
-    public weak var delegate: ARTVideoPlayerSlidingViewDelegate?
+    weak var delegate: ARTVideoPlayerSlidingViewDelegate?
     
     /// 容器视图
     public var containerView: UIView!
@@ -30,14 +30,14 @@ open class ARTVideoPlayerLandscapeSlidingView: UIView {
     
     // MARK: - Initialization
     
-    public init(_ delegate: ARTVideoPlayerSlidingViewDelegate? = nil) {
+    init(_ delegate: ARTVideoPlayerSlidingViewDelegate? = nil) {
         super.init(frame: .zero)
         self.delegate = delegate
         self.backgroundColor = .clear
         setupViews()
     }
     
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -57,9 +57,6 @@ open class ARTVideoPlayerLandscapeSlidingView: UIView {
     // MARK: - Public Method
     
     /// 显示动画视图
-    ///
-    /// - Parameter animated: 是否动画
-    /// - Note: 重写父类方法，设置子视图布局
     public func showExtensionsView(_ completion: (() -> Void)? = nil) {
         if self.superview == nil { // 判断视图是否已在父视图中
             art_keyWindow.addSubview(self)
@@ -77,9 +74,6 @@ open class ARTVideoPlayerLandscapeSlidingView: UIView {
     }
     
     /// 移除动画视图
-    ///
-    /// - Parameter animated: 是否动画
-    /// - Note: 重写父类方法，设置子视图布局
     public func hideExtensionsView(_ completion: (() -> Void)? = nil) {
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut]) {
             self.containerView.transform = CGAffineTransformTranslate(self.containerView.transform, UIScreen.art_currentScreenWidth, 0)
@@ -98,9 +92,6 @@ open class ARTVideoPlayerLandscapeSlidingView: UIView {
     // MARK: - Gesture Recognizer
     
     /// 点击手势
-    ///
-    /// - Parameter gesture: 点击手势
-    /// - Note: 重写父类方法，处理点击手势
     @objc public func handleSortingTapGesture(_ gesture: UITapGestureRecognizer) {
         hideExtensionsView()
     }

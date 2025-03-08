@@ -1,6 +1,6 @@
 //
 //  ARTVideoPlayerPortraitFullscreenBottombar.swift
-//  Pods
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/10/17.
 //
@@ -8,29 +8,7 @@
 import AVFoundation
 import ARTZecoToolKit
 
-/// 协议方法
-///
-/// - NOTE: 可继承该协议方法
-protocol ARTVideoPlayerPortraitFullscreenBottombarDelegate: ARTVideoPlayerBottombarDelegate {
-    
-    /// 当收藏按钮被点击时调用
-    /// - Parameter isFavorited: 是否已收藏
-    func bottombarDidTapFavorite(for bottombar: ARTVideoPlayerPortraitFullscreenBottombar, isFavorited: Bool)
-    
-    /// 当评论按钮被点击时调用
-    func bottombarDidTapComment(for bottombar: ARTVideoPlayerPortraitFullscreenBottombar)
-    
-    /// 当分享按钮被点击时调用
-    func bottombarDidTapShare(for bottombar: ARTVideoPlayerPortraitFullscreenBottombar)
-    
-    /// 当更多按钮被点击时调用
-    func bottombarDidTapMore(for bottombar: ARTVideoPlayerPortraitFullscreenBottombar)
-}
-
 class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
-    
-    /// 代理对象
-    weak var subclassDelegate: ARTVideoPlayerPortraitFullscreenBottombarDelegate?
     
     /// 容器视图
     private var containerView: UIView!
@@ -69,18 +47,6 @@ class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
     private var isFavorited: Bool = false
     
     
-    // MARK: - Initializatio
-    
-    init(_ subclassDelegate: ARTVideoPlayerPortraitFullscreenBottombarDelegate? = nil) {
-        self.subclassDelegate = subclassDelegate
-        super.init(subclassDelegate)
-        self.backgroundColor = .clear
-    }
-    
-    required public init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     // MARK: - Override Super Methods
     
     override func setupViews() {
@@ -110,7 +76,7 @@ class ARTVideoPlayerPortraitFullscreenBottombar: ARTVideoPlayerBottombar {
             UIView.animate(withDuration: duration) {
                 self.sliderView.trackHeight = trackHeight
                 self.progressView.layer.cornerRadius = cornerRadius
-                if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: thumbSize) {
+                if let thumbImage = UIImage(named: "icon_video_slider_thumb")?.art_scaled(to: thumbSize) {
                     self.sliderView.setThumbImage(thumbImage, for: .normal)
                 }
                 self.progressView.snp.updateConstraints { make in
@@ -131,65 +97,6 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
     public func updateFavoriteButtonImage(isFavorited: Bool) {
         self.isFavorited = isFavorited
         // 根据 isFavorited 更新按钮图片的代码
-    }
-}
-
-// MARK: - Button Actions
-
-extension ARTVideoPlayerPortraitFullscreenBottombar {
-    
-    /// 点击收藏按钮
-    @objc func didTapFavoriteButton() {
-        isFavorited.toggle()
-        updateFavoriteButtonImage(isFavorited: isFavorited)
-        subclassDelegate?.bottombarDidTapFavorite(for: self, isFavorited: isFavorited)
-    }
-    
-    /// 点击评论按钮
-    @objc func didTapCommentButton() {
-        subclassDelegate?.bottombarDidTapComment(for: self)
-    }
-    
-    /// 点击分享按钮
-    @objc func didTapShareButton() {
-        subclassDelegate?.bottombarDidTapShare(for: self)
-    }
-    
-    /// 点击更多按钮
-    @objc func didTapMoreButton() {
-        subclassDelegate?.bottombarDidTapMore(for: self)
-    }
-    
-    /// 点击弹幕按钮
-    @objc func didTapDanmakuButton() {
-        danmakuButton.isSelected = !danmakuButton.isSelected
-        delegate?.bottombarDidTapDanmakuToggle(for: self, isDanmakuEnabled: danmakuButton.isSelected)
-    }
-    
-    /// 点击发送弹幕按钮
-    @objc func didTapDanmakuSendButton() {
-        guard let text = danmakuInputLabel.text else { return }
-        delegate?.bottombarDidTapDanmakuSend(for: self, text: text)
-    }
-    
-    /// 点击清屏按钮
-    @objc func didTapClearButton() {
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.25) {
-                self.containerView.alpha = 0.0
-                self.exitClearView.alpha = 1.0
-            }
-        }
-    }
-    
-    /// 点击退出清屏按钮
-    @objc func didTapExitClearButton() {
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.25) {
-                self.exitClearView.alpha = 0.0
-                self.containerView.alpha = 1.0
-            }
-        }
     }
 }
 
@@ -274,7 +181,7 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
     
     private func setupFavoriteButton() { // 创建收藏按钮
         favoriteButton = ARTAlignmentButton(type: .custom)
-        favoriteButton.isSelected           = true
+        favoriteButton.tag                  = ARTVideoPlayerControls.ButtonType.favorite.rawValue
         favoriteButton.titleLabel?.font     = .art_regular(ARTAdaptedValue(10.0))
         favoriteButton.imageAlignment       = .top
         favoriteButton.titleAlignment       = .bottom
@@ -282,53 +189,68 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         favoriteButton.imageSize            = ARTAdaptedSize(width: 30.0, height: 30.0)
         favoriteButton.setTitle("收藏", for: .normal)
         favoriteButton.setTitleColor(.white, for: .normal)
-        favoriteButton.setImage(UIImage(named: "video_favorite"), for: .normal)
-        favoriteButton.setImage(UIImage(named: "video_favorited"), for: .selected)
-        favoriteButton.addTarget(self, action: #selector(didTapFavoriteButton), for: .touchUpInside)
+        favoriteButton.setImage(UIImage(named: "icon_video_favorite_fullscreen"), for: .normal)
+        favoriteButton.setImage(UIImage(named: "icon_video_favorited_fullscreen"), for: .selected)
         containerView.addSubview(favoriteButton)
         favoriteButton.snp.makeConstraints { make in
             make.size.equalTo(ARTAdaptedSize(width: 50.0, height: 50.0))
             make.top.equalTo(ARTAdaptedValue(4.0))
             make.right.equalToSuperview()
         }
+        favoriteButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.favoriteButton.isSelected.toggle()
+            self.handleButtonTap(self.favoriteButton)
+        })
+        .disposed(by: disposeBag)
     }
     
     private func setupCommentButton() { // 创建评论按钮
         commentButton = ARTAlignmentButton(type: .custom)
         commentButton.titleLabel?.font      = .art_regular(ARTAdaptedValue(10.0))
+        commentButton.tag                   = ARTVideoPlayerControls.ButtonType.comment.rawValue
         commentButton.imageAlignment        = .top
         commentButton.titleAlignment        = .bottom
         commentButton.imageTitleSpacing     = ARTAdaptedValue(4.0)
         commentButton.imageSize             = ARTAdaptedSize(width: 30.0, height: 30.0)
         commentButton.setTitle("3999", for: .normal)
         commentButton.setTitleColor(.white, for: .normal)
-        commentButton.setImage(UIImage(named: "video_comment"), for: .normal)
-        commentButton.addTarget(self, action: #selector(didTapCommentButton), for: .touchUpInside)
+        commentButton.setImage(UIImage(named: "icon_video_comment"), for: .normal)
         containerView.addSubview(commentButton)
         commentButton.snp.makeConstraints { make in
             make.size.equalTo(favoriteButton)
             make.top.equalTo(favoriteButton.snp.bottom).offset(ARTAdaptedValue(8.0))
             make.right.equalToSuperview()
         }
+        commentButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.handleButtonTap(self.commentButton)
+        })
+        .disposed(by: disposeBag)
     }
     
     private func setupShareButton() { // 创建分享按钮
         shareButton = ARTAlignmentButton(type: .custom)
         shareButton.titleLabel?.font        = .art_regular(ARTAdaptedValue(10.0))
+        shareButton.tag                     = ARTVideoPlayerControls.ButtonType.share.rawValue
         shareButton.imageAlignment          = .top
         shareButton.titleAlignment          = .bottom
         shareButton.imageTitleSpacing       = ARTAdaptedValue(4.0)
         shareButton.imageSize               = ARTAdaptedSize(width: 30.0, height: 30.0)
         shareButton.setTitle("399", for: .normal)
         shareButton.setTitleColor(.white, for: .normal)
-        shareButton.setImage(UIImage(named: "video_share"), for: .normal)
-        shareButton.addTarget(self, action: #selector(didTapShareButton), for: .touchUpInside)
+        shareButton.setImage(UIImage(named: "icon_video_share_fullscreen"), for: .normal)
         containerView.addSubview(shareButton)
         shareButton.snp.makeConstraints { make in
             make.size.equalTo(favoriteButton)
             make.top.equalTo(commentButton.snp.bottom).offset(ARTAdaptedValue(8.0))
             make.right.equalToSuperview()
         }
+        shareButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.handleButtonTap(self.shareButton)
+        })
+        .disposed(by: disposeBag)
     }
     
     private func setupProgressView() { // 创建进度条
@@ -353,34 +275,45 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
     
     private func setupMoreButton() { // 创建更多按钮
         moreButton = ARTAlignmentButton(type: .custom)
-        moreButton.layoutType       = .freeform
-        moreButton.imageAlignment   = .bottomLeft
-        moreButton.imageSize        = ARTAdaptedSize(width: 30.0, height: 30.0)
-        moreButton.setImage(UIImage(named: "video_more"), for: .normal)
-        moreButton.addTarget(self, action: #selector(didTapMoreButton), for: .touchUpInside)
+        moreButton.tag                      = ARTVideoPlayerControls.ButtonType.more.rawValue
+        moreButton.layoutType               = .freeform
+        moreButton.imageAlignment           = .bottomLeft
+        moreButton.imageSize                = ARTAdaptedSize(width: 30.0, height: 30.0)
+        moreButton.setImage(UIImage(named: "icon_video_more"), for: .normal)
         toolBarView.addSubview(moreButton)
         moreButton.snp.makeConstraints { make in
             make.size.equalTo(ARTAdaptedSize(width: 42.0, height: 40.0))
             make.right.equalToSuperview()
             make.top.equalToSuperview()
         }
+        moreButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.handleButtonTap(self.moreButton)
+        })
+        .disposed(by: disposeBag)
     }
     
-    private func setupDanmakuButton() { // 创建弹幕按钮
+    private func setupDanmakuButton() { // 创建弹幕开关按钮
         danmakuButton = ARTAlignmentButton(type: .custom)
-        danmakuButton.isSelected = isDanmakuEnabled()
-        danmakuButton.layoutType = .freeform
-        danmakuButton.imageAlignment = .bottomLeft
-        danmakuButton.imageSize = ARTAdaptedSize(width: 30.0, height: 30.0)
-        danmakuButton.setImage(UIImage(named: "video_danmaku_off_black"), for: .normal)
-        danmakuButton.setImage(UIImage(named: "video_danmaku_on_black"), for: .selected)
-        danmakuButton.addTarget(self, action: #selector(didTapDanmakuButton), for: .touchUpInside)
+        danmakuButton.tag                   = ARTVideoPlayerControls.ButtonType.danmakuToggle.rawValue
+        danmakuButton.isSelected            = isDanmakuEnabled()
+        danmakuButton.layoutType            = .freeform
+        danmakuButton.imageAlignment        = .bottomLeft
+        danmakuButton.imageSize             = ARTAdaptedSize(width: 30.0, height: 30.0)
+        danmakuButton.setImage(UIImage(named: "icon_video_danmaku_off_black"), for: .normal)
+        danmakuButton.setImage(UIImage(named: "icon_video_danmaku_on_black"), for: .selected)
         toolBarView.addSubview(danmakuButton)
         danmakuButton.snp.makeConstraints { make in
             make.size.equalTo(moreButton)
             make.right.equalTo(moreButton.snp.left)
             make.centerY.equalTo(moreButton)
         }
+        danmakuButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.danmakuButton.isSelected = !self.danmakuButton.isSelected
+            self.handleButtonTap(self.danmakuButton)
+        })
+        .disposed(by: disposeBag)
     }
     
     private func setupDanmakuInputField() { // 创建弹幕输入框
@@ -409,11 +342,17 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         }
         
         let danmakuSendButton = UIButton(type: .custom)
-        danmakuSendButton.addTarget(self, action: #selector(didTapDanmakuSendButton), for: .touchUpInside)
+        danmakuSendButton.tag               = ARTVideoPlayerControls.ButtonType.danmakuSend.rawValue
         toolBarView.addSubview(danmakuSendButton)
         danmakuSendButton.snp.makeConstraints { make in
             make.edges.equalTo(inputView)
         }
+        danmakuSendButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            danmakuSendButton.art_customValue = self.danmakuInputLabel.text
+            self.handleButtonTap(danmakuSendButton)
+        })
+        .disposed(by: disposeBag)
     }
     
     private func setupClearButton() { // 创建清屏按钮
@@ -430,12 +369,16 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         
         let clearButton = ARTAlignmentButton(type: .custom)
         clearButton.imageSize = ARTAdaptedSize(width: 19.0, height: 19.0)
-        clearButton.setImage(UIImage(named: "video_clear"), for: .normal)
-        clearButton.addTarget(self, action: #selector(didTapClearButton), for: .touchUpInside)
+        clearButton.setImage(UIImage(named: "icon_video_clear"), for: .normal)
         clearContainerView.addSubview(clearButton)
         clearButton.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        clearButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.animateViewAlpha(containerAlpha: 0.0, exitClearViewAlpha: 1.0)
+        })
+        .disposed(by: disposeBag)
     }
     
     private func setupExitClearButton() { // 创建退出清屏按钮
@@ -453,17 +396,31 @@ extension ARTVideoPlayerPortraitFullscreenBottombar {
         
         let exitClearButton = ARTAlignmentButton(type: .custom)
         exitClearButton.imageSize = ARTAdaptedSize(width: 19.0, height: 19.0)
-        exitClearButton.setImage(UIImage(named: "video_exit_clear"), for: .normal)
-        exitClearButton.addTarget(self, action: #selector(didTapExitClearButton), for: .touchUpInside)
+        exitClearButton.setImage(UIImage(named: "icon_video_exit_clear"), for: .normal)
         exitClearView.addSubview(exitClearButton)
         exitClearButton.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        exitClearButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.animateViewAlpha(containerAlpha: 1.0, exitClearViewAlpha: 0.0)
+        })
+        .disposed(by: disposeBag)
     }
     
     private func setupAnimation() { // 过度动画流畅
         UIView.animate(withDuration: 0.3) {
             self.containerView.alpha = 1.0
+        }
+    }
+    
+    /// 通用的动画方法
+    private func animateViewAlpha(containerAlpha: CGFloat, exitClearViewAlpha: CGFloat) {
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.25) {
+                self.containerView.alpha = containerAlpha
+                self.exitClearView.alpha = exitClearViewAlpha
+            }
         }
     }
 }

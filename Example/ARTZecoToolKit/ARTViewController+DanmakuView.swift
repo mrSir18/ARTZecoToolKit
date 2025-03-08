@@ -95,22 +95,22 @@ extension ARTViewController_DanmakuView {
 extension ARTViewController_DanmakuView: ARTDanmakuViewDelegate {
     
     func danmakuViewCreateCell(_ danmakuView: ARTDanmakuView) -> ARTDanmakuCell { // 创建弹幕
-        let cell = ARTCustomDanmakuCell()
+        let cell = ARTEnhancedDanmakuCell()
         return cell
     }
     
     func danmakuView(_ danmakuView: ARTDanmakuView, didClickDanmakuCell danmakuCell: ARTDanmakuCell) { // 点击弹幕
-        guard let danmakuCell = danmakuCell as? ARTCustomDanmakuCell else { return }
+        guard let danmakuCell = danmakuCell as? ARTEnhancedDanmakuCell else { return }
         print("点击了弹幕：\(danmakuCell.danmakuLabel.text ?? "")")
     }
     
     func danmakuView(_ danmakuView: ARTDanmakuView, willDisplayDanmakuCell danmakuCell: ARTDanmakuCell) { // 弹幕开始显示
-//        guard let danmakuCell = danmakuCell as? ARTCustomDanmakuCell else { return }
+//        guard let danmakuCell = danmakuCell as? ARTEnhancedDanmakuCell else { return }
 //        print("弹幕开始显示：\(danmakuCell.bulletLabel.text ?? "")")
     }
     
     func danmakuView(_ danmakuView: ARTDanmakuView, didEndDisplayDanmakuCell danmakuCell: ARTDanmakuCell) { // 弹幕结束显示
-//        guard let danmakuCell = danmakuCell as? ARTCustomDanmakuCell else { return }
+//        guard let danmakuCell = danmakuCell as? ARTEnhancedDanmakuCell else { return }
 //        print("弹幕结束显示：\(danmakuCell.bulletLabel.text ?? "")")
     }
     

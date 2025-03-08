@@ -5,6 +5,17 @@ PODS:
     - SnapKit
     - YYText
   - libpag (4.4.25)
+  - RxBlocking (6.9.0):
+    - RxSwift (= 6.9.0)
+  - RxCocoa (6.9.0):
+    - RxRelay (= 6.9.0)
+    - RxSwift (= 6.9.0)
+  - RxGesture (4.0.4):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxRelay (6.9.0):
+    - RxSwift (= 6.9.0)
+  - RxSwift (6.9.0)
   - SDWebImage (5.21.0):
     - SDWebImage/Core (= 5.21.0)
   - SDWebImage/Core (5.21.0)
@@ -15,10 +26,19 @@ PODS:
 DEPENDENCIES:
   - ARTZecoToolKit (from `../`)
   - libpag
+  - RxBlocking
+  - RxCocoa
+  - RxGesture
+  - RxSwift
 
 SPEC REPOS:
   trunk:
     - libpag
+    - RxBlocking
+    - RxCocoa
+    - RxGesture
+    - RxRelay
+    - RxSwift
     - SDWebImage
     - SmartCodable
     - SnapKit
@@ -31,11 +51,16 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   ARTZecoToolKit: 5a6fdc0b4c0c0b0b99401565d63f60142f3e4267
   libpag: 154c2213708c16c48a49b3dd51c85399cebb6a5a
+  RxBlocking: 5d2b26d019b6ba9eb3f58638611f124609c44822
+  RxCocoa: ac16414696ae706516be3e1ab00fcce5bdc9be8a
+  RxGesture: f3efb47ed2d26a8082f7b660d4a59970e275a7f8
+  RxRelay: 6b0c930e5cef57d5fe2032571e5e65b78e3cbdb1
+  RxSwift: 31649ace6aceeb422e16ff71c60804f9c3281ed9
   SDWebImage: f84b0feeb08d2d11e6a9b843cb06d75ebf5b8868
   SmartCodable: 56babd0a912588ce299f2d0799633126f4c427c2
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 5a1a4152e59719f08d1581af2e6194b21d4f2722
+PODFILE CHECKSUM: f8731ae3effa4a350dd6ba910b5d45eb70709d49
 
 COCOAPODS: 1.14.3

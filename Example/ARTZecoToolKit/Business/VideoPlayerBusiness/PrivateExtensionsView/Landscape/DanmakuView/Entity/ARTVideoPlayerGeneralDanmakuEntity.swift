@@ -1,6 +1,6 @@
 //
 //  ARTVideoPlayerGeneralDanmakuEntity.swift
-//  ARTZecoToolKit
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/11/7.
 //
@@ -9,7 +9,7 @@
 extension ARTVideoPlayerGeneralDanmakuEntity {
     
     // 滑块选项类型
-    public enum SliderOptionType: String, Codable {
+    enum SliderOptionType: String, Codable {
         case opacity        // 不透明度
         case displayArea    // 显示区域
         case scale          // 缩放比例
@@ -17,7 +17,7 @@ extension ARTVideoPlayerGeneralDanmakuEntity {
     }
     
     // 滑块选项
-    public struct SliderOption: Codable {
+    struct SliderOption: Codable {
         let title: String       // 标题
         let minValue: Float     // 最小值
         let maxValue: Int       // 最大值
@@ -27,7 +27,7 @@ extension ARTVideoPlayerGeneralDanmakuEntity {
     }
     
     // 默认值结构体
-    public struct DefaultValues {
+    struct DefaultValues {
         static let opacity: Int     = 100
         static let displayArea: Int = 2
         static let scale: Int       = 2
@@ -49,7 +49,7 @@ extension ARTVideoPlayerGeneralDanmakuEntity {
     }
 }
 
-public struct ARTVideoPlayerGeneralDanmakuEntity {
+struct ARTVideoPlayerGeneralDanmakuEntity {
     
     /// 存储键
     private static let storageKey = "ARTVideoPlayerSliderOptions"
@@ -60,7 +60,7 @@ public struct ARTVideoPlayerGeneralDanmakuEntity {
     
     // MARK: - Initialization
     
-    public init() {
+    init() {
         if let savedOptions = Self.loadSliderOptions() {
             self.sliderOptions = savedOptions
         } else {
@@ -75,7 +75,7 @@ public struct ARTVideoPlayerGeneralDanmakuEntity {
     }
     
     /// 保存到本地
-    public func saveSliderOptions() {
+    func saveSliderOptions() {
         do {
             let data = try JSONEncoder().encode(sliderOptions)
             UserDefaults.standard.set(data, forKey: Self.storageKey)
@@ -103,7 +103,7 @@ public struct ARTVideoPlayerGeneralDanmakuEntity {
     ///  - index: 下标
     ///  - newOption: 新选项
     ///  - Note: 更新失败时会打印错误信息
-    public mutating func updateOption(at index: Int, with newOption: SliderOption) {
+    mutating func updateOption(at index: Int, with newOption: SliderOption) {
         guard sliderOptions.indices.contains(index) else {
             print("更新失败: 下标 \(index) 超出范围")
             return
@@ -115,12 +115,12 @@ public struct ARTVideoPlayerGeneralDanmakuEntity {
     /// 根据 OptionType 获取对应的 defaultValue 值
     /// - Parameter optionType: 滑块选项类型
     /// - Returns: 如果找到对应的选项，返回其 `defaultValue`；否则返回 nil
-    public func defaultValue(for optionType: SliderOptionType) -> Int? {
+    func defaultValue(for optionType: SliderOptionType) -> Int? {
         return sliderOptions.first(where: { $0.optionType == optionType })?.defaultValue
     }
     
     /// 恢复默认值
-    public mutating func restoreDefaults() {
+    mutating func restoreDefaults() {
         sliderOptions = sliderOptions.map { option in
             var modifiedOption = option
             modifiedOption.defaultValue = DefaultValues.defaultValue(for: option.optionType)

@@ -1,11 +1,22 @@
 //
 //  ARTVideoPlayerOverlayView.swift
-//  Pods
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/10/19.
 //
 
 import ARTZecoToolKit
+
+// MARK: - ARTVideoPlayerOverlayViewDelegate
+
+protocol ARTVideoPlayerOverlayViewDelegate: AnyObject {
+    
+    /// 点击弹幕事件回调
+    /// - Parameter danmakuCell: 弹幕单元
+    func overlayViewDidTapDanmakuCell(for overlayView: ARTVideoPlayerOverlayView, danmakuCell: ARTDanmakuCell)
+}
+
+// MARK: - ARTVideoPlayerOverlayView
 
 class ARTVideoPlayerOverlayView: ARTPassThroughView {
     
@@ -37,7 +48,8 @@ class ARTVideoPlayerOverlayView: ARTPassThroughView {
     
     /// 创建弹幕视图
     func setupDanmakuView() {
-        danmakuView = delegate_customDanmakuView() ?? defaultDanmakuView()
+        danmakuView = ARTDanmakuView(self)
+        danmakuView.danmakuTrackHeight = ARTAdaptedValue(42.0) // 弹幕轨道高度
         addSubview(danmakuView)
         danmakuView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -49,13 +61,6 @@ class ARTVideoPlayerOverlayView: ARTPassThroughView {
 // MARK: - Private Methods
 
 extension ARTVideoPlayerOverlayView {
-    
-    /// 默认弹幕视图
-    private func defaultDanmakuView() -> ARTDanmakuView {
-        danmakuView = ARTDanmakuView(self)
-        danmakuView.danmakuTrackHeight = ARTAdaptedValue(42.0) // 弹幕轨道高度
-        return danmakuView
-    }
     
     /// 更新弹幕的属性
     /// - Parameter option: 弹幕选项
@@ -117,7 +122,7 @@ extension ARTVideoPlayerOverlayView {
     
     /// 是否开始发送弹幕
     /// - Parameter isDanmakuEnabled: 是否开启弹幕
-    public func shouldSendDanmaku(isDanmakuEnabled: Bool) {
+    public func shouldSendDanmaku(_ isDanmakuEnabled: Bool) {
         isDanmakuEnabled ? startDanmaku() : stopDanmaku()
     }
     
@@ -162,13 +167,11 @@ extension ARTVideoPlayerOverlayView {
     }
 }
 
-// MARK: - Private Delegate Methods
+// MARK: - ARTDanmakuViewDelegate
 
-extension ARTVideoPlayerOverlayView {
-
-    /// 获取自定义弹幕视图
-    /// - Returns: 自定义弹幕视图
-    private func delegate_customDanmakuView() -> ARTDanmakuView? {
-        return delegate?.overlayViewDidCustomDanmakuView(for: self)
+extension ARTVideoPlayerOverlayView: ARTDanmakuViewDelegate {
+    
+    public func danmakuView(_ danmakuView: ARTDanmakuView, didClickDanmakuCell danmakuCell: ARTDanmakuCell) { // 点击弹幕
+        delegate?.overlayViewDidTapDanmakuCell(for: self, danmakuCell: danmakuCell)
     }
 }

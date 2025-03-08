@@ -1,6 +1,6 @@
 //
 //  ARTVideoPlayerWindowBottombar.swift
-//  ARTZecoToolKit
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/10/15.
 //
@@ -8,19 +8,7 @@
 import AVFoundation
 import ARTZecoToolKit
 
-/// 协议方法
-///
-/// - NOTE: 可继承该协议方法
-protocol ARTVideoPlayerWindowBottombarDelegate: ARTVideoPlayerBottombarDelegate {
-    
-    /// 当全屏按钮被点击时调用
-    func bottombarDidTapFullscreen(for bottombar: ARTVideoPlayerWindowBottombar)
-}
-
 class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
-    
-    /// 代理对象
-    weak var subclassDelegate: ARTVideoPlayerWindowBottombarDelegate?
     
     /// 容器视图
     private var containerView: UIView!
@@ -34,17 +22,6 @@ class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     /// 全屏按钮
     private var fullscreenButton: ARTAlignmentButton!
     
-    
-    // MARK: - Initializatio
-    
-    init(_ subclassDelegate: ARTVideoPlayerWindowBottombarDelegate? = nil) {
-        self.subclassDelegate = subclassDelegate
-        super.init(subclassDelegate)
-    }
-    
-    required public init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     // MARK: - Override Super Methods
     
@@ -71,7 +48,7 @@ class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
             UIView.animate(withDuration: duration) {
                 self.sliderView.trackHeight = trackHeight
                 self.progressView.layer.cornerRadius = cornerRadius
-                if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: thumbSize) {
+                if let thumbImage = UIImage(named: "icon_video_slider_thumb")?.art_scaled(to: thumbSize) {
                     self.sliderView.setThumbImage(thumbImage, for: .normal)
                 }
                 self.progressView.snp.updateConstraints { make in
@@ -85,16 +62,6 @@ class ARTVideoPlayerWindowBottombar: ARTVideoPlayerBottombar {
     override func resetPlaybackTimeLabels() { // 重置播放时间标签
         currentTimeLabel.text = "00:00"
         durationLabel.text = "/00:00"
-    }
-}
-
-// MARK: - Button Actions
-
-extension ARTVideoPlayerWindowBottombar {
-    
-    /// 点击全屏按钮
-    @objc func didTapFullscreenButton() {
-        subclassDelegate?.bottombarDidTapFullscreen(for: self)
     }
 }
 
@@ -140,17 +107,22 @@ extension ARTVideoPlayerWindowBottombar {
     
     private func setupFullscreenButton() { // 创建全屏按钮
         fullscreenButton = ARTAlignmentButton(type: .custom)
+        fullscreenButton.tag                = ARTVideoPlayerControls.ButtonType.fullscreen.rawValue
         fullscreenButton.layoutType         = .freeform
         fullscreenButton.imageAlignment     = .topLeft
         fullscreenButton.imageEdgeInset     = UIEdgeInsets(top: ARTAdaptedValue(10.0), left: ARTAdaptedValue(12.0), bottom: 0, right: 0) // 图片内边距
         fullscreenButton.imageSize          = ARTAdaptedSize(width: 20.0, height: 20.0)
-        fullscreenButton.setImage(UIImage(named: "video_fullscreen"), for: .normal)
-        fullscreenButton.addTarget(self, action: #selector(didTapFullscreenButton), for: .touchUpInside)
+        fullscreenButton.setImage(UIImage(named: "icon_video_fullscreen"), for: .normal)
         containerView.addSubview(fullscreenButton)
         fullscreenButton.snp.makeConstraints { make in
             make.top.right.bottom.equalToSuperview()
             make.width.equalTo(ARTAdaptedValue(48.0))
         }
+        fullscreenButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.handleButtonTap(self.fullscreenButton)
+        })
+        .disposed(by: disposeBag)
     }
     
     private func setupProgressView() { // 创建进度条

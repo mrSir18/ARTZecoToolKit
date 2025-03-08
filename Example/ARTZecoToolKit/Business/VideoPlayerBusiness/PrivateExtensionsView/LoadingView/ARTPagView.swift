@@ -1,13 +1,12 @@
 //
 //  ARTPagView.swift
-//  ARTZecoToolKit_Example
+//  ARTZeco
 //
-//  Created by mrSir18 on 2024/12/12.
-//  Copyright © 2024 CocoaPods. All rights reserved.
+//  Created by mrSir18 on 2024/6/26.
 //
 
 class ARTPagView: PAGView {
-    
+
     // MARK: - Life Cycle
     
     override init(frame: CGRect) {
@@ -30,7 +29,6 @@ class ARTPagView: PAGView {
            let pagFile = PAGFile.load(filePath) {
             setComposition(pagFile)
             setRepeatCount(repeatCount)
-            play()
         }
     }
 }

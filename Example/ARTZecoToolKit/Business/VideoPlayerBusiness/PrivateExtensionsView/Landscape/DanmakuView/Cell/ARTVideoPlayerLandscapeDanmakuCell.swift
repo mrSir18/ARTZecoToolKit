@@ -1,6 +1,6 @@
 //
 //  ARTVideoPlayerLandscapeDanmakuCell.swift
-//  ARTZecoToolKit
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/11/6.
 //
@@ -29,7 +29,7 @@ class ARTVideoPlayerLandscapeDanmakuCell: UICollectionViewCell {
         view.minimumTrackTintColor = .art_color(withHEXValue: 0xFE5C01)
         view.maximumTrackTintColor = .art_color(withHEXValue: 0xC8C8CC, alpha: 0.5)
         view.trackHeight = ARTAdaptedValue(2.0)
-        if let thumbImage = UIImage(named: "video_slider_landscape_danmaku_thumb")?.art_scaled(to: ARTAdaptedSize(width: 14.0, height: 14.0)) {
+        if let thumbImage = UIImage(named: "icon_video_slider_landscape_danmaku_thumb")?.art_scaled(to: ARTAdaptedSize(width: 14.0, height: 14.0)) {
             view.setThumbImage(thumbImage, for: .normal)
         }
         view.addTarget(self, action: #selector(handleSliderValueChanged(_:)), for: .valueChanged)
@@ -41,7 +41,6 @@ class ARTVideoPlayerLandscapeDanmakuCell: UICollectionViewCell {
     }()
     
     /// 滑块值改变回调
-    ///
     /// - Parameters:
     ///  - value: 当前滑块值
     ///  - shouldSave 是否需要保存

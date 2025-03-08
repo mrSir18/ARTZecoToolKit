@@ -1,6 +1,6 @@
 //
 //  ARTVideoPlayerSystemControls.swift
-//  Pods
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/10/21.
 //
@@ -8,27 +8,16 @@
 import AVFoundation
 import ARTZecoToolKit
 
-/// 协议方法
-///
-/// - NOTE: 可继承该协议方法
-protocol ARTVideoPlayerSystemControlsDelegate: AnyObject {
-    
-}
-
 class ARTVideoPlayerSystemControls: ARTPassThroughView {
-    
-    /// 代理对象
-    weak var delegate: ARTVideoPlayerSystemControlsDelegate?
-    
+
     /// 视频播放显示视图
     private var playerDisplayView: ARTVideoPlayerDisplayView!
     
     
     // MARK: - Initialization
-    
-    init(_ delegate: ARTVideoPlayerSystemControlsDelegate? = nil) {
+
+    init() {
         super.init(frame: .zero)
-        self.delegate = delegate
         setupViews()
     }
     

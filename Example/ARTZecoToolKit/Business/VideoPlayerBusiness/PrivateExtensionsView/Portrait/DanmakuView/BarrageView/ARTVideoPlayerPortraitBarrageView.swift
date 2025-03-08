@@ -1,6 +1,6 @@
 //
 //  ARTVideoPlayerPortraitBarrageView.swift
-//  ARTZecoToolKit
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/11/7.
 //
@@ -32,9 +32,7 @@ class ARTVideoPlayerPortraitBarrageView: UIView {
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Private Methods
-    
+
     private func setupViews() {
         setupCollectionView()
     }

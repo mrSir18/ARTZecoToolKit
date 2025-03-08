@@ -1,26 +1,19 @@
 //
 //  ARTVideoPlayerTopbar.swift
-//  Pods
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/10/15.
 //
 
 import ARTZecoToolKit
+import RxSwift
+import RxCocoa
 
-/// 协议方法
-///
-/// - NOTE: 可继承该协议方法
 protocol ARTVideoPlayerTopbarDelegate: AnyObject {
     
-    /// 当返回按钮被点击时调用
-    func topbarDidTapBack(for topbar: ARTVideoPlayerTopbar)
-    
-    /// 当收藏按钮被点击时调用
-    /// - Parameter isFavorited: 是否已收藏
-    func topbarDidTapFavorite(for topbar: ARTVideoPlayerTopbar, isFavorited: Bool)
-    
-    /// 当分享按钮被点击时调用
-    func topbarDidTapShare(for topbar: ARTVideoPlayerTopbar)
+    /// 用户点击顶部导航栏按钮
+    /// - Parameter sender: 按钮对象
+    func topbar(_ topbar: ARTVideoPlayerTopbar, didTapButton sender: UIButton)
 }
 
 class ARTVideoPlayerTopbar: UIView {
@@ -43,6 +36,9 @@ class ARTVideoPlayerTopbar: UIView {
     /// 当前收藏状态
     public var isFavorited: Bool = false
     
+    /// 订阅管理对象
+    public let disposeBag = DisposeBag()
+    
     
     // MARK: - Initialization
     
@@ -63,6 +59,14 @@ class ARTVideoPlayerTopbar: UIView {
     public func setupViews() {
         
     }
+    
+    // MARK: - Button Actions
+    
+    /// 处理按钮点击事件
+    /// - Parameter button: 按钮对象
+    public func handleButtonTap(_ sender: UIButton) {
+        delegate?.topbar(self, didTapButton: sender)
+    }
 }
 
 // MARK: - Public Methods
@@ -74,27 +78,5 @@ extension ARTVideoPlayerTopbar {
     public func updateFavoriteButtonImage(isFavorited: Bool) {
         self.isFavorited = isFavorited
         // 根据 isFavorited 更新按钮图片的代码
-    }
-}
-
-// MARK: - Button Actions
-
-extension ARTVideoPlayerTopbar {
-    
-    /// 点击返回按钮
-    @objc func didTapBackButton() {
-        delegate?.topbarDidTapBack(for: self)
-    }
-    
-    /// 点击收藏按钮
-    @objc func didTapFavoriteButton() {
-        isFavorited.toggle()
-        updateFavoriteButtonImage(isFavorited: isFavorited)
-        delegate?.topbarDidTapFavorite(for: self, isFavorited: isFavorited)
-    }
-    
-    /// 点击分享按钮
-    @objc func didTapShareButton() {
-        delegate?.topbarDidTapShare(for: self)
     }
 }

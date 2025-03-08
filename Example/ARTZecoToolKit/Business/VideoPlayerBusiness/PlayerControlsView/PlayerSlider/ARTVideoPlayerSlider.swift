@@ -1,11 +1,26 @@
 //
 //  ARTVideoPlayerSlider.swift
-//  Pods
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/10/20.
 //
 
 import ARTZecoToolKit
+
+public enum SliderAction {
+    
+    /// 滑块开始触摸
+    case beginTouch
+    
+    /// 滑块值改变
+    case changeValue
+    
+    /// 滑块触摸结束
+    case endTouch
+    
+    /// 滑块被点击
+    case tap
+}
 
 /// 自定义视频播放器滑块类，具有可调节的轨道高度。
 ///

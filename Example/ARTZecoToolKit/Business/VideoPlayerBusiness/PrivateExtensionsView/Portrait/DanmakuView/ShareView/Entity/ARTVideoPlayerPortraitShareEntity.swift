@@ -1,6 +1,6 @@
 //
 //  ARTVideoPlayerPortraitShareEntity.swift
-//  ARTZecoToolKit
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/11/7.
 //
@@ -24,10 +24,10 @@ struct ARTVideoPlayerPortraitShareEntity {
     
     // 分享选项数组
     var shareOptions: [ShareOption] = [
-        ShareOption(icon: "share_session_icon", title: "微信好友", type: .wechatFriend),
-        ShareOption(icon: "share_timeline_icon", title: "微信朋友圈", type: .wechatMoments),
-        ShareOption(icon: "share_copy_icon", title: "复制链接", type: .copyLink),
-        ShareOption(icon: "share_download_icon", title: "保存照片", type: .savePhoto)
+        ShareOption(icon: "icon_share_session", title: "微信好友", type: .wechatFriend),
+        ShareOption(icon: "icon_share_timeline", title: "微信朋友圈", type: .wechatMoments),
+        ShareOption(icon: "icon_share_copy", title: "复制链接", type: .copyLink),
+        ShareOption(icon: "icon_share_download", title: "保存照片", type: .savePhoto)
     ]
     
     // 初始化

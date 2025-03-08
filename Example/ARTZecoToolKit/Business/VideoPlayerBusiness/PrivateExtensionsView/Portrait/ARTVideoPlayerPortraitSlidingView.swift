@@ -1,6 +1,6 @@
 //
 //  ARTVideoPlayerPortraitSlidingView.swift
-//  ARTZecoToolKit
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/11/7.
 //
@@ -38,21 +38,16 @@ class ARTVideoPlayerPortraitSlidingView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Override Super Methods
-    
-    /// 重写父类方法，设置子视图
+
+    /// 设置子视图
     func setupViews() {
         setupOverlayView()
         setupContainerView()
     }
     
-    // MARK: - Override Super Method
+    // MARK: - Public Method
     
     /// 显示动画视图
-    ///
-    /// - Parameter animated: 是否动画
-    /// - Note: 重写父类方法，设置子视图布局
     func showExtensionsView(_ completion: (() -> Void)? = nil) {
         if self.superview == nil { // 判断视图是否已在父视图中
             art_keyWindow.addSubview(self)
@@ -77,9 +72,6 @@ class ARTVideoPlayerPortraitSlidingView: UIView {
     }
     
     /// 移除动画视图
-    ///
-    /// - Parameter animated: 是否动画
-    /// - Note: 重写父类方法，设置子视图布局
     func hideExtensionsView(_ completion: (() -> Void)? = nil) {
         containerViewBottomConstraint?.update(offset: containerHeight)
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut]) {
@@ -93,9 +85,6 @@ class ARTVideoPlayerPortraitSlidingView: UIView {
     // MARK: - Gesture Recognizer
     
     /// 点击手势
-    ///
-    /// - Parameter gesture: 点击手势
-    /// - Note: 重写父类方法，处理点击手势
     @objc func handleSortingTapGesture(_ gesture: UITapGestureRecognizer) {
         hideExtensionsView()
     }

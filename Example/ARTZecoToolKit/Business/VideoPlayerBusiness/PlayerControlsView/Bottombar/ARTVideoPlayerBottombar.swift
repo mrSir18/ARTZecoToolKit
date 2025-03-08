@@ -1,45 +1,30 @@
 //
 //  ARTVideoPlayerBottombar.swift
-//  Pods
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/10/15.
 //
 
 import AVFoundation
 import ARTZecoToolKit
+import RxSwift
+import RxCocoa
 
-/// 协议方法
-///
-/// - NOTE: 可继承该协议方法
 protocol ARTVideoPlayerBottombarDelegate: AnyObject {
     
-    /// 当滑块触摸开始时调用
-    func bottombarDidBeginTouch(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider)
-    
-    /// 当滑块值改变时调用
-    func bottombarDidChangeValue(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider)
-    
-    /// 当滑块触摸结束时调用
-    func bottombarDidEndTouch(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider)
-    
-    /// 当滑块被点击时调用
-    func bottombarDidTap(for bottombar: ARTVideoPlayerBottombar, slider: ARTVideoPlayerSlider)
-    
-    /// 当暂停按钮被点击时调用
-    func bottombarDidTapPause(for bottombar: ARTVideoPlayerBottombar, isPlaying: Bool)
-    
-    /// 当弹幕开关按钮被点击时调用
-    /// - Parameter isDanmakuEnabled: 是否开启弹幕
-    func bottombarDidTapDanmakuToggle(for bottombar: ARTVideoPlayerBottombar, isDanmakuEnabled: Bool)
-    
-    /// 当弹幕设置按钮被点击时调用
-    func bottombarDidTapDanmakuSettings(for bottombar: ARTVideoPlayerBottombar)
-    
-    /// 当弹幕发送按钮被点击时调用
-    func bottombarDidTapDanmakuSend(for bottombar: ARTVideoPlayerBottombar, text: String)
-    
     /// 请求播放器的播放状态
+    /// - Returns: 播放器当前状态
     func bottombarDidRequestPlayerState(for bottombar: ARTVideoPlayerBottombar) -> PlayerState
+    
+    /// 滑块操作
+    /// - Parameters:
+    ///   - slider: 被操作的滑块
+    ///   - action: 操作类型
+    func bottombar(_ bottombar: ARTVideoPlayerBottombar, didPerformSliderAction slider: ARTVideoPlayerSlider, action: SliderAction)
+    
+    /// 用户点击底部工具栏按钮
+    /// - Parameter sender: 按钮对象
+    func bottombar(_ bottombar: ARTVideoPlayerBottombar, didTapButton sender: UIButton)
 }
 
 class ARTVideoPlayerBottombar: UIView {
@@ -70,7 +55,7 @@ class ARTVideoPlayerBottombar: UIView {
         view.minimumTrackTintColor = .art_color(withHEXValue: 0xFE5C01, alpha: 0.66)
         view.trackHeight = ARTAdaptedValue(3.0)
         view.thumbOffset = ARTAdaptedValue(-1.5)
-        if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: ARTAdaptedSize(width: 14.0, height: 14.0)) {
+        if let thumbImage = UIImage(named: "icon_video_slider_thumb")?.art_scaled(to: ARTAdaptedSize(width: 14.0, height: 14.0)) {
             view.setThumbImage(thumbImage, for: .normal)
         }
         view.addTarget(self, action: #selector(handleSliderTouchBegan(_:)), for: .touchDown)
@@ -81,6 +66,9 @@ class ARTVideoPlayerBottombar: UIView {
         view.addGestureRecognizer(tapGesture)
         return view
     }()
+    
+    /// 订阅管理对象
+    public let disposeBag = DisposeBag()
     
     /// 进度条上次点击时间
     private var lastSliderTapTime: TimeInterval = 0.0
@@ -93,8 +81,8 @@ class ARTVideoPlayerBottombar: UIView {
     
     public init(_ delegate: ARTVideoPlayerBottombarDelegate? = nil) {
         super.init(frame: .zero)
-        self.delegate = delegate
         self.backgroundColor = .clear
+        self.delegate = delegate
         setupViews()
     }
     
@@ -108,6 +96,14 @@ class ARTVideoPlayerBottombar: UIView {
     public func setupViews() {
         
     }
+    
+    // MARK: - Button Actions
+    
+    /// 处理按钮点击事件
+    /// - Parameter button: 按钮对象
+    public func handleButtonTap(_ sender: UIButton) {
+        delegate?.bottombar(self, didTapButton: sender)
+    }
 }
 
 // MARK: - Slider Events
@@ -118,20 +114,20 @@ extension ARTVideoPlayerBottombar {
     @objc func handleSliderTouchBegan(_ slider: ARTVideoPlayerSlider) {
         guard playerState != .buffering else { return }
         configureSliderAppearance(for: slider, isTouching: true)
-        delegate?.bottombarDidBeginTouch(for: self, slider: slider)
+        delegate?.bottombar(self, didPerformSliderAction: slider, action: .beginTouch)
     }
     
     /// 滑块值改变时调用的函数
     @objc func handleSliderValueChanged(_ slider: ARTVideoPlayerSlider) {
         guard playerState != .buffering else { return }
-        delegate?.bottombarDidChangeValue(for: self, slider: slider)
+        delegate?.bottombar(self, didPerformSliderAction: slider, action: .changeValue)
     }
     
     /// 触摸结束时调用的函数
     @objc func handleSliderTouchEnded(_ slider: ARTVideoPlayerSlider) {
         guard playerState != .buffering else { return }
         configureSliderAppearance(for: slider, isTouching: false)
-        delegate?.bottombarDidEndTouch(for: self, slider: slider)
+        delegate?.bottombar(self, didPerformSliderAction: slider, action: .endTouch)
     }
     
     /// 处理滑块被点击的手势
@@ -140,17 +136,17 @@ extension ARTVideoPlayerBottombar {
         let currentTime = Date().timeIntervalSince1970
         guard currentTime - lastSliderTapTime >= 0.5 else { return } // 限制点击间隔，至少 0.5 秒, 防止进度条动画未完成时重复点击
         
-        guard let sliderView = gesture.view as? ARTVideoPlayerSlider else { return }
-        let location = gesture.location(in: sliderView)
-        guard sliderView.bounds.contains(location) else { return } // 点击位置不在滑块范围内，直接返回
+        guard let slider = gesture.view as? ARTVideoPlayerSlider else { return }
+        let location = gesture.location(in: slider)
+        guard slider.bounds.contains(location) else { return } // 点击位置不在滑块范围内，直接返回
         
         // 计算点击位置相对于滑块的百分比
-        let percentage = location.x / sliderView.bounds.width
-        let newValue = Float(percentage) * (sliderView.maximumValue - sliderView.minimumValue) + sliderView.minimumValue
-        sliderView.value = min(max(newValue, sliderView.minimumValue), sliderView.maximumValue) // 设置滑块的新值，并确保其在有效范围内
+        let percentage = location.x / slider.bounds.width
+        let newValue = Float(percentage) * (slider.maximumValue - slider.minimumValue) + slider.minimumValue
+        slider.value = min(max(newValue, slider.minimumValue), slider.maximumValue) // 设置滑块的新值，并确保其在有效范围内
         
         // 指定播放时间
-        delegate?.bottombarDidTap(for: self, slider: sliderView)
+        delegate?.bottombar(self, didPerformSliderAction: slider, action: .tap)
         
         // 更新上次点击的时间
         lastSliderTapTime = currentTime
@@ -214,7 +210,7 @@ extension ARTVideoPlayerBottombar {
     /// - Parameter value: 滑块值
     @objc public func updateSliderPosition(value: Float) {
         adjustSliderValue(value: value)
-        delegate?.bottombarDidChangeValue(for: self, slider: sliderView)
+        delegate?.bottombar(self, didPerformSliderAction: sliderView, action: .changeValue)
     }
     
     /// 触摸结束时调用

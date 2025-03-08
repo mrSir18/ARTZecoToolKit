@@ -214,16 +214,3 @@ extension ARTViewController_VideoPlayer {
         }.joined(separator: ", ")
     }
 }
-
-// MARK: - ARTVideoPlayerViewDelegate
-
-extension ARTViewController_VideoPlayer: ARTVideoPlayerViewDelegate {
-    
-    func playerViewWrapper(for playerView: ARTVideoPlayerView) -> ARTVideoPlayerWrapperView? { // 获取播放器基类
-        return ARTVideoPlayerCustomWrapperView(self)
-    }
-}
-
-extension ARTViewController_VideoPlayer: ARTVideoPlayerCustomWrapperViewDelegate {
-    
-}

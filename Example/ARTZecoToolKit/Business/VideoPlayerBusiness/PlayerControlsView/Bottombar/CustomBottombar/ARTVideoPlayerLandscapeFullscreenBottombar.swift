@@ -1,6 +1,6 @@
 //
 //  ARTVideoPlayerLandscapeFullscreenBottombar.swift
-//  ARTZecoToolKit
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/10/15.
 //
@@ -8,25 +8,7 @@
 import AVFoundation
 import ARTZecoToolKit
 
-/// 协议方法
-///
-/// - NOTE: 可继承该协议方法
-protocol ARTVideoPlayerLandscapeFullscreenBottombarDelegate: ARTVideoPlayerBottombarDelegate {
-    
-    /// 当下一集按钮被点击时调用
-    func bottombarDidTapNext(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
-    
-    /// 当倍数按钮被点击时调用
-    func bottombarDidTapSpeed(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
-    
-    /// 当合集按钮被点击时调用
-    func bottombarDidTapCatalogue(for bottombar: ARTVideoPlayerLandscapeFullscreenBottombar)
-}
-
 class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
-    
-    /// 代理对象
-    weak var subclassDelegate: ARTVideoPlayerLandscapeFullscreenBottombarDelegate?
     
     /// 容器视图
     private var containerView: UIView!
@@ -57,18 +39,7 @@ class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
     
     /// 合集按钮
     private var collectionButton: UIButton!
-    
-    
-    // MARK: - Initializatio
-    
-    init(_ subclassDelegate: ARTVideoPlayerLandscapeFullscreenBottombarDelegate? = nil) {
-        self.subclassDelegate = subclassDelegate
-        super.init(subclassDelegate)
-    }
-    
-    required public init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+
     
     // MARK: - Override Super Methods
     
@@ -101,7 +72,7 @@ class ARTVideoPlayerLandscapeFullscreenBottombar: ARTVideoPlayerBottombar {
             UIView.animate(withDuration: duration) {
                 self.sliderView.trackHeight = trackHeight
                 self.progressView.layer.cornerRadius = cornerRadius
-                if let thumbImage = UIImage(named: "video_slider_thumb")?.art_scaled(to: thumbSize) {
+                if let thumbImage = UIImage(named: "icon_video_slider_thumb")?.art_scaled(to: thumbSize) {
                     self.sliderView.setThumbImage(thumbImage, for: .normal)
                 }
                 self.progressView.snp.updateConstraints { make in
@@ -128,49 +99,6 @@ extension ARTVideoPlayerLandscapeFullscreenBottombar {
     /// 更新倍速按钮标题
     public func updateRateButtonTitle(rate: Float) {
         speedButton.setTitle(rate == 1.0 ? "倍数" : String(format: "%.1fX", rate), for: .normal)
-    }
-}
-
-// MARK: - Button Actions
-
-extension ARTVideoPlayerLandscapeFullscreenBottombar {
-    
-    /// 点击暂停按钮
-    @objc func didTapPauseButton() {
-        pauseButton.isSelected.toggle()
-        delegate?.bottombarDidTapPause(for: self, isPlaying: pauseButton.isSelected)
-    }
-    
-    /// 点击下一集按钮
-    @objc func didTapNextButton() {
-        subclassDelegate?.bottombarDidTapNext(for: self)
-    }
-    
-    /// 点击弹幕按钮
-    @objc func didTapDanmakuButton() {
-        danmakuButton.isSelected = !danmakuButton.isSelected
-        delegate?.bottombarDidTapDanmakuToggle(for: self, isDanmakuEnabled: danmakuButton.isSelected)
-    }
-    
-    /// 点击弹幕设置按钮
-    @objc func didTapDanmakuSettingsButton() {
-        delegate?.bottombarDidTapDanmakuSettings(for: self)
-    }
-    
-    /// 点击发送弹幕按钮
-    @objc func didTapDanmakuSendButton() {
-        guard let text = danmakuInputLabel.text else { return }
-        delegate?.bottombarDidTapDanmakuSend(for: self, text: text)
-    }
-    
-    /// 点击倍数按钮
-    @objc func didTapSpeedButton() {
-        subclassDelegate?.bottombarDidTapSpeed(for: self)
-    }
-    
-    /// 点击目录按钮
-    @objc func didTapCatalogueButton() {
-        subclassDelegate?.bottombarDidTapCatalogue(for: self)
     }
 }
 
@@ -239,68 +167,90 @@ extension ARTVideoPlayerLandscapeFullscreenBottombar {
     
     private func setupPauseButton() { // 创建暂停按钮
         pauseButton = ARTAlignmentButton(type: .custom)
-        pauseButton.imageAlignment = .left
-        pauseButton.imageSize = ARTAdaptedSize(width: 20.0, height: 20.0)
-        pauseButton.setImage(UIImage(named: "video_pause"), for: .normal)
-        pauseButton.setImage(UIImage(named: "video_play"), for: .selected)
-        pauseButton.addTarget(self, action: #selector(didTapPauseButton), for: .touchUpInside)
+        pauseButton.tag                     = ARTVideoPlayerControls.ButtonType.pause.rawValue
+        pauseButton.imageAlignment          = .left
+        pauseButton.imageSize               = ARTAdaptedSize(width: 20.0, height: 20.0)
+        pauseButton.setImage(UIImage(named: "icon_video_pause"), for: .normal)
+        pauseButton.setImage(UIImage(named: "icon_video_play"), for: .selected)
         containerView.addSubview(pauseButton)
         pauseButton.snp.makeConstraints { make in
             make.size.equalTo(ARTAdaptedSize(width: 36.0, height: 36.0))
             make.bottom.equalTo(-ARTAdaptedValue(12.0))
             make.left.equalTo(currentTimeLabel.snp.left).offset(-ARTAdaptedValue(4.0))
         }
+        pauseButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.pauseButton.isSelected.toggle()
+            self.handleButtonTap(self.pauseButton)
+        })
+        .disposed(by: disposeBag)
     }
     
     private func setupNextButton() { // 创建下一集按钮
         nextButton = ARTAlignmentButton(type: .custom)
-        nextButton.imageAlignment = .left
-        nextButton.imageSize = ARTAdaptedSize(width: 18.0, height: 17.0)
-        nextButton.setImage(UIImage(named: "video_next_episode"), for: .normal)
-        nextButton.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
+        nextButton.tag                      = ARTVideoPlayerControls.ButtonType.next.rawValue
+        nextButton.imageAlignment           = .left
+        nextButton.imageSize                = ARTAdaptedSize(width: 18.0, height: 17.0)
+        nextButton.setImage(UIImage(named: "icon_video_next_episode"), for: .normal)
         containerView.addSubview(nextButton)
         nextButton.snp.makeConstraints { make in
             make.size.equalTo(pauseButton)
             make.left.equalTo(pauseButton.snp.right)
             make.centerY.equalTo(pauseButton)
         }
+        nextButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.handleButtonTap(self.nextButton)
+        })
+        .disposed(by: disposeBag)
     }
     
-    private func setupDanmakuButton() { // 创建弹幕按钮
+    private func setupDanmakuButton() { // 创建弹幕开关按钮
         danmakuButton = ARTAlignmentButton(type: .custom)
-        danmakuButton.isSelected = isDanmakuEnabled()
-        danmakuButton.imageAlignment = .left
-        danmakuButton.imageSize = ARTAdaptedSize(width: 23.0, height: 23.0)
-        danmakuButton.setImage(UIImage(named: "video_danmaku_off"), for: .normal)
-        danmakuButton.setImage(UIImage(named: "video_danmaku_on"), for: .selected)
-        danmakuButton.addTarget(self, action: #selector(didTapDanmakuButton), for: .touchUpInside)
+        danmakuButton.tag                   = ARTVideoPlayerControls.ButtonType.danmakuToggle.rawValue
+        danmakuButton.isSelected            = isDanmakuEnabled()
+        danmakuButton.imageAlignment        = .left
+        danmakuButton.imageSize             = ARTAdaptedSize(width: 23.0, height: 23.0)
+        danmakuButton.setImage(UIImage(named: "icon_video_danmaku_off"), for: .normal)
+        danmakuButton.setImage(UIImage(named: "icon_video_danmaku_on"), for: .selected)
         containerView.addSubview(danmakuButton)
         danmakuButton.snp.makeConstraints { make in
             make.size.equalTo(pauseButton)
             make.left.equalTo(nextButton.snp.right)
             make.centerY.equalTo(pauseButton)
         }
+        danmakuButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.danmakuButton.isSelected = !self.danmakuButton.isSelected
+            self.handleButtonTap(self.danmakuButton)
+        })
+        .disposed(by: disposeBag)
     }
     
     private func setupDanmakuSettingsButton() { // 创建弹幕设置按钮
         danmakuSettingsButton = ARTAlignmentButton(type: .custom)
+        danmakuSettingsButton.tag            = ARTVideoPlayerControls.ButtonType.danmakuSettings.rawValue
         danmakuSettingsButton.imageAlignment = .left
         danmakuSettingsButton.imageSize = ARTAdaptedSize(width: 23.0, height: 23.0)
-        danmakuSettingsButton.setImage(UIImage(named: "video_danmaku_settings"), for: .normal)
-        danmakuSettingsButton.addTarget(self, action: #selector(didTapDanmakuSettingsButton), for: .touchUpInside)
+        danmakuSettingsButton.setImage(UIImage(named: "icon_video_danmaku_settings"), for: .normal)
         containerView.addSubview(danmakuSettingsButton)
         danmakuSettingsButton.snp.makeConstraints { make in
             make.size.equalTo(pauseButton)
             make.left.equalTo(danmakuButton.snp.right)
             make.centerY.equalTo(pauseButton)
         }
+        danmakuSettingsButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.handleButtonTap(self.danmakuSettingsButton)
+        })
+        .disposed(by: disposeBag)
     }
     
     private func setupDanmakuInputField() { // 创建弹幕输入框
         let inputView = UIView()
-        inputView.backgroundColor       = .art_color(withHEXValue: 0xD8D8D8, alpha: 0.3)
-        inputView.layer.cornerRadius    = ARTAdaptedValue(14.0)
-        inputView.layer.masksToBounds   = true
+        inputView.backgroundColor           = .art_color(withHEXValue: 0xD8D8D8, alpha: 0.3)
+        inputView.layer.cornerRadius        = ARTAdaptedValue(14.0)
+        inputView.layer.masksToBounds       = true
         containerView.addSubview(inputView)
         inputView.snp.makeConstraints { make in
             make.size.equalTo(ARTAdaptedSize(width: 163.0, height: 28.0))
@@ -309,10 +259,10 @@ extension ARTVideoPlayerLandscapeFullscreenBottombar {
         }
         
         danmakuInputLabel = YYLabel()
-        danmakuInputLabel.font            = .art_regular(ARTAdaptedValue(12.0))
-        danmakuInputLabel.textColor       = .art_color(withHEXValue: 0xFFFFFF)
-        danmakuInputLabel.text            = "发一条友好的弹幕吧"
-        danmakuInputLabel.textAlignment   = .center
+        danmakuInputLabel.font              = .art_regular(ARTAdaptedValue(12.0))
+        danmakuInputLabel.textColor         = .art_color(withHEXValue: 0xFFFFFF)
+        danmakuInputLabel.text              = "发一条友好的弹幕吧"
+        danmakuInputLabel.textAlignment     = .center
         containerView.addSubview(danmakuInputLabel)
         danmakuInputLabel.snp.makeConstraints { make in
             make.top.bottom.equalTo(inputView)
@@ -321,40 +271,56 @@ extension ARTVideoPlayerLandscapeFullscreenBottombar {
         }
         
         let danmakuSendButton = UIButton(type: .custom)
-        danmakuSendButton.addTarget(self, action: #selector(didTapDanmakuSendButton), for: .touchUpInside)
+        danmakuSendButton.tag               = ARTVideoPlayerControls.ButtonType.danmakuSend.rawValue
         containerView.addSubview(danmakuSendButton)
         danmakuSendButton.snp.makeConstraints { make in
             make.edges.equalTo(inputView)
         }
+        danmakuSendButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            danmakuSendButton.art_customValue = self.danmakuInputLabel.text
+            self.handleButtonTap(danmakuSendButton)
+        })
+        .disposed(by: disposeBag)
     }
     
     private func setupCatalogueButton() { // 创建合集按钮
         collectionButton = UIButton(type: .custom)
-        collectionButton.titleLabel?.font = .art_medium(ARTAdaptedValue(12.0))
+        collectionButton.tag                = ARTVideoPlayerControls.ButtonType.catalogue.rawValue
+        collectionButton.titleLabel?.font   = .art_medium(ARTAdaptedValue(12.0))
         collectionButton.contentHorizontalAlignment = .right
         collectionButton.setTitle("目录", for: .normal)
         collectionButton.setTitleColor(.art_color(withHEXValue: 0xFFFFFF), for: .normal)
-        collectionButton.addTarget(self, action: #selector(didTapCatalogueButton), for: .touchUpInside)
         containerView.addSubview(collectionButton)
         collectionButton.snp.makeConstraints { make in
             make.size.equalTo(ARTAdaptedSize(width: 44.0, height: 37.0))
             make.right.equalTo(progressView)
             make.bottom.equalTo(-ARTAdaptedValue(10.0))
         }
+        collectionButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.handleButtonTap(self.collectionButton)
+        })
+        .disposed(by: disposeBag)
     }
     
-    private func setupSpeedButton() { // 创建全屏按钮
+    private func setupSpeedButton() { // 创建倍数按钮
         speedButton = UIButton(type: .custom)
-        speedButton.titleLabel?.font = .art_medium(ARTAdaptedValue(12.0))
+        speedButton.tag                     = ARTVideoPlayerControls.ButtonType.speed.rawValue
+        speedButton.titleLabel?.font        = .art_medium(ARTAdaptedValue(12.0))
         speedButton.contentHorizontalAlignment = .right
         speedButton.setTitle("倍数", for: .normal)
         speedButton.setTitleColor(.art_color(withHEXValue: 0xFFFFFF), for: .normal)
-        speedButton.addTarget(self, action: #selector(didTapSpeedButton), for: .touchUpInside)
         containerView.addSubview(speedButton)
         speedButton.snp.makeConstraints { make in
             make.size.equalTo(collectionButton)
             make.right.equalTo(collectionButton.snp.left)
             make.bottom.equalTo(collectionButton)
         }
+        speedButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.handleButtonTap(self.speedButton)
+        })
+        .disposed(by: disposeBag)
     }
 }

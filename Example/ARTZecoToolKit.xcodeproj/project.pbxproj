@@ -19,9 +19,9 @@
 		0258B7AF2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0258B7AE2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift */; };
 		0258CA9E2C03995300A486E7 /* ARTViewController_PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0258CA9D2C03995300A486E7 /* ARTViewController_PageViewController.swift */; };
 		025AF79B2CEBE271009643E2 /* ARTViewController+DanmakuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025AF79A2CEBE271009643E2 /* ARTViewController+DanmakuView.swift */; };
-		025D29312D1046470022FA6E /* ARTVideoPlayerCustomWrapperViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D292F2D1046470022FA6E /* ARTVideoPlayerCustomWrapperViewDelegate.swift */; };
-		025D29322D1046470022FA6E /* ARTVideoPlayerCustomWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D292D2D1046470022FA6E /* ARTVideoPlayerCustomWrapperView.swift */; };
-		025D29332D1046470022FA6E /* ARTVideoPlayerCustomWrapperView+DelegateImplementations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D292E2D1046470022FA6E /* ARTVideoPlayerCustomWrapperView+DelegateImplementations.swift */; };
+		025D29312D1046470022FA6E /* ARTVideoPlayerEnhancedWrapperViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D292F2D1046470022FA6E /* ARTVideoPlayerEnhancedWrapperViewDelegate.swift */; };
+		025D29322D1046470022FA6E /* ARTVideoPlayerEnhancedWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D292D2D1046470022FA6E /* ARTVideoPlayerEnhancedWrapperView.swift */; };
+		025D29332D1046470022FA6E /* ARTVideoPlayerEnhancedWrapperView+DelegateImplementations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D292E2D1046470022FA6E /* ARTVideoPlayerEnhancedWrapperView+DelegateImplementations.swift */; };
 		025D29662D1096930022FA6E /* ARTVideoPlayerLandscapeFullscreenBottombar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29542D1096930022FA6E /* ARTVideoPlayerLandscapeFullscreenBottombar.swift */; };
 		025D29672D1096930022FA6E /* ARTVideoPlayerBottombar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29582D1096930022FA6E /* ARTVideoPlayerBottombar.swift */; };
 		025D29682D1096930022FA6E /* ARTVideoPlayerSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D295A2D1096930022FA6E /* ARTVideoPlayerSlider.swift */; };
@@ -38,7 +38,6 @@
 		025D29A12D10BF710022FA6E /* ARTVideoPlayerPortraitShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29992D10BF710022FA6E /* ARTVideoPlayerPortraitShareView.swift */; };
 		025D29A22D10BF710022FA6E /* ARTVideoPlayerLandscapeSlidingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29892D10BF710022FA6E /* ARTVideoPlayerLandscapeSlidingView.swift */; };
 		025D29A32D10BF710022FA6E /* ARTVideoPlayerLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D298B2D10BF710022FA6E /* ARTVideoPlayerLoadingView.swift */; };
-		025D29A42D10BF710022FA6E /* ARTVideoPlayerOverlayView+DelegateImplementations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29752D10BF710022FA6E /* ARTVideoPlayerOverlayView+DelegateImplementations.swift */; };
 		025D29A52D10BF710022FA6E /* ARTVideoPlayerPortraitBarrageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29912D10BF710022FA6E /* ARTVideoPlayerPortraitBarrageView.swift */; };
 		025D29A62D10BF710022FA6E /* ARTVideoPlayerOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29742D10BF710022FA6E /* ARTVideoPlayerOverlayView.swift */; };
 		025D29A82D10BF710022FA6E /* ARTVideoPlayerPortraitDanmakuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D299B2D10BF710022FA6E /* ARTVideoPlayerPortraitDanmakuView.swift */; };
@@ -50,7 +49,6 @@
 		025D29AE2D10BF710022FA6E /* ARTVideoPlayerLandscapePlaybackRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29862D10BF710022FA6E /* ARTVideoPlayerLandscapePlaybackRateView.swift */; };
 		025D29AF2D10BF710022FA6E /* ARTVideoPlayerDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29792D10BF710022FA6E /* ARTVideoPlayerDisplayView.swift */; };
 		025D29B02D10BF710022FA6E /* ARTVideoPlayerPortraitShareEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29952D10BF710022FA6E /* ARTVideoPlayerPortraitShareEntity.swift */; };
-		025D29B12D10BF710022FA6E /* ARTVideoPlayerOverlayViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29762D10BF710022FA6E /* ARTVideoPlayerOverlayViewDelegate.swift */; };
 		025D29B22D10BF710022FA6E /* ARTVideoPlayerPortraitShareCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D29932D10BF710022FA6E /* ARTVideoPlayerPortraitShareCell.swift */; };
 		025D29B32D10BF710022FA6E /* ARTVideoPlayerPortraitBarrageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D298D2D10BF710022FA6E /* ARTVideoPlayerPortraitBarrageCell.swift */; };
 		025D29B42D10BF710022FA6E /* ARTVideoPlayerSlidingViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025D299F2D10BF710022FA6E /* ARTVideoPlayerSlidingViewDelegate.swift */; };
@@ -67,17 +65,19 @@
 		02A375A72CC5588800248BBC /* DINCond-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 02A375A02CC5588800248BBC /* DINCond-Bold.otf */; };
 		02A375A82CC5588800248BBC /* DINPro-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02A375A12CC5588800248BBC /* DINPro-Light.ttf */; };
 		02A375A92CC5588800248BBC /* DINPro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 02A375A32CC5588800248BBC /* DINPro-Regular.otf */; };
+		02AB41062D7C85760023B638 /* ARTVideoPlayerControlsViewEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AB41052D7C85760023B638 /* ARTVideoPlayerControlsViewEnums.swift */; };
+		02AB41082D7C8BDE0023B638 /* ARTViewController_VideoPlayer+DelegateImplementations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AB41072D7C8BDE0023B638 /* ARTViewController_VideoPlayer+DelegateImplementations.swift */; };
 		02B4908B2C8AEA4C007F379A /* county.json in Resources */ = {isa = PBXBuildFile; fileRef = 02B490872C8AEA4C007F379A /* county.json */; };
 		02B4908C2C8AEA4C007F379A /* city.json in Resources */ = {isa = PBXBuildFile; fileRef = 02B490882C8AEA4C007F379A /* city.json */; };
 		02B4908D2C8AEA4C007F379A /* province.json in Resources */ = {isa = PBXBuildFile; fileRef = 02B490892C8AEA4C007F379A /* province.json */; };
 		02B4908E2C8AEA4C007F379A /* street.json in Resources */ = {isa = PBXBuildFile; fileRef = 02B4908A2C8AEA4C007F379A /* street.json */; };
 		02BE325C2CC9C9DC00F25937 /* video.MP4 in Resources */ = {isa = PBXBuildFile; fileRef = 02BE325B2CC9C9DC00F25937 /* video.MP4 */; };
-		02D1BCC72D0AF8ED0075BF64 /* loading.pag in Resources */ = {isa = PBXBuildFile; fileRef = 02D1BCC62D0AF8ED0075BF64 /* loading.pag */; };
+		02D1BCC72D0AF8ED0075BF64 /* video_loading.pag in Resources */ = {isa = PBXBuildFile; fileRef = 02D1BCC62D0AF8ED0075BF64 /* video_loading.pag */; };
 		02E1AF422D6B7F5E00C5531B /* ARTVideoPlayerLandscapeChaptersView+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E1AF402D6B7F5E00C5531B /* ARTVideoPlayerLandscapeChaptersView+CollectionView.swift */; };
 		02E1AF432D6B7F5E00C5531B /* ARTVideoPlayerLandscapeChaptersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E1AF3D2D6B7F5E00C5531B /* ARTVideoPlayerLandscapeChaptersCell.swift */; };
 		02E1AF442D6B7F5E00C5531B /* ARTVideoPlayerLandscapeChaptersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E1AF3F2D6B7F5E00C5531B /* ARTVideoPlayerLandscapeChaptersView.swift */; };
 		02E984702D08C8000052C36A /* ARTWebCustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E9846D2D08C8000052C36A /* ARTWebCustomViewController.swift */; };
-		02E984712D08C8000052C36A /* ARTCustomDanmakuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E984662D08C8000052C36A /* ARTCustomDanmakuCell.swift */; };
+		02E984712D08C8000052C36A /* ARTEnhancedDanmakuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E984662D08C8000052C36A /* ARTEnhancedDanmakuCell.swift */; };
 		02E984722D08C8000052C36A /* ARTCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E984632D08C8000052C36A /* ARTCollectionViewModel.swift */; };
 		02E984732D08C8000052C36A /* ARTCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E9845C2D08C8000052C36A /* ARTCollectionCell.swift */; };
 		02E984742D08C8000052C36A /* ARTSecondCarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E984532D08C8000052C36A /* ARTSecondCarouselCell.swift */; };
@@ -139,9 +139,9 @@
 		0258B7AE2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_VideoPlayer.swift; sourceTree = "<group>"; };
 		0258CA9D2C03995300A486E7 /* ARTViewController_PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTViewController_PageViewController.swift; sourceTree = "<group>"; };
 		025AF79A2CEBE271009643E2 /* ARTViewController+DanmakuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTViewController+DanmakuView.swift"; sourceTree = "<group>"; };
-		025D292D2D1046470022FA6E /* ARTVideoPlayerCustomWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerCustomWrapperView.swift; sourceTree = "<group>"; };
-		025D292E2D1046470022FA6E /* ARTVideoPlayerCustomWrapperView+DelegateImplementations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTVideoPlayerCustomWrapperView+DelegateImplementations.swift"; sourceTree = "<group>"; };
-		025D292F2D1046470022FA6E /* ARTVideoPlayerCustomWrapperViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerCustomWrapperViewDelegate.swift; sourceTree = "<group>"; };
+		025D292D2D1046470022FA6E /* ARTVideoPlayerEnhancedWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerEnhancedWrapperView.swift; sourceTree = "<group>"; };
+		025D292E2D1046470022FA6E /* ARTVideoPlayerEnhancedWrapperView+DelegateImplementations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTVideoPlayerEnhancedWrapperView+DelegateImplementations.swift"; sourceTree = "<group>"; };
+		025D292F2D1046470022FA6E /* ARTVideoPlayerEnhancedWrapperViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerEnhancedWrapperViewDelegate.swift; sourceTree = "<group>"; };
 		025D29542D1096930022FA6E /* ARTVideoPlayerLandscapeFullscreenBottombar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerLandscapeFullscreenBottombar.swift; sourceTree = "<group>"; };
 		025D29552D1096930022FA6E /* ARTVideoPlayerPortraitFullscreenBottombar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerPortraitFullscreenBottombar.swift; sourceTree = "<group>"; };
 		025D29562D1096930022FA6E /* ARTVideoPlayerWindowBottombar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerWindowBottombar.swift; sourceTree = "<group>"; };
@@ -155,8 +155,6 @@
 		025D29632D1096930022FA6E /* ARTVideoPlayerControlsView+DelegateImplementations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTVideoPlayerControlsView+DelegateImplementations.swift"; sourceTree = "<group>"; };
 		025D29642D1096930022FA6E /* ARTVideoPlayerControlsViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerControlsViewDelegate.swift; sourceTree = "<group>"; };
 		025D29742D10BF710022FA6E /* ARTVideoPlayerOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerOverlayView.swift; sourceTree = "<group>"; };
-		025D29752D10BF710022FA6E /* ARTVideoPlayerOverlayView+DelegateImplementations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTVideoPlayerOverlayView+DelegateImplementations.swift"; sourceTree = "<group>"; };
-		025D29762D10BF710022FA6E /* ARTVideoPlayerOverlayViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerOverlayViewDelegate.swift; sourceTree = "<group>"; };
 		025D29792D10BF710022FA6E /* ARTVideoPlayerDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerDisplayView.swift; sourceTree = "<group>"; };
 		025D297B2D10BF710022FA6E /* ARTVideoPlayerSystemControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerSystemControls.swift; sourceTree = "<group>"; };
 		025D297D2D10BF710022FA6E /* ARTVideoPlayerLandscapeDanmakuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerLandscapeDanmakuCell.swift; sourceTree = "<group>"; };
@@ -187,12 +185,14 @@
 		02A375A22CC5588800248BBC /* DINPro-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINPro-Medium.ttf"; sourceTree = "<group>"; };
 		02A375A32CC5588800248BBC /* DINPro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINPro-Regular.otf"; sourceTree = "<group>"; };
 		02A375A42CC5588800248BBC /* SourceHanSansCN-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceHanSansCN-Heavy.otf"; sourceTree = "<group>"; };
+		02AB41052D7C85760023B638 /* ARTVideoPlayerControlsViewEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerControlsViewEnums.swift; sourceTree = "<group>"; };
+		02AB41072D7C8BDE0023B638 /* ARTViewController_VideoPlayer+DelegateImplementations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTViewController_VideoPlayer+DelegateImplementations.swift"; sourceTree = "<group>"; };
 		02B490872C8AEA4C007F379A /* county.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = county.json; sourceTree = "<group>"; };
 		02B490882C8AEA4C007F379A /* city.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = city.json; sourceTree = "<group>"; };
 		02B490892C8AEA4C007F379A /* province.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = province.json; sourceTree = "<group>"; };
 		02B4908A2C8AEA4C007F379A /* street.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = street.json; sourceTree = "<group>"; };
 		02BE325B2CC9C9DC00F25937 /* video.MP4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.MP4; sourceTree = "<group>"; };
-		02D1BCC62D0AF8ED0075BF64 /* loading.pag */ = {isa = PBXFileReference; lastKnownFileType = file; path = loading.pag; sourceTree = "<group>"; };
+		02D1BCC62D0AF8ED0075BF64 /* video_loading.pag */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_loading.pag; sourceTree = "<group>"; };
 		02E1AF3D2D6B7F5E00C5531B /* ARTVideoPlayerLandscapeChaptersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerLandscapeChaptersCell.swift; sourceTree = "<group>"; };
 		02E1AF3F2D6B7F5E00C5531B /* ARTVideoPlayerLandscapeChaptersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTVideoPlayerLandscapeChaptersView.swift; sourceTree = "<group>"; };
 		02E1AF402D6B7F5E00C5531B /* ARTVideoPlayerLandscapeChaptersView+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTVideoPlayerLandscapeChaptersView+CollectionView.swift"; sourceTree = "<group>"; };
@@ -210,7 +210,7 @@
 		02E9845F2D08C8000052C36A /* ARTCollectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTCollectionHeader.swift; sourceTree = "<group>"; };
 		02E984612D08C8000052C36A /* ARTViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARTViewController+CollectionView.swift"; sourceTree = "<group>"; };
 		02E984632D08C8000052C36A /* ARTCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTCollectionViewModel.swift; sourceTree = "<group>"; };
-		02E984662D08C8000052C36A /* ARTCustomDanmakuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTCustomDanmakuCell.swift; sourceTree = "<group>"; };
+		02E984662D08C8000052C36A /* ARTEnhancedDanmakuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTEnhancedDanmakuCell.swift; sourceTree = "<group>"; };
 		02E984682D08C8000052C36A /* ARTControllerBottomBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTControllerBottomBar.swift; sourceTree = "<group>"; };
 		02E9846A2D08C8000052C36A /* ARTControllerNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTControllerNavigationBar.swift; sourceTree = "<group>"; };
 		02E9846D2D08C8000052C36A /* ARTWebCustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTWebCustomViewController.swift; sourceTree = "<group>"; };
@@ -271,9 +271,9 @@
 		025D29302D1046470022FA6E /* PlayerWrapperView */ = {
 			isa = PBXGroup;
 			children = (
-				025D292D2D1046470022FA6E /* ARTVideoPlayerCustomWrapperView.swift */,
-				025D292E2D1046470022FA6E /* ARTVideoPlayerCustomWrapperView+DelegateImplementations.swift */,
-				025D292F2D1046470022FA6E /* ARTVideoPlayerCustomWrapperViewDelegate.swift */,
+				025D292D2D1046470022FA6E /* ARTVideoPlayerEnhancedWrapperView.swift */,
+				025D292E2D1046470022FA6E /* ARTVideoPlayerEnhancedWrapperView+DelegateImplementations.swift */,
+				025D292F2D1046470022FA6E /* ARTVideoPlayerEnhancedWrapperViewDelegate.swift */,
 			);
 			path = PlayerWrapperView;
 			sourceTree = "<group>";
@@ -330,6 +330,7 @@
 				025D29622D1096930022FA6E /* ARTVideoPlayerControlsView.swift */,
 				025D29632D1096930022FA6E /* ARTVideoPlayerControlsView+DelegateImplementations.swift */,
 				025D29642D1096930022FA6E /* ARTVideoPlayerControlsViewDelegate.swift */,
+				02AB41052D7C85760023B638 /* ARTVideoPlayerControlsViewEnums.swift */,
 				025D29592D1096930022FA6E /* Bottombar */,
 				025D295B2D1096930022FA6E /* PlayerSlider */,
 				025D29612D1096930022FA6E /* Topbar */,
@@ -341,8 +342,6 @@
 			isa = PBXGroup;
 			children = (
 				025D29742D10BF710022FA6E /* ARTVideoPlayerOverlayView.swift */,
-				025D29752D10BF710022FA6E /* ARTVideoPlayerOverlayView+DelegateImplementations.swift */,
-				025D29762D10BF710022FA6E /* ARTVideoPlayerOverlayViewDelegate.swift */,
 			);
 			path = PlayerOverlayView;
 			sourceTree = "<group>";
@@ -524,7 +523,7 @@
 			isa = PBXGroup;
 			children = (
 				02EC99422D6E304B00D040D3 /* RickAstley.mp4 */,
-				02D1BCC62D0AF8ED0075BF64 /* loading.pag */,
+				02D1BCC62D0AF8ED0075BF64 /* video_loading.pag */,
 				02FC53412CF1B25E009794A4 /* privacy-policy.html */,
 				0250693D2D01BEE9009637ED /* zeco-test.html */,
 				02F8AE262BF66B3D00A111F6 /* 0.png */,
@@ -664,7 +663,7 @@
 		02E984672D08C8000052C36A /* DanmakuBusiness */ = {
 			isa = PBXGroup;
 			children = (
-				02E984662D08C8000052C36A /* ARTCustomDanmakuCell.swift */,
+				02E984662D08C8000052C36A /* ARTEnhancedDanmakuCell.swift */,
 			);
 			path = DanmakuBusiness;
 			sourceTree = "<group>";
@@ -719,6 +718,7 @@
 		02E984862D08C8450052C36A /* VideoPlayerBusiness */ = {
 			isa = PBXGroup;
 			children = (
+				02AB41072D7C8BDE0023B638 /* ARTViewController_VideoPlayer+DelegateImplementations.swift */,
 				025D29302D1046470022FA6E /* PlayerWrapperView */,
 				025D29652D1096930022FA6E /* PlayerControlsView */,
 				025D29772D10BF710022FA6E /* PlayerOverlayView */,
@@ -948,7 +948,7 @@
 				02F8AE2C2BF66B3E00A111F6 /* 2.png in Resources */,
 				0258B7AB2BFA845800AEB349 /* 3.png in Resources */,
 				02F8AE2D2BF66B3E00A111F6 /* 1.png in Resources */,
-				02D1BCC72D0AF8ED0075BF64 /* loading.pag in Resources */,
+				02D1BCC72D0AF8ED0075BF64 /* video_loading.pag in Resources */,
 				02B4908E2C8AEA4C007F379A /* street.json in Resources */,
 				0250693E2D01BEE9009637ED /* zeco-test.html in Resources */,
 				0235E28F2C794B30003DEFA8 /* portrait.jpg in Resources */,
@@ -1022,6 +1022,11 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ARTZecoToolKit_Example/Pods-ARTZecoToolKit_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ARTZecoToolKit/ARTZecoToolKit.framework",
+				"${BUILT_PRODUCTS_DIR}/RxBlocking/RxBlocking.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SmartCodable/SmartCodable.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
@@ -1031,6 +1036,11 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ARTZecoToolKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxBlocking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SmartCodable.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
@@ -1055,9 +1065,9 @@
 				02F8AE4C2BF67E7E00A111F6 /* ARTViewController_CitySelector.swift in Sources */,
 				0258B7AF2BFA851400AEB349 /* ARTViewController_VideoPlayer.swift in Sources */,
 				02F8AE4F2BF67E7E00A111F6 /* ARTViewController_SlidePopup.swift in Sources */,
-				025D29312D1046470022FA6E /* ARTVideoPlayerCustomWrapperViewDelegate.swift in Sources */,
-				025D29322D1046470022FA6E /* ARTVideoPlayerCustomWrapperView.swift in Sources */,
-				025D29332D1046470022FA6E /* ARTVideoPlayerCustomWrapperView+DelegateImplementations.swift in Sources */,
+				025D29312D1046470022FA6E /* ARTVideoPlayerEnhancedWrapperViewDelegate.swift in Sources */,
+				025D29322D1046470022FA6E /* ARTVideoPlayerEnhancedWrapperView.swift in Sources */,
+				025D29332D1046470022FA6E /* ARTVideoPlayerEnhancedWrapperView+DelegateImplementations.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				0292ECA72C733B7A00D08248 /* ARTViewController+WebView.swift in Sources */,
 				023F976D2C32F5A1009CD62B /* ARTViewController_AlertView.swift in Sources */,
@@ -1070,12 +1080,11 @@
 				0282385F2BFDA517007B6A25 /* ARTViewController_AlignmentButton.swift in Sources */,
 				025AF79B2CEBE271009643E2 /* ARTViewController+DanmakuView.swift in Sources */,
 				02E984702D08C8000052C36A /* ARTWebCustomViewController.swift in Sources */,
-				02E984712D08C8000052C36A /* ARTCustomDanmakuCell.swift in Sources */,
+				02E984712D08C8000052C36A /* ARTEnhancedDanmakuCell.swift in Sources */,
 				02E984722D08C8000052C36A /* ARTCollectionViewModel.swift in Sources */,
 				025D29A12D10BF710022FA6E /* ARTVideoPlayerPortraitShareView.swift in Sources */,
 				025D29A22D10BF710022FA6E /* ARTVideoPlayerLandscapeSlidingView.swift in Sources */,
 				025D29A32D10BF710022FA6E /* ARTVideoPlayerLoadingView.swift in Sources */,
-				025D29A42D10BF710022FA6E /* ARTVideoPlayerOverlayView+DelegateImplementations.swift in Sources */,
 				025D29A52D10BF710022FA6E /* ARTVideoPlayerPortraitBarrageView.swift in Sources */,
 				025D29A62D10BF710022FA6E /* ARTVideoPlayerOverlayView.swift in Sources */,
 				025D29A82D10BF710022FA6E /* ARTVideoPlayerPortraitDanmakuView.swift in Sources */,
@@ -1090,7 +1099,6 @@
 				025D29AE2D10BF710022FA6E /* ARTVideoPlayerLandscapePlaybackRateView.swift in Sources */,
 				025D29AF2D10BF710022FA6E /* ARTVideoPlayerDisplayView.swift in Sources */,
 				025D29B02D10BF710022FA6E /* ARTVideoPlayerPortraitShareEntity.swift in Sources */,
-				025D29B12D10BF710022FA6E /* ARTVideoPlayerOverlayViewDelegate.swift in Sources */,
 				025D29B22D10BF710022FA6E /* ARTVideoPlayerPortraitShareCell.swift in Sources */,
 				025D29B32D10BF710022FA6E /* ARTVideoPlayerPortraitBarrageCell.swift in Sources */,
 				025D29B42D10BF710022FA6E /* ARTVideoPlayerSlidingViewDelegate.swift in Sources */,
@@ -1103,6 +1111,7 @@
 				02E984742D08C8000052C36A /* ARTSecondCarouselCell.swift in Sources */,
 				0242B1912D69E58200E45B5F /* ARTPagView.swift in Sources */,
 				02E984752D08C8000052C36A /* ARTBaseViewController.swift in Sources */,
+				02AB41082D7C8BDE0023B638 /* ARTViewController_VideoPlayer+DelegateImplementations.swift in Sources */,
 				02E984762D08C8000052C36A /* ARTCarouselEntity.swift in Sources */,
 				02E984772D08C8000052C36A /* ARTViewController+CollectionView.swift in Sources */,
 				02E984782D08C8000052C36A /* ARTBaseNavigationController.swift in Sources */,
@@ -1115,6 +1124,7 @@
 				025D296C2D1096930022FA6E /* ARTVideoPlayerControlsView.swift in Sources */,
 				025D296D2D1096930022FA6E /* ARTVideoPlayerWindowBottombar.swift in Sources */,
 				025D296E2D1096930022FA6E /* ARTVideoPlayerPortraitFullscreenTopbar.swift in Sources */,
+				02AB41062D7C85760023B638 /* ARTVideoPlayerControlsViewEnums.swift in Sources */,
 				025D296F2D1096930022FA6E /* ARTVideoPlayerControlsView+DelegateImplementations.swift in Sources */,
 				025D29702D1096930022FA6E /* ARTVideoPlayerLandscapeFullscreenTopbar.swift in Sources */,
 				025D29712D1096930022FA6E /* ARTVideoPlayerTopbar.swift in Sources */,

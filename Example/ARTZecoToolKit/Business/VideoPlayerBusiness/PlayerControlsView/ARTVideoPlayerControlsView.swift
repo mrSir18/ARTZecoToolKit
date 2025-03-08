@@ -1,6 +1,6 @@
 //
 //  ARTVideoPlayerControlsView.swift
-//  Pods
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/10/19.
 //
@@ -23,9 +23,7 @@ class ARTVideoPlayerControlsView: ARTPassThroughView {
     }
     
     /// 播放器当前的屏幕方向
-    public lazy var screenOrientation: ScreenOrientation = {
-        return delegate_customScreenOrientation()
-    }()
+    public var screenOrientation: ScreenOrientation = .window
     
     /// 自动隐藏控件的定时器
     public var autoHideControlsTimer: Timer?
@@ -188,7 +186,7 @@ class ARTVideoPlayerControlsView: ARTPassThroughView {
     }
     
     /// 本地存储弹幕状态
-    public func didSaveDanmakuStateInControls(isDanmakuEnabled: Bool) {
+    public func didSaveDanmakuStateInControls(_ isDanmakuEnabled: Bool) {
         UserDefaults.standard.set(isDanmakuEnabled, forKey: "DanmakuEnabledKey")
     }
     
@@ -213,7 +211,7 @@ extension ARTVideoPlayerControlsView {
     /// 创建顶部工具栏
     private func setupTopBar() {
         let topBarHeight = topBarHeight(for: screenOrientation)
-        topBar = delegate_customTopBar() ?? defaultTopBarForOrientation()
+        topBar = defaultCustomTopBar()
         addSubview(topBar)
         topBar.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
@@ -224,7 +222,7 @@ extension ARTVideoPlayerControlsView {
     /// 创建底部工具栏
     private func setupBottomBar() {
         let bottomBarHeight = bottomBarHeight(for: screenOrientation)
-        bottomBar = delegate_customBottomBar() ?? defaultBottomBarForOrientation()
+        bottomBar = defaultCustomBottomBar()
         addSubview(bottomBar)
         bottomBar.snp.makeConstraints { make in
             make.left.bottom.right.equalToSuperview()
@@ -237,7 +235,7 @@ extension ARTVideoPlayerControlsView {
         playImageView = UIImageView()
         playImageView.isHidden = true
         playImageView.alpha = 0.5
-        playImageView.image = UIImage(named: "video_play")
+        playImageView.image = UIImage(named: "icon_video_play")
         addSubview(playImageView)
         playImageView.snp.makeConstraints { make in
             make.size.equalTo(ARTAdaptedSize(width: 40.0, height: 40.0))
@@ -251,7 +249,7 @@ extension ARTVideoPlayerControlsView {
 extension ARTVideoPlayerControlsView {
     
     /// 根据屏幕方向返认顶部栏
-    private func defaultTopBarForOrientation() -> ARTVideoPlayerTopbar {
+    private func defaultCustomTopBar() -> ARTVideoPlayerTopbar {
         switch screenOrientation {
         case .portraitFullScreen:
             return ARTVideoPlayerPortraitFullscreenTopbar(self)
@@ -263,7 +261,7 @@ extension ARTVideoPlayerControlsView {
     }
     
     /// 根据屏幕方向返回底部栏
-    private func defaultBottomBarForOrientation() -> ARTVideoPlayerBottombar {
+    private func defaultCustomBottomBar() -> ARTVideoPlayerBottombar {
         switch screenOrientation {
         case .portraitFullScreen:
             return ARTVideoPlayerPortraitFullscreenBottombar(self)
@@ -313,7 +311,7 @@ extension ARTVideoPlayerControlsView {
     @objc private func autoHideControls() {
         toggleControlsInControls(visible: false)
     }
-    
+      
     /// 显隐控件
     /// - Parameter visible: 是否显示
     private func toggleControlsInControls(visible: Bool) {
@@ -321,7 +319,7 @@ extension ARTVideoPlayerControlsView {
         if screenOrientation == .window { // 窗口模式下调整透明度
             let targetAlpha: CGFloat = visible ? 1 : 0
             UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut], animations: {
-                self.topBar.containerView.alpha = targetAlpha
+                self.delegate_controlsViewDidChangeAlpha(alpha: targetAlpha)
                 self.bottomBar.alpha = targetAlpha
             })
         } else { // 横屏全屏模式下调整约束
@@ -365,21 +363,9 @@ extension ARTVideoPlayerControlsView {
 
 extension ARTVideoPlayerControlsView {
     
-    /// 获取自定义播放模式
-    /// - Returns: 自定义播放模式，如果代理未实现则返回默认模式
-    private func delegate_customScreenOrientation() -> ScreenOrientation {
-        return delegate?.customScreenOrientation(for: self) ?? .window
-    }
-    
-    /// 获取自定义顶部工具栏
-    /// - Returns: 自定义顶部工具栏，如果代理未实现则返回 nil
-    private func delegate_customTopBar() -> ARTVideoPlayerTopbar? {
-        return delegate?.customTopBar(for: self, screenOrientation: screenOrientation)
-    }
-    
-    /// 获取自定义底部工具栏
-    /// - Returns: 自定义底部工具栏，如果代理未实现则返回 nil
-    private func delegate_customBottomBar() -> ARTVideoPlayerBottombar? {
-        return delegate?.customBottomBar(for: self, screenOrientation: screenOrientation)
+    /// 控制层视图已经显示
+    /// - Parameters: alpha 控制层视图透明度
+    private func delegate_controlsViewDidChangeAlpha(alpha: CGFloat) {
+        delegate?.controlsView(self, didChangeAlpha: alpha)
     }
 }

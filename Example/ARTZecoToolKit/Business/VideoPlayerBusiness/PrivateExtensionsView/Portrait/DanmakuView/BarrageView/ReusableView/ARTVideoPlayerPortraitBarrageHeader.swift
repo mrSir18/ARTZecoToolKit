@@ -1,6 +1,6 @@
 //
 //  ARTVideoPlayerPortraitBarrageHeader.swift
-//  ARTZecoToolKit
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/11/7.
 //
@@ -19,7 +19,7 @@ class ARTVideoPlayerPortraitBarrageHeader: ARTSectionHeaderView {
     public var restoreCallback: (() -> Void)?
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)

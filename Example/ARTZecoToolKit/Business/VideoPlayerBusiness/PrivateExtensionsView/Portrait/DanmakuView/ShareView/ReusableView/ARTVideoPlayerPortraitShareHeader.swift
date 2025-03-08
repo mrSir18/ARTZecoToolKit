@@ -1,6 +1,6 @@
 //
 //  ARTVideoPlayerPortraitShareHeader.swift
-//  ARTZecoToolKit
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/11/7.
 //
@@ -9,7 +9,8 @@ import ARTZecoToolKit
 
 class ARTVideoPlayerPortraitShareHeader: ARTSectionHeaderView {
     
-    // MARK: - Life Cycle
+    
+    // MARK: - Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,6 +23,7 @@ class ARTVideoPlayerPortraitShareHeader: ARTSectionHeaderView {
     }
     
     private func setupViews() {
+        
         // 创建标题标签
         let titleLabel = UILabel()
         titleLabel.text             = "分享至"

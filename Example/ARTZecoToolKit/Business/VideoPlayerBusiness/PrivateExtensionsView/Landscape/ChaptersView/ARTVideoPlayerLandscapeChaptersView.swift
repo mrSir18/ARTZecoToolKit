@@ -1,6 +1,6 @@
 //
 //  ARTVideoPlayerLandscapeChaptersView.swift
-//  ARTZecoToolKit
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/11/4.
 //

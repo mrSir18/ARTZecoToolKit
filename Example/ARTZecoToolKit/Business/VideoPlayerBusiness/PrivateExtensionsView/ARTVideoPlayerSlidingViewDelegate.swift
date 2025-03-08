@@ -1,14 +1,11 @@
 //
 //  ARTVideoPlayerSlidingViewDelegate.swift
-//  ARTZecoToolKit
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/11/7.
 //
 
-/// 协议方法
-///
-/// - NOTE: 可继承该协议方法
-public protocol ARTVideoPlayerSlidingViewDelegate: AnyObject {
+protocol ARTVideoPlayerSlidingViewDelegate: AnyObject {
     
     // MARK: 弹幕设置 - 公共方法
     

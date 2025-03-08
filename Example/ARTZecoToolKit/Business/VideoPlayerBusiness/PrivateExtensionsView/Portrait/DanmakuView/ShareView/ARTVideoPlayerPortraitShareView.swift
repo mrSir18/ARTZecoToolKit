@@ -1,6 +1,6 @@
 //
 //  ARTVideoPlayerPortraitShareView.swift
-//  ARTZecoToolKit
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/11/7.
 //
@@ -29,8 +29,6 @@ class ARTVideoPlayerPortraitShareView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Override Super Methods
     
     private func setupViews() {
         /// 设置列表视图

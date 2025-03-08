@@ -6,6 +6,10 @@ target 'ARTZecoToolKit_Example' do
   pod 'ARTZecoToolKit', :path => '../'
 
   pod 'libpag', :inhibit_warnings => true
+  pod 'RxSwift', :inhibit_warnings => true
+  pod 'RxCocoa', :inhibit_warnings => true
+  pod 'RxGesture', :inhibit_warnings => true
+  pod 'RxBlocking', :inhibit_warnings => true
   
   target 'ARTZecoToolKit_Tests' do
     inherit! :search_paths

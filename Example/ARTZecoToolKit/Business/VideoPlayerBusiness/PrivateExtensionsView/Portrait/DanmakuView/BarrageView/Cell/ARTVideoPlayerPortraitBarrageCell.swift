@@ -1,6 +1,6 @@
 //
 //  ARTVideoPlayerPortraitBarrageCell.swift
-//  ARTZecoToolKit
+//  ARTZeco
 //
 //  Created by mrSir18 on 2024/11/7.
 //
@@ -29,7 +29,7 @@ class ARTVideoPlayerPortraitBarrageCell: UICollectionViewCell {
         view.minimumTrackTintColor = .art_color(withHEXValue: 0xFE5C01)
         view.maximumTrackTintColor = .art_color(withHEXValue: 0xE3E3E5, alpha: 0.6)
         view.trackHeight = ARTAdaptedValue(2.0)
-        if let thumbImage = UIImage(named: "video_slider_portrait_danmaku_thumb")?.art_scaled(to: ARTAdaptedSize(width: 14.0, height: 14.0)) {
+        if let thumbImage = UIImage(named: "icon_video_slider_portrait_danmaku_thumb")?.art_scaled(to: ARTAdaptedSize(width: 14.0, height: 14.0)) {
             view.setThumbImage(thumbImage, for: .normal)
         }
         view.addTarget(self, action: #selector(handleSliderValueChanged(_:)), for: .valueChanged)
@@ -41,14 +41,13 @@ class ARTVideoPlayerPortraitBarrageCell: UICollectionViewCell {
     }()
     
     /// 滑块值改变回调
-    ///
     /// - Parameters:
     ///  - value: 当前滑块值
     ///  - shouldSave 是否需要保存
     public var sliderValueChanged: ((Int, Bool) -> Void)?
     
     
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)
