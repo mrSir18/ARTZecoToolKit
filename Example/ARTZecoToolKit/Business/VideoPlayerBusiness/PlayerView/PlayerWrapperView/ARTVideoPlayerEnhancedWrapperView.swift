@@ -244,6 +244,26 @@ class ARTVideoPlayerEnhancedWrapperView: ARTVideoPlayerWrapperView {
     }
 }
 
+// MARK: - 重写点击手势
+
+extension ARTVideoPlayerEnhancedWrapperView {
+    
+    /// 默认无需重写点击手势
+    /// - Note: 根据个人业务定制点击手势，特殊需求处理.window
+    override func handleTapGesture(_ gesture: UITapGestureRecognizer) { // 点击手势
+        let currentTime = Date().timeIntervalSince1970
+        if currentTime - lastTapTime < doubleTapDelay { // 双击事件
+            guard isLandscape || screenOrientation == .window else { return }
+            didReceivewDoubleTapGesture() // 通知外部双击事件
+            
+        } else { // 单击事件
+            let location = gesture.location(in: self)
+            didReceiveTapGesture(at: location) // 通知外部点击事件
+        }
+        lastTapTime = currentTime // 更新上次点击的时间
+    }
+}
+
 // MARK: - 发送消息给外部
 
 extension ARTVideoPlayerEnhancedWrapperView {
@@ -298,11 +318,12 @@ extension ARTVideoPlayerEnhancedWrapperView {
     override func didReceiveTapGesture(at location: CGPoint) { // 点击手势
         guard playerState != .buffering else { return }
         if overlayView.handleTapOnOverlay(at: location) { return } // 如果弹幕视图处理了点击事件，直接返回
-        if isLandscape { // 如果是横屏模式，切换控制
+        if isLandscape || screenOrientation == .window { // 如果是横屏模式，切换控制
             controlsView.didToggleControlsVisibilityInControls()
         } else { // 如果是竖屏模
             togglePlayerState()
         }
+        print("屏幕模式：\(screenOrientation.rawValue)")
     }
     
     override func didReceivewDoubleTapGesture() { // 双击手势

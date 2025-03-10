@@ -38,13 +38,13 @@ open class ARTVideoPlayerWrapperView: ARTBaseVideoPlayerWrapperView {
     public var feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     
-    // MARK: - Private Properties
+    // MARK: - Tap Gesture Properties
     
     /// 记录上次点击的时间
-    private var lastTapTime: TimeInterval = 0
+    public var lastTapTime: TimeInterval = 0
     
     /// 双击最大时间间隔
-    private let doubleTapDelay: TimeInterval = 0.3
+    public let doubleTapDelay: TimeInterval = 0.3
 
     
     // MARK: - Initialization
@@ -198,11 +198,6 @@ extension ARTVideoPlayerWrapperView: UIGestureRecognizerDelegate {
             didReceiveTapGesture(at: location) // 通知外部点击事件
         }
         lastTapTime = currentTime // 更新上次点击的时间
-    }
-    
-    @objc open func handleDoubleTapGesture(_ gesture: UITapGestureRecognizer) {
-        guard isLandscape else { return } // 如果是横屏模式
-        didReceivewDoubleTapGesture() // 通知外部双击事件
     }
     
     /// 处理捏合手势
