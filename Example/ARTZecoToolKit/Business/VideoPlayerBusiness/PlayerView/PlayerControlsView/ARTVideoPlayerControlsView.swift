@@ -320,6 +320,7 @@ extension ARTVideoPlayerControlsView {
             let targetAlpha: CGFloat = visible ? 1 : 0
             UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut], animations: {
                 self.delegate_controlsViewDidChangeAlpha(alpha: targetAlpha)
+                self.topBar.containerView.alpha = targetAlpha
                 self.bottomBar.alpha = targetAlpha
             })
         } else { // 横屏全屏模式下调整约束

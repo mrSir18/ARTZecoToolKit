@@ -98,7 +98,7 @@ class ARTVideoPlayerEnhancedWrapperView: ARTVideoPlayerWrapperView {
         super.init(coder: coder)
     }
     
-    // MARK: - Initialization
+    // MARK: - Setup Methods
     
     override func setupViews() {
         super.setupViews()
