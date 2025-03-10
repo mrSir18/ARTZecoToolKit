@@ -323,7 +323,6 @@ extension ARTVideoPlayerEnhancedWrapperView {
         } else { // 如果是竖屏模
             togglePlayerState()
         }
-        print("屏幕模式：\(screenOrientation.rawValue)")
     }
     
     override func didReceivewDoubleTapGesture() { // 双击手势
