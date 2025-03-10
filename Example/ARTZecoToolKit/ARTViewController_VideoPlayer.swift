@@ -158,7 +158,7 @@ import ARTZecoToolKit
 class ARTViewController_VideoPlayer: ARTBaseViewController {
     
     /// 播放器视图
-    public var playerView: ARTVideoPlayerView!
+    public var playerView: ARTVideoPlayerEnhancedWrapperView!
 
     
     // MARK: - Initialization
@@ -173,7 +173,7 @@ class ARTViewController_VideoPlayer: ARTBaseViewController {
 
     private func setupPlayerView() { // 创建播放器视图
         let aspectRatio: CGFloat = 16.0 / 9.0
-        playerView = ARTVideoPlayerView(self)
+        playerView = ARTVideoPlayerEnhancedWrapperView(self)
         view.addSubview(playerView)
         playerView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
